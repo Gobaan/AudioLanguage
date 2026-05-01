@@ -1,0 +1,294 @@
+{
+  "categories": [
+    {
+      "id": "greeting",
+      "label": "Greetings",
+      "scenes": [
+        {
+          "id": "ta-greeting-hello",
+          "situation": "You meet someone for the first time.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "Hello!" },
+            { "speaker": "learner", "text": "Hello! How are you?" },
+            { "speaker": "other",   "text": "Fine. Thank you." }
+          ]
+        },
+        {
+          "id": "ta-greeting-name",
+          "situation": "Someone asks your name at a gathering.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "What is your name?" },
+            { "speaker": "learner", "text": "My name is Anna. Your name?" },
+            { "speaker": "other",   "text": "My name is Raja." }
+          ]
+        },
+        {
+          "id": "ta-greeting-how-are-you",
+          "situation": "You run into a neighbour in the morning.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "How are you?" },
+            { "speaker": "learner", "text": "I am well. Thanks. And you?" },
+            { "speaker": "other",   "text": "I am also well." }
+          ]
+        },
+        {
+          "id": "ta-greeting-goodbye",
+          "situation": "You are leaving a friend's house.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "OK, I am leaving. Goodbye." },
+            { "speaker": "other",   "text": "OK. Take care." },
+            { "speaker": "learner", "text": "Thank you. We will meet again." }
+          ]
+        },
+        {
+          "id": "ta-greeting-thanks",
+          "situation": "Someone helps you carry something heavy.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "Shall I help?" },
+            { "speaker": "learner", "text": "Yes, thank you very much!" },
+            { "speaker": "other",   "text": "No problem." }
+          ]
+        },
+        {
+          "id": "ta-greeting-sorry",
+          "situation": "You accidentally step on someone's foot.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "I am sorry!" },
+            { "speaker": "other",   "text": "It's OK, no problem." },
+            { "speaker": "learner", "text": "Thank you very much." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "market",
+      "label": "At the Market",
+      "scenes": [
+        {
+          "id": "ta-market-how-much",
+          "situation": "You want to know the price of vegetables at a market.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "What is the price of this?" },
+            { "speaker": "other",   "text": "One hundred rupees." },
+            { "speaker": "learner", "text": "OK, give it to me." }
+          ]
+        },
+        {
+          "id": "ta-market-too-expensive",
+          "situation": "The price is higher than you expected.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "Two hundred rupees." },
+            { "speaker": "learner", "text": "It's very expensive. Can you reduce it a little?" },
+            { "speaker": "other",   "text": "OK, one hundred and seventy rupees." }
+          ]
+        },
+        {
+          "id": "ta-market-do-you-have",
+          "situation": "You are looking for a specific item.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "learner", "text": "Do you have mangoes?" },
+            { "speaker": "other",   "text": "Yes, look here, very good ones." },
+            { "speaker": "learner", "text": "OK, give me one kilo." }
+          ]
+        },
+        {
+          "id": "ta-market-pay",
+          "situation": "You want to pay and finish the transaction.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "Can I pay by card?" },
+            { "speaker": "other",   "text": "No, cash only." },
+            { "speaker": "learner", "text": "OK, here is the money." }
+          ]
+        },
+        {
+          "id": "ta-market-no-thanks",
+          "situation": "A vendor is trying to sell you something you don't want.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "Buy it, it's very good!" },
+            { "speaker": "learner", "text": "No need, thank you." },
+            { "speaker": "other",   "text": "OK, no problem." }
+          ]
+        },
+        {
+          "id": "ta-market-fresh",
+          "situation": "You want to know if the fish is fresh.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "learner", "text": "Is this fish fresh?" },
+            { "speaker": "other",   "text": "Yes, it came this morning." },
+            { "speaker": "learner", "text": "Good. Give me half a kilo." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directions",
+      "label": "Asking Directions",
+      "scenes": [
+        {
+          "id": "ta-directions-where",
+          "situation": "You need to find the bus stop.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "Excuse me, where is the bus stop?" },
+            { "speaker": "other",   "text": "Go straight, turn right." },
+            { "speaker": "learner", "text": "Thank you very much!" }
+          ]
+        },
+        {
+          "id": "ta-directions-lost",
+          "situation": "You are lost in an unfamiliar neighbourhood.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "learner", "text": "I am lost. Will you help me?" },
+            { "speaker": "other",   "text": "Of course. Where do you need to go?" },
+            { "speaker": "learner", "text": "To the railway station." }
+          ]
+        },
+        {
+          "id": "ta-directions-far",
+          "situation": "You want to know if it's walkable.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "Is it far from here?" },
+            { "speaker": "other",   "text": "No, you can walk. Five minutes." },
+            { "speaker": "learner", "text": "OK, thank you." }
+          ]
+        },
+        {
+          "id": "ta-directions-auto",
+          "situation": "You are negotiating with an auto-rickshaw driver.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "learner", "text": "Will you go to Central Station?" },
+            { "speaker": "other",   "text": "We'll go. One hundred rupees." },
+            { "speaker": "learner", "text": "Will you come for seventy rupees?" }
+          ]
+        },
+        {
+          "id": "ta-directions-which-way",
+          "situation": "You need to choose between left and right.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "other",   "text": "Go left, then straight." },
+            { "speaker": "learner", "text": "Left side? Understood, thank you." },
+            { "speaker": "other",   "text": "OK, don't worry." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cafe",
+      "label": "At a Café",
+      "scenes": [
+        {
+          "id": "ta-cafe-table",
+          "situation": "You arrive at a restaurant and want a table.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "Welcome! How many people?" },
+            { "speaker": "learner", "text": "Two people. Can we get a table?" },
+            { "speaker": "other",   "text": "Yes. Come this way." }
+          ]
+        },
+        {
+          "id": "ta-cafe-order",
+          "situation": "The waiter comes to take your order.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "What are you ordering?" },
+            { "speaker": "learner", "text": "One masala dosa and one tea please." },
+            { "speaker": "other",   "text": "OK, it will come right away." }
+          ]
+        },
+        {
+          "id": "ta-cafe-bill",
+          "situation": "You have finished eating and want the bill.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "Please bring the bill." },
+            { "speaker": "other",   "text": "Here is the bill. Two hundred rupees." },
+            { "speaker": "learner", "text": "Here is the money. Thank you." }
+          ]
+        },
+        {
+          "id": "ta-cafe-recommend",
+          "situation": "You want a recommendation from the waiter.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "learner", "text": "Can you tell me what is good?" },
+            { "speaker": "other",   "text": "Today the sambar rice is very good." },
+            { "speaker": "learner", "text": "OK, give me that then." }
+          ]
+        },
+        {
+          "id": "ta-cafe-spicy",
+          "situation": "You want to make sure the food is not too spicy.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "learner", "text": "Please make it less spicy." },
+            { "speaker": "other",   "text": "OK, we will make it mild." },
+            { "speaker": "learner", "text": "Thank you very much." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "help",
+      "label": "Asking for Help",
+      "scenes": [
+        {
+          "id": "ta-help-understand",
+          "situation": "Someone spoke too quickly and you didn't catch it.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "other",   "text": "Fill in this form and bring your Aadhaar card." },
+            { "speaker": "learner", "text": "Sorry, I didn't understand. Can you say it slowly?" },
+            { "speaker": "other",   "text": "OK. You need your Aadhaar card." }
+          ]
+        },
+        {
+          "id": "ta-help-repeat",
+          "situation": "You missed what the announcer said at the station.",
+          "difficulty": 2,
+          "lines": [
+            { "speaker": "other",   "text": "Your train is leaving now." },
+            { "speaker": "learner", "text": "Will you say it again?" },
+            { "speaker": "other",   "text": "The train is leaving right now!" }
+          ]
+        },
+        {
+          "id": "ta-help-english",
+          "situation": "You need to find someone who speaks English.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "Do you know English?" },
+            { "speaker": "other",   "text": "A little. What do you need?" },
+            { "speaker": "learner", "text": "Thank you. I am looking for a hotel." }
+          ]
+        },
+        {
+          "id": "ta-help-looking-for",
+          "situation": "You are looking for a hospital.",
+          "difficulty": 1,
+          "lines": [
+            { "speaker": "learner", "text": "Excuse me, where is the hospital?" },
+            { "speaker": "other",   "text": "Go straight, it's on the left." },
+            { "speaker": "learner", "text": "Thank you very much, sir." }
+          ]
+        }
+      ]
+    }
+  ]
+}
