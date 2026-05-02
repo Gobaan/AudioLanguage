@@ -18,7 +18,7 @@ from audiolanguage.paths import repo_paths  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Generate MP3 TTS files for prompts.json")
+    p = argparse.ArgumentParser(description="Generate MP3 TTS files from audio_sources/prompts.json")
     p.add_argument("--force", action="store_true", help="Re-generate files even if they exist")
     p.add_argument(
         "--voice",
@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
 def load_prompts(path: Path) -> dict[str, str]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
-        raise TypeError("prompts.json must be a JSON object of string values")
+        raise TypeError("audio_sources/prompts.json must be a JSON object of string values")
     out: dict[str, str] = {}
     for k, v in data.items():
         if not isinstance(k, str) or not isinstance(v, str):
@@ -89,4 +89,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

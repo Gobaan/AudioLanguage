@@ -32,6 +32,7 @@ const state = {
   speechStatus: 'idle',
   speechTranscript: '',
   expectedLineIndex: 1,
+  visualFrameIndex: 0,
   stopListening: null,
 };
 
@@ -73,6 +74,7 @@ async function startCard() {
 
   state.isRunning = true;
   state.attemptCount = 0;
+  state.visualFrameIndex = 0;
   state.sequence = hasSeenCard(currentCard().id) ? [...SECOND_TIME_SEQUENCE] : [...FIRST_TIME_SEQUENCE];
   state.stepIndex = 0;
   renderActiveCard('playing');
@@ -91,6 +93,7 @@ async function runSequence() {
     }
 
     if (step.kind === 'dialogue') {
+      state.visualFrameIndex = step.index;
       renderActiveCard('playing');
       await playAudio(dialogueUrl(currentCard().id, step.index));
       state.stepIndex += 1;
@@ -117,6 +120,7 @@ async function handleResponse(isCorrect) {
   }
 
   if (!isCorrect) {
+    state.visualFrameIndex = state.expectedLineIndex;
     renderActiveCard('retry');
     await playAudio(promptUrl('feedback_failure'));
     await playAudio(dialogueUrl(currentCard().id, state.expectedLineIndex));
@@ -130,6 +134,7 @@ async function handleResponse(isCorrect) {
     return;
   }
 
+  state.visualFrameIndex = 2;
   renderActiveCard('success');
   await playAudio(promptUrl('feedback_success'));
   await playAudio(promptUrl('closing'));
@@ -182,6 +187,7 @@ function renderActiveCard(status) {
 function stopCard() {
   state.isRunning = false;
   state.isListening = false;
+  state.visualFrameIndex = 0;
   state.isTranscribing = false;
   state.stopListening?.(false);
   state.stopListening = null;
@@ -200,6 +206,7 @@ async function captureResponse() {
   return new Promise(resolve => {
     state.isListening = true;
     state.isTranscribing = false;
+    state.visualFrameIndex = state.expectedLineIndex;
     state.speechStatus = 'listening';
     state.speechTranscript = '';
     renderActiveCard('listening');
@@ -395,6 +402,16 @@ function renderSpeechDebug() {
 }
 
 function renderSceneArt(card) {
+  const frameUrl = sceneFrameUrl(card);
+
+  if (frameUrl) {
+    return `
+      <figure class="scene-art scene-frame">
+        <img src="${escapeHtml(frameUrl)}" alt="${escapeHtml(frameAltText(card))}">
+      </figure>
+    `;
+  }
+
   return `
     <div class="scene-art" aria-label="Scene image">
       <div class="sun"></div>
@@ -404,6 +421,19 @@ function renderSceneArt(card) {
       <div class="context-object"></div>
     </div>
   `;
+}
+
+function sceneFrameUrl(card) {
+  if (card.id !== 'ta-greeting-hello') return null;
+
+  return `/visuals/${card.id}/frame-${state.visualFrameIndex}.png`;
+}
+
+function frameAltText(card) {
+  const line = card.lines?.[state.visualFrameIndex];
+  if (!line) return card.situation || 'Dialogue scene';
+
+  return `${card.situation} ${line.speaker} says: ${line.text}`;
 }
 
 function renderProgress() {
@@ -433,6 +463,7 @@ function restart() {
   state.stepIndex = 0;
   state.isRunning = false;
   state.isListening = false;
+  state.visualFrameIndex = 0;
   state.completedCount = 0;
   renderReadyCard();
 }

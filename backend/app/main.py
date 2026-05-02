@@ -14,8 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BASE_DIR.parent
 STATIC_DIR = BASE_DIR / "static"
 AUDIO_DIR = PROJECT_DIR / "audio"
-DIALOGUES_PATH = PROJECT_DIR / "dialogues.json"
-PROMPTS_PATH = PROJECT_DIR / "prompts.json"
+VISUALS_DIR = PROJECT_DIR / "visuals"
+AUDIO_SOURCES_DIR = PROJECT_DIR / "audio_sources"
+DIALOGUES_PATH = AUDIO_SOURCES_DIR / "dialogues.json"
+PROMPTS_PATH = AUDIO_SOURCES_DIR / "prompts.json"
 WHISPER_MODEL = None
 
 app = FastAPI(title="Audio Language")
@@ -29,6 +31,7 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 app.mount("/audio", StaticFiles(directory=str(AUDIO_DIR)), name="audio")
+app.mount("/visuals", StaticFiles(directory=str(VISUALS_DIR)), name="visuals")
 
 
 @app.get("/")
@@ -44,7 +47,7 @@ def list_scenes():
 
 @app.get("/api/dialogues")
 def list_dialogues():
-    """Return dialogue card metadata from dialogues.json."""
+    """Return dialogue card metadata from audio_sources/dialogues.json."""
     with DIALOGUES_PATH.open(encoding="utf-8") as file:
         data = json.load(file)
 

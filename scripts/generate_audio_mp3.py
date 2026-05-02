@@ -24,7 +24,7 @@ class Voices:
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Generate MP3 TTS files for dialogues.json")
+    p = argparse.ArgumentParser(description="Generate MP3 TTS files from audio_sources/dialogues.json")
     p.add_argument("--force", action="store_true", help="Re-generate files even if they exist")
     p.add_argument(
         "--feminine-voice",
@@ -114,4 +114,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

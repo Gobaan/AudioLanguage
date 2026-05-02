@@ -17,7 +17,7 @@ def load_dialogues(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def expected_wav_names(dialogues: dict) -> list[str]:
+def expected_mp3_names(dialogues: dict) -> list[str]:
     names: list[str] = []
     for category in dialogues.get("categories", []):
         for scene in category.get("scenes", []):
@@ -36,8 +36,8 @@ def missing_files(names: list[str], folder: Path) -> list[str]:
 def print_summary(*, dialogues_file: Path, audio_folder: Path, expected: int, missing: int) -> None:
     print(f"Dialogues file: {dialogues_file}")
     print(f"Audio dir     : {audio_folder}")
-    print(f"Expected wavs : {expected}")
-    print(f"Missing wavs  : {missing}")
+    print(f"Expected MP3s : {expected}")
+    print(f"Missing MP3s  : {missing}")
 
 
 def print_missing(names: list[str], *, limit: int = 50) -> None:
@@ -58,7 +58,7 @@ def main() -> int:
     adir.mkdir(parents=True, exist_ok=True)
 
     dialogues = load_dialogues(dpath)
-    expected = expected_wav_names(dialogues)
+    expected = expected_mp3_names(dialogues)
     missing = missing_files(expected, adir)
 
     print_summary(
@@ -78,4 +78,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

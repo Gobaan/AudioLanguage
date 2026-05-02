@@ -2,9 +2,9 @@
 
 ### Terminology
 
-- **Prompt audio**: clips from `audio/prompts/*.mp3` (keys in `prompts.json`)
+- **Prompt audio**: clips from `audio/prompts/*.mp3` (keys in `audio_sources/prompts.json`)
   - `opening`, `first_time`, `second_time`, `call_to_action`, `feedback_failure`, `feedback_success`, `closing`
-- **Dialogue audio**: scene line clips from `audio/<sceneId>-<lineIndex>.mp3`
+- **Dialogue audio**: scene line clips from `audio/<sceneId>-<lineIndex>.mp3` (lines in `audio_sources/dialogues.json`)
 
 ### First time opening a dialogue card (for that `scene.id`)
 

@@ -94,6 +94,18 @@ button:disabled {
   width: 100%;
 }
 
+.scene-frame {
+  background: #e7d7bf;
+  display: block;
+}
+
+.scene-frame img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
 .scene-greeting .scene-art {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
