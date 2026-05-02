@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scenario Generation"
+  short_description: "Create emotionally engaging language scenes"
+  default_prompt: "Use $scenario-generation to create new language learning scenarios."

@@ -202,6 +202,36 @@ button:disabled {
   width: 48px;
 }
 
+.speech-debug {
+  background: rgba(23, 20, 15, 0.08);
+  border: 1px solid rgba(23, 20, 15, 0.12);
+  border-radius: 18px;
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.speech-debug-label {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+  opacity: 0.65;
+  text-transform: uppercase;
+}
+
+.speech-debug-status {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.speech-debug-transcript {
+  font-size: 1rem;
+  min-height: 1.4em;
+}
+
 .audio-orb {
   align-items: center;
   background: var(--ink);
