@@ -1,0 +1,219 @@
+{
+  "scenes": [
+    {
+      "id": "study-room-friend",
+      "environment": "cozy home study room",
+      "domain": "greetings",
+      "mvp_priority": 1,
+      "description": "A learner studies at a desk when a friend enters and starts a friendly greeting.",
+      "characters": [
+        { "role": "learner", "description": "seated at desk with notebook and headphones" },
+        { "role": "friend", "description": "friendly peer entering through doorway" }
+      ],
+      "props": ["desk", "notebook", "pencil", "headphones", "open doorway"],
+      "mood": "warm, casual, friendly",
+      "physical_cues": {
+        "world_opener": "friend enters, smiles, waves, and makes eye contact",
+        "learner_target": "learner looks up, waves back, and gestures toward friend",
+        "world_response": "friend smiles, nods, and relaxes"
+      },
+      "localized_variants": {
+        "en": "cozy home study room",
+        "es": "home study room or language class desk",
+        "ta": "home study room in Tamil Nadu",
+        "ru": "small apartment study desk"
+      }
+    },
+    {
+      "id": "neighbor-gate",
+      "environment": "front gate outside a home",
+      "domain": "greetings",
+      "mvp_priority": 2,
+      "description": "A neighbor pauses at a gate and greets the learner outside.",
+      "characters": [
+        { "role": "learner", "description": "standing near a small front gate" },
+        { "role": "neighbor", "description": "friendly neighbor passing by" }
+      ],
+      "props": ["front gate", "plants", "morning light", "pathway"],
+      "mood": "friendly, familiar, local",
+      "physical_cues": {
+        "world_opener": "neighbor pauses, waves, and smiles",
+        "learner_target": "learner turns toward neighbor and answers politely",
+        "world_response": "neighbor nods and continues warmly"
+      }
+    },
+    {
+      "id": "school-hallway-classmate",
+      "environment": "school or language class hallway",
+      "domain": "greetings",
+      "mvp_priority": 3,
+      "description": "A classmate sees the learner before class and starts a quick greeting.",
+      "characters": [
+        { "role": "learner", "description": "standing with backpack or notebook" },
+        { "role": "classmate", "description": "friendly classmate approaching before class" }
+      ],
+      "props": ["backpack", "notebook", "classroom doorway"],
+      "mood": "casual, quick, friendly",
+      "physical_cues": {
+        "world_opener": "classmate slows down and gives a quick wave",
+        "learner_target": "learner shifts attention from notebook and responds",
+        "world_response": "classmate smiles and nods before moving on"
+      }
+    },
+    {
+      "id": "busy-service-counter",
+      "environment": "busy service counter",
+      "domain": "repair",
+      "mvp_priority": 4,
+      "description": "A staff member speaks quickly and the learner needs them to repeat slowly.",
+      "characters": [
+        { "role": "learner", "description": "standing at a counter looking uncertain" },
+        { "role": "staff", "description": "helpful but busy person behind the counter" }
+      ],
+      "props": ["counter", "forms", "small queue", "pen"],
+      "mood": "slightly pressured but helpful",
+      "physical_cues": {
+        "world_opener": "staff explains quickly while pointing to a form",
+        "learner_target": "learner looks confused, raises hand gently, and asks for slower repetition",
+        "world_response": "staff softens expression and repeats more slowly"
+      }
+    },
+    {
+      "id": "street-bus-stop",
+      "environment": "street corner near shops",
+      "domain": "directions",
+      "mvp_priority": 5,
+      "description": "The learner needs to find a bus stop in an unfamiliar area.",
+      "characters": [
+        { "role": "learner", "description": "holding a phone or small bag and looking around" },
+        { "role": "local", "description": "nearby person willing to point the way" }
+      ],
+      "props": ["street corner", "shops", "phone map", "road"],
+      "mood": "practical, mildly urgent, relieved",
+      "physical_cues": {
+        "learner_target": "learner looks around, then asks with a palm-up searching gesture",
+        "world_response": "local points down the street and traces the route with a hand"
+      }
+    },
+    {
+      "id": "corner-shop-water",
+      "environment": "small corner shop",
+      "domain": "buying_ordering",
+      "mvp_priority": 6,
+      "description": "The learner wants to buy a bottle of water from a shopkeeper.",
+      "characters": [
+        { "role": "learner", "description": "customer standing near a fridge or counter" },
+        { "role": "shopkeeper", "description": "friendly shopkeeper behind the counter" }
+      ],
+      "props": ["water bottle", "counter", "small fridge", "cash tray"],
+      "mood": "simple, practical, friendly",
+      "physical_cues": {
+        "learner_target": "learner points gently toward a water bottle and asks politely",
+        "world_response": "shopkeeper reaches for the bottle and confirms"
+      }
+    },
+    {
+      "id": "market-stall-price",
+      "environment": "market stall",
+      "domain": "buying_ordering",
+      "mvp_priority": 7,
+      "description": "The learner points to an item at a market and asks the price.",
+      "characters": [
+        { "role": "learner", "description": "customer looking at goods on a stall" },
+        { "role": "vendor", "description": "vendor standing behind displayed items" }
+      ],
+      "props": ["displayed goods", "price board without readable text", "cash", "bags"],
+      "mood": "busy, practical, polite",
+      "physical_cues": {
+        "learner_target": "learner points to an item and looks between item and vendor",
+        "world_response": "vendor holds up fingers or gestures toward payment"
+      }
+    },
+    {
+      "id": "local-food-counter",
+      "environment": "casual local food counter",
+      "domain": "buying_ordering",
+      "mvp_priority": 8,
+      "description": "The learner orders one common local food item from a friendly server.",
+      "characters": [
+        { "role": "learner", "description": "customer looking at visible food or a menu board" },
+        { "role": "server", "description": "busy but friendly food counter worker" }
+      ],
+      "props": ["food display", "menu board without readable text", "tray", "counter"],
+      "mood": "warm, hungry, practical",
+      "physical_cues": {
+        "learner_target": "learner points to a visible food item and holds up one finger",
+        "world_response": "server nods and starts preparing or handing over the food"
+      }
+    },
+    {
+      "id": "hospital-street-corner",
+      "environment": "street corner near a clinic or hospital district",
+      "domain": "health_directions",
+      "mvp_priority": 9,
+      "description": "The learner urgently asks a local person where the hospital is.",
+      "characters": [
+        { "role": "learner", "description": "worried person holding a phone map" },
+        { "role": "local", "description": "nearby person who can point toward the hospital" }
+      ],
+      "props": ["phone map", "street signs without readable text", "medical cross symbol", "road"],
+      "mood": "concerned, urgent, helpful",
+      "physical_cues": {
+        "learner_target": "learner looks worried, shows phone, and asks with a searching gesture",
+        "world_response": "local points firmly toward the hospital direction"
+      }
+    },
+    {
+      "id": "pharmacy-counter",
+      "environment": "small pharmacy counter",
+      "domain": "health",
+      "mvp_priority": 10,
+      "description": "The learner asks a pharmacist for medicine for a simple symptom.",
+      "characters": [
+        { "role": "learner", "description": "customer at the pharmacy counter looking uncomfortable" },
+        { "role": "pharmacist", "description": "attentive pharmacist behind the counter" }
+      ],
+      "props": ["medicine shelves", "counter", "small medicine boxes", "water bottle"],
+      "mood": "practical, slightly embarrassed, caring",
+      "physical_cues": {
+        "learner_target": "learner gestures to symptom gently and asks for medicine",
+        "world_response": "pharmacist listens carefully and reaches toward medicine shelves"
+      }
+    },
+    {
+      "id": "hostel-front-desk",
+      "environment": "hostel reception desk",
+      "domain": "travel_lodging",
+      "mvp_priority": 11,
+      "description": "The learner arrives with a bag and starts a simple hostel check-in.",
+      "characters": [
+        { "role": "learner", "description": "traveler with backpack, phone, and passport" },
+        { "role": "receptionist", "description": "hostel staff member at front desk" }
+      ],
+      "props": ["front desk", "backpack", "passport", "phone booking", "room key"],
+      "mood": "tired, practical, relieved",
+      "physical_cues": {
+        "world_opener": "receptionist looks up from desk and smiles",
+        "learner_target": "learner shows phone booking or passport and says they have a reservation",
+        "world_response": "receptionist checks the booking and reaches for a key"
+      }
+    },
+    {
+      "id": "cafe-social-chat",
+      "environment": "quiet cafe table",
+      "domain": "social",
+      "mvp_priority": 30,
+      "description": "Two adults chat casually, and the learner makes a respectful low-pressure social invitation.",
+      "characters": [
+        { "role": "learner", "description": "adult sitting at a cafe table with relaxed posture" },
+        { "role": "conversation_partner", "description": "adult conversation partner with comfortable personal space" }
+      ],
+      "props": ["coffee cups", "small table", "chairs", "daylight window"],
+      "mood": "warm, respectful, low-pressure",
+      "physical_cues": {
+        "learner_target": "learner smiles politely and gestures lightly toward the coffee cups",
+        "world_response": "conversation partner responds clearly; learner accepts the answer respectfully"
+      }
+    }
+  ]
+}

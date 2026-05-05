@@ -1,0 +1,4 @@
+interface:
+  display_name: "Language Session Flow"
+  short_description: "Plan adaptive daily language sessions"
+  default_prompt: "Use $language-session-flow to design daily session flow, breaks, recalibration, review, and progression."

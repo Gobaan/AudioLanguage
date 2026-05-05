@@ -1,0 +1,29 @@
+{
+  "language": "ta",
+  "display_name": "Tamil",
+  "script": "Tamil",
+  "native_review_status": "needs_native_review",
+  "visual_beats": [],
+  "generation_backlog": [
+    { "dialogue_id": "ta-greeting-hello", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-greeting-neighbor", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-greeting-classmate", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-greeting-and-you", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-introduce-self", "needed_assets": ["line images", "video prompts", "audio", "proper noun labels"] },
+    { "dialogue_id": "ta-repair-say-slowly", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-repair-dont-understand", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-directions-bus-stop", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-shop-water", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-market-price", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-pay-and-close", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-apologize-small-mistake", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-speak-little-language", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-politeness-please-thanks", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-order-local-food", "needed_assets": ["line images", "video prompts", "audio", "localized food item visuals"] },
+    { "dialogue_id": "ta-directions-hospital", "needed_assets": ["line images", "video prompts", "audio", "medical location visuals"] },
+    { "dialogue_id": "ta-pharmacy-cough-medicine", "needed_assets": ["line images", "video prompts", "audio", "respectful symptom gesture"] },
+    { "dialogue_id": "ta-pharmacy-diarrhea-medicine", "needed_assets": ["line images", "video prompts", "audio", "respectful symptom gesture"] },
+    { "dialogue_id": "ta-hostel-check-in", "needed_assets": ["line images", "video prompts", "audio"] },
+    { "dialogue_id": "ta-social-coffee-invitation", "needed_assets": ["line images", "video prompts", "audio", "refusal path visuals"] }
+  ]
+}

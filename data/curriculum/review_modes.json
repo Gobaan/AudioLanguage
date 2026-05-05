@@ -1,0 +1,70 @@
+{
+  "review_modes": [
+    {
+      "id": "listen",
+      "name": "Listen",
+      "support_level": 1,
+      "description": "Play the dialogue line with visual context."
+    },
+    {
+      "id": "echo",
+      "name": "Echo",
+      "support_level": 2,
+      "description": "Play the target line, then ask the learner to repeat."
+    },
+    {
+      "id": "produce_from_visual",
+      "name": "Produce from visual",
+      "support_level": 3,
+      "description": "Show the scene/visual cue without model audio first; learner produces the target line."
+    },
+    {
+      "id": "missing_line",
+      "name": "Missing line",
+      "support_level": 4,
+      "description": "Play surrounding lines and ask the learner to fill the missing target line."
+    },
+    {
+      "id": "response_cue",
+      "name": "Response cue",
+      "support_level": 5,
+      "description": "Play the response and ask the learner to infer what they should have said."
+    },
+    {
+      "id": "transfer",
+      "name": "Transfer",
+      "support_level": 5,
+      "description": "Use the same target function in a new scene."
+    },
+    {
+      "id": "free_response",
+      "name": "Free response",
+      "support_level": 6,
+      "description": "Accept any natural response that fits the function and scene."
+    },
+    {
+      "id": "choose_intention",
+      "name": "Choose intention",
+      "support_level": 3,
+      "description": "Show or play a scene and ask which communicative function the learner-character needs."
+    },
+    {
+      "id": "choose_best_response",
+      "name": "Choose best response",
+      "support_level": 4,
+      "description": "Show a scene and several plausible responses; learner chooses the line that fits the intention."
+    },
+    {
+      "id": "reject_weird_response",
+      "name": "Reject weird response",
+      "support_level": 4,
+      "description": "Ask the learner to identify a response that is grammatical but wrong or socially odd for the scene."
+    },
+    {
+      "id": "ai_roleplay_unlock",
+      "name": "AI roleplay unlock",
+      "support_level": 6,
+      "description": "Use known functions in a constrained live roleplay after the learner has shown basic intention control."
+    }
+  ]
+}

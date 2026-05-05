@@ -1,0 +1,256 @@
+{
+  "language": "en",
+  "display_name": "English",
+  "mvp_session": {
+    "id": "en-mvp-survival-session-1",
+    "name": "First survival loop",
+    "goal": "Teach a tiny set of socially safe beginner functions, then test whether the learner can infer intention instead of repeating from memory.",
+    "estimated_minutes": 8,
+    "unlock_after": [],
+    "cards": [
+      "en-card-greeting-listen",
+      "en-card-greeting-produce",
+      "en-card-counter-repair-choice",
+      "en-card-counter-speak-little",
+      "en-card-shop-politeness-choice",
+      "en-card-shop-water-produce",
+      "en-card-bus-stop-transfer",
+      "en-card-pharmacy-intention-choice",
+      "en-card-pharmacy-cough-produce",
+      "en-card-ai-shop-roleplay-unlock"
+    ]
+  },
+  "practice_cards": [
+    {
+      "id": "en-card-greeting-listen",
+      "dialogue_id": "en-greeting-hello",
+      "mode": "listen",
+      "stage": "first_exposure",
+      "correct_function_id": "greet_and_ask_wellbeing",
+      "target_id": "en-target-hello-how-are-you",
+      "prompt": "Watch and listen to the greeting exchange.",
+      "expected_response": null,
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true
+      },
+      "success_signal": "learner completes first exposure"
+    },
+    {
+      "id": "en-card-greeting-produce",
+      "dialogue_id": "en-greeting-hello",
+      "mode": "produce_from_visual",
+      "stage": "guided_production",
+      "correct_function_id": "greet_and_ask_wellbeing",
+      "target_id": "en-target-hello-how-are-you",
+      "prompt": "The friend greets you. Say the learner line.",
+      "expected_response": "Hello! How are you?",
+      "confusable_function_ids": ["use_polite_basics", "introduce_self", "pay_and_close"],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner produces a greeting and wellbeing question"
+    },
+    {
+      "id": "en-card-counter-repair-choice",
+      "dialogue_id": "en-repair-say-slowly",
+      "mode": "choose_best_response",
+      "stage": "intention_contrast",
+      "correct_function_id": "ask_for_repetition",
+      "target_id": "en-target-say-it-slowly",
+      "prompt": "The staff member is speaking too fast. Choose what the learner should say.",
+      "choices": [
+        {
+          "target_id": "en-target-say-it-slowly",
+          "text": "Can you say it slowly?",
+          "is_correct": true,
+          "why": "The problem is speed, so the learner asks for slower speech."
+        },
+        {
+          "target_id": "en-target-water-please",
+          "text": "Water, please.",
+          "is_correct": false,
+          "why": "This is a shop request, not a repair phrase."
+        },
+        {
+          "target_id": "en-target-how-much-is-this",
+          "text": "How much is this?",
+          "is_correct": false,
+          "why": "There is no buying or price question in this moment."
+        }
+      ],
+      "confusable_function_ids": ["say_do_not_understand", "say_speak_little_language", "ask_for_help"],
+      "support": {
+        "show_visual": true,
+        "play_world_audio": true,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner distinguishes speech-speed repair from unrelated requests"
+    },
+    {
+      "id": "en-card-counter-speak-little",
+      "dialogue_id": "en-speak-little-language",
+      "mode": "produce_from_visual",
+      "stage": "guided_production",
+      "correct_function_id": "say_speak_little_language",
+      "target_id": "en-target-i-speak-a-little-english",
+      "prompt": "The staff member is using too much language. Tell them you speak only a little.",
+      "expected_response": "I speak a little English.",
+      "confusable_function_ids": ["ask_for_repetition", "say_do_not_understand", "ask_for_help"],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner can use a safety phrase instead of freezing"
+    },
+    {
+      "id": "en-card-shop-politeness-choice",
+      "dialogue_id": "en-politeness-please-thanks",
+      "mode": "choose_intention",
+      "stage": "intention_contrast",
+      "correct_function_id": "use_polite_basics",
+      "target_id": "en-target-please-and-thank-you",
+      "prompt": "The shopkeeper is offering the item. What social job does the learner need?",
+      "choices": [
+        {
+          "function_id": "use_polite_basics",
+          "label": "Accept politely and thank them",
+          "is_correct": true
+        },
+        {
+          "function_id": "ask_where_place_is",
+          "label": "Ask where something is",
+          "is_correct": false
+        },
+        {
+          "function_id": "apologize",
+          "label": "Apologize for a mistake",
+          "is_correct": false
+        }
+      ],
+      "confusable_function_ids": ["request_basic_item", "pay_and_close", "apologize"],
+      "support": {
+        "show_visual": true,
+        "play_world_audio": true,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner reads politeness as the intention, not just the object"
+    },
+    {
+      "id": "en-card-shop-water-produce",
+      "dialogue_id": "en-shop-water",
+      "mode": "produce_from_visual",
+      "stage": "guided_production",
+      "correct_function_id": "request_basic_item",
+      "target_id": "en-target-water-please",
+      "prompt": "You want the bottle of water. Say the learner line.",
+      "expected_response": "Water, please.",
+      "confusable_function_ids": ["use_polite_basics", "ask_price", "pay_and_close"],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner requests a visible object politely"
+    },
+    {
+      "id": "en-card-bus-stop-transfer",
+      "dialogue_id": "en-directions-bus-stop",
+      "mode": "produce_from_visual",
+      "stage": "guided_production",
+      "correct_function_id": "ask_where_place_is",
+      "target_id": "en-target-where-is-bus-stop",
+      "prompt": "You are lost and need the bus stop. Ask where it is.",
+      "expected_response": "Where is the bus stop?",
+      "confusable_function_ids": ["ask_where_hospital_is", "ask_for_help", "request_basic_item"],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner produces a direction question from visual need"
+    },
+    {
+      "id": "en-card-pharmacy-intention-choice",
+      "dialogue_id": "en-pharmacy-cough-medicine",
+      "mode": "choose_best_response",
+      "stage": "intention_contrast",
+      "correct_function_id": "ask_pharmacy_medicine",
+      "target_id": "en-target-cough-medicine-please",
+      "prompt": "The learner is coughing at the pharmacy. Choose the useful response.",
+      "choices": [
+        {
+          "target_id": "en-target-cough-medicine-please",
+          "text": "Cough medicine, please.",
+          "is_correct": true,
+          "why": "The visible need is cough medicine."
+        },
+        {
+          "target_id": "en-target-say-it-slowly",
+          "text": "Can you say it slowly?",
+          "is_correct": false,
+          "why": "This is useful if the pharmacist spoke too fast, but the visual need is medicine."
+        },
+        {
+          "target_id": "en-target-how-much-is-this",
+          "text": "How much is this?",
+          "is_correct": false,
+          "why": "Price can come later; first the learner needs to ask for medicine."
+        }
+      ],
+      "confusable_function_ids": ["ask_for_repetition", "ask_price", "say_do_not_understand"],
+      "support": {
+        "show_visual": true,
+        "play_world_audio": false,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner maps symptom and setting to the medicine request"
+    },
+    {
+      "id": "en-card-pharmacy-cough-produce",
+      "dialogue_id": "en-pharmacy-cough-medicine",
+      "mode": "produce_from_visual",
+      "stage": "guided_production",
+      "correct_function_id": "ask_pharmacy_medicine",
+      "target_id": "en-target-cough-medicine-please",
+      "prompt": "You are at the pharmacy and need medicine for a cough.",
+      "expected_response": "Cough medicine, please.",
+      "confusable_function_ids": ["ask_for_repetition", "ask_price", "use_polite_basics"],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true
+      },
+      "success_signal": "learner produces the pharmacy request from visual intention"
+    },
+    {
+      "id": "en-card-ai-shop-roleplay-unlock",
+      "dialogue_id": "en-shop-water",
+      "mode": "ai_roleplay_unlock",
+      "stage": "constrained_roleplay",
+      "correct_function_id": "request_basic_item",
+      "target_id": "en-target-water-please",
+      "prompt": "Roleplay a tiny shop exchange using only known functions.",
+      "allowed_function_ids": [
+        "greet_and_ask_wellbeing",
+        "request_basic_item",
+        "ask_price",
+        "pay_and_close",
+        "use_polite_basics",
+        "ask_for_repetition",
+        "say_do_not_understand"
+      ],
+      "roleplay_goal": "Buy a bottle of water and close politely.",
+      "support": {
+        "show_visual": true,
+        "allow_repair_phrases": true,
+        "keep_ai_language_to_known_functions": true
+      },
+      "success_signal": "learner completes a short exchange without translation"
+    }
+  ]
+}

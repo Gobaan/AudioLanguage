@@ -1,0 +1,260 @@
+{
+  "functions": [
+    {
+      "id": "greet_and_ask_wellbeing",
+      "name": "Greet and ask wellbeing",
+      "domain": "greetings",
+      "difficulty": 1,
+      "mvp_priority": 1,
+      "description": "Start a friendly greeting exchange and ask how the other person is doing.",
+      "meaning_units": ["hello", "you", "question", "fine", "thank_you"],
+      "gesture_grammar": {
+        "hello": ["friendly wave", "smile", "eye contact"],
+        "you": ["gentle open-hand gesture toward the listener"],
+        "question": ["raised eyebrows", "slight forward lean"],
+        "fine": ["relaxed smile", "small nod"],
+        "thank_you": ["small appreciative nod", "light hand-to-chest gesture"]
+      }
+    },
+    {
+      "id": "introduce_self",
+      "name": "Introduce yourself",
+      "domain": "greetings",
+      "difficulty": 1,
+      "mvp_priority": 2,
+      "description": "Say your name and understand when someone asks for it.",
+      "meaning_units": ["my", "name", "proper_noun", "your", "question"],
+      "gesture_grammar": {
+        "my": ["hand-to-chest gesture"],
+        "name": ["small proper-noun label when helpful"],
+        "proper_noun": ["subtle identity label such as a name tag or notebook label"],
+        "your": ["open-hand gesture toward the listener"],
+        "question": ["raised eyebrows", "attentive pause"]
+      }
+    },
+    {
+      "id": "ask_for_repetition",
+      "name": "Ask for repetition",
+      "domain": "repair",
+      "difficulty": 1,
+      "mvp_priority": 3,
+      "description": "Recover when the learner misses or does not understand what was said.",
+      "meaning_units": ["sorry", "repeat", "slowly", "question"],
+      "gesture_grammar": {
+        "sorry": ["concerned expression", "small apologetic hand raise"],
+        "repeat": ["hand cupped slightly near ear", "gentle circular hand motion"],
+        "slowly": ["downward calming palm gesture", "slower head nod"],
+        "question": ["puzzled expression", "slight lean forward"]
+      }
+    },
+    {
+      "id": "say_do_not_understand",
+      "name": "Say you do not understand",
+      "domain": "repair",
+      "difficulty": 1,
+      "mvp_priority": 4,
+      "description": "Politely signal confusion instead of freezing.",
+      "meaning_units": ["sorry", "not", "understand"],
+      "gesture_grammar": {
+        "sorry": ["softened face", "small apologetic hand raise"],
+        "not": ["small head shake", "open palm stop gesture"],
+        "understand": ["listener points lightly to their temple or ear, then shakes head gently"]
+      }
+    },
+    {
+      "id": "ask_for_help",
+      "name": "Ask for help",
+      "domain": "help",
+      "difficulty": 1,
+      "mvp_priority": 5,
+      "description": "Ask another person for help in an unfamiliar situation.",
+      "meaning_units": ["you", "help", "me", "question"],
+      "gesture_grammar": {
+        "you": ["open-hand gesture toward listener"],
+        "help": ["open palms", "looking between problem object and listener"],
+        "me": ["hand-to-chest gesture"],
+        "question": ["raised eyebrows", "hopeful pause"]
+      }
+    },
+    {
+      "id": "ask_where_place_is",
+      "name": "Ask where a place is",
+      "domain": "directions",
+      "difficulty": 1,
+      "mvp_priority": 6,
+      "description": "Ask where an important place or service is located.",
+      "meaning_units": ["where", "place", "question", "thanks"],
+      "gesture_grammar": {
+        "where": ["looking around", "palm-up searching gesture"],
+        "place": ["point to map, phone, sign, or surrounding street"],
+        "question": ["raised eyebrows", "slight lean toward listener"],
+        "thanks": ["small nod", "relieved smile"]
+      }
+    },
+    {
+      "id": "request_basic_item",
+      "name": "Request a basic item",
+      "domain": "buying_ordering",
+      "difficulty": 1,
+      "mvp_priority": 7,
+      "description": "Ask for a common item such as water, food, ticket, or medicine.",
+      "meaning_units": ["item", "want", "this", "please"],
+      "gesture_grammar": {
+        "item": ["desired object visible in scene"],
+        "want": ["look at desired object", "open palm toward object"],
+        "this": ["point to visible object"],
+        "please": ["polite smile", "softened voice posture"]
+      }
+    },
+    {
+      "id": "ask_price",
+      "name": "Ask the price",
+      "domain": "buying_ordering",
+      "difficulty": 1,
+      "mvp_priority": 8,
+      "description": "Find out how much something costs before buying.",
+      "meaning_units": ["how_much", "this", "question"],
+      "gesture_grammar": {
+        "how_much": ["show item", "look between item and seller", "small money gesture"],
+        "this": ["point to object"],
+        "question": ["raised eyebrows", "waiting pause"]
+      }
+    },
+    {
+      "id": "pay_and_close",
+      "name": "Pay and close politely",
+      "domain": "buying_ordering",
+      "difficulty": 1,
+      "mvp_priority": 9,
+      "description": "Complete a simple transaction and thank the other person.",
+      "meaning_units": ["here", "pay", "thank_you"],
+      "gesture_grammar": {
+        "here": ["extend hand with payment"],
+        "pay": ["hand money or card", "seller reaches to receive it"],
+        "thank_you": ["small appreciative nod", "smile"]
+      }
+    },
+    {
+      "id": "apologize",
+      "name": "Apologize",
+      "domain": "repair",
+      "difficulty": 1,
+      "mvp_priority": 10,
+      "description": "Use a simple apology to soften mistakes, interruptions, confusion, or accidental friction.",
+      "meaning_units": ["sorry", "mistake", "polite_softener"],
+      "gesture_grammar": {
+        "sorry": ["softened face", "small apologetic hand raise", "slight nod"],
+        "mistake": ["brief pause", "self-correction gesture"],
+        "polite_softener": ["relaxed shoulders", "gentle voice posture"]
+      }
+    },
+    {
+      "id": "say_speak_little_language",
+      "name": "Say you speak only a little",
+      "domain": "repair",
+      "difficulty": 1,
+      "mvp_priority": 11,
+      "description": "Tell someone you speak only a little of the language so they slow down or simplify.",
+      "meaning_units": ["speak", "little", "language", "not_much"],
+      "gesture_grammar": {
+        "speak": ["small gesture near mouth"],
+        "little": ["pinched fingers or small amount gesture"],
+        "language": ["gesture between speaker and listener"],
+        "not_much": ["small head shake", "humble smile"]
+      }
+    },
+    {
+      "id": "use_polite_basics",
+      "name": "Use please and thank you",
+      "domain": "politeness",
+      "difficulty": 1,
+      "mvp_priority": 12,
+      "description": "Use basic politeness markers before, during, and after simple exchanges.",
+      "meaning_units": ["please", "thank_you", "polite_request", "acknowledgement"],
+      "gesture_grammar": {
+        "please": ["polite smile", "open palm", "softened posture"],
+        "thank_you": ["small appreciative nod", "smile", "hand-to-chest gesture when culturally appropriate"],
+        "polite_request": ["look toward listener, then desired object or task"],
+        "acknowledgement": ["nod after receiving help or an item"]
+      }
+    },
+    {
+      "id": "order_local_food",
+      "name": "Order local food",
+      "domain": "buying_ordering",
+      "difficulty": 1,
+      "mvp_priority": 13,
+      "description": "Order one common local food item politely in a casual food setting.",
+      "meaning_units": ["food_item", "one", "want", "please"],
+      "gesture_grammar": {
+        "food_item": ["food visible on menu board, counter, tray, or display"],
+        "one": ["hold up one finger"],
+        "want": ["look at food item", "open palm toward food"],
+        "please": ["polite smile", "softened posture"]
+      }
+    },
+    {
+      "id": "ask_where_hospital_is",
+      "name": "Ask where the hospital is",
+      "domain": "health_directions",
+      "difficulty": 1,
+      "mvp_priority": 14,
+      "description": "Ask for the location of a hospital or urgent care place when help may be needed.",
+      "meaning_units": ["where", "hospital", "question", "urgent"],
+      "gesture_grammar": {
+        "where": ["looking around", "palm-up searching gesture"],
+        "hospital": ["phone map, medical cross sign, or clinic building visible"],
+        "question": ["raised eyebrows", "concerned eye contact"],
+        "urgent": ["worried posture", "quick glance at phone or companion"]
+      }
+    },
+    {
+      "id": "ask_pharmacy_medicine",
+      "name": "Ask for medicine at a pharmacy",
+      "domain": "health",
+      "difficulty": 2,
+      "mvp_priority": 15,
+      "description": "Ask a pharmacist for help with a simple symptom such as cough or diarrhea.",
+      "meaning_units": ["medicine", "symptom", "cough", "diarrhea", "please"],
+      "gesture_grammar": {
+        "medicine": ["pharmacy shelf, pharmacist, or medicine box visible"],
+        "symptom": ["gesture to body area or concerned expression"],
+        "cough": ["cover mouth and cough lightly"],
+        "diarrhea": ["hold stomach with embarrassed but respectful expression"],
+        "please": ["polite smile", "open palm"]
+      }
+    },
+    {
+      "id": "check_in_hostel",
+      "name": "Check in to a hostel",
+      "domain": "travel_lodging",
+      "difficulty": 2,
+      "mvp_priority": 16,
+      "description": "Start a simple lodging check-in with name or reservation.",
+      "meaning_units": ["reservation", "name", "passport", "room", "check_in"],
+      "gesture_grammar": {
+        "reservation": ["phone confirmation or printed booking visible"],
+        "name": ["point to name on document or hand to chest"],
+        "passport": ["passport visible in hand"],
+        "room": ["receptionist gestures toward key or hallway"],
+        "check_in": ["learner stands at front desk with bag"]
+      }
+    },
+    {
+      "id": "make_respectful_social_invitation",
+      "name": "Make a respectful social invitation",
+      "domain": "social",
+      "difficulty": 3,
+      "mvp_priority": 30,
+      "description": "Ask about availability or invite someone socially while preserving comfort and respecting refusal.",
+      "meaning_units": ["available", "partner", "coffee", "invitation", "no_problem"],
+      "gesture_grammar": {
+        "available": ["open, non-intrusive posture"],
+        "partner": ["neutral hand gesture, no pointing at body"],
+        "coffee": ["coffee cup or cafe table visible"],
+        "invitation": ["small hopeful smile, respectful distance"],
+        "no_problem": ["relaxed nod", "step back politely"]
+      }
+    }
+  ]
+}

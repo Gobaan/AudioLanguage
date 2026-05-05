@@ -8,6 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
+from app.content.data_graph import DataGraphError, list_languages, load_language_session
+from app.content.loader import load_content_graph
 from app.scenes import scenes
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,6 +18,7 @@ STATIC_DIR = BASE_DIR / "static"
 AUDIO_DIR = PROJECT_DIR / "audio"
 VISUALS_DIR = PROJECT_DIR / "visuals"
 AUDIO_SOURCES_DIR = PROJECT_DIR / "audio_sources"
+DATA_DIR = PROJECT_DIR / "data"
 DIALOGUES_PATH = AUDIO_SOURCES_DIR / "dialogues.json"
 PROMPTS_PATH = AUDIO_SOURCES_DIR / "prompts.json"
 WHISPER_MODEL = None
@@ -48,14 +51,7 @@ def list_scenes():
 @app.get("/api/dialogues")
 def list_dialogues():
     """Return dialogue card metadata from audio_sources/dialogues.json."""
-    with DIALOGUES_PATH.open(encoding="utf-8") as file:
-        data = json.load(file)
-
-    return [
-        scene | {"category": category["id"], "category_label": category["label"]}
-        for category in data["categories"]
-        for scene in category["scenes"]
-    ]
+    return [dialogue.model_dump() for dialogue in load_content_graph(DIALOGUES_PATH).dialogues]
 
 
 @app.get("/api/prompts")
@@ -63,6 +59,25 @@ def list_prompts():
     """Return available spoken prompt keys."""
     with PROMPTS_PATH.open(encoding="utf-8") as file:
         return json.load(file)
+
+
+@app.get("/api/languages")
+def get_languages():
+    """Return languages available in the structured content graph."""
+    return list_languages(DATA_DIR)
+
+
+@app.get("/api/languages/{language}/session")
+def get_language_session(language: str):
+    """Return a hydrated MVP practice session for one language."""
+    try:
+        return load_language_session(
+            data_dir=DATA_DIR,
+            project_dir=PROJECT_DIR,
+            language=language,
+        )
+    except DataGraphError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
 
 
 def get_whisper_model():

@@ -1,0 +1,168 @@
+{
+  "language": "en",
+  "display_name": "English",
+  "visual_beats": [
+    {
+      "id": "en-vb-greeting-hello-0",
+      "dialogue_id": "en-greeting-hello",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "en-target-hello-how-are-you",
+      "scene_id": "study-room-friend",
+      "line_index": 0,
+      "line_text": "Hello!",
+      "timing_role": "setup",
+      "meaning_units": ["hello"],
+      "asset_paths": {
+        "audio": "audio/ta-greeting-hello-0.mp3",
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "friend enters through doorway, smiles, waves, and makes eye contact"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "en-vb-greeting-hello-1",
+      "dialogue_id": "en-greeting-hello",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "en-target-hello-how-are-you",
+      "scene_id": "study-room-friend",
+      "line_index": 1,
+      "line_text": "Hello! How are you?",
+      "timing_role": "learner_target",
+      "meaning_units": ["hello", "you", "question"],
+      "asset_paths": {
+        "audio": "audio/ta-greeting-hello-1.mp3",
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "learner looks up and waves back"
+        },
+        {
+          "meaning_unit": "you",
+          "visual_cue": "learner opens a hand toward the friend"
+        },
+        {
+          "meaning_unit": "question",
+          "visual_cue": "learner raises eyebrows slightly and leans forward"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "en-vb-greeting-hello-2",
+      "dialogue_id": "en-greeting-hello",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "en-target-hello-how-are-you",
+      "scene_id": "study-room-friend",
+      "line_index": 2,
+      "line_text": "Fine. Thank you.",
+      "timing_role": "response",
+      "meaning_units": ["fine", "thank_you"],
+      "asset_paths": {
+        "audio": "audio/ta-greeting-hello-2.mp3",
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "fine",
+          "visual_cue": "friend smiles with relaxed posture and nods"
+        },
+        {
+          "meaning_unit": "thank_you",
+          "visual_cue": "friend gives a small appreciative nod"
+        }
+      ],
+      "proper_noun_labels": []
+    }
+  ],
+  "generation_backlog": [
+    {
+      "dialogue_id": "en-greeting-neighbor",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-greeting-classmate",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-greeting-and-you",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-introduce-self",
+      "needed_assets": ["line images", "video prompts", "audio", "proper noun labels"]
+    },
+    {
+      "dialogue_id": "en-repair-say-slowly",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-repair-dont-understand",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-directions-bus-stop",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-shop-water",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-market-price",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-pay-and-close",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-apologize-small-mistake",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-speak-little-language",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-politeness-please-thanks",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-order-local-food",
+      "needed_assets": ["line images", "video prompts", "audio", "localized food item visuals"]
+    },
+    {
+      "dialogue_id": "en-directions-hospital",
+      "needed_assets": ["line images", "video prompts", "audio", "medical location visuals"]
+    },
+    {
+      "dialogue_id": "en-pharmacy-cough-medicine",
+      "needed_assets": ["line images", "video prompts", "audio", "respectful symptom gesture"]
+    },
+    {
+      "dialogue_id": "en-pharmacy-diarrhea-medicine",
+      "needed_assets": ["line images", "video prompts", "audio", "respectful symptom gesture"]
+    },
+    {
+      "dialogue_id": "en-hostel-check-in",
+      "needed_assets": ["line images", "video prompts", "audio"]
+    },
+    {
+      "dialogue_id": "en-social-coffee-invitation",
+      "needed_assets": ["line images", "video prompts", "audio", "refusal path visuals"]
+    }
+  ]
+}

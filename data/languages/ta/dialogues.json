@@ -1,0 +1,277 @@
+{
+  "language": "ta",
+  "display_name": "Tamil",
+  "script": "Tamil",
+  "native_review_status": "needs_native_review",
+  "dialogues": [
+    {
+      "id": "ta-greeting-hello",
+      "type": "anchor",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "ta-target-hello-how-are-you",
+      "scene_id": "study-room-friend",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "extension_candidates": ["ta-greeting-and-you"],
+      "transfer_candidates": ["ta-greeting-neighbor", "ta-greeting-classmate"],
+      "lines": [
+        { "index": 0, "speaker_role": "friend", "line_type": "world_opener", "text": "வணக்கம்!", "transliteration": "Vanakkam!", "meaning_units": ["hello"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-hello-how-are-you", "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?", "transliteration": "Vanakkam! Eppadi irukkireergal?", "meaning_units": ["hello", "you", "question"] },
+        { "index": 2, "speaker_role": "friend", "line_type": "world_response", "text": "நன்றாக இருக்கிறேன். நன்றி.", "transliteration": "Nandraaga irukkiren. Nandri.", "meaning_units": ["fine", "thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-greeting-neighbor",
+      "type": "transfer",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "ta-target-hello-how-are-you",
+      "scene_id": "neighbor-gate",
+      "review_modes": ["transfer", "produce_from_visual", "free_response"],
+      "source_anchor_id": "ta-greeting-hello",
+      "lines": [
+        { "index": 0, "speaker_role": "neighbor", "line_type": "world_opener", "text": "காலை வணக்கம்!", "transliteration": "Kaalai vanakkam!", "meaning_units": ["hello"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-hello-how-are-you", "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?", "transliteration": "Vanakkam! Eppadi irukkireergal?", "meaning_units": ["hello", "you", "question"] },
+        { "index": 2, "speaker_role": "neighbor", "line_type": "world_response", "text": "நன்றாக இருக்கிறேன். நன்றி.", "transliteration": "Nandraaga irukkiren. Nandri.", "meaning_units": ["fine", "thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-greeting-classmate",
+      "type": "transfer",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "ta-target-hello-how-are-you",
+      "scene_id": "school-hallway-classmate",
+      "review_modes": ["transfer", "response_cue", "free_response"],
+      "source_anchor_id": "ta-greeting-hello",
+      "lines": [
+        { "index": 0, "speaker_role": "classmate", "line_type": "world_opener", "text": "ஹாய்!", "transliteration": "Hi!", "meaning_units": ["hello"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-hello-how-are-you", "text": "ஹாய், எப்படி இருக்கிறீர்கள்?", "transliteration": "Hi, eppadi irukkireergal?", "meaning_units": ["hello", "you", "question"] },
+        { "index": 2, "speaker_role": "classmate", "line_type": "world_response", "text": "நன்றாக இருக்கிறேன், நன்றி.", "transliteration": "Nandraaga irukkiren, nandri.", "meaning_units": ["fine", "thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-greeting-and-you",
+      "type": "extension",
+      "function_id": "greet_and_ask_wellbeing",
+      "target_id": "ta-target-hello-how-are-you",
+      "scene_id": "study-room-friend",
+      "review_modes": ["listen", "echo", "missing_line", "free_response"],
+      "source_anchor_id": "ta-greeting-hello",
+      "new_meaning_units": ["and_you"],
+      "lines": [
+        { "index": 0, "speaker_role": "friend", "line_type": "world_opener", "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?", "transliteration": "Vanakkam! Eppadi irukkireergal?", "meaning_units": ["hello", "you", "question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "text": "நன்றாக இருக்கிறேன், நன்றி. நீங்கள்?", "transliteration": "Nandraaga irukkiren, nandri. Neengal?", "meaning_units": ["fine", "thank_you", "and_you", "question"] },
+        { "index": 2, "speaker_role": "friend", "line_type": "world_response", "text": "நானும் நன்றாக இருக்கிறேன்.", "transliteration": "Naanum nandraaga irukkiren.", "meaning_units": ["fine"] }
+      ]
+    },
+    {
+      "id": "ta-introduce-self",
+      "type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "lines": [
+        { "index": 0, "speaker_role": "classmate", "line_type": "world_opener", "text": "உங்கள் பெயர் என்ன?", "transliteration": "Ungal peyar enna?", "meaning_units": ["your", "name", "question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-my-name-is", "text": "என் பெயர் அன்னா.", "transliteration": "En peyar Anna.", "meaning_units": ["my", "name", "proper_noun"] },
+        { "index": 2, "speaker_role": "classmate", "line_type": "world_response", "text": "சந்தித்ததில் மகிழ்ச்சி, அன்னா.", "transliteration": "Sandhiththathil magizhchi, Anna.", "meaning_units": ["proper_noun"] }
+      ]
+    },
+    {
+      "id": "ta-repair-say-slowly",
+      "type": "anchor",
+      "function_id": "ask_for_repetition",
+      "target_id": "ta-target-say-it-slowly",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "lines": [
+        { "index": 0, "speaker_role": "staff", "line_type": "world_opener", "text": "உங்கள் பெயரை இங்கே எழுதுங்கள்.", "transliteration": "Ungal peyarai inge ezhuthungal.", "meaning_units": ["name", "here"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-say-it-slowly", "text": "மெதுவாக சொல்ல முடியுமா?", "transliteration": "Methuvaga solla mudiyuma?", "meaning_units": ["you", "say", "slowly", "question"] },
+        { "index": 2, "speaker_role": "staff", "line_type": "world_response", "text": "சரி. மெதுவாக சொல்கிறேன்.", "transliteration": "Sari. Methuvaga solgiren.", "meaning_units": ["slowly"] }
+      ]
+    },
+    {
+      "id": "ta-repair-dont-understand",
+      "type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "lines": [
+        { "index": 0, "speaker_role": "staff", "line_type": "world_opener", "text": "இந்த படிவத்தை நிரப்புங்கள்.", "transliteration": "Indha padivathai nirappungal.", "meaning_units": ["this"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-i-dont-understand", "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.", "transliteration": "Mannikkavum, enakku puriyavillai.", "meaning_units": ["sorry", "not", "understand"] },
+        { "index": 2, "speaker_role": "staff", "line_type": "world_response", "text": "பரவாயில்லை. நான் உதவுகிறேன்.", "transliteration": "Paravaayillai. Naan udhavugiren.", "meaning_units": ["help"] }
+      ]
+    },
+    {
+      "id": "ta-directions-bus-stop",
+      "type": "anchor",
+      "function_id": "ask_where_place_is",
+      "target_id": "ta-target-where-is-bus-stop",
+      "scene_id": "street-bus-stop",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "transfer"],
+      "lines": [
+        { "index": 0, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-where-is-bus-stop", "text": "பேருந்து நிறுத்தம் எங்கே?", "transliteration": "Perundhu niruththam enge?", "meaning_units": ["where", "place", "question"] },
+        { "index": 1, "speaker_role": "local", "line_type": "world_response", "text": "அங்கே.", "transliteration": "Ange.", "meaning_units": ["place"] },
+        { "index": 2, "speaker_role": "learner", "line_type": "learner_close", "text": "நன்றி.", "transliteration": "Nandri.", "meaning_units": ["thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-shop-water",
+      "type": "anchor",
+      "function_id": "request_basic_item",
+      "target_id": "ta-target-water-please",
+      "scene_id": "corner-shop-water",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "free_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-water-please", "text": "தண்ணீர், தயவு செய்து.", "transliteration": "Thanneer, thayavu seithu.", "meaning_units": ["item", "please"] },
+        { "index": 1, "speaker_role": "shopkeeper", "line_type": "world_response", "text": "இதோ.", "transliteration": "Idho.", "meaning_units": ["here"] },
+        { "index": 2, "speaker_role": "learner", "line_type": "learner_close", "text": "நன்றி.", "transliteration": "Nandri.", "meaning_units": ["thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-market-price",
+      "type": "anchor",
+      "function_id": "ask_price",
+      "target_id": "ta-target-how-much-is-this",
+      "scene_id": "market-stall-price",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "transfer"],
+      "lines": [
+        { "index": 0, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-how-much-is-this", "text": "இது எவ்வளவு?", "transliteration": "Idhu evvalavu?", "meaning_units": ["how_much", "this", "question"] },
+        { "index": 1, "speaker_role": "vendor", "line_type": "world_response", "text": "முப்பது ரூபாய்.", "transliteration": "Muppadhu rupai.", "meaning_units": ["pay"] },
+        { "index": 2, "speaker_role": "learner", "line_type": "learner_close", "text": "நன்றி.", "transliteration": "Nandri.", "meaning_units": ["thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-pay-and-close",
+      "type": "anchor",
+      "function_id": "pay_and_close",
+      "target_id": "ta-target-here-is-the-money",
+      "scene_id": "market-stall-price",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "lines": [
+        { "index": 0, "speaker_role": "vendor", "line_type": "world_opener", "text": "முப்பது ரூபாய்.", "transliteration": "Muppadhu rupai.", "meaning_units": ["pay"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-here-is-the-money", "text": "இதோ பணம். நன்றி.", "transliteration": "Idho panam. Nandri.", "meaning_units": ["here", "pay", "thank_you"] },
+        { "index": 2, "speaker_role": "vendor", "line_type": "world_response", "text": "நன்றி.", "transliteration": "Nandri.", "meaning_units": ["thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-apologize-small-mistake",
+      "type": "anchor",
+      "function_id": "apologize",
+      "target_id": "ta-target-sorry",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "lines": [
+        { "index": 0, "speaker_role": "learner", "line_type": "world_action", "text": "", "transliteration": "", "meaning_units": ["mistake"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-sorry", "text": "மன்னிக்கவும்.", "transliteration": "Mannikkavum.", "meaning_units": ["sorry"] },
+        { "index": 2, "speaker_role": "staff", "line_type": "world_response", "text": "பரவாயில்லை.", "transliteration": "Paravaayillai.", "meaning_units": ["polite_softener"] }
+      ]
+    },
+    {
+      "id": "ta-speak-little-language",
+      "type": "anchor",
+      "function_id": "say_speak_little_language",
+      "target_id": "ta-target-i-speak-a-little-tamil",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "lines": [
+        { "index": 0, "speaker_role": "staff", "line_type": "world_opener", "text": "இந்த படிவத்தை நிரப்புங்கள்.", "transliteration": "Indha padivathai nirappungal.", "meaning_units": ["this"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-i-speak-a-little-tamil", "text": "எனக்கு கொஞ்சம் தமிழ் தெரியும்.", "transliteration": "Enakku konjam Tamil theriyum.", "meaning_units": ["speak", "little", "language"] },
+        { "index": 2, "speaker_role": "staff", "line_type": "world_response", "text": "சரி. மெதுவாக பேசுகிறேன்.", "transliteration": "Sari. Methuvaga pesugiren.", "meaning_units": ["slowly"] }
+      ]
+    },
+    {
+      "id": "ta-politeness-please-thanks",
+      "type": "anchor",
+      "function_id": "use_polite_basics",
+      "target_id": "ta-target-please-and-thank-you",
+      "scene_id": "corner-shop-water",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "transfer"],
+      "lines": [
+        { "index": 0, "speaker_role": "shopkeeper", "line_type": "world_opener", "text": "தண்ணீர்?", "transliteration": "Thanneer?", "meaning_units": ["item"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-please-and-thank-you", "text": "ஆம், தயவு செய்து. நன்றி.", "transliteration": "Aam, thayavu seithu. Nandri.", "meaning_units": ["please", "thank_you"] },
+        { "index": 2, "speaker_role": "shopkeeper", "line_type": "world_response", "text": "பரவாயில்லை.", "transliteration": "Paravaayillai.", "meaning_units": ["acknowledgement"] }
+      ]
+    },
+    {
+      "id": "ta-order-local-food",
+      "type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "free_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "server", "line_type": "world_opener", "text": "என்ன வேண்டும்?", "transliteration": "Enna vendum?", "meaning_units": ["question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-one-local-food-please", "text": "ஒரு தோசை, தயவு செய்து.", "transliteration": "Oru dosai, thayavu seithu.", "meaning_units": ["one", "food_item", "please"] },
+        { "index": 2, "speaker_role": "server", "line_type": "world_response", "text": "சரி.", "transliteration": "Sari.", "meaning_units": ["acknowledgement"] }
+      ]
+    },
+    {
+      "id": "ta-directions-hospital",
+      "type": "anchor",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "ta-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "lines": [
+        { "index": 0, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-where-is-hospital", "text": "மருத்துவமனை எங்கே?", "transliteration": "Maruthuvamanai enge?", "meaning_units": ["where", "hospital", "question"] },
+        { "index": 1, "speaker_role": "local", "line_type": "world_response", "text": "அங்கே.", "transliteration": "Ange.", "meaning_units": ["place"] },
+        { "index": 2, "speaker_role": "learner", "line_type": "learner_close", "text": "நன்றி.", "transliteration": "Nandri.", "meaning_units": ["thank_you"] }
+      ]
+    },
+    {
+      "id": "ta-pharmacy-cough-medicine",
+      "type": "anchor",
+      "function_id": "ask_pharmacy_medicine",
+      "target_id": "ta-target-cough-medicine-please",
+      "scene_id": "pharmacy-counter",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "lines": [
+        { "index": 0, "speaker_role": "pharmacist", "line_type": "world_opener", "text": "வணக்கம். உதவி வேண்டுமா?", "transliteration": "Vanakkam. Udhavi venduma?", "meaning_units": ["help", "question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-cough-medicine-please", "text": "இருமல் மருந்து, தயவு செய்து.", "transliteration": "Irumal marundhu, thayavu seithu.", "meaning_units": ["cough", "medicine", "please"] },
+        { "index": 2, "speaker_role": "pharmacist", "line_type": "world_response", "text": "சரி. ஒரு நிமிடம்.", "transliteration": "Sari. Oru nimidam.", "meaning_units": ["acknowledgement"] }
+      ]
+    },
+    {
+      "id": "ta-pharmacy-diarrhea-medicine",
+      "type": "transfer",
+      "function_id": "ask_pharmacy_medicine",
+      "target_id": "ta-target-diarrhea-medicine-please",
+      "scene_id": "pharmacy-counter",
+      "review_modes": ["transfer", "produce_from_visual", "free_response"],
+      "source_anchor_id": "ta-pharmacy-cough-medicine",
+      "lines": [
+        { "index": 0, "speaker_role": "pharmacist", "line_type": "world_opener", "text": "வணக்கம். உதவி வேண்டுமா?", "transliteration": "Vanakkam. Udhavi venduma?", "meaning_units": ["help", "question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-diarrhea-medicine-please", "text": "வயிற்றுப்போக்கு மருந்து, தயவு செய்து.", "transliteration": "Vayitruppokku marundhu, thayavu seithu.", "meaning_units": ["diarrhea", "medicine", "please"] },
+        { "index": 2, "speaker_role": "pharmacist", "line_type": "world_response", "text": "சரி. ஒரு நிமிடம்.", "transliteration": "Sari. Oru nimidam.", "meaning_units": ["acknowledgement"] }
+      ]
+    },
+    {
+      "id": "ta-hostel-check-in",
+      "type": "anchor",
+      "function_id": "check_in_hostel",
+      "target_id": "ta-target-i-have-reservation",
+      "scene_id": "hostel-front-desk",
+      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "lines": [
+        { "index": 0, "speaker_role": "receptionist", "line_type": "world_opener", "text": "வணக்கம். செக்-இன்?", "transliteration": "Vanakkam. Check-in?", "meaning_units": ["check_in", "question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-i-have-reservation", "text": "எனக்கு முன்பதிவு இருக்கிறது.", "transliteration": "Enakku munpadhivu irukkiradhu.", "meaning_units": ["reservation", "check_in"] },
+        { "index": 2, "speaker_role": "receptionist", "line_type": "world_response", "text": "உங்கள் பெயர், தயவு செய்து?", "transliteration": "Ungal peyar, thayavu seithu?", "meaning_units": ["name", "please", "question"] }
+      ]
+    },
+    {
+      "id": "ta-social-coffee-invitation",
+      "type": "later_stage",
+      "function_id": "make_respectful_social_invitation",
+      "target_id": "ta-target-coffee-invitation",
+      "scene_id": "cafe-social-chat",
+      "review_modes": ["listen", "echo", "free_response"],
+      "safety_notes": ["Teach polite refusal handling in a later review variant.", "Do not score persistence as success."],
+      "lines": [
+        { "index": 0, "speaker_role": "conversation_partner", "line_type": "world_opener", "text": "இது நன்றாக இருந்தது.", "transliteration": "Idhu nandraaga irundhadhu.", "meaning_units": ["acknowledgement"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "ta-target-coffee-invitation", "text": "ஒருநாள் காபி குடிக்க வர விரும்புகிறீர்களா?", "transliteration": "Orunaal kaapi kudikka vara virumbugireergala?", "meaning_units": ["coffee", "invitation"] },
+        { "index": 2, "speaker_role": "conversation_partner", "line_type": "world_response", "text": "ஆம், அது நன்றாக இருக்கும்.", "transliteration": "Aam, adhu nandraaga irukkum.", "meaning_units": ["yes", "positive_response"] },
+        { "index": 3, "speaker_role": "learner", "line_type": "learner_close", "text": "சிறப்பு. விரைவில் சந்திப்போம்.", "transliteration": "Sirappu. Viraivil sandhippom.", "meaning_units": ["positive_response", "goodbye"] }
+      ]
+    }
+  ]
+}
