@@ -46,6 +46,7 @@ def load_language_session(
     dialogues_data = read_json(language_dir / "dialogues.json")
     practice_data = read_json(language_dir / "practice_cards.json")
     visual_data = read_json(language_dir / "visual_beats.json")
+    audio_assets = load_audio_assets(language_dir)
 
     targets = index_by_id(targets_data, "targets")
     dialogues = index_by_id(dialogues_data, "dialogues")
@@ -66,6 +67,7 @@ def load_language_session(
                 targets=targets,
                 dialogues=dialogues,
                 visual_beats=visual_beats,
+                audio_assets=audio_assets,
                 project_dir=project_dir,
             )
         )
@@ -89,6 +91,7 @@ def hydrate_practice_card(
     targets: dict[str, dict[str, Any]],
     dialogues: dict[str, dict[str, Any]],
     visual_beats: list[dict[str, Any]],
+    audio_assets: dict[tuple[str, int], str],
     project_dir: Path,
 ) -> dict[str, Any]:
     dialogue = required(dialogues, card.get("dialogue_id"), "dialogue")
@@ -106,6 +109,7 @@ def hydrate_practice_card(
                 dialogue_id=str(dialogue["id"]),
                 asset_slug=str(asset_slug),
                 visual_beats=visual_beats,
+                audio_assets=audio_assets,
                 project_dir=project_dir,
             )
             for line in dialogue.get("lines", [])
@@ -128,6 +132,7 @@ def hydrate_line(
     dialogue_id: str,
     asset_slug: str,
     visual_beats: list[dict[str, Any]],
+    audio_assets: dict[tuple[str, int], str],
     project_dir: Path,
 ) -> dict[str, Any]:
     line_index = int(line.get("index", 0))
@@ -135,6 +140,11 @@ def hydrate_line(
     beat_assets = beat.get("asset_paths", {}) if beat else {}
     audio_path = line.get("audio_path") or beat_assets.get("audio")
     image_path = beat_assets.get("image")
+
+    if not audio_path:
+        manifest_audio = audio_assets.get((dialogue_id, line_index))
+        if manifest_audio and (project_dir / manifest_audio).exists():
+            audio_path = manifest_audio
 
     if not audio_path:
         derived_audio = f"audio/{dialogue_id}-{line_index}.mp3"
@@ -168,6 +178,23 @@ def read_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise DataGraphError(f"Missing content file: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_audio_assets(language_dir: Path) -> dict[tuple[str, int], str]:
+    manifest_path = language_dir / "audio_assets.json"
+    if not manifest_path.exists():
+        return {}
+
+    manifest = read_json(manifest_path)
+    assets: dict[tuple[str, int], str] = {}
+    for item in manifest.get("assets", []):
+        dialogue_id = item.get("dialogue_id")
+        line_index = item.get("line_index")
+        audio_path = item.get("audio_path")
+        if dialogue_id is None or line_index is None or not audio_path:
+            continue
+        assets[(str(dialogue_id), int(line_index))] = str(audio_path)
+    return assets
 
 
 def index_by_id(data: dict[str, Any], key: str) -> dict[str, dict[str, Any]]:
