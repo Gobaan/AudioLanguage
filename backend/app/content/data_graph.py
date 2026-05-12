@@ -193,7 +193,8 @@ def load_audio_assets(language_dir: Path) -> dict[tuple[str, int], str]:
         audio_path = item.get("audio_path")
         if dialogue_id is None or line_index is None or not audio_path:
             continue
-        assets[(str(dialogue_id), int(line_index))] = str(audio_path)
+        key = (str(dialogue_id), int(line_index))
+        assets[key] = str(audio_path)
     return assets
 
 

@@ -25,6 +25,7 @@ def parse_args() -> argparse.Namespace:
         default="en-US-JennyNeural",
         help="Edge TTS voice name for prompt audio",
     )
+    p.add_argument("--key", action="append", help="Only generate this prompt key. Repeatable.")
     return p.parse_args()
 
 
@@ -47,7 +48,7 @@ async def synthesize_mp3(*, text: str, voice: str, out_path: Path) -> None:
     await communicate.save(str(out_path))
 
 
-async def generate_all(*, voice: str, force: bool) -> int:
+async def generate_all(*, voice: str, force: bool, keys: list[str] | None) -> int:
     paths = repo_paths()
     prompts_file = paths.prompts_json
     if not prompts_file.exists():
@@ -60,7 +61,11 @@ async def generate_all(*, voice: str, force: bool) -> int:
     skipped = 0
     total = 0
 
-    for key in sorted(prompts.keys()):
+    selected_keys = sorted(keys or prompts.keys())
+
+    for key in selected_keys:
+        if key not in prompts:
+            raise KeyError(f"Prompt key not found: {key}")
         total += 1
         text = prompts[key].strip()
         out_path = paths.prompt_mp3_path(key=key)
@@ -84,7 +89,7 @@ async def generate_all(*, voice: str, force: bool) -> int:
 
 def main() -> int:
     args = parse_args()
-    return asyncio.run(generate_all(voice=args.voice, force=args.force))
+    return asyncio.run(generate_all(voice=args.voice, force=args.force, keys=args.key))
 
 
 if __name__ == "__main__":

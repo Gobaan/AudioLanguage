@@ -1,10 +1,11 @@
 {
-    "opening": "The man says",
-    "first_time": "You respond",
+    "opening": "They say",
+    "first_time": "You say",
+    "user_says": "You say",
     "second_time": "What do you say?",
-    "call_to_action": "Try it now",
+    "call_to_action": "Now you try",
     "feedback_failure": "Try again",
     "feedback_success": "Good job",
     "feedback_failure_2": "Try again tomorrow",
-    "closing": "The man says"
+    "closing": "They say"
 }

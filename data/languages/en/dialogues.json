@@ -3,6 +3,39 @@
   "display_name": "English",
   "dialogues": [
     {
+      "id": "en-first-hi-response",
+      "asset_slug": "ta-greeting-hello",
+      "type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "friend",
+          "line_type": "world_opener",
+          "text": "Hi!",
+          "meaning_units": ["hello"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-respond-hi",
+          "text": "Hi!",
+          "meaning_units": ["hello", "response"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "friend",
+          "line_type": "world_response",
+          "text": "Nice to see you.",
+          "meaning_units": ["positive_response"]
+        }
+      ]
+    },
+    {
       "id": "en-greeting-hello",
       "asset_slug": "ta-greeting-hello",
       "type": "anchor",

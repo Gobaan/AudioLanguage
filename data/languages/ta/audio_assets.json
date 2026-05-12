@@ -32,7 +32,7 @@
       },
       "text": "வணக்கம்!",
       "transliteration": "Vanakkam!",
-      "audio_path": "audio/ta-greeting-hello-0.mp3",
+      "audio_path": "audio/generated/ta/ta-greeting-hello/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -58,9 +58,32 @@
       },
       "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
-      "audio_path": "audio/ta-greeting-hello-1.mp3",
+      "audio_path": "audio/generated/ta/ta-greeting-hello/line-1.mp3",
       "status": "generated",
-      "native_review_required": true
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Vanakkam",
+          "text": "வணக்கம்",
+          "audio_path": "audio/generated/ta/words/vanakkam.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "Eppadi",
+          "text": "எப்படி",
+          "audio_path": "audio/generated/ta/words/eppadi.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "irukkireergal",
+          "text": "இருக்கிறீர்கள்",
+          "audio_path": "audio/generated/ta/words/irukkireergal.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-greeting-hello-line-2",
@@ -84,7 +107,7 @@
       },
       "text": "நன்றாக இருக்கிறேன். நன்றி.",
       "transliteration": "Nandraaga irukkiren. Nandri.",
-      "audio_path": "audio/ta-greeting-hello-2.mp3",
+      "audio_path": "audio/generated/ta/ta-greeting-hello/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -111,7 +134,7 @@
       "text": "காலை வணக்கம்!",
       "transliteration": "Kaalai vanakkam!",
       "audio_path": "audio/generated/ta/ta-greeting-neighbor/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -137,8 +160,31 @@
       "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
       "audio_path": "audio/generated/ta/ta-greeting-neighbor/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Vanakkam",
+          "text": "வணக்கம்",
+          "audio_path": "audio/generated/ta/words/vanakkam.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "Eppadi",
+          "text": "எப்படி",
+          "audio_path": "audio/generated/ta/words/eppadi.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "irukkireergal",
+          "text": "இருக்கிறீர்கள்",
+          "audio_path": "audio/generated/ta/words/irukkireergal.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-greeting-neighbor-line-2",
@@ -163,7 +209,7 @@
       "text": "நன்றாக இருக்கிறேன். நன்றி.",
       "transliteration": "Nandraaga irukkiren. Nandri.",
       "audio_path": "audio/generated/ta/ta-greeting-neighbor/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -189,7 +235,7 @@
       "text": "ஹாய்!",
       "transliteration": "Hi!",
       "audio_path": "audio/generated/ta/ta-greeting-classmate/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -215,8 +261,31 @@
       "text": "ஹாய், எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Hi, eppadi irukkireergal?",
       "audio_path": "audio/generated/ta/ta-greeting-classmate/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Hi",
+          "text": "ஹாய்",
+          "audio_path": "audio/generated/ta/words/hi.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "eppadi",
+          "text": "எப்படி",
+          "audio_path": "audio/generated/ta/words/eppadi.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "irukkireergal",
+          "text": "இருக்கிறீர்கள்",
+          "audio_path": "audio/generated/ta/words/irukkireergal.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-greeting-classmate-line-2",
@@ -241,7 +310,7 @@
       "text": "நன்றாக இருக்கிறேன், நன்றி.",
       "transliteration": "Nandraaga irukkiren, nandri.",
       "audio_path": "audio/generated/ta/ta-greeting-classmate/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -267,7 +336,7 @@
       "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
       "audio_path": "audio/generated/ta/ta-greeting-and-you/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -293,8 +362,38 @@
       "text": "நன்றாக இருக்கிறேன், நன்றி. நீங்கள்?",
       "transliteration": "Nandraaga irukkiren, nandri. Neengal?",
       "audio_path": "audio/generated/ta/ta-greeting-and-you/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Nandraaga",
+          "text": "நன்றாக",
+          "audio_path": "audio/generated/ta/words/nandraaga.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "irukkiren",
+          "text": "இருக்கிறேன்",
+          "audio_path": "audio/generated/ta/words/irukkiren.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "nandri",
+          "text": "நன்றி",
+          "audio_path": "audio/generated/ta/words/nandri.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "Neengal",
+          "text": "நீங்கள்",
+          "audio_path": "audio/generated/ta/words/neengal.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-greeting-and-you-line-2",
@@ -319,7 +418,7 @@
       "text": "நானும் நன்றாக இருக்கிறேன்.",
       "transliteration": "Naanum nandraaga irukkiren.",
       "audio_path": "audio/generated/ta/ta-greeting-and-you/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -345,7 +444,7 @@
       "text": "உங்கள் பெயர் என்ன?",
       "transliteration": "Ungal peyar enna?",
       "audio_path": "audio/generated/ta/ta-introduce-self/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -371,8 +470,31 @@
       "text": "என் பெயர் அன்னா.",
       "transliteration": "En peyar Anna.",
       "audio_path": "audio/generated/ta/ta-introduce-self/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "En",
+          "text": "என்",
+          "audio_path": "audio/generated/ta/words/en.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "peyar",
+          "text": "பெயர்",
+          "audio_path": "audio/generated/ta/words/peyar.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "Anna",
+          "text": "அன்னா",
+          "audio_path": "audio/generated/ta/words/anna.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-introduce-self-line-2",
@@ -397,7 +519,7 @@
       "text": "சந்தித்ததில் மகிழ்ச்சி, அன்னா.",
       "transliteration": "Sandhiththathil magizhchi, Anna.",
       "audio_path": "audio/generated/ta/ta-introduce-self/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -423,7 +545,7 @@
       "text": "உங்கள் பெயரை இங்கே எழுதுங்கள்.",
       "transliteration": "Ungal peyarai inge ezhuthungal.",
       "audio_path": "audio/generated/ta/ta-repair-say-slowly/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -449,8 +571,31 @@
       "text": "மெதுவாக சொல்ல முடியுமா?",
       "transliteration": "Methuvaga solla mudiyuma?",
       "audio_path": "audio/generated/ta/ta-repair-say-slowly/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Methuvaga",
+          "text": "மெதுவாக",
+          "audio_path": "audio/generated/ta/words/methuvaga.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "solla",
+          "text": "சொல்ல",
+          "audio_path": "audio/generated/ta/words/solla.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "mudiyuma",
+          "text": "முடியுமா",
+          "audio_path": "audio/generated/ta/words/mudiyuma.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-repair-say-slowly-line-2",
@@ -475,7 +620,7 @@
       "text": "சரி. மெதுவாக சொல்கிறேன்.",
       "transliteration": "Sari. Methuvaga solgiren.",
       "audio_path": "audio/generated/ta/ta-repair-say-slowly/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -501,7 +646,7 @@
       "text": "இந்த படிவத்தை நிரப்புங்கள்.",
       "transliteration": "Indha padivathai nirappungal.",
       "audio_path": "audio/generated/ta/ta-repair-dont-understand/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -527,8 +672,31 @@
       "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
       "transliteration": "Mannikkavum, enakku puriyavillai.",
       "audio_path": "audio/generated/ta/ta-repair-dont-understand/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Mannikkavum",
+          "text": "மன்னிக்கவும்",
+          "audio_path": "audio/generated/ta/words/mannikkavum.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "enakku",
+          "text": "எனக்கு",
+          "audio_path": "audio/generated/ta/words/enakku.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "puriyavillai",
+          "text": "புரியவில்லை",
+          "audio_path": "audio/generated/ta/words/puriyavillai.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-repair-dont-understand-line-2",
@@ -553,7 +721,7 @@
       "text": "பரவாயில்லை. நான் உதவுகிறேன்.",
       "transliteration": "Paravaayillai. Naan udhavugiren.",
       "audio_path": "audio/generated/ta/ta-repair-dont-understand/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -579,8 +747,31 @@
       "text": "பேருந்து நிறுத்தம் எங்கே?",
       "transliteration": "Perundhu niruththam enge?",
       "audio_path": "audio/generated/ta/ta-directions-bus-stop/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Perundhu",
+          "text": "பேருந்து",
+          "audio_path": "audio/generated/ta/words/perundhu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "niruththam",
+          "text": "நிறுத்தம்",
+          "audio_path": "audio/generated/ta/words/niruththam.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "enge",
+          "text": "எங்கே",
+          "audio_path": "audio/generated/ta/words/enge.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-directions-bus-stop-line-1",
@@ -605,7 +796,7 @@
       "text": "அங்கே.",
       "transliteration": "Ange.",
       "audio_path": "audio/generated/ta/ta-directions-bus-stop/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -631,7 +822,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-directions-bus-stop/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -657,8 +848,31 @@
       "text": "தண்ணீர், தயவு செய்து.",
       "transliteration": "Thanneer, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-shop-water/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Thanneer",
+          "text": "தண்ணீர்",
+          "audio_path": "audio/generated/ta/words/thanneer.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "thayavu",
+          "text": "தயவு",
+          "audio_path": "audio/generated/ta/words/thayavu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "seithu",
+          "text": "செய்து",
+          "audio_path": "audio/generated/ta/words/seithu.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-shop-water-line-1",
@@ -683,7 +897,7 @@
       "text": "இதோ.",
       "transliteration": "Idho.",
       "audio_path": "audio/generated/ta/ta-shop-water/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -709,7 +923,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-shop-water/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -735,8 +949,24 @@
       "text": "இது எவ்வளவு?",
       "transliteration": "Idhu evvalavu?",
       "audio_path": "audio/generated/ta/ta-market-price/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Idhu",
+          "text": "இது",
+          "audio_path": "audio/generated/ta/words/idhu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "evvalavu",
+          "text": "எவ்வளவு",
+          "audio_path": "audio/generated/ta/words/evvalavu.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-market-price-line-1",
@@ -761,7 +991,7 @@
       "text": "முப்பது ரூபாய்.",
       "transliteration": "Muppadhu rupai.",
       "audio_path": "audio/generated/ta/ta-market-price/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -787,7 +1017,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-market-price/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -813,7 +1043,7 @@
       "text": "முப்பது ரூபாய்.",
       "transliteration": "Muppadhu rupai.",
       "audio_path": "audio/generated/ta/ta-pay-and-close/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -839,8 +1069,31 @@
       "text": "இதோ பணம். நன்றி.",
       "transliteration": "Idho panam. Nandri.",
       "audio_path": "audio/generated/ta/ta-pay-and-close/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Idho",
+          "text": "இதோ",
+          "audio_path": "audio/generated/ta/words/idho.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "panam",
+          "text": "பணம்",
+          "audio_path": "audio/generated/ta/words/panam.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "Nandri",
+          "text": "நன்றி",
+          "audio_path": "audio/generated/ta/words/nandri.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-pay-and-close-line-2",
@@ -865,7 +1118,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-pay-and-close/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -891,8 +1144,17 @@
       "text": "மன்னிக்கவும்.",
       "transliteration": "Mannikkavum.",
       "audio_path": "audio/generated/ta/ta-apologize-small-mistake/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Mannikkavum",
+          "text": "மன்னிக்கவும்",
+          "audio_path": "audio/generated/ta/words/mannikkavum.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-apologize-small-mistake-line-2",
@@ -917,7 +1179,7 @@
       "text": "பரவாயில்லை.",
       "transliteration": "Paravaayillai.",
       "audio_path": "audio/generated/ta/ta-apologize-small-mistake/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -943,7 +1205,7 @@
       "text": "இந்த படிவத்தை நிரப்புங்கள்.",
       "transliteration": "Indha padivathai nirappungal.",
       "audio_path": "audio/generated/ta/ta-speak-little-language/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -969,8 +1231,38 @@
       "text": "எனக்கு கொஞ்சம் தமிழ் தெரியும்.",
       "transliteration": "Enakku konjam Tamil theriyum.",
       "audio_path": "audio/generated/ta/ta-speak-little-language/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Enakku",
+          "text": "எனக்கு",
+          "audio_path": "audio/generated/ta/words/enakku.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "konjam",
+          "text": "கொஞ்சம்",
+          "audio_path": "audio/generated/ta/words/konjam.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "Tamil",
+          "text": "தமிழ்",
+          "audio_path": "audio/generated/ta/words/tamil.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "theriyum",
+          "text": "தெரியும்",
+          "audio_path": "audio/generated/ta/words/theriyum.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-speak-little-language-line-2",
@@ -995,7 +1287,7 @@
       "text": "சரி. மெதுவாக பேசுகிறேன்.",
       "transliteration": "Sari. Methuvaga pesugiren.",
       "audio_path": "audio/generated/ta/ta-speak-little-language/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1021,7 +1313,7 @@
       "text": "தண்ணீர்?",
       "transliteration": "Thanneer?",
       "audio_path": "audio/generated/ta/ta-politeness-please-thanks/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1047,8 +1339,38 @@
       "text": "ஆம், தயவு செய்து. நன்றி.",
       "transliteration": "Aam, thayavu seithu. Nandri.",
       "audio_path": "audio/generated/ta/ta-politeness-please-thanks/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Aam",
+          "text": "ஆம்",
+          "audio_path": "audio/generated/ta/words/aam.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "thayavu",
+          "text": "தயவு",
+          "audio_path": "audio/generated/ta/words/thayavu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "seithu",
+          "text": "செய்து",
+          "audio_path": "audio/generated/ta/words/seithu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "Nandri",
+          "text": "நன்றி",
+          "audio_path": "audio/generated/ta/words/nandri.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-politeness-please-thanks-line-2",
@@ -1073,7 +1395,7 @@
       "text": "பரவாயில்லை.",
       "transliteration": "Paravaayillai.",
       "audio_path": "audio/generated/ta/ta-politeness-please-thanks/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1099,7 +1421,7 @@
       "text": "என்ன வேண்டும்?",
       "transliteration": "Enna vendum?",
       "audio_path": "audio/generated/ta/ta-order-local-food/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1125,8 +1447,38 @@
       "text": "ஒரு தோசை, தயவு செய்து.",
       "transliteration": "Oru dosai, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-order-local-food/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Oru",
+          "text": "ஒரு",
+          "audio_path": "audio/generated/ta/words/oru.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "dosai",
+          "text": "தோசை",
+          "audio_path": "audio/generated/ta/words/dosai.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "thayavu",
+          "text": "தயவு",
+          "audio_path": "audio/generated/ta/words/thayavu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "seithu",
+          "text": "செய்து",
+          "audio_path": "audio/generated/ta/words/seithu.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-order-local-food-line-2",
@@ -1151,7 +1503,7 @@
       "text": "சரி.",
       "transliteration": "Sari.",
       "audio_path": "audio/generated/ta/ta-order-local-food/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1177,8 +1529,24 @@
       "text": "மருத்துவமனை எங்கே?",
       "transliteration": "Maruthuvamanai enge?",
       "audio_path": "audio/generated/ta/ta-directions-hospital/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Maruthuvamanai",
+          "text": "மருத்துவமனை",
+          "audio_path": "audio/generated/ta/words/maruthuvamanai.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "enge",
+          "text": "எங்கே",
+          "audio_path": "audio/generated/ta/words/enge.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-directions-hospital-line-1",
@@ -1203,7 +1571,7 @@
       "text": "அங்கே.",
       "transliteration": "Ange.",
       "audio_path": "audio/generated/ta/ta-directions-hospital/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1229,7 +1597,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-directions-hospital/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1255,7 +1623,7 @@
       "text": "வணக்கம். உதவி வேண்டுமா?",
       "transliteration": "Vanakkam. Udhavi venduma?",
       "audio_path": "audio/generated/ta/ta-pharmacy-cough-medicine/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1281,8 +1649,38 @@
       "text": "இருமல் மருந்து, தயவு செய்து.",
       "transliteration": "Irumal marundhu, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-pharmacy-cough-medicine/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Irumal",
+          "text": "இருமல்",
+          "audio_path": "audio/generated/ta/words/irumal.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "marundhu",
+          "text": "மருந்து",
+          "audio_path": "audio/generated/ta/words/marundhu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "thayavu",
+          "text": "தயவு",
+          "audio_path": "audio/generated/ta/words/thayavu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "seithu",
+          "text": "செய்து",
+          "audio_path": "audio/generated/ta/words/seithu.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-pharmacy-cough-medicine-line-2",
@@ -1307,7 +1705,7 @@
       "text": "சரி. ஒரு நிமிடம்.",
       "transliteration": "Sari. Oru nimidam.",
       "audio_path": "audio/generated/ta/ta-pharmacy-cough-medicine/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1333,7 +1731,7 @@
       "text": "வணக்கம். உதவி வேண்டுமா?",
       "transliteration": "Vanakkam. Udhavi venduma?",
       "audio_path": "audio/generated/ta/ta-pharmacy-diarrhea-medicine/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1359,8 +1757,38 @@
       "text": "வயிற்றுப்போக்கு மருந்து, தயவு செய்து.",
       "transliteration": "Vayitruppokku marundhu, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-pharmacy-diarrhea-medicine/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Vayitruppokku",
+          "text": "வயிற்றுப்போக்கு",
+          "audio_path": "audio/generated/ta/words/vayitruppokku.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "marundhu",
+          "text": "மருந்து",
+          "audio_path": "audio/generated/ta/words/marundhu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "thayavu",
+          "text": "தயவு",
+          "audio_path": "audio/generated/ta/words/thayavu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "seithu",
+          "text": "செய்து",
+          "audio_path": "audio/generated/ta/words/seithu.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-pharmacy-diarrhea-medicine-line-2",
@@ -1385,7 +1813,7 @@
       "text": "சரி. ஒரு நிமிடம்.",
       "transliteration": "Sari. Oru nimidam.",
       "audio_path": "audio/generated/ta/ta-pharmacy-diarrhea-medicine/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1411,7 +1839,7 @@
       "text": "வணக்கம். செக்-இன்?",
       "transliteration": "Vanakkam. Check-in?",
       "audio_path": "audio/generated/ta/ta-hostel-check-in/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1437,8 +1865,31 @@
       "text": "எனக்கு முன்பதிவு இருக்கிறது.",
       "transliteration": "Enakku munpadhivu irukkiradhu.",
       "audio_path": "audio/generated/ta/ta-hostel-check-in/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Enakku",
+          "text": "எனக்கு",
+          "audio_path": "audio/generated/ta/words/enakku.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "munpadhivu",
+          "text": "முன்பதிவு",
+          "audio_path": "audio/generated/ta/words/munpadhivu.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "irukkiradhu",
+          "text": "இருக்கிறது",
+          "audio_path": "audio/generated/ta/words/irukkiradhu.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-hostel-check-in-line-2",
@@ -1463,7 +1914,7 @@
       "text": "உங்கள் பெயர், தயவு செய்து?",
       "transliteration": "Ungal peyar, thayavu seithu?",
       "audio_path": "audio/generated/ta/ta-hostel-check-in/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1489,7 +1940,7 @@
       "text": "இது நன்றாக இருந்தது.",
       "transliteration": "Idhu nandraaga irundhadhu.",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1515,8 +1966,45 @@
       "text": "ஒருநாள் காபி குடிக்க வர விரும்புகிறீர்களா?",
       "transliteration": "Orunaal kaapi kudikka vara virumbugireergala?",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
+      "status": "generated",
+      "native_review_required": true,
+      "chunk_audio": [
+        {
+          "index": 0,
+          "label": "Orunaal",
+          "text": "ஒருநாள்",
+          "audio_path": "audio/generated/ta/words/orunaal.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 1,
+          "label": "kaapi",
+          "text": "காபி",
+          "audio_path": "audio/generated/ta/words/kaapi.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 2,
+          "label": "kudikka",
+          "text": "குடிக்க",
+          "audio_path": "audio/generated/ta/words/kudikka.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 3,
+          "label": "vara",
+          "text": "வர",
+          "audio_path": "audio/generated/ta/words/vara.mp3",
+          "status": "generated"
+        },
+        {
+          "index": 4,
+          "label": "virumbugireergala",
+          "text": "விரும்புகிறீர்களா",
+          "audio_path": "audio/generated/ta/words/virumbugireergala.mp3",
+          "status": "generated"
+        }
+      ]
     },
     {
       "id": "ta-social-coffee-invitation-line-2",
@@ -1541,7 +2029,7 @@
       "text": "ஆம், அது நன்றாக இருக்கும்.",
       "transliteration": "Aam, adhu nandraaga irukkum.",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1567,7 +2055,7 @@
       "text": "சிறப்பு. விரைவில் சந்திப்போம்.",
       "transliteration": "Sirappu. Viraivil sandhippom.",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-3.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     }
   ],

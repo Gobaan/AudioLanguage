@@ -1,15 +1,17 @@
 from pathlib import Path
-from difflib import SequenceMatcher
 import json
-import re
 import tempfile
+
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
+from app.conversation.factory import create_conversation_coach
+from app.conversation.models import ConversationContext, LearnerAttempt
 from app.content.data_graph import DataGraphError, list_languages, load_language_session
 from app.content.loader import load_content_graph
+from app.speech.similarity import normalize_for_match, text_similarity
 from app.scenes import scenes
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +23,8 @@ AUDIO_SOURCES_DIR = PROJECT_DIR / "audio_sources"
 DATA_DIR = PROJECT_DIR / "data"
 DIALOGUES_PATH = AUDIO_SOURCES_DIR / "dialogues.json"
 PROMPTS_PATH = AUDIO_SOURCES_DIR / "prompts.json"
-WHISPER_MODEL = None
+
+conversation_coach = create_conversation_coach()
 
 app = FastAPI(title="Audio Language")
 
@@ -46,6 +49,15 @@ def index():
 def list_scenes():
     """Return all available scenes."""
     return scenes
+
+
+@app.get("/api/scenes/{scene_id}")
+def get_scene(scene_id: str):
+    """Return a single scene by id."""
+    for scene in scenes:
+        if scene.id == scene_id:
+            return scene
+    raise HTTPException(status_code=404, detail=f"Scene '{scene_id}' not found")
 
 
 @app.get("/api/dialogues")
@@ -80,24 +92,46 @@ def get_language_session(language: str):
         raise HTTPException(status_code=404, detail=str(error)) from error
 
 
-def get_whisper_model():
-    """Load the local transcription model once, on first use."""
-    global WHISPER_MODEL
-
-    if WHISPER_MODEL is None:
-        from faster_whisper import WhisperModel
-
-        WHISPER_MODEL = WhisperModel("tiny.en", device="cpu", compute_type="int8")
-
-    return WHISPER_MODEL
-
-
 @app.post("/api/transcribe")
 async def transcribe_audio(
     file: UploadFile = File(...),
     expected: str = Form(""),
+    expected_alt: str = Form(""),
+    language: str = Form("en"),
+    target_audio: str = Form(""),
+    target_meaning: str = Form(""),
+    scene_contract: str = Form(""),
+    focus_chunk_index: int = Form(-1),
 ):
-    """Transcribe a short learner recording."""
+    """Compatibility wrapper for the guided conversation attempt endpoint."""
+    return await evaluate_conversation_attempt(
+        file=file,
+        expected=expected,
+        expected_alt=expected_alt,
+        language=language,
+        target_audio=target_audio,
+        target_meaning=target_meaning,
+        scene_contract=scene_contract,
+        scene_id="",
+        function_id="",
+        target_id="",
+    )
+
+
+@app.post("/api/conversation/attempt")
+async def evaluate_conversation_attempt(
+    file: UploadFile = File(...),
+    expected: str = Form(""),
+    expected_alt: str = Form(""),
+    language: str = Form("en"),
+    target_audio: str = Form(""),
+    target_meaning: str = Form(""),
+    scene_contract: str = Form(""),
+    scene_id: str = Form(""),
+    function_id: str = Form(""),
+    target_id: str = Form(""),
+):
+    """Evaluate whether a learner utterance fits the current guided scene."""
     suffix = Path(file.filename or "recording.webm").suffix or ".webm"
     audio_bytes = await file.read()
 
@@ -106,47 +140,72 @@ async def transcribe_audio(
         temp_path = Path(temp_file.name)
 
     try:
-        segments, info = get_whisper_model().transcribe(
-            str(temp_path),
-            language="en",
-            vad_filter=True,
+        context = ConversationContext(
+            language=language,
+            scene_id=scene_id,
+            function_id=function_id,
+            target_id=target_id,
+            target_text=expected,
+            target_romanized=expected_alt,
+            target_meaning=target_meaning,
+            target_audio=target_audio,
+            scene_contract=parse_scene_contract(scene_contract),
         )
-        transcript = " ".join(segment.text.strip() for segment in segments).strip()
-        score = text_similarity(transcript, expected)
-
-        return {
-            "transcript": transcript,
-            "expected": expected,
-            "score": score,
-            "is_match": bool(expected and score >= 0.72),
-            "language": info.language,
-            "language_probability": info.language_probability,
-        }
+        coach_response = conversation_coach.evaluate_attempt(
+            attempt=LearnerAttempt(audio_path=temp_path),
+            context=context,
+        )
+        return conversation_response_payload(
+            response=coach_response.to_dict(),
+            expected=expected,
+            expected_alt=expected_alt,
+            language=language,
+        )
     finally:
         temp_path.unlink(missing_ok=True)
 
 
-def text_similarity(actual: str, expected: str) -> float:
-    """Compare learner transcript to target phrase with forgiving punctuation/case."""
-    actual_normalized = normalize_for_match(actual)
-    expected_normalized = normalize_for_match(expected)
+def conversation_response_payload(
+    *,
+    response: dict,
+    expected: str,
+    expected_alt: str,
+    language: str,
+) -> dict:
+    """Return the new response shape plus legacy fields the current UI expects."""
+    communication = response["communication"]
+    return {
+        **response,
+        "transcript_phonetic": response["transcript_romanized"],
+        "expected": expected,
+        "expected_alt": expected_alt,
+        "expected_phonetic": expected_alt or expected,
+        "text_score": response["score"],
+        "transcription_available": response["speech_available"],
+        "transcription_feedback": response["speech_feedback"],
+        "heard_rhythm": "",
+        "heard_beats": [],
+        "rhythm_score": 0.0,
+        "rhythm_feedback": "Rhythm scoring disabled for guided conversation mode.",
+        "rhythm_details": {},
+        "chunk_feedback": [],
+        "phone_available": False,
+        "phone_score": 0.0,
+        "phone_feedback": "Phone scoring disabled for guided conversation mode.",
+        "learner_phones": [],
+        "target_phones": [],
+        "score": communication["confidence"],
+        "is_match": communication["close_enough"],
+        "review_only": False,
+        "language": language,
+    }
 
-    if not actual_normalized or not expected_normalized:
-        return 0.0
 
-    return SequenceMatcher(None, actual_normalized, expected_normalized).ratio()
-
-
-def normalize_for_match(value: str) -> str:
-    value = value.lower()
-    value = re.sub(r"[^a-z0-9\s]", " ", value)
-    return " ".join(value.split())
-
-
-@app.get("/api/scenes/{scene_id}")
-def get_scene(scene_id: str):
-    """Return a single scene by id."""
-    for scene in scenes:
-        if scene.id == scene_id:
-            return scene
-    raise HTTPException(status_code=404, detail=f"Scene '{scene_id}' not found")
+def parse_scene_contract(raw_contract: str) -> dict | None:
+    if not raw_contract:
+        return None
+    try:
+        parsed = json.loads(raw_contract)
+    except json.JSONDecodeError:
+        return None
+    return parsed if isinstance(parsed, dict) else None

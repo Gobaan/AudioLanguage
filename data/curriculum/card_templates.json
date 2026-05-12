@@ -1,0 +1,108 @@
+{
+  "default_template_id": "guided-speaking-scene-v1",
+  "card_templates": [
+    {
+      "id": "guided-speaking-scene-v1",
+      "name": "Guided speaking scene",
+      "purpose": "Default template for new beginner speaking cards that teach meaning through a short visual dialogue, then ask the learner to speak.",
+      "dialogue_shape": {
+        "required_lines": [
+          {
+            "index": 0,
+            "line_type": "world_opener",
+            "speaker_role": "scene partner",
+            "purpose": "Cue the situation and make the learner response necessary.",
+            "default_visual_frame": "frame-0.png"
+          },
+          {
+            "index": 1,
+            "line_type": "learner_target",
+            "speaker_role": "learner",
+            "purpose": "The line the user should learn to produce.",
+            "default_visual_frame": "frame-1.png"
+          }
+        ],
+        "optional_lines": [
+          {
+            "index": 2,
+            "line_type": "world_response",
+            "speaker_role": "scene partner",
+            "purpose": "Natural confirmation that the learner line worked. Keep out of default practice playback unless testing full dialogue comprehension.",
+            "default_visual_frame": "frame-2.png"
+          }
+        ]
+      },
+      "default_playback_sequence": [
+        {
+          "kind": "prompt_audio",
+          "audio_path": "audio/prompts/opening.mp3",
+          "spoken_prompt": "They say",
+          "active_line_index": 0
+        },
+        {
+          "kind": "dialogue_audio",
+          "line_type": "world_opener",
+          "active_line_index": 0
+        },
+        {
+          "kind": "prompt_audio",
+          "audio_path": "audio/prompts/user_says.mp3",
+          "spoken_prompt": "You say",
+          "active_line_index": 1
+        },
+        {
+          "kind": "dialogue_audio",
+          "line_type": "learner_target",
+          "active_line_index": 1
+        },
+        {
+          "kind": "prompt_audio",
+          "audio_path": "audio/prompts/call_to_action.mp3",
+          "spoken_prompt": "Now you try",
+          "active_line_index": 1
+        },
+        {
+          "kind": "record_and_verify",
+          "active_line_index": 1,
+          "compare_against": ["target_script", "target_transliteration"]
+        }
+      ],
+      "visual_rules": [
+        "Each spoken dialogue line gets its own frame.",
+        "Frame 0 shows the scene partner cueing the situation.",
+        "Frame 1 shows the learner-character about to say the target line.",
+        "Keep frame 1 visible during the model learner line, 'Now you try', recording, and retry.",
+        "Frame 2 is optional and reserved for full-dialogue or post-success confirmation."
+      ],
+      "text_support_rules": [
+        "Do not show target text before the first attempt.",
+        "Reveal target script only after success, manual reveal, or failed attempt feedback.",
+        "Keep transliteration hidden by default; expose it through pronunciation feedback or a pronunciation toggle.",
+        "On failure, show heard pronunciation and expected pronunciation in Latin characters."
+      ],
+      "retry_rules": [
+        "A failed attempt shows a Try Again button.",
+        "Try Again records and verifies again without replaying the whole scene.",
+        "Do not auto-advance after failure."
+      ],
+      "practice_card_skeleton": {
+        "id": "{language}-card-{scenario}-listen",
+        "template_id": "guided-speaking-scene-v1",
+        "dialogue_id": "{language}-{scenario}",
+        "mode": "listen",
+        "stage": "template_guided_speaking",
+        "correct_function_id": "{function_id}",
+        "target_id": "{language}-target-{target_slug}",
+        "prompt": "Watch, listen, then try the learner line.",
+        "expected_response": null,
+        "support": {
+          "show_visual": true,
+          "play_model_audio": true,
+          "show_target_text_after_attempt": true,
+          "show_transliteration_after_failure": true
+        },
+        "success_signal": "learner speaks the target line after the scene cue"
+      }
+    }
+  ]
+}

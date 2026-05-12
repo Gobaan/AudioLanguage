@@ -3,6 +3,29 @@
   "display_name": "English",
   "targets": [
     {
+      "id": "en-target-respond-hi",
+      "function_id": "respond_to_greeting",
+      "canonical": "Hi!",
+      "display_meaning": "Respond to Hi.",
+      "meaning_units": ["hello", "response"],
+      "accepted_variants": ["Hi.", "Hi?", "Hello.", "Hello?", "Hey.", "Hi, how are you?", "Hello, nice to see you."],
+      "valid_but_off_target": ["Goodbye.", "Where is the hospital?", "Water, please."],
+      "wrong_for_context_examples": ["Goodbye.", "Where is the hospital?", "How much is this?"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "greeting_response"
+        },
+        "optional": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        }
+      },
+      "notes": {
+        "register": "friendly-basic",
+        "acceptance_note": "Question punctuation from speech transcription should not make a greeting response off-target."
+      }
+    },
+    {
       "id": "en-target-hello-how-are-you",
       "function_id": "greet_and_ask_wellbeing",
       "canonical": "Hello! How are you?",

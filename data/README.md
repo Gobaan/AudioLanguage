@@ -14,6 +14,7 @@ data/
     functions.json
     scenes.json
     review_modes.json
+    card_templates.json
   languages/
     en/
       targets.json
@@ -118,6 +119,20 @@ python scripts/generate_tts_from_manifest.py --language ta --limit 3
 The visual prompt exporter writes prompt text files under `visuals/generated/{language}/{dialogue_id}/prompts/` so image and video tools can be driven from the same source data.
 
 ## Practice Card Principle
+
+The default new-card template is `guided-speaking-scene-v1` in `data/curriculum/card_templates.json`.
+
+It uses the working first-card loop:
+
+1. Audio prompt: "They say" while showing frame 0.
+2. Scene partner line plays while showing frame 0.
+3. Audio prompt: "You say" while switching to frame 1.
+4. Learner model line plays while showing frame 1.
+5. Audio prompt: "Now you try" while staying on frame 1.
+6. Mic records and verifies against target script plus transliteration.
+7. Failure shows heard pronunciation, expected pronunciation, and Try Again.
+
+Frame 2 / final partner response is optional and should be reserved for full-dialogue review or post-success confirmation. It is not part of the default speaking practice loop.
 
 The MVP should not only ask the learner to repeat one phrase across many scenes.
 

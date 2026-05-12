@@ -3,6 +3,79 @@
   "display_name": "English",
   "visual_beats": [
     {
+      "id": "en-vb-first-hi-response-0",
+      "dialogue_id": "en-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 0,
+      "line_text": "Hi!",
+      "timing_role": "cue",
+      "meaning_units": ["hello"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "friend enters, smiles, waves, and starts the greeting"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "en-vb-first-hi-response-1",
+      "dialogue_id": "en-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 1,
+      "line_text": "Hi!",
+      "timing_role": "learner_turn",
+      "meaning_units": ["hello", "response"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "learner looks up, smiles, and waves back"
+        },
+        {
+          "meaning_unit": "response",
+          "visual_cue": "learner turns their body toward the friend to answer"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "en-vb-first-hi-response-2",
+      "dialogue_id": "en-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 2,
+      "line_text": "Nice to see you.",
+      "timing_role": "resolution",
+      "meaning_units": ["positive_response"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "friend smiles warmly, showing the greeting worked"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
       "id": "en-vb-greeting-hello-0",
       "dialogue_id": "en-greeting-hello",
       "function_id": "greet_and_ask_wellbeing",

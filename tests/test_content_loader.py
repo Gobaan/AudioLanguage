@@ -44,6 +44,7 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertEqual(first["scene"]["id"], "study-room-friend")
         self.assertEqual(first["review_mode"]["id"], "listen")
         self.assertTrue(first["dialogue"]["lines"][1]["is_learner_target"])
+        self.assertNotIn("chunk_audio", first["dialogue"]["lines"][1])
 
     def test_lists_languages_from_data_graph(self):
         languages = list_languages(PROJECT_DIR / "data")

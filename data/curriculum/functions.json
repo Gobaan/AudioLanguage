@@ -1,6 +1,20 @@
 {
   "functions": [
     {
+      "id": "respond_to_greeting",
+      "name": "Respond to a greeting",
+      "domain": "greetings",
+      "difficulty": 1,
+      "mvp_priority": 0,
+      "description": "Respond naturally when another person says hi or hello.",
+      "meaning_units": ["hello", "response", "optional_question"],
+      "gesture_grammar": {
+        "hello": ["friendly wave", "smile", "eye contact"],
+        "response": ["turn toward speaker", "open expression", "small nod"],
+        "optional_question": ["raised eyebrows", "slight forward lean"]
+      }
+    },
+    {
       "id": "greet_and_ask_wellbeing",
       "name": "Greet and ask wellbeing",
       "domain": "greetings",

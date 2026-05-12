@@ -53,6 +53,11 @@ def main() -> None:
     backend_dir = project_dir / "backend"
 
     sys.path.insert(0, str(backend_dir))
+    sys.path.insert(0, str(project_dir))
+
+    from scripts.load_secrets import load_secrets
+
+    load_secrets()
 
     port = find_available_port(
         host=args.host,

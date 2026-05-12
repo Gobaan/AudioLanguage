@@ -3,7 +3,62 @@
   "display_name": "Tamil",
   "script": "Tamil",
   "native_review_status": "needs_native_review",
-  "visual_beats": [],
+  "visual_beats": [
+    {
+      "dialogue_id": "ta-greeting-hello",
+      "line_index": 0,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-0.png" },
+      "notes": "Generic guided-speaking frame for the partner cue."
+    },
+    {
+      "dialogue_id": "ta-greeting-hello",
+      "line_index": 1,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-1.png" },
+      "notes": "Generic guided-speaking frame for the learner response."
+    },
+    {
+      "dialogue_id": "ta-greeting-hello",
+      "line_index": 2,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-2.png" },
+      "notes": "Generic guided-speaking frame for the partner confirmation."
+    },
+    {
+      "dialogue_id": "ta-introduce-self",
+      "line_index": 0,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-0.png" },
+      "notes": "Temporary generic frame until a classmate introduction scene is generated."
+    },
+    {
+      "dialogue_id": "ta-introduce-self",
+      "line_index": 1,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-1.png" },
+      "notes": "Temporary generic frame until a classmate introduction scene is generated."
+    },
+    {
+      "dialogue_id": "ta-introduce-self",
+      "line_index": 2,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-2.png" },
+      "notes": "Temporary generic frame until a classmate introduction scene is generated."
+    },
+    {
+      "dialogue_id": "ta-repair-say-slowly",
+      "line_index": 0,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-0.png" },
+      "notes": "Temporary generic frame until a service-counter repair scene is generated."
+    },
+    {
+      "dialogue_id": "ta-repair-say-slowly",
+      "line_index": 1,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-1.png" },
+      "notes": "Temporary generic frame until a service-counter repair scene is generated."
+    },
+    {
+      "dialogue_id": "ta-repair-say-slowly",
+      "line_index": 2,
+      "asset_paths": { "image": "visuals/ta-greeting-hello/frame-2.png" },
+      "notes": "Temporary generic frame until a service-counter repair scene is generated."
+    }
+  ],
   "generation_backlog": [
     { "dialogue_id": "ta-greeting-hello", "needed_assets": ["line images", "video prompts", "audio"] },
     { "dialogue_id": "ta-greeting-neighbor", "needed_assets": ["line images", "video prompts", "audio"] },

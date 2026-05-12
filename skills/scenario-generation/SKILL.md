@@ -1,4 +1,5 @@
 ---
+kay 
 name: scenario-generation
 description: Generate language-learning scenarios, scene cards, and short dialogues that are emotionally engaging, culturally grounded, audio-first, and sequenced for i+1 progression. Use when Codex needs to create new scenes, write alternating speaker dialogue, decide whether to deepen one scene or create varied transfer scenes, design visual scene prompts, tag vocabulary, or turn weak vocabulary into contextual practice.
 ---
@@ -132,6 +133,41 @@ Useful review modes:
 - Continue the dialogue freely with a chatbot.
 
 The repeated scene gives memory an anchor; the changing challenge prevents pattern matching.
+
+## Default Speaking Card Template
+
+When creating a new beginner speaking card for this project, use `guided-speaking-scene-v1` from `data/curriculum/card_templates.json` unless the user explicitly asks for a different card type.
+
+Default card structure:
+
+1. **They say** prompt audio plays while frame 0 is visible.
+2. The scene partner's cue line plays while frame 0 remains visible.
+3. **You say** prompt audio plays while switching to frame 1.
+4. The learner model line plays while frame 1 remains visible.
+5. **Now you try** prompt audio plays while frame 1 remains visible.
+6. The app records the learner and verifies against both target script and transliteration.
+7. On failure, show heard pronunciation, expected pronunciation, and a Try Again button.
+
+Required dialogue line shape:
+
+- Line 0: `world_opener`, scene partner, visible cue, `frame-0.png`
+- Line 1: `learner_target`, learner, target production line, `frame-1.png`
+- Line 2: optional `world_response`, scene partner, natural confirmation, `frame-2.png`
+
+Frame rules:
+
+- Every spoken line should have a matching frame.
+- Frame 0 should make the partner's cue visually obvious.
+- Frame 1 should show the learner-character ready to speak the target line.
+- Keep frame 1 visible during "You say", learner model audio, "Now you try", mic recording, and retry.
+- Do not include the final partner response in default practice playback. Use it later for full-dialogue review or post-success confirmation.
+
+Text support rules:
+
+- Do not show target text before the first attempt.
+- Reveal target script only after success, manual reveal, or failed attempt feedback.
+- Keep transliteration hidden by default.
+- Use transliteration as corrective feedback after failure or behind an explicit pronunciation toggle.
 
 ## Visual Setup
 

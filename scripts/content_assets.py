@@ -53,4 +53,5 @@ def relative_posix(path: Path) -> str:
 
 
 def path_exists(project_dir: Path, relative_path: str) -> bool:
-    return (project_dir / relative_path).exists()
+    path = project_dir / relative_path
+    return path.exists() and path.stat().st_size > 0

@@ -35,30 +35,28 @@ async def generate_language(
     manifest = read_json(data_dir / "languages" / language / "audio_assets.json")
     created = 0
     skipped = 0
-
     for item in manifest.get("assets", []):
         if limit is not None and created >= limit:
             break
 
+        profile = item.get("voice_profile") or voice_profile_for(language, item.get("speaker_role", ""))
         audio_path = item["audio_path"]
         if path_exists(project_dir, audio_path) and not force:
             skipped += 1
-            continue
-
-        profile = item.get("voice_profile") or voice_profile_for(language, item.get("speaker_role", ""))
-        await synthesize_mp3(
-            text=item["text"],
-            voice=profile["provider_voice"],
-            rate=profile.get("rate", "+0%"),
-            pitch=profile.get("pitch", "+0Hz"),
-            out_path=project_dir / audio_path,
-        )
-        created += 1
-        print(
-            f"{language}: {audio_path} "
-            f"({profile['id']}: {profile['provider_voice']}, "
-            f"rate {profile.get('rate', '+0%')}, pitch {profile.get('pitch', '+0Hz')})"
-        )
+        else:
+            await synthesize_mp3(
+                text=item["text"],
+                voice=profile["provider_voice"],
+                rate=profile.get("rate", "+0%"),
+                pitch=profile.get("pitch", "+0Hz"),
+                out_path=project_dir / audio_path,
+            )
+            created += 1
+            print(
+                f"{language}: {audio_path} "
+                f"({profile['id']}: {profile['provider_voice']}, "
+                f"rate {profile.get('rate', '+0%')}, pitch {profile.get('pitch', '+0Hz')})"
+            )
 
     return created, skipped
 

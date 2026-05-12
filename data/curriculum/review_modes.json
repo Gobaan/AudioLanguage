@@ -43,6 +43,12 @@
       "description": "Accept any natural response that fits the function and scene."
     },
     {
+      "id": "ai_guided_response",
+      "name": "AI guided response",
+      "support_level": 3,
+      "description": "Use a constrained AI partner to judge whether the learner response fits one scene intention."
+    },
+    {
       "id": "choose_intention",
       "name": "Choose intention",
       "support_level": 3,

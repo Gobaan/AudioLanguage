@@ -2,27 +2,88 @@
   "language": "en",
   "display_name": "English",
   "mvp_session": {
-    "id": "en-mvp-survival-session-1",
-    "name": "First survival loop",
-    "goal": "Teach a tiny set of socially safe beginner functions, then test whether the learner can infer intention instead of repeating from memory.",
-    "estimated_minutes": 8,
+    "id": "en-first-user-session-1",
+    "name": "First greeting session",
+    "goal": "Prove the learner can respond to a real greeting inside one tiny scene.",
+    "estimated_minutes": 5,
     "unlock_after": [],
     "cards": [
-      "en-card-greeting-listen",
-      "en-card-greeting-produce",
-      "en-card-counter-repair-choice",
-      "en-card-counter-speak-little",
-      "en-card-shop-politeness-choice",
-      "en-card-shop-water-produce",
-      "en-card-bus-stop-transfer",
-      "en-card-pharmacy-intention-choice",
-      "en-card-pharmacy-cough-produce",
-      "en-card-ai-shop-roleplay-unlock"
+      "en-card-first-hi-dialogue-practice"
     ]
   },
   "practice_cards": [
     {
+      "id": "en-card-first-hi-dialogue-practice",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "en-first-hi-response",
+      "mode": "ai_guided_response",
+      "stage": "first_exposure_to_guided_production",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "prompt": "Watch the greeting once. Then replay it and say your part when prompted.",
+      "expected_response": "Hi!",
+      "ai_scene_contract": {
+        "language_being_practiced": "English",
+        "support_language": "English",
+        "physical_scene": "A friendly person sees the learner at a casual community event.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Respond to a friendly 'Hi' greeting.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
+        "example_valid_responses": [
+          "Hi.",
+          "Hi?",
+          "Hello.",
+          "Hello?",
+          "Hey.",
+          "Hi, how are you?",
+          "Hello, nice to see you."
+        ],
+        "acceptance_notes": [
+          "Accept greeting words even if transcribed with a question mark.",
+          "Accept 'Hello?' as a direct greeting response to 'Hi'.",
+          "For this first beginner scene, do not require an added wellbeing question."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ignore_greeting",
+            "definition": "The learner says nothing or gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated to greeting the person."
+          },
+          {
+            "id": "end_conversation",
+            "definition": "The learner immediately says goodbye or leaves."
+          }
+        ]
+      },
+      "support": {
+        "show_visual": true,
+        "play_full_dialogue_first": true,
+        "autoplay_full_dialogue": true,
+        "replay_until_learner_turn": true,
+        "copy_ai_prompt": true,
+        "show_target_text_after_attempt": true,
+        "show_examples_before_attempt": false
+      },
+      "success_signal": "learner hears the full scene, then successfully supplies the missing greeting response"
+    },
+    {
       "id": "en-card-greeting-listen",
+      "template_id": "guided-speaking-scene-v1",
       "dialogue_id": "en-greeting-hello",
       "mode": "listen",
       "stage": "first_exposure",

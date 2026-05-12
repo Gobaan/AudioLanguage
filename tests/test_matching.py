@@ -6,7 +6,7 @@ from pathlib import Path
 BACKEND_DIR = Path(__file__).resolve().parents[1] / "backend"
 sys.path.insert(0, str(BACKEND_DIR))
 
-from app.main import normalize_for_match, text_similarity
+from app.speech.similarity import normalize_for_match, text_similarity
 
 
 class MatchingTests(unittest.TestCase):

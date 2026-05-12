@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Conversation Prompting"
+  short_description: "Prompt AI judges for guided language scenes"
+  default_prompt: "Use $ai-conversation-prompting to design a strict scene contract and structured AI prompt for judging learner speech in a language-learning scene."

@@ -21,10 +21,6 @@ def audio_path_for(project_dir: Path, language: str, dialogue_id: str, line: dic
     if line.get("audio_path"):
         return line["audio_path"]
 
-    legacy_path = f"audio/{dialogue_id}-{line['index']}.mp3"
-    if path_exists(project_dir, legacy_path):
-        return legacy_path
-
     generated_path = Path("audio") / "generated" / language / dialogue_id / f"line-{line['index']}.mp3"
     return relative_posix(generated_path)
 
@@ -49,29 +45,28 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
         audio_path = audio_path_for(project_dir, language, dialogue["id"], line)
         status = "generated" if path_exists(project_dir, audio_path) else "needs_generation"
         voice_profile = voice_profile_for(language, line.get("speaker_role", ""))
-        assets.append(
-            {
-                "id": f"{dialogue['id']}-line-{line['index']}",
-                "language": language,
-                "dialogue_id": dialogue["id"],
-                "dialogue_type": dialogue.get("type", ""),
-                "function_id": dialogue.get("function_id", ""),
-                "target_id": line.get("target_id") or dialogue.get("target_id", ""),
-                "scene_id": dialogue.get("scene_id", ""),
-                "line_index": line["index"],
-                "line_type": line.get("line_type", ""),
-                "speaker_role": line.get("speaker_role", ""),
-                "voice_id": voice_profile["id"],
-                "voice_profile": voice_profile,
-                "text": text,
-                "transliteration": line.get("transliteration", ""),
-                "audio_path": audio_path,
-                "status": status,
-                "native_review_required": bool(
-                    dialogues_payload.get("native_review_status") == "needs_native_review"
-                ),
-            }
-        )
+        asset = {
+            "id": f"{dialogue['id']}-line-{line['index']}",
+            "language": language,
+            "dialogue_id": dialogue["id"],
+            "dialogue_type": dialogue.get("type", ""),
+            "function_id": dialogue.get("function_id", ""),
+            "target_id": line.get("target_id") or dialogue.get("target_id", ""),
+            "scene_id": dialogue.get("scene_id", ""),
+            "line_index": line["index"],
+            "line_type": line.get("line_type", ""),
+            "speaker_role": line.get("speaker_role", ""),
+            "voice_id": voice_profile["id"],
+            "voice_profile": voice_profile,
+            "text": text,
+            "transliteration": line.get("transliteration", ""),
+            "audio_path": audio_path,
+            "status": status,
+            "native_review_required": bool(
+                dialogues_payload.get("native_review_status") == "needs_native_review"
+            ),
+        }
+        assets.append(asset)
 
     return {
         "language": language,
