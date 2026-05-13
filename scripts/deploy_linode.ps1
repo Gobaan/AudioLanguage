@@ -42,6 +42,7 @@ $RemoteScript = @"
 set -euo pipefail
 
 REMOTE_DIR="$RemoteDir"
+REMOTE_DIR="`$(eval echo "`$REMOTE_DIR")"
 PORT="$Port"
 SERVICE_NAME="$ServiceName"
 
