@@ -11,6 +11,7 @@ from app.conversation.factory import create_conversation_coach
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.content.data_graph import DataGraphError, list_languages, load_language_session
 from app.content.loader import load_content_graph
+from app.speech.language import romanize_for_language
 from app.speech.similarity import normalize_for_match, text_similarity
 from app.scenes import scenes
 
@@ -173,9 +174,10 @@ def conversation_response_payload(
     language: str,
 ) -> dict:
     """Return the new response shape plus legacy fields the current UI expects."""
-    communication = response["communication"]
+    communication = romanized_communication(response["communication"], language)
     return {
         **response,
+        "communication": communication,
         "transcript_phonetic": response["transcript_romanized"],
         "expected": expected,
         "expected_alt": expected_alt,
@@ -199,6 +201,15 @@ def conversation_response_payload(
         "review_only": False,
         "language": language,
     }
+
+
+def romanized_communication(communication: dict, language: str) -> dict:
+    """Return learner-facing feedback in readable Latin text when possible."""
+    display = dict(communication)
+    for key in ("message", "partner_response"):
+        if display.get(key):
+            display[key] = romanize_for_language(str(display[key]), language)
+    return display
 
 
 def parse_scene_contract(raw_contract: str) -> dict | None:

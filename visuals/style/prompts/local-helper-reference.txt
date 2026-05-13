@@ -1,0 +1,10 @@
+Use case: illustration-story
+Asset type: reusable local-helper character reference sheet for language-learning comic panels
+Primary request: Create the base local helper archetype reference sheet for directions and street-help scenes in a language-learning app.
+Style/medium: simple flat webcomic illustration matching learner-reference.png: clean dark line art, warm flat colors, expressive human face, clear at phone size.
+Subject: ordinary adult local helper, approachable and observant, short dark hair, rust-colored jacket over a cream shirt, dark jeans, simple shoes.
+Composition/framing: character reference sheet on a plain light background. Show the same character in four views: front neutral pose, three-quarter standing pose, pointing directions with an open hand, and concerned helpful expression. Keep all four drawings clearly the same person.
+Personality: helpful, grounded, observant, kind but not overly cheerful.
+Continuity constraints: preserve exact outfit colors, hairstyle, body proportions, and simple webcomic face style across all poses.
+Text constraints: no captions, no labels, no dialogue, no subtitles, no translations, no logos, no watermark.
+Avoid: photorealism, animal mascot, fantasy costume, exaggerated cartoon proportions, extra characters, detailed background, readable text.

@@ -1,10 +1,132 @@
 {
-  "default_template_id": "guided-speaking-scene-v1",
+  "default_template_id": "guided-dialogue-replay-v1",
   "card_templates": [
     {
+      "id": "guided-dialogue-replay-v1",
+      "name": "Guided dialogue replay",
+      "purpose": "Default template for beginner scenario cards: show one complete visual dialogue, replay the cue, prompt the learner to speak in context, then let the AI judge whether the attempt fits the scene.",
+      "runtime_behavior": {
+        "first_watch": [
+          "Autoplay the full dialogue once.",
+          "Rotate frames as each dialogue line plays.",
+          "Show a green listening glow while audio is playing.",
+          "Hide inactive controls during the autoplay."
+        ],
+        "practice_turn": [
+          "Replay the scene partner cue line while showing its frame.",
+          "Switch to the learner frame after the cue.",
+          "Start microphone recording after the cue finishes.",
+          "Show a blue glow and 'Now you try' only while the microphone is actually listening.",
+          "Hold the learner frame during recording and AI checking.",
+          "Show a warm checking glow while waiting for the AI judgement.",
+          "On success, play the next scene partner response when available.",
+          "On failure, show short AI feedback and keep the learner in the same card."
+        ]
+      },
+      "default_support": {
+        "show_visual": true,
+        "play_full_dialogue_first": true,
+        "autoplay_full_dialogue": true,
+        "replay_until_learner_turn": true,
+        "show_target_text_after_attempt": true,
+        "show_examples_before_attempt": false,
+        "show_transliteration_after_failure": true
+      },
+      "required_card_fields": [
+        "id",
+        "template_id",
+        "dialogue_id",
+        "mode",
+        "correct_function_id",
+        "target_id",
+        "ai_scene_contract",
+        "success_signal"
+      ],
+      "dialogue_shape": {
+        "required_lines": [
+          {
+            "index": 0,
+            "line_type": "world_opener",
+            "speaker_role": "scene partner",
+            "purpose": "Cue the situation and make the learner response necessary.",
+            "default_visual_frame": "frame-0.png"
+          },
+          {
+            "index": 1,
+            "line_type": "learner_target",
+            "speaker_role": "learner",
+            "purpose": "The line the user should learn to produce after hearing the cue.",
+            "default_visual_frame": "frame-1.png"
+          }
+        ],
+        "optional_lines": [
+          {
+            "index": 2,
+            "line_type": "world_response",
+            "speaker_role": "scene partner",
+            "purpose": "Natural confirmation that the learner line worked. Play after a successful attempt when audio exists.",
+            "default_visual_frame": "frame-2.png"
+          }
+        ]
+      },
+      "visual_rules": [
+        "Every spoken dialogue line should have a visual frame.",
+        "Frame 0 should make the partner cue visually obvious.",
+        "Frame 1 should show the learner-character about to answer.",
+        "Frame 1 must remain visible during the learner prompt, microphone recording, and checking.",
+        "Prefer consistent recurring character roles across scenarios so the learner recognizes whose line they own.",
+        "Do not put readable target text, subtitles, or translations inside the image."
+      ],
+      "ai_contract_rules": [
+        "Define the target function in plain English; do not rely on intent ids alone.",
+        "Use required semantic slots instead of only exact accepted phrases.",
+        "Include likely wrong intents so the AI can reject plausible but off-target utterances.",
+        "Ask for structured judgement fields that the learning engine can consume.",
+        "Keep feedback short and supportive.",
+        "Do not let the AI continue into open conversation from this card."
+      ],
+      "practice_card_skeleton": {
+        "id": "{language}-card-{scenario}-dialogue-practice",
+        "template_id": "guided-dialogue-replay-v1",
+        "dialogue_id": "{language}-{scenario}",
+        "mode": "ai_guided_response",
+        "stage": "guided_scene_production",
+        "correct_function_id": "{function_id}",
+        "target_id": "{language}-target-{target_slug}",
+        "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+        "expected_response": "{target_line}",
+        "ai_scene_contract": {
+          "language_being_practiced": "{display_language}",
+          "support_language": "English",
+          "physical_scene": "{scene_description}",
+          "learner_role": "{learner_role}",
+          "partner_role": "{partner_role}",
+          "current_turn": "partner_speaks_first",
+          "target_function": {
+            "id": "{function_id}",
+            "definition": "{plain_english_function_definition}"
+          },
+          "learner_intention": "{plain_english_intention}",
+          "required_slots": {},
+          "optional_slots": {},
+          "example_valid_responses": [],
+          "acceptance_notes": [],
+          "wrong_intents": []
+        },
+        "support": {},
+        "success_signal": "learner hears the full scene, then successfully supplies the missing learner response"
+      }
+    },
+    {
       "id": "guided-speaking-scene-v1",
-      "name": "Guided speaking scene",
-      "purpose": "Default template for new beginner speaking cards that teach meaning through a short visual dialogue, then ask the learner to speak.",
+      "name": "Legacy guided speaking scene",
+      "purpose": "Older beginner speaking template kept for existing prototype cards. New cards should use guided-dialogue-replay-v1.",
+      "default_support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_attempt": true,
+        "show_transliteration_after_failure": true
+      },
       "dialogue_shape": {
         "required_lines": [
           {
@@ -27,81 +149,10 @@
             "index": 2,
             "line_type": "world_response",
             "speaker_role": "scene partner",
-            "purpose": "Natural confirmation that the learner line worked. Keep out of default practice playback unless testing full dialogue comprehension.",
+            "purpose": "Natural confirmation that the learner line worked.",
             "default_visual_frame": "frame-2.png"
           }
         ]
-      },
-      "default_playback_sequence": [
-        {
-          "kind": "prompt_audio",
-          "audio_path": "audio/prompts/opening.mp3",
-          "spoken_prompt": "They say",
-          "active_line_index": 0
-        },
-        {
-          "kind": "dialogue_audio",
-          "line_type": "world_opener",
-          "active_line_index": 0
-        },
-        {
-          "kind": "prompt_audio",
-          "audio_path": "audio/prompts/user_says.mp3",
-          "spoken_prompt": "You say",
-          "active_line_index": 1
-        },
-        {
-          "kind": "dialogue_audio",
-          "line_type": "learner_target",
-          "active_line_index": 1
-        },
-        {
-          "kind": "prompt_audio",
-          "audio_path": "audio/prompts/call_to_action.mp3",
-          "spoken_prompt": "Now you try",
-          "active_line_index": 1
-        },
-        {
-          "kind": "record_and_verify",
-          "active_line_index": 1,
-          "compare_against": ["target_script", "target_transliteration"]
-        }
-      ],
-      "visual_rules": [
-        "Each spoken dialogue line gets its own frame.",
-        "Frame 0 shows the scene partner cueing the situation.",
-        "Frame 1 shows the learner-character about to say the target line.",
-        "Keep frame 1 visible during the model learner line, 'Now you try', recording, and retry.",
-        "Frame 2 is optional and reserved for full-dialogue or post-success confirmation."
-      ],
-      "text_support_rules": [
-        "Do not show target text before the first attempt.",
-        "Reveal target script only after success, manual reveal, or failed attempt feedback.",
-        "Keep transliteration hidden by default; expose it through pronunciation feedback or a pronunciation toggle.",
-        "On failure, show heard pronunciation and expected pronunciation in Latin characters."
-      ],
-      "retry_rules": [
-        "A failed attempt shows a Try Again button.",
-        "Try Again records and verifies again without replaying the whole scene.",
-        "Do not auto-advance after failure."
-      ],
-      "practice_card_skeleton": {
-        "id": "{language}-card-{scenario}-listen",
-        "template_id": "guided-speaking-scene-v1",
-        "dialogue_id": "{language}-{scenario}",
-        "mode": "listen",
-        "stage": "template_guided_speaking",
-        "correct_function_id": "{function_id}",
-        "target_id": "{language}-target-{target_slug}",
-        "prompt": "Watch, listen, then try the learner line.",
-        "expected_response": null,
-        "support": {
-          "show_visual": true,
-          "play_model_audio": true,
-          "show_target_text_after_attempt": true,
-          "show_transliteration_after_failure": true
-        },
-        "success_signal": "learner speaks the target line after the scene cue"
       }
     }
   ]

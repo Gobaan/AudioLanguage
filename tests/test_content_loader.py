@@ -46,6 +46,63 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertTrue(first["dialogue"]["lines"][1]["is_learner_target"])
         self.assertNotIn("chunk_audio", first["dialogue"]["lines"][1])
 
+    def test_applies_default_guided_dialogue_template_support(self):
+        session = load_language_session(
+            data_dir=PROJECT_DIR / "data",
+            project_dir=PROJECT_DIR,
+            language="en",
+        )
+
+        first = session["cards"][0]
+
+        self.assertEqual(first["template_id"], "guided-dialogue-replay-v1")
+        self.assertEqual(first["template"]["id"], "guided-dialogue-replay-v1")
+        self.assertTrue(first["support"]["play_full_dialogue_first"])
+        self.assertTrue(first["support"]["autoplay_full_dialogue"])
+        self.assertTrue(first["support"]["replay_until_learner_turn"])
+        self.assertFalse(first["support"]["show_examples_before_attempt"])
+
+    def test_english_mvp_session_has_five_guided_scenarios_with_audio(self):
+        session = load_language_session(
+            data_dir=PROJECT_DIR / "data",
+            project_dir=PROJECT_DIR,
+            language="en",
+        )
+
+        self.assertEqual(len(session["cards"]), 5)
+        for card in session["cards"]:
+            self.assertEqual(card["template_id"], "guided-dialogue-replay-v1")
+            self.assertEqual(card["mode"], "ai_guided_response")
+            self.assertTrue(card["ai_scene_contract"]["target_function"]["definition"])
+            self.assertTrue(card["ai_scene_contract"]["required_slots"])
+            self.assertTrue(all(line.get("audio") for line in card["dialogue"]["lines"]))
+
+    def test_japanese_first_session_uses_short_beginner_chunks(self):
+        session = load_language_session(
+            data_dir=PROJECT_DIR / "data",
+            project_dir=PROJECT_DIR,
+            language="ja",
+        )
+
+        learner_lines = [
+            card["dialogue"]["lines"][1]["transliteration"]
+            for card in session["cards"]
+        ]
+
+        self.assertEqual(
+            learner_lines,
+            [
+                "Konnichiwa!",
+                "Anna desu.",
+                "Wakarimasen.",
+                "Sumimasen.",
+                "Sandoicchi kudasai.",
+            ],
+        )
+        for card in session["cards"]:
+            self.assertTrue(card["support"]["show_transliteration_after_failure"])
+            self.assertTrue(card["dialogue"]["lines"][1]["audio"])
+
     def test_lists_languages_from_data_graph(self):
         languages = list_languages(PROJECT_DIR / "data")
 

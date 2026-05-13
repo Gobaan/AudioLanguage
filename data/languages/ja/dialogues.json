@@ -1,0 +1,219 @@
+{
+  "language": "ja",
+  "display_name": "Japanese",
+  "script": "Japanese",
+  "native_review_status": "needs_native_review",
+  "dialogues": [
+    {
+      "id": "ja-first-hi-response",
+      "asset_slug": "ta-greeting-hello",
+      "type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "friend",
+          "line_type": "world_opener",
+          "text": "こんにちは！",
+          "transliteration": "Konnichiwa!",
+          "meaning_units": ["hello"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ja-target-respond-hi",
+          "text": "こんにちは！",
+          "transliteration": "Konnichiwa!",
+          "meaning_units": ["hello", "response"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "friend",
+          "line_type": "world_response",
+          "text": "会えてうれしいです。",
+          "transliteration": "Aete ureshii desu.",
+          "meaning_units": ["positive_response"]
+        }
+      ]
+    },
+    {
+      "id": "ja-introduce-self",
+      "type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "classmate",
+          "line_type": "world_opener",
+          "text": "お名前は？",
+          "transliteration": "Onamae wa?",
+          "meaning_units": ["your", "name", "question"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ja-target-my-name-is",
+          "text": "アンナです。",
+          "transliteration": "Anna desu.",
+          "meaning_units": ["my", "name", "proper_noun"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "classmate",
+          "line_type": "world_response",
+          "text": "よろしくお願いします。",
+          "transliteration": "Yoroshiku onegaishimasu.",
+          "meaning_units": ["positive_response"]
+        }
+      ]
+    },
+    {
+      "id": "ja-repair-dont-understand",
+      "type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "こちらに記入してください。",
+          "transliteration": "Kochira ni kinyuu shite kudasai.",
+          "meaning_units": ["this"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ja-target-i-dont-understand",
+          "text": "わかりません。",
+          "transliteration": "Wakarimasen.",
+          "meaning_units": ["not", "understand"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "大丈夫です。手伝います。",
+          "transliteration": "Daijoubu desu. Tetsudaimasu.",
+          "meaning_units": ["help"]
+        }
+      ]
+    },
+    {
+      "id": "ja-apologize-small-mistake",
+      "type": "anchor",
+      "function_id": "apologize",
+      "target_id": "ja-target-sorry-excuse-me",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "次の方、どうぞ。",
+          "transliteration": "Tsugi no kata, douzo.",
+          "meaning_units": ["attention", "turn_prompt"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ja-target-sorry-excuse-me",
+          "text": "すみません。",
+          "transliteration": "Sumimasen.",
+          "meaning_units": ["sorry", "polite_softener"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "はい、どうぞ。",
+          "transliteration": "Hai, douzo.",
+          "meaning_units": ["acknowledgement"]
+        }
+      ]
+    },
+    {
+      "id": "ja-order-local-food",
+      "type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "server",
+          "line_type": "world_opener",
+          "text": "何にしますか？",
+          "transliteration": "Nani ni shimasu ka?",
+          "meaning_units": ["question"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ja-target-one-local-food-please",
+          "text": "サンドイッチください。",
+          "transliteration": "Sandoicchi kudasai.",
+          "meaning_units": ["food_item", "please"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "server",
+          "line_type": "world_response",
+          "text": "はい。",
+          "transliteration": "Hai.",
+          "meaning_units": ["acknowledgement"]
+        }
+      ]
+    },
+    {
+      "id": "ja-directions-hospital",
+      "type": "anchor",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "ja-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "local",
+          "line_type": "world_opener",
+          "text": "どうしましたか？",
+          "transliteration": "Dou shimashita ka?",
+          "meaning_units": ["help", "question"]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ja-target-where-is-hospital",
+          "text": "病院はどこですか？",
+          "transliteration": "Byouin wa doko desu ka?",
+          "meaning_units": ["where", "hospital", "question"]
+        },
+        {
+          "index": 2,
+          "speaker_role": "local",
+          "line_type": "world_response",
+          "text": "あちらです。",
+          "transliteration": "Achira desu.",
+          "meaning_units": ["place"]
+        }
+      ]
+    }
+  ]
+}

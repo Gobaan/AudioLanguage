@@ -11,7 +11,7 @@ from app.conversation.models import (
     LearnerAttempt,
     SpeechInterpretation,
 )
-from app.speech.language import romanize_for_language
+from app.speech.language import has_unexpected_script, romanize_for_language
 from app.speech.similarity import normalize_for_match, text_similarity
 
 
@@ -39,10 +39,11 @@ class OpenAISpeechInterpreter:
                 model=os.environ.get(TRANSCRIBE_MODEL_ENV, self.model),
                 file=audio_file,
                 language=context.language or None,
+                prompt=build_transcription_prompt(context),
             )
 
         transcript = str(getattr(transcription, "text", "") or "").strip()
-        romanized = romanize_for_language(transcript, context.language)
+        romanized = learner_facing_transcript(transcript, context)
         expected = context.target_romanized or context.target_text
         score = text_similarity(normalize_for_match(romanized), normalize_for_match(expected))
         return SpeechInterpretation(
@@ -102,6 +103,38 @@ def build_openai_client():
         raise OpenAIUnavailable("Install the openai package to enable the AI judge.") from error
 
     return OpenAI()
+
+
+def build_transcription_prompt(context: ConversationContext) -> str:
+    expected_values = [
+        value
+        for value in [context.target_text, context.target_romanized, context.target_meaning]
+        if value
+    ]
+    expected_hint = "; ".join(expected_values) or "the learner's short response"
+    language_name = language_display_name(context.language)
+    return (
+        f"The learner is practicing {language_name}. "
+        f"They are attempting this short guided-scene response: {expected_hint}. "
+        "Prefer the practiced language over unrelated scripts when the audio is uncertain. "
+        "If the learner approximates the phrase with an accent, transcribe the closest intended phrase."
+    )
+
+
+def learner_facing_transcript(transcript: str, context: ConversationContext) -> str:
+    if not transcript:
+        return ""
+    if has_unexpected_script(transcript, context.language):
+        return f"unclear {language_display_name(context.language)} attempt"
+    return romanize_for_language(transcript, context.language)
+
+
+def language_display_name(language: str) -> str:
+    return {
+        "en": "English",
+        "ja": "Japanese",
+        "ta": "Tamil",
+    }.get(language, language or "target language")
 
 
 def build_judge_prompt(

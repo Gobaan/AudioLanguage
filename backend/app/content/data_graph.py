@@ -42,6 +42,7 @@ def load_language_session(
     functions = index_by_id(read_json(data_dir / "curriculum" / "functions.json"), "functions")
     scenes = index_by_id(read_json(data_dir / "curriculum" / "scenes.json"), "scenes")
     review_modes = index_by_id(read_json(data_dir / "curriculum" / "review_modes.json"), "review_modes")
+    card_templates = index_by_id(read_json(data_dir / "curriculum" / "card_templates.json"), "card_templates")
     targets_data = read_json(language_dir / "targets.json")
     dialogues_data = read_json(language_dir / "dialogues.json")
     practice_data = read_json(language_dir / "practice_cards.json")
@@ -64,6 +65,7 @@ def load_language_session(
                 functions=functions,
                 scenes=scenes,
                 review_modes=review_modes,
+                card_templates=card_templates,
                 targets=targets,
                 dialogues=dialogues,
                 visual_beats=visual_beats,
@@ -88,6 +90,7 @@ def hydrate_practice_card(
     functions: dict[str, dict[str, Any]],
     scenes: dict[str, dict[str, Any]],
     review_modes: dict[str, dict[str, Any]],
+    card_templates: dict[str, dict[str, Any]],
     targets: dict[str, dict[str, Any]],
     dialogues: dict[str, dict[str, Any]],
     visual_beats: list[dict[str, Any]],
@@ -99,6 +102,7 @@ def hydrate_practice_card(
     function = required(functions, card.get("correct_function_id"), "function")
     scene = required(scenes, dialogue.get("scene_id"), "scene")
     review_mode = required(review_modes, card.get("mode"), "review mode")
+    template = card_templates.get(str(card.get("template_id", "")))
     asset_slug = dialogue.get("asset_slug") or dialogue.get("id")
 
     hydrated_dialogue = {
@@ -116,7 +120,7 @@ def hydrate_practice_card(
         ],
     }
 
-    return {
+    hydrated_card = {
         **card,
         "function": function,
         "target": target,
@@ -124,6 +128,14 @@ def hydrate_practice_card(
         "review_mode": review_mode,
         "dialogue": hydrated_dialogue,
     }
+    if template:
+        hydrated_card["template"] = template
+        hydrated_card["support"] = {
+            **template.get("default_support", {}),
+            **card.get("support", {}),
+        }
+
+    return hydrated_card
 
 
 def hydrate_line(

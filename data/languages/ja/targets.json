@@ -1,0 +1,155 @@
+{
+  "language": "ja",
+  "display_name": "Japanese",
+  "script": "Japanese",
+  "native_review_status": "needs_native_review",
+  "targets": [
+    {
+      "id": "ja-target-respond-hi",
+      "function_id": "respond_to_greeting",
+      "canonical": "こんにちは！",
+      "transliteration": "Konnichiwa!",
+      "display_meaning": "Respond to Hi.",
+      "meaning_units": ["hello", "response"],
+      "accepted_variants": ["こんにちは。", "やあ。", "どうも。"],
+      "valid_but_off_target": ["さようなら。", "病院はどこですか？"],
+      "wrong_for_context_examples": ["さようなら。", "病院はどこですか？"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "greeting_response"
+        },
+        "optional": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        }
+      },
+      "notes": {
+        "register": "friendly-basic",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ja-target-my-name-is",
+      "function_id": "introduce_self",
+      "canonical": "アンナです。",
+      "transliteration": "Anna desu.",
+      "display_meaning": "My name is Anna.",
+      "meaning_units": ["my", "name", "proper_noun"],
+      "accepted_variants": ["私の名前はアンナです。", "アンナと言います。"],
+      "valid_but_off_target": ["アンナ。"],
+      "wrong_for_context_examples": ["こんにちは。", "ありがとう。"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional": {
+          "greeting": true
+        }
+      },
+      "notes": {
+        "proper_noun": "Anna",
+        "register": "neutral",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ja-target-i-dont-understand",
+      "function_id": "say_do_not_understand",
+      "canonical": "わかりません。",
+      "transliteration": "Wakarimasen.",
+      "display_meaning": "I don't understand.",
+      "meaning_units": ["not", "understand"],
+      "accepted_variants": ["すみません、わかりません。", "すみません、分かりません。"],
+      "valid_but_off_target": ["ゆっくり言ってください。"],
+      "wrong_for_context_examples": ["はい。", "サンドイッチを一つお願いします。"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional": {
+          "apology": true,
+          "politeness": true
+        }
+      },
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ja-target-sorry-excuse-me",
+      "function_id": "apologize",
+      "canonical": "すみません。",
+      "transliteration": "Sumimasen.",
+      "display_meaning": "Excuse me / sorry.",
+      "meaning_units": ["sorry", "polite_softener"],
+      "accepted_variants": ["すみません", "ごめんなさい。"],
+      "valid_but_off_target": ["ありがとう。"],
+      "wrong_for_context_examples": ["こんにちは。", "サンドイッチください。"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "apology_or_attention"
+        },
+        "optional": {
+          "politeness": true
+        }
+      },
+      "notes": {
+        "register": "polite-basic",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ja-target-one-local-food-please",
+      "function_id": "order_local_food",
+      "canonical": "サンドイッチください。",
+      "transliteration": "Sandoicchi kudasai.",
+      "display_meaning": "Sandwich, please.",
+      "meaning_units": ["food_item", "please"],
+      "accepted_variants": ["サンドイッチをください。", "サンドイッチお願いします。", "サンドイッチを一つください。"],
+      "valid_but_off_target": ["サンドイッチを一つお願いします。"],
+      "wrong_for_context_examples": ["病院はどこですか？", "わかりません。"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "request_order",
+          "item": "sandwich"
+        },
+        "optional": {
+          "politeness": true
+        }
+      },
+      "notes": {
+        "food_slot": "sandwich",
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ja-target-where-is-hospital",
+      "function_id": "ask_where_hospital_is",
+      "canonical": "病院はどこですか？",
+      "transliteration": "Byouin wa doko desu ka?",
+      "display_meaning": "Where is the hospital?",
+      "meaning_units": ["where", "hospital", "question"],
+      "accepted_variants": ["すみません、病院はどこですか？", "病院はどちらですか？"],
+      "valid_but_off_target": ["病院を探しています。"],
+      "wrong_for_context_examples": ["いくらですか？", "サンドイッチをお願いします。"],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "ask_location",
+          "place": "hospital"
+        },
+        "optional": {
+          "politeness": true,
+          "urgency": true
+        }
+      },
+      "notes": {
+        "register": "urgent-neutral",
+        "native_review_required": true
+      }
+    }
+  ]
+}

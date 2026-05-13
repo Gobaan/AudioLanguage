@@ -1,0 +1,10 @@
+Use case: illustration-story
+Asset type: reusable pharmacist character reference sheet for language-learning comic panels
+Primary request: Create the base pharmacist archetype reference sheet for pharmacy and medicine scenes in a language-learning app.
+Style/medium: simple flat webcomic illustration matching learner-reference.png: clean dark line art, warm flat colors, expressive human face, clear at phone size.
+Subject: professional adult pharmacist, tidy short hair, white pharmacy coat over a mint shirt, dark pants, calm focused expression.
+Composition/framing: character reference sheet on a plain light background. Show the same character in four views: front neutral pose, three-quarter pose holding a small plain medicine box with no text, attentive listening pose, and helpful pointing gesture. Keep all four drawings clearly the same person.
+Personality: careful, calm, trustworthy, helpful.
+Continuity constraints: preserve exact outfit colors, hairstyle, body proportions, and simple webcomic face style across all poses.
+Text constraints: no captions, no labels, no dialogue, no subtitles, no translations, no logos, no watermark, no readable medicine text.
+Avoid: photorealism, animal mascot, fantasy costume, exaggerated cartoon proportions, extra characters, detailed background, readable text.

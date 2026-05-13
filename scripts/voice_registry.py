@@ -16,7 +16,7 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "+0Hz",
         },
         "friend": {
-            "provider_voice": "en-US-AriaNeural",
+            "provider_voice": "en-US-DavisNeural",
             "rate": "+2%",
             "pitch": "+0Hz",
         },
@@ -26,7 +26,7 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "-2Hz",
         },
         "classmate": {
-            "provider_voice": "en-US-AnaNeural",
+            "provider_voice": "en-US-DavisNeural",
             "rate": "+4%",
             "pitch": "+2Hz",
         },
@@ -46,19 +46,19 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "-3Hz",
         },
         "vendor": {
-            "provider_voice": "en-US-RogerNeural",
+            "provider_voice": "en-US-AriaNeural",
             "rate": "+3%",
-            "pitch": "-4Hz",
+            "pitch": "+0Hz",
         },
         "server": {
-            "provider_voice": "en-US-JasonNeural",
+            "provider_voice": "en-US-AriaNeural",
             "rate": "+5%",
             "pitch": "+0Hz",
         },
         "pharmacist": {
-            "provider_voice": "en-US-SaraNeural",
+            "provider_voice": "en-US-RogerNeural",
             "rate": "-3%",
-            "pitch": "+0Hz",
+            "pitch": "-2Hz",
         },
         "receptionist": {
             "provider_voice": "en-US-NancyNeural",
@@ -83,9 +83,9 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "+0Hz",
         },
         "friend": {
-            "provider_voice": "ta-IN-PallaviNeural",
+            "provider_voice": "ta-IN-ValluvarNeural",
             "rate": "+3%",
-            "pitch": "+2Hz",
+            "pitch": "+0Hz",
         },
         "neighbor": {
             "provider_voice": "ta-IN-ValluvarNeural",
@@ -93,9 +93,9 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "-3Hz",
         },
         "classmate": {
-            "provider_voice": "ta-IN-PallaviNeural",
+            "provider_voice": "ta-IN-ValluvarNeural",
             "rate": "+5%",
-            "pitch": "+4Hz",
+            "pitch": "+1Hz",
         },
         "staff": {
             "provider_voice": "ta-IN-ValluvarNeural",
@@ -113,9 +113,9 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "-4Hz",
         },
         "vendor": {
-            "provider_voice": "ta-IN-ValluvarNeural",
+            "provider_voice": "ta-IN-PallaviNeural",
             "rate": "+4%",
-            "pitch": "-6Hz",
+            "pitch": "+0Hz",
         },
         "server": {
             "provider_voice": "ta-IN-PallaviNeural",
@@ -123,7 +123,7 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "+1Hz",
         },
         "pharmacist": {
-            "provider_voice": "ta-IN-PallaviNeural",
+            "provider_voice": "ta-IN-ValluvarNeural",
             "rate": "-4%",
             "pitch": "-2Hz",
         },
@@ -139,6 +139,53 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
         },
         "default": {
             "provider_voice": "ta-IN-ValluvarNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+    },
+    "ja": {
+        "learner": {
+            "provider_voice": "ja-JP-NanamiNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+        "friend": {
+            "provider_voice": "ja-JP-KeitaNeural",
+            "rate": "+2%",
+            "pitch": "+0Hz",
+        },
+        "classmate": {
+            "provider_voice": "ja-JP-KeitaNeural",
+            "rate": "+4%",
+            "pitch": "+1Hz",
+        },
+        "staff": {
+            "provider_voice": "ja-JP-KeitaNeural",
+            "rate": "+0%",
+            "pitch": "-2Hz",
+        },
+        "local": {
+            "provider_voice": "ja-JP-KeitaNeural",
+            "rate": "-1%",
+            "pitch": "+0Hz",
+        },
+        "server": {
+            "provider_voice": "ja-JP-NanamiNeural",
+            "rate": "+3%",
+            "pitch": "+0Hz",
+        },
+        "vendor": {
+            "provider_voice": "ja-JP-NanamiNeural",
+            "rate": "+3%",
+            "pitch": "+0Hz",
+        },
+        "pharmacist": {
+            "provider_voice": "ja-JP-KeitaNeural",
+            "rate": "-3%",
+            "pitch": "-1Hz",
+        },
+        "default": {
+            "provider_voice": "ja-JP-NanamiNeural",
             "rate": "+0%",
             "pitch": "+0Hz",
         },

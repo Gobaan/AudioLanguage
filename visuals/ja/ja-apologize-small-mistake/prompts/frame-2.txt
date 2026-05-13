@@ -1,0 +1,10 @@
+Simple flat webcomic illustration, clean line art, expressive human characters.
+Use character references: learner-reference.png for the learner and staff-reference.png for the staff member.
+Scene: the same busy service counter from frames 0 and 1.
+Panel role: resolution.
+Action: after the learner says the attention-getting apology, the staff member finally looks up from the paperwork, makes eye contact, nods, and opens one hand toward the learner to invite her to continue.
+Speech bubble: one small speech bubble from the staff member containing only "...".
+Meaning support: the attention shift is the payoff; the learner can infer that the phrase worked because the staff looks up and engages.
+Composition: stable medium comic panel, staff face clearly visible and looking at the learner, learner relaxed but attentive at the counter.
+Continuity: preserve the same characters, clothing, counter layout, and warm webcomic style across the full card.
+Constraints: no subtitles, no translations, no readable dialogue text except the staff "..." speech bubble, no logos, no extra readable signs.

@@ -1,0 +1,10 @@
+Simple flat webcomic illustration, clean line art, expressive human characters.
+Use character references: learner-reference.png for the learner and staff-reference.png for the staff member.
+Scene: a busy but orderly service counter with forms, a small queue marker, and a counter screen with no readable text.
+Panel role: cue.
+Action: the staff member calls the next person forward while still looking down at paperwork or a counter screen; with one hand, the staff member makes a clear open-palmed gesture toward the counter to invite the next person up. The learner has just stepped out of the waiting area and is approaching the counter.
+Speech bubble: one small speech bubble from the staff member containing only "...".
+Meaning support: the staff's downcast gaze makes the call feel routine and not fully personal yet; the open-palmed gesture makes it clear the staff is calling the learner forward; the learner's forward step shows it is now her turn.
+Composition: stable medium comic panel, staff behind the counter on the right, learner entering from the left, both characters readable.
+Continuity: preserve reference character identity, clothing, palette, proportions, and style across the full card.
+Constraints: no subtitles, no translations, no readable dialogue text except the staff "..." speech bubble, no logos, no extra characters unless they are simple background silhouettes.

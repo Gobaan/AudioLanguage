@@ -423,7 +423,7 @@
       "text": "What is your name?",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-introduce-self/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -449,7 +449,7 @@
       "text": "My name is Anna.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-introduce-self/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -475,7 +475,7 @@
       "text": "Nice to meet you, Anna.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-introduce-self/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -579,7 +579,7 @@
       "text": "Please fill out this form.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-repair-dont-understand/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -605,7 +605,7 @@
       "text": "Sorry, I don't understand.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-repair-dont-understand/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -631,7 +631,7 @@
       "text": "That's okay. I can help.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-repair-dont-understand/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -1167,7 +1167,7 @@
       "speaker_role": "server",
       "voice_id": "en-server",
       "voice_profile": {
-        "provider_voice": "en-US-JasonNeural",
+        "provider_voice": "en-US-GuyNeural",
         "rate": "+5%",
         "pitch": "+0Hz",
         "id": "en-server",
@@ -1177,7 +1177,7 @@
       "text": "What would you like?",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-order-local-food/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -1203,7 +1203,7 @@
       "text": "One sandwich, please.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-order-local-food/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -1219,7 +1219,7 @@
       "speaker_role": "server",
       "voice_id": "en-server",
       "voice_profile": {
-        "provider_voice": "en-US-JasonNeural",
+        "provider_voice": "en-US-GuyNeural",
         "rate": "+5%",
         "pitch": "+0Hz",
         "id": "en-server",
@@ -1229,7 +1229,7 @@
       "text": "Okay.",
       "transliteration": "",
       "audio_path": "audio/generated/en/en-order-local-food/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {
@@ -1241,6 +1241,32 @@
       "target_id": "en-target-where-is-hospital",
       "scene_id": "hospital-street-corner",
       "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "local",
+      "voice_id": "en-local",
+      "voice_profile": {
+        "provider_voice": "en-US-ChristopherNeural",
+        "rate": "-1%",
+        "pitch": "+0Hz",
+        "id": "en-local",
+        "provider": "edge_tts",
+        "speaker_role": "local"
+      },
+      "text": "Can I help?",
+      "transliteration": "",
+      "audio_path": "audio/generated/en/en-directions-hospital/line-0.mp3",
+      "status": "generated",
+      "native_review_required": false
+    },
+    {
+      "id": "en-directions-hospital-line-1",
+      "language": "en",
+      "dialogue_id": "en-directions-hospital",
+      "dialogue_type": "anchor",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "en-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 1,
       "line_type": "learner_target",
       "speaker_role": "learner",
       "voice_id": "en-learner",
@@ -1254,19 +1280,19 @@
       },
       "text": "Where is the hospital?",
       "transliteration": "",
-      "audio_path": "audio/generated/en/en-directions-hospital/line-0.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/en/en-directions-hospital/line-1.mp3",
+      "status": "generated",
       "native_review_required": false
     },
     {
-      "id": "en-directions-hospital-line-1",
+      "id": "en-directions-hospital-line-2",
       "language": "en",
       "dialogue_id": "en-directions-hospital",
       "dialogue_type": "anchor",
       "function_id": "ask_where_hospital_is",
       "target_id": "en-target-where-is-hospital",
       "scene_id": "hospital-street-corner",
-      "line_index": 1,
+      "line_index": 2,
       "line_type": "world_response",
       "speaker_role": "local",
       "voice_id": "en-local",
@@ -1280,34 +1306,8 @@
       },
       "text": "Over there.",
       "transliteration": "",
-      "audio_path": "audio/generated/en/en-directions-hospital/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": false
-    },
-    {
-      "id": "en-directions-hospital-line-2",
-      "language": "en",
-      "dialogue_id": "en-directions-hospital",
-      "dialogue_type": "anchor",
-      "function_id": "ask_where_hospital_is",
-      "target_id": "en-target-where-is-hospital",
-      "scene_id": "hospital-street-corner",
-      "line_index": 2,
-      "line_type": "learner_close",
-      "speaker_role": "learner",
-      "voice_id": "en-learner",
-      "voice_profile": {
-        "provider_voice": "en-US-JennyNeural",
-        "rate": "+0%",
-        "pitch": "+0Hz",
-        "id": "en-learner",
-        "provider": "edge_tts",
-        "speaker_role": "learner"
-      },
-      "text": "Thank you.",
-      "transliteration": "",
       "audio_path": "audio/generated/en/en-directions-hospital/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": false
     },
     {

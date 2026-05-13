@@ -23,6 +23,12 @@ data/
       visual_beats.json
       audio_assets.json
       visual_prompts.json
+    ja/
+      targets.json
+      dialogues.json
+      practice_cards.json
+      visual_beats.json
+      audio_assets.json
 ```
 
 Future languages should add their own folder:
@@ -36,6 +42,7 @@ data/languages/ru/
 Current language folders:
 
 - `en`: English seed content used to validate the graph shape.
+- `ja`: Japanese MVP content for testing the language-picker flow and AI-guided card loop; marked `needs_native_review`.
 - `ta`: Tamil seed content for testing a language the builder does not understand; marked `needs_native_review`.
 
 ## Core Relationships
@@ -114,25 +121,45 @@ To generate MP3 files from the manifest when `edge-tts` is installed and network
 
 ```powershell
 python scripts/generate_tts_from_manifest.py --language ta --limit 3
+python scripts/generate_tts_from_manifest.py --language ja
 ```
 
 The visual prompt exporter writes prompt text files under `visuals/generated/{language}/{dialogue_id}/prompts/` so image and video tools can be driven from the same source data.
 
 ## Practice Card Principle
 
-The default new-card template is `guided-speaking-scene-v1` in `data/curriculum/card_templates.json`.
+Learning-engine decisions are documented in `skills/learning-engine-flow/SKILL.md`.
+
+The default new-card template is `guided-dialogue-replay-v1` in `data/curriculum/card_templates.json`.
 
 It uses the working first-card loop:
 
-1. Audio prompt: "They say" while showing frame 0.
-2. Scene partner line plays while showing frame 0.
-3. Audio prompt: "You say" while switching to frame 1.
-4. Learner model line plays while showing frame 1.
-5. Audio prompt: "Now you try" while staying on frame 1.
-6. Mic records and verifies against target script plus transliteration.
-7. Failure shows heard pronunciation, expected pronunciation, and Try Again.
+1. Autoplay the full visual dialogue once, rotating frames as each spoken line plays.
+2. Hide inactive controls during the first autoplay.
+3. Show a green glow while scene audio is playing.
+4. After the first watch, show `Try`.
+5. On `Try`, replay only the partner cue line.
+6. Play the "Now you try" prompt while switching to the learner frame.
+7. Start the microphone after the cue finishes; the on-screen listening state tells the learner it is their turn.
+8. Show a blue glow only while the microphone is actually listening.
+9. Hold the learner frame during recording and AI checking.
+10. Show concise AI feedback; play the partner response after a successful attempt when available.
 
-Frame 2 / final partner response is optional and should be reserved for full-dialogue review or post-success confirmation. It is not part of the default speaking practice loop.
+Frame 2 / final partner response is optional but useful as post-success confirmation. It should not interrupt a retry after failure.
+
+For beginner cards, keep the first session to short chunks first. Longer survival phrases should unlock by extension. Romanized pronunciation should remain hidden until after a failed attempt, then appear with full-speed and slow target audio as recovery support.
+
+The template supplies the shared support flags server-side, so individual cards should only override differences:
+
+```json
+{
+  "template_id": "guided-dialogue-replay-v1",
+  "mode": "ai_guided_response",
+  "support": {}
+}
+```
+
+Every card using this template must include an `ai_scene_contract` with a plain-English target-function definition, required semantic slots, optional slots, likely wrong intents, and short feedback rules.
 
 The MVP should not only ask the learner to repeat one phrase across many scenes.
 

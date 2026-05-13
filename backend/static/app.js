@@ -29,6 +29,8 @@ const state = {
   targetPhones: [],
   communication: null,
   copiedPrompt: false,
+  lastRecordingUrl: '',
+  lastRecordingFilename: '',
   hasWatchedDialogue: false,
   hasAutoplayedDialogue: false,
   isAutoplayingDialogue: false,
@@ -37,7 +39,22 @@ const state = {
 const PROMPT_AUDIO = {
   theySay: '/audio/prompts/opening.mp3',
   youSay: '/audio/prompts/user_says.mp3',
-  nowYouTry: '/audio/prompts/call_to_action.mp3',
+};
+
+const TEMPLATE_IDS = {
+  guidedDialogueReplay: 'guided-dialogue-replay-v1',
+};
+
+const TEMPLATE_SUPPORT_DEFAULTS = {
+  [TEMPLATE_IDS.guidedDialogueReplay]: {
+    show_visual: true,
+    play_full_dialogue_first: true,
+    autoplay_full_dialogue: true,
+    replay_until_learner_turn: true,
+    show_target_text_after_attempt: true,
+    show_examples_before_attempt: false,
+    show_transliteration_after_failure: true,
+  },
 };
 
 const preloadedImages = new Map();
@@ -65,10 +82,13 @@ init();
 async function init() {
   try {
     state.languages = await fetchJson('/api/languages');
-    if (!state.languages.some(language => language.id === state.language)) {
+    const savedLanguage = window.localStorage.getItem('audio-language-selected');
+    if (savedLanguage && state.languages.some(language => language.id === savedLanguage)) {
+      state.language = savedLanguage;
+    } else if (!state.languages.some(language => language.id === state.language)) {
       state.language = state.languages[0]?.id || 'en';
     }
-    await loadSession(state.language);
+    renderLanguageSelect();
   } catch (error) {
     renderError(error.message);
   }
@@ -76,6 +96,7 @@ async function init() {
 
 async function loadSession(language) {
   state.language = language;
+  window.localStorage.setItem('audio-language-selected', language);
   state.session = await fetchJson(`/api/languages/${encodeURIComponent(language)}/session`);
   preloadSessionImages(state.session);
   state.cardIndex = 0;
@@ -91,7 +112,7 @@ async function fetchJson(url) {
 
 function render() {
   if (!state.session) {
-    renderLoading();
+    renderLanguageSelect();
     return;
   }
 
@@ -115,6 +136,7 @@ function render() {
   bind('[data-action="watch-dialogue"]', 'click', () => watchDialogue(card));
   bind('[data-action="try-dialogue"]', 'click', () => tryDialogue(card));
   bind('[data-action="play-target"]', 'click', () => playTarget(card));
+  bind('[data-action="play-target-slow"]', 'click', () => playTarget(card, 0.5));
   bind('[data-action="try-line"]', 'click', () => recordAndVerify(card));
   bind('[data-action="retry-speech"]', 'click', () => recordAndVerify(card));
   bind('[data-action="reveal"]', 'click', revealAnswer);
@@ -128,6 +150,29 @@ function render() {
   });
 
   maybeAutoplayDialogue(card);
+}
+
+function renderLanguageSelect() {
+  app.innerHTML = `
+    <section class="language-start">
+      <div class="language-start-copy">
+        <span>Choose a practice language</span>
+        <h1>Audio Language</h1>
+      </div>
+      <div class="language-grid">
+        ${state.languages.map(language => `
+          <button class="language-card ${language.id === state.language ? 'selected' : ''}" data-language-id="${escapeHtml(language.id)}">
+            <strong>${escapeHtml(language.display_name)}</strong>
+            <small>${escapeHtml(language.id.toUpperCase())}</small>
+          </button>
+        `).join('')}
+      </div>
+    </section>
+  `;
+
+  document.querySelectorAll('[data-language-id]').forEach(button => {
+    button.addEventListener('click', () => loadSession(button.dataset.languageId));
+  });
 }
 
 function cardShellClass(card) {
@@ -231,6 +276,8 @@ function renderCardBody(card) {
     renderChoices(card),
     renderFeedback(card),
     renderSpeechResult(),
+    renderFailureRescue(card),
+    renderDebugTools(card),
   ].join('');
 
   if (!content.trim()) return '';
@@ -243,7 +290,7 @@ function renderCardBody(card) {
 }
 
 function renderBeginnerExamples(card) {
-  const shouldShow = card.support?.show_examples_before_attempt || false;
+  const shouldShow = supportFor(card).show_examples_before_attempt || false;
   if (!shouldShow) return '';
 
   const examples = exampleResponsesFor(card).slice(0, 4);
@@ -380,6 +427,52 @@ function renderCommunicationFeedback() {
   `;
 }
 
+function renderFailureRescue(card) {
+  if (state.speechMatched !== false) return '';
+  if (!supportFor(card).show_transliteration_after_failure) return '';
+
+  const line = targetLine(card);
+  const transliteration = line?.transliteration || card.target?.transliteration || '';
+  if (!transliteration) return '';
+
+  return `
+    <div class="rescue-card">
+      <span>Pronunciation rescue</span>
+      <strong>${escapeHtml(transliteration)}</strong>
+    </div>
+  `;
+}
+
+function renderDebugTools(card) {
+  if (!isLocalDebugHost()) return '';
+  if (!state.lastRecordingUrl && !state.speechTranscript) return '';
+
+  return `
+    <details class="debug-tools" open>
+      <summary>Debug tools</summary>
+      <div class="debug-tool-grid">
+        ${state.lastRecordingUrl ? `
+          <a class="text-button" href="${escapeHtml(state.lastRecordingUrl)}" download="${escapeHtml(state.lastRecordingFilename || 'recording.webm')}">
+            Download recording
+          </a>
+        ` : ''}
+        ${state.speechTranscript ? `
+          <div class="debug-readout">
+            <span>Displayed transcript</span>
+            <code>${escapeHtml(state.speechTranscript)}</code>
+          </div>
+        ` : ''}
+        ${card.id ? `
+          <div class="debug-readout">
+            <span>Card</span>
+            <code>${escapeHtml(card.id)}</code>
+          </div>
+        ` : ''}
+      </div>
+    </details>
+  `;
+}
+
 function renderPhoneShape() {
   if (!state.phoneAvailable) {
     return '<strong>Phone recognizer unavailable</strong>';
@@ -440,7 +533,7 @@ function renderBeatChips(beats) {
 }
 
 function renderControls(card) {
-  if (card.support?.play_full_dialogue_first) {
+  if (isGuidedDialogueReplay(card)) {
     return renderGuidedDialogueControls(card);
   }
 
@@ -468,16 +561,30 @@ function renderControls(card) {
 function renderGuidedDialogueControls(card) {
   const isBusy = state.isPlaying || state.isListening || state.isTranscribing;
   const hasNextCard = state.cardIndex < state.session.cards.length - 1;
+  const hasAttemptResult = state.speechMatched !== null;
+  const canContinue = state.hasWatchedDialogue && hasAttemptResult && !isBusy;
+  const canHearTarget = state.speechMatched === false && Boolean(targetLine(card)?.audio);
+  const continueLabel = hasNextCard ? 'Continue' : 'Finish';
+  const skipLabel = hasNextCard ? 'Skip' : 'Finish';
 
   if (!state.hasWatchedDialogue && (state.isAutoplayingDialogue || state.isPlaying)) {
-    return '';
+    return `
+      <footer class="controls guided-controls">
+        <button class="text-button subtle" data-action="next">${skipLabel}</button>
+      </footer>
+    `;
   }
 
   return `
     <footer class="controls guided-controls">
       ${!state.hasWatchedDialogue ? '<button class="text-button" data-action="watch-dialogue">Watch Dialogue</button>' : ''}
       <button class="text-button primary" data-action="try-dialogue" ${isBusy || !state.hasWatchedDialogue ? 'disabled' : ''}>Try</button>
-      ${hasNextCard ? '<button class="icon-button" data-action="next" aria-label="Next card">â€º</button>' : ''}
+      ${canHearTarget ? `
+        <button class="text-button" data-action="play-target" ${isBusy ? 'disabled' : ''}>Hear Line</button>
+        <button class="text-button" data-action="play-target-slow" ${isBusy ? 'disabled' : ''}>Hear Slow</button>
+      ` : ''}
+      ${canContinue ? `<button class="text-button" data-action="next">${continueLabel}</button>` : ''}
+      ${!canContinue ? `<button class="text-button subtle" data-action="next" ${isBusy ? 'disabled' : ''}>${skipLabel}</button>` : ''}
       ${!state.hasWatchedDialogue ? '<span class="control-hint">Watch once, then try your part.</span>' : ''}
     </footer>
   `;
@@ -538,8 +645,6 @@ function scenePlaybackSteps(card) {
     steps.push({ url: PROMPT_AUDIO.youSay, lineIndex: learnerLine.index });
     steps.push({ url: learnerLine.audio, lineIndex: learnerLine.index });
   }
-  steps.push({ url: PROMPT_AUDIO.nowYouTry, lineIndex: learnerLine.index });
-
   return steps;
 }
 
@@ -628,7 +733,6 @@ async function watchDialogue(card) {
 async function tryDialogue(card) {
   clearAttemptFeedback();
   await playMany(openerToLearnerSteps(card));
-  await playMany([{ url: PROMPT_AUDIO.nowYouTry, lineIndex: targetLine(card)?.index }]);
   await recordAndVerify(card);
   if (state.speechMatched) {
     await playMany(responseAfterLearnerSteps(card));
@@ -643,7 +747,7 @@ async function runPracticeTurn(card) {
 }
 
 async function maybeAutoplayDialogue(card) {
-  if (!card.support?.autoplay_full_dialogue) return;
+  if (!isGuidedDialogueReplay(card) || !supportFor(card).autoplay_full_dialogue) return;
   if (state.hasAutoplayedDialogue || state.hasWatchedDialogue) return;
   if (state.isAutoplayingDialogue) return;
   if (state.isPlaying || state.isListening || state.isTranscribing) return;
@@ -657,9 +761,9 @@ async function maybeAutoplayDialogue(card) {
   }
 }
 
-async function playTarget(card) {
+async function playTarget(card, playbackRate = 1) {
   const line = targetLine(card);
-  if (line?.audio) await playMany([{ url: line.audio, lineIndex: line.index }]);
+  if (line?.audio) await playMany([{ url: line.audio, lineIndex: line.index, playbackRate }]);
 }
 
 async function playMany(steps) {
@@ -670,7 +774,7 @@ async function playMany(steps) {
       state.activeLineIndex = Number(step.lineIndex);
       render();
     }
-    await playAudio(step.url);
+    await playAudio(step.url, step.playbackRate);
   }
   state.isPlaying = false;
   render();
@@ -702,6 +806,7 @@ async function recordAndVerify(card) {
   render();
 
   const recordingBlob = await recorder.recordFor(recordingPolicyFor(card, line));
+  setLastRecording(recordingBlob, card);
   state.isListening = false;
   state.isTranscribing = true;
   state.speechStatus = 'Checking';
@@ -921,9 +1026,10 @@ function getAudioDuration(url) {
   });
 }
 
-function playAudio(url) {
+function playAudio(url, playbackRate = 1) {
   return new Promise(resolve => {
     const audio = new Audio(url);
+    audio.playbackRate = playbackRate;
     window.currentAudio = audio;
     audio.onended = resolve;
     audio.onerror = resolve;
@@ -966,6 +1072,7 @@ function togglePronunciation() {
 }
 
 function nextCard() {
+  stopCurrentAudio();
   state.cardIndex += 1;
   resetCardState();
   render();
@@ -973,9 +1080,32 @@ function nextCard() {
 
 function previousCard() {
   if (state.cardIndex === 0) return;
+  stopCurrentAudio();
   state.cardIndex -= 1;
   resetCardState();
   render();
+}
+
+function stopCurrentAudio() {
+  if (!window.currentAudio) return;
+  window.currentAudio.pause();
+  window.currentAudio.currentTime = 0;
+  window.currentAudio = null;
+}
+
+function setLastRecording(recordingBlob, card) {
+  clearLastRecording();
+  state.lastRecordingUrl = URL.createObjectURL(recordingBlob);
+  const extension = recordingExtension(recordingBlob.type);
+  state.lastRecordingFilename = `${card.id || 'card'}-${Date.now()}.${extension}`;
+}
+
+function clearLastRecording() {
+  if (state.lastRecordingUrl) {
+    URL.revokeObjectURL(state.lastRecordingUrl);
+  }
+  state.lastRecordingUrl = '';
+  state.lastRecordingFilename = '';
 }
 
 function resetCardState() {
@@ -999,6 +1129,7 @@ function clearSpeechResult() {
 }
 
 function clearAttemptFeedback() {
+  clearLastRecording();
   state.speechTranscript = '';
   state.heardRhythm = '';
   state.heardBeats = [];
@@ -1017,8 +1148,30 @@ function clearAttemptFeedback() {
   state.expectedRhythm = '';
 }
 
+function isLocalDebugHost() {
+  return ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname);
+}
+
+function recordingExtension(mimeType) {
+  if (mimeType.includes('mp4')) return 'mp4';
+  if (mimeType.includes('ogg')) return 'ogg';
+  if (mimeType.includes('wav')) return 'wav';
+  return 'webm';
+}
+
 function currentCard() {
   return state.session.cards[state.cardIndex];
+}
+
+function isGuidedDialogueReplay(card) {
+  return card.template_id === TEMPLATE_IDS.guidedDialogueReplay || supportFor(card).play_full_dialogue_first;
+}
+
+function supportFor(card) {
+  return {
+    ...(TEMPLATE_SUPPORT_DEFAULTS[card?.template_id] || {}),
+    ...(card?.support || {}),
+  };
 }
 
 function canShowTargetSupport() {
@@ -1080,6 +1233,7 @@ function renderComplete() {
       <div class="status-mark success" aria-hidden="true">✓</div>
       <h2>Session complete</h2>
       <button class="text-button primary" data-action="restart">Restart</button>
+      <button class="text-button" data-action="change-language">Change Language</button>
     </section>
   `;
 
@@ -1088,6 +1242,13 @@ function renderComplete() {
     resetCardState();
     render();
   });
+  bind('[data-action="change-language"]', 'click', showLanguageSelect);
+}
+
+function showLanguageSelect() {
+  state.session = null;
+  resetCardState();
+  renderLanguageSelect();
 }
 
 function renderLoading() {

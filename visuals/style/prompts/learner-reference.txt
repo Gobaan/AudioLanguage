@@ -1,0 +1,10 @@
+Use case: illustration-story
+Asset type: reusable character reference sheet for language-learning comic panels
+Primary request: Create the base learner avatar reference sheet for a language-learning app.
+Style/medium: simple flat webcomic illustration, clean dark line art, warm flat colors, expressive human face, clear at phone size.
+Subject: young adult woman learner, friendly and approachable, medium build, average height, short dark wavy hair, warm medium skin tone, teal zip hoodie over a plain white shirt, dark navy pants, simple gray sneakers, small tan crossbody bag.
+Composition/framing: character reference sheet on a plain light background. Show the same character in four views: front neutral pose, three-quarter standing pose, friendly wave, and slightly confused listening expression. Keep all four drawings clearly the same person.
+Personality: curious, slightly nervous in new situations, capable, warm, ordinary.
+Continuity constraints: preserve exact outfit colors, hairstyle, bag, body proportions, and simple webcomic face style across all poses.
+Text constraints: no captions, no labels, no dialogue, no subtitles, no translations, no logos, no watermark.
+Avoid: photorealism, animal mascot, fantasy costume, school uniform, exaggerated cartoon proportions, extra characters, detailed background, readable text.

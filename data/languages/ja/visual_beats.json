@@ -1,0 +1,437 @@
+{
+  "language": "ja",
+  "display_name": "Japanese",
+  "script": "Japanese",
+  "native_review_status": "needs_native_review",
+  "visual_beats": [
+    {
+      "id": "ja-vb-first-hi-response-0",
+      "dialogue_id": "ja-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 0,
+      "line_text": "こんにちは！",
+      "timing_role": "cue",
+      "meaning_units": ["hello"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "friend enters, smiles, waves, and starts the greeting"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "ja-vb-first-hi-response-1",
+      "dialogue_id": "ja-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 1,
+      "line_text": "こんにちは！",
+      "timing_role": "learner_turn",
+      "meaning_units": ["hello", "response"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello,response",
+          "visual_cue": "learner looks up, smiles, and waves back"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "ja-vb-first-hi-response-2",
+      "dialogue_id": "ja-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 2,
+      "line_text": "会えてうれしいです。",
+      "timing_role": "resolution",
+      "meaning_units": ["positive_response"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "friend smiles warmly, showing the greeting worked"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "ja-vb-introduce-self-0",
+      "dialogue_id": "ja-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 0,
+      "line_text": "お名前は？",
+      "timing_role": "cue",
+      "meaning_units": ["your", "name", "question"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "classmate smiles and gestures toward the learner, asking for their name"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-introduce-self-1",
+      "dialogue_id": "ja-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 1,
+      "line_text": "アンナです。",
+      "timing_role": "learner_turn",
+      "meaning_units": ["my", "name", "proper_noun"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "learner touches chest and introduces themself; a small name label on notebook says Anna"
+        }
+      ],
+      "proper_noun_labels": ["Anna"],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-introduce-self-2",
+      "dialogue_id": "ja-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 2,
+      "line_text": "よろしくお願いします。",
+      "timing_role": "resolution",
+      "meaning_units": ["positive_response"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "classmate smiles warmly and nods in recognition"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-repair-dont-understand-0",
+      "dialogue_id": "ja-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 0,
+      "line_text": "こちらに記入してください。",
+      "timing_role": "cue",
+      "meaning_units": ["this"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this",
+          "visual_cue": "staff points to a form on the counter and speaks quickly"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-repair-dont-understand-1",
+      "dialogue_id": "ja-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 1,
+      "line_text": "わかりません。",
+      "timing_role": "learner_turn",
+      "meaning_units": ["not", "understand"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "not,understand",
+          "visual_cue": "learner raises a small apologetic hand and looks confused"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-repair-dont-understand-2",
+      "dialogue_id": "ja-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 2,
+      "line_text": "大丈夫です。手伝います。",
+      "timing_role": "resolution",
+      "meaning_units": ["help"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "staff softens posture and points helpfully to the form"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-apologize-small-mistake-0",
+      "dialogue_id": "ja-apologize-small-mistake",
+      "function_id": "apologize",
+      "target_id": "ja-target-sorry-excuse-me",
+      "scene_id": "busy-service-counter",
+      "line_index": 0,
+      "line_text": "次の方、どうぞ。",
+      "timing_role": "cue",
+      "meaning_units": ["attention", "turn_prompt"],
+      "asset_paths": {
+        "image": "visuals/ja/ja-apologize-small-mistake/frame-0.png",
+        "image_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-0.txt",
+        "video_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention,turn_prompt",
+          "visual_cue": "staff calls the next person forward while still looking down at paperwork or a counter screen; learner begins stepping up"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-apologize-small-mistake-1",
+      "dialogue_id": "ja-apologize-small-mistake",
+      "function_id": "apologize",
+      "target_id": "ja-target-sorry-excuse-me",
+      "scene_id": "busy-service-counter",
+      "line_index": 1,
+      "line_text": "すみません。",
+      "timing_role": "learner_turn",
+      "meaning_units": ["attention_request", "polite_softener"],
+      "asset_paths": {
+        "image": "visuals/ja/ja-apologize-small-mistake/frame-1.png",
+        "image_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-1.txt",
+        "video_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_request,polite_softener",
+          "visual_cue": "learner steps to the counter and gives a small polite bow or gentle raised-hand gesture while staff is still looking down"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-apologize-small-mistake-2",
+      "dialogue_id": "ja-apologize-small-mistake",
+      "function_id": "apologize",
+      "target_id": "ja-target-sorry-excuse-me",
+      "scene_id": "busy-service-counter",
+      "line_index": 2,
+      "line_text": "はい、どうぞ。",
+      "timing_role": "resolution",
+      "meaning_units": ["attention_received", "acknowledgement"],
+      "asset_paths": {
+        "image": "visuals/ja/ja-apologize-small-mistake/frame-2.png",
+        "image_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-2.txt",
+        "video_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_received,acknowledgement",
+          "visual_cue": "staff looks up from the counter, makes eye contact, nods, and invites the learner to continue"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-order-local-food-0",
+      "dialogue_id": "ja-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 0,
+      "line_text": "何にしますか？",
+      "timing_role": "cue",
+      "meaning_units": ["question"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "server waits at the counter with food visible nearby"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-order-local-food-1",
+      "dialogue_id": "ja-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 1,
+      "line_text": "サンドイッチください。",
+      "timing_role": "learner_turn",
+      "meaning_units": ["food_item", "please"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "food_item,please",
+          "visual_cue": "learner points to a sandwich and asks politely"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-order-local-food-2",
+      "dialogue_id": "ja-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 2,
+      "line_text": "はい。",
+      "timing_role": "resolution",
+      "meaning_units": ["acknowledgement"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "server nods and reaches toward the food"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-directions-hospital-0",
+      "dialogue_id": "ja-directions-hospital",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "ja-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 0,
+      "line_text": "どうしましたか？",
+      "timing_role": "cue",
+      "meaning_units": ["help", "question"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help,question",
+          "visual_cue": "local person notices the worried learner looking at a phone map"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-directions-hospital-1",
+      "dialogue_id": "ja-directions-hospital",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "ja-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 1,
+      "line_text": "病院はどこですか？",
+      "timing_role": "learner_turn",
+      "meaning_units": ["where", "hospital", "question"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "where,hospital,question",
+          "visual_cue": "learner looks worried and gestures down the street while holding a phone map"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-directions-hospital-2",
+      "dialogue_id": "ja-directions-hospital",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "ja-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 2,
+      "line_text": "あちらです。",
+      "timing_role": "resolution",
+      "meaning_units": ["place"],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "place",
+          "visual_cue": "local person points clearly toward the hospital direction"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    }
+  ]
+}

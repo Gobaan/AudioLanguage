@@ -7,8 +7,14 @@ BACKEND_DIR = Path(__file__).resolve().parents[1] / "backend"
 sys.path.insert(0, str(BACKEND_DIR))
 
 from app.conversation.judge import LocalCommunicationJudge
-from app.conversation.models import ConversationContext, SpeechInterpretation
-from app.conversation.openai_adapter import build_judge_prompt, judgement_from_payload
+from app.conversation.coach import apply_deterministic_pass_guard
+from app.conversation.models import CommunicationJudgement, ConversationContext, SpeechInterpretation
+from app.conversation.openai_adapter import (
+    build_judge_prompt,
+    build_transcription_prompt,
+    judgement_from_payload,
+    learner_facing_transcript,
+)
 
 
 class LocalCommunicationJudgeTests(unittest.TestCase):
@@ -50,6 +56,54 @@ class LocalCommunicationJudgeTests(unittest.TestCase):
 
         self.assertFalse(result.close_enough)
         self.assertEqual(result.status, "unclear")
+
+
+class DeterministicPassGuardTests(unittest.TestCase):
+    def test_overrides_false_judge_when_transcript_matches_target(self):
+        guarded = apply_deterministic_pass_guard(
+            interpretation=SpeechInterpretation(
+                transcript="\u3042\u3093\u306a\u3067\u3059\u3002",
+                romanized="annadesu.",
+                score=0.941,
+                available=True,
+            ),
+            judgement=CommunicationJudgement(
+                status="off_target",
+                close_enough=False,
+                confidence=0.25,
+                message="Not the expected intent.",
+            ),
+            context=ConversationContext(
+                language="ja",
+                target_romanized="Anna desu.",
+                scene_contract={"partner_role": "classmate"},
+            ),
+        )
+
+        self.assertTrue(guarded.close_enough)
+        self.assertEqual(guarded.status, "exact_line_match")
+        self.assertEqual(guarded.next_action, "continue")
+
+    def test_keeps_judge_failure_when_transcript_is_not_close(self):
+        judgement = CommunicationJudgement(
+            status="off_target",
+            close_enough=False,
+            confidence=0.25,
+            message="Not the expected intent.",
+        )
+
+        guarded = apply_deterministic_pass_guard(
+            interpretation=SpeechInterpretation(
+                transcript="arigatou",
+                romanized="arigatou",
+                score=0.2,
+                available=True,
+            ),
+            judgement=judgement,
+            context=ConversationContext(language="ja", target_romanized="Anna desu."),
+        )
+
+        self.assertIs(guarded, judgement)
 
 
 class OpenAIPromptAdapterTests(unittest.TestCase):
@@ -96,6 +150,29 @@ class OpenAIPromptAdapterTests(unittest.TestCase):
         self.assertEqual(judgement.status, "exact")
         self.assertEqual(judgement.partner_response, "Nice to see you!")
         self.assertEqual(judgement.next_action, "continue")
+
+    def test_build_transcription_prompt_includes_expected_language_context(self):
+        prompt = build_transcription_prompt(
+            ConversationContext(
+                language="ja",
+                target_text="\u3053\u3093\u306b\u3061\u306f\uff01",
+                target_romanized="Konnichiwa!",
+                target_meaning="Respond to a greeting.",
+            )
+        )
+
+        self.assertIn("Japanese", prompt)
+        self.assertIn("Konnichiwa", prompt)
+        self.assertIn("unrelated scripts", prompt)
+
+    def test_learner_facing_transcript_hides_unrelated_script(self):
+        transcript = "\u05e1\u05de\u05d9\u05dd \u05d0\u05e1\u05df \u05d5\u05db\u05e8\u05d9\u05dd \u05d0\u05e1\u05df"
+        display = learner_facing_transcript(
+            transcript,
+            ConversationContext(language="ja", target_romanized="Konnichiwa!"),
+        )
+
+        self.assertEqual(display, "unclear Japanese attempt")
 
 
 if __name__ == "__main__":

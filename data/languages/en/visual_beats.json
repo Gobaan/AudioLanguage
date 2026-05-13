@@ -11,7 +11,9 @@
       "line_index": 0,
       "line_text": "Hi!",
       "timing_role": "cue",
-      "meaning_units": ["hello"],
+      "meaning_units": [
+        "hello"
+      ],
       "asset_paths": {
         "image": "visuals/ta-greeting-hello/frame-0.png",
         "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
@@ -34,7 +36,10 @@
       "line_index": 1,
       "line_text": "Hi!",
       "timing_role": "learner_turn",
-      "meaning_units": ["hello", "response"],
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
       "asset_paths": {
         "image": "visuals/ta-greeting-hello/frame-1.png",
         "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
@@ -61,7 +66,9 @@
       "line_index": 2,
       "line_text": "Nice to see you.",
       "timing_role": "resolution",
-      "meaning_units": ["positive_response"],
+      "meaning_units": [
+        "positive_response"
+      ],
       "asset_paths": {
         "image": "visuals/ta-greeting-hello/frame-2.png",
         "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
@@ -84,7 +91,9 @@
       "line_index": 0,
       "line_text": "Hello!",
       "timing_role": "setup",
-      "meaning_units": ["hello"],
+      "meaning_units": [
+        "hello"
+      ],
       "asset_paths": {
         "audio": "audio/ta-greeting-hello-0.mp3",
         "image": "visuals/ta-greeting-hello/frame-0.png",
@@ -108,7 +117,11 @@
       "line_index": 1,
       "line_text": "Hello! How are you?",
       "timing_role": "learner_target",
-      "meaning_units": ["hello", "you", "question"],
+      "meaning_units": [
+        "hello",
+        "you",
+        "question"
+      ],
       "asset_paths": {
         "audio": "audio/ta-greeting-hello-1.mp3",
         "image": "visuals/ta-greeting-hello/frame-1.png",
@@ -140,7 +153,10 @@
       "line_index": 2,
       "line_text": "Fine. Thank you.",
       "timing_role": "response",
-      "meaning_units": ["fine", "thank_you"],
+      "meaning_units": [
+        "fine",
+        "thank_you"
+      ],
       "asset_paths": {
         "audio": "audio/ta-greeting-hello-2.mp3",
         "image": "visuals/ta-greeting-hello/frame-2.png",
@@ -158,84 +174,491 @@
         }
       ],
       "proper_noun_labels": []
+    },
+    {
+      "id": "en-vb-introduce-self-0",
+      "dialogue_id": "en-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 0,
+      "line_text": "What is your name?",
+      "timing_role": "cue",
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "classmate smiles and gestures toward the learner, asking for their name"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-introduce-self-1",
+      "dialogue_id": "en-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 1,
+      "line_text": "My name is Anna.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "learner touches chest and introduces themself; a small name label on notebook says Anna"
+        }
+      ],
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-introduce-self-2",
+      "dialogue_id": "en-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 2,
+      "line_text": "Nice to meet you, Anna.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "proper_noun",
+          "visual_cue": "classmate smiles warmly and nods in recognition"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-repair-dont-understand-0",
+      "dialogue_id": "en-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 0,
+      "line_text": "Please fill out this form.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "this"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this",
+          "visual_cue": "staff points to a form on the counter and speaks quickly"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-repair-dont-understand-1",
+      "dialogue_id": "en-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 1,
+      "line_text": "Sorry, I don't understand.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "sorry",
+        "not",
+        "understand"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "sorry,not,understand",
+          "visual_cue": "learner raises a small apologetic hand and looks confused"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-repair-dont-understand-2",
+      "dialogue_id": "en-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 2,
+      "line_text": "That's okay. I can help.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "help"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "staff softens posture and points helpfully to the form"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-order-local-food-0",
+      "dialogue_id": "en-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 0,
+      "line_text": "What would you like?",
+      "timing_role": "cue",
+      "meaning_units": [
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "server waits at the counter with food visible nearby"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-order-local-food-1",
+      "dialogue_id": "en-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 1,
+      "line_text": "One sandwich, please.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "one",
+        "food_item",
+        "please"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "one,food_item,please",
+          "visual_cue": "learner points to a sandwich and holds up one finger politely"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-order-local-food-2",
+      "dialogue_id": "en-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 2,
+      "line_text": "Okay.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "server nods and reaches toward the food"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-directions-hospital-0",
+      "dialogue_id": "en-directions-hospital",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "en-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 0,
+      "line_text": "Can I help?",
+      "timing_role": "cue",
+      "meaning_units": [
+        "help",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-0.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help,question",
+          "visual_cue": "local person notices the worried learner looking at a phone map"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-directions-hospital-1",
+      "dialogue_id": "en-directions-hospital",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "en-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 1,
+      "line_text": "Where is the hospital?",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "where",
+        "hospital",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-1.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "where,hospital,question",
+          "visual_cue": "learner looks worried and gestures down the street while holding a phone map"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
+    },
+    {
+      "id": "en-vb-directions-hospital-2",
+      "dialogue_id": "en-directions-hospital",
+      "function_id": "ask_where_hospital_is",
+      "target_id": "en-target-where-is-hospital",
+      "scene_id": "hospital-street-corner",
+      "line_index": 2,
+      "line_text": "Over there.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "place"
+      ],
+      "asset_paths": {
+        "image": "visuals/ta-greeting-hello/frame-2.png",
+        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
+        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "place",
+          "visual_cue": "local person points clearly toward the hospital direction"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Temporary generic frame reused for MVP card flow testing."
     }
   ],
   "generation_backlog": [
     {
       "dialogue_id": "en-greeting-neighbor",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-greeting-classmate",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-greeting-and-you",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-introduce-self",
-      "needed_assets": ["line images", "video prompts", "audio", "proper noun labels"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio",
+        "proper noun labels"
+      ]
     },
     {
       "dialogue_id": "en-repair-say-slowly",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-repair-dont-understand",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-directions-bus-stop",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-shop-water",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-market-price",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-pay-and-close",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-apologize-small-mistake",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-speak-little-language",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-politeness-please-thanks",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-order-local-food",
-      "needed_assets": ["line images", "video prompts", "audio", "localized food item visuals"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio",
+        "localized food item visuals"
+      ]
     },
     {
       "dialogue_id": "en-directions-hospital",
-      "needed_assets": ["line images", "video prompts", "audio", "medical location visuals"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio",
+        "medical location visuals"
+      ]
     },
     {
       "dialogue_id": "en-pharmacy-cough-medicine",
-      "needed_assets": ["line images", "video prompts", "audio", "respectful symptom gesture"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio",
+        "respectful symptom gesture"
+      ]
     },
     {
       "dialogue_id": "en-pharmacy-diarrhea-medicine",
-      "needed_assets": ["line images", "video prompts", "audio", "respectful symptom gesture"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio",
+        "respectful symptom gesture"
+      ]
     },
     {
       "dialogue_id": "en-hostel-check-in",
-      "needed_assets": ["line images", "video prompts", "audio"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio"
+      ]
     },
     {
       "dialogue_id": "en-social-coffee-invitation",
-      "needed_assets": ["line images", "video prompts", "audio", "refusal path visuals"]
+      "needed_assets": [
+        "line images",
+        "video prompts",
+        "audio",
+        "refusal path visuals"
+      ]
     }
   ]
 }

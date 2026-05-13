@@ -31,11 +31,14 @@ async def generate_language(
     language: str,
     force: bool,
     limit: int | None,
+    dialogue_ids: set[str] | None,
 ) -> tuple[int, int]:
     manifest = read_json(data_dir / "languages" / language / "audio_assets.json")
     created = 0
     skipped = 0
     for item in manifest.get("assets", []):
+        if dialogue_ids and item.get("dialogue_id") not in dialogue_ids:
+            continue
         if limit is not None and created >= limit:
             break
 
@@ -66,6 +69,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--data-dir", default="data", type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to generate. Repeatable.")
+    parser.add_argument("--dialogue-id", action="append", help="Only generate audio for this dialogue id. Repeatable.")
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--limit", type=int, help="Maximum files to create per language.")
     return parser.parse_args()
@@ -84,6 +88,7 @@ async def async_main() -> None:
             language=language,
             force=args.force,
             limit=args.limit,
+            dialogue_ids=set(args.dialogue_id) if args.dialogue_id else None,
         )
         print(f"{language}: created {created}, skipped {skipped}")
 

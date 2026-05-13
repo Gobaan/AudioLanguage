@@ -136,17 +136,19 @@ The repeated scene gives memory an anchor; the changing challenge prevents patte
 
 ## Default Speaking Card Template
 
-When creating a new beginner speaking card for this project, use `guided-speaking-scene-v1` from `data/curriculum/card_templates.json` unless the user explicitly asks for a different card type.
+When creating a new beginner speaking card for this project, use `guided-dialogue-replay-v1` from `data/curriculum/card_templates.json` unless the user explicitly asks for a different card type.
 
 Default card structure:
 
-1. **They say** prompt audio plays while frame 0 is visible.
-2. The scene partner's cue line plays while frame 0 remains visible.
-3. **You say** prompt audio plays while switching to frame 1.
-4. The learner model line plays while frame 1 remains visible.
-5. **Now you try** prompt audio plays while frame 1 remains visible.
-6. The app records the learner and verifies against both target script and transliteration.
-7. On failure, show heard pronunciation, expected pronunciation, and a Try Again button.
+1. The app autoplays the full visual dialogue once, rotating frames as each spoken line plays.
+2. Controls are hidden during the first autoplay so the user simply watches.
+3. After the first watch, the user taps **Try**.
+4. The app replays only the scene partner cue line while showing frame 0.
+5. **Now you try** prompt audio plays while switching to frame 1.
+6. The microphone starts only after the prompt audio finishes.
+7. The app keeps frame 1 visible during listening and AI checking.
+8. The AI judges whether the learner's attempt fits the scene contract.
+9. On success, the app may play the partner's final response. On failure, it shows short repair feedback and keeps the user on the same card.
 
 Required dialogue line shape:
 
@@ -159,15 +161,23 @@ Frame rules:
 - Every spoken line should have a matching frame.
 - Frame 0 should make the partner's cue visually obvious.
 - Frame 1 should show the learner-character ready to speak the target line.
-- Keep frame 1 visible during "You say", learner model audio, "Now you try", mic recording, and retry.
-- Do not include the final partner response in default practice playback. Use it later for full-dialogue review or post-success confirmation.
+- Keep frame 1 visible during "Now you try", mic recording, and AI checking.
+- Use the final partner response during full-dialogue watch and after a successful attempt.
 
 Text support rules:
 
 - Do not show target text before the first attempt.
-- Reveal target script only after success, manual reveal, or failed attempt feedback.
-- Keep transliteration hidden by default.
-- Use transliteration as corrective feedback after failure or behind an explicit pronunciation toggle.
+- Prefer context, audio, and AI feedback over translation.
+- Keep transliteration hidden by default unless a dedicated pronunciation support mode is active.
+- Keep AI feedback brief; do not turn the card into grammar instruction.
+
+AI contract rules:
+
+- Define intent ids in plain English inside `ai_scene_contract`.
+- Use required semantic slots, not only accepted phrase lists.
+- Include 2-4 likely wrong intents so the AI can reject plausible but off-target responses.
+- Keep the AI inside this single scene and current learner turn.
+- Return structured judgement for the learning engine.
 
 ## Visual Setup
 

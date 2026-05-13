@@ -9,14 +9,20 @@
       "function_id": "respond_to_greeting",
       "target_id": "en-target-respond-hi",
       "scene_id": "study-room-friend",
-      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "friend",
           "line_type": "world_opener",
           "text": "Hi!",
-          "meaning_units": ["hello"]
+          "meaning_units": [
+            "hello"
+          ]
         },
         {
           "index": 1,
@@ -24,14 +30,19 @@
           "line_type": "learner_target",
           "target_id": "en-target-respond-hi",
           "text": "Hi!",
-          "meaning_units": ["hello", "response"]
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "friend",
           "line_type": "world_response",
           "text": "Nice to see you.",
-          "meaning_units": ["positive_response"]
+          "meaning_units": [
+            "positive_response"
+          ]
         }
       ]
     },
@@ -42,16 +53,28 @@
       "function_id": "greet_and_ask_wellbeing",
       "target_id": "en-target-hello-how-are-you",
       "scene_id": "study-room-friend",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
-      "extension_candidates": ["en-greeting-and-you"],
-      "transfer_candidates": ["en-greeting-neighbor", "en-greeting-classmate"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
+      "extension_candidates": [
+        "en-greeting-and-you"
+      ],
+      "transfer_candidates": [
+        "en-greeting-neighbor",
+        "en-greeting-classmate"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "friend",
           "line_type": "world_opener",
           "text": "Hello!",
-          "meaning_units": ["hello"],
+          "meaning_units": [
+            "hello"
+          ],
           "audio_path": "audio/ta-greeting-hello-0.mp3"
         },
         {
@@ -60,7 +83,11 @@
           "line_type": "learner_target",
           "target_id": "en-target-hello-how-are-you",
           "text": "Hello! How are you?",
-          "meaning_units": ["hello", "you", "question"],
+          "meaning_units": [
+            "hello",
+            "you",
+            "question"
+          ],
           "audio_path": "audio/ta-greeting-hello-1.mp3"
         },
         {
@@ -68,7 +95,10 @@
           "speaker_role": "friend",
           "line_type": "world_response",
           "text": "Fine. Thank you.",
-          "meaning_units": ["fine", "thank_you"],
+          "meaning_units": [
+            "fine",
+            "thank_you"
+          ],
           "audio_path": "audio/ta-greeting-hello-2.mp3"
         }
       ]
@@ -79,7 +109,11 @@
       "function_id": "greet_and_ask_wellbeing",
       "target_id": "en-target-hello-how-are-you",
       "scene_id": "neighbor-gate",
-      "review_modes": ["transfer", "produce_from_visual", "free_response"],
+      "review_modes": [
+        "transfer",
+        "produce_from_visual",
+        "free_response"
+      ],
       "source_anchor_id": "en-greeting-hello",
       "lines": [
         {
@@ -87,7 +121,9 @@
           "speaker_role": "neighbor",
           "line_type": "world_opener",
           "text": "Good morning!",
-          "meaning_units": ["hello"]
+          "meaning_units": [
+            "hello"
+          ]
         },
         {
           "index": 1,
@@ -95,14 +131,21 @@
           "line_type": "learner_target",
           "target_id": "en-target-hello-how-are-you",
           "text": "Hello! How are you?",
-          "meaning_units": ["hello", "you", "question"]
+          "meaning_units": [
+            "hello",
+            "you",
+            "question"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "neighbor",
           "line_type": "world_response",
           "text": "I'm fine. Thank you.",
-          "meaning_units": ["fine", "thank_you"]
+          "meaning_units": [
+            "fine",
+            "thank_you"
+          ]
         }
       ]
     },
@@ -112,7 +155,11 @@
       "function_id": "greet_and_ask_wellbeing",
       "target_id": "en-target-hello-how-are-you",
       "scene_id": "school-hallway-classmate",
-      "review_modes": ["transfer", "response_cue", "free_response"],
+      "review_modes": [
+        "transfer",
+        "response_cue",
+        "free_response"
+      ],
       "source_anchor_id": "en-greeting-hello",
       "lines": [
         {
@@ -120,7 +167,9 @@
           "speaker_role": "classmate",
           "line_type": "world_opener",
           "text": "Hi!",
-          "meaning_units": ["hello"]
+          "meaning_units": [
+            "hello"
+          ]
         },
         {
           "index": 1,
@@ -128,14 +177,21 @@
           "line_type": "learner_target",
           "target_id": "en-target-hello-how-are-you",
           "text": "Hi, how are you?",
-          "meaning_units": ["hello", "you", "question"]
+          "meaning_units": [
+            "hello",
+            "you",
+            "question"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "classmate",
           "line_type": "world_response",
           "text": "Good, thanks.",
-          "meaning_units": ["fine", "thank_you"]
+          "meaning_units": [
+            "fine",
+            "thank_you"
+          ]
         }
       ]
     },
@@ -145,30 +201,48 @@
       "function_id": "greet_and_ask_wellbeing",
       "target_id": "en-target-hello-how-are-you",
       "scene_id": "study-room-friend",
-      "review_modes": ["listen", "echo", "missing_line", "free_response"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "missing_line",
+        "free_response"
+      ],
       "source_anchor_id": "en-greeting-hello",
-      "new_meaning_units": ["and_you"],
+      "new_meaning_units": [
+        "and_you"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "friend",
           "line_type": "world_opener",
           "text": "Hello! How are you?",
-          "meaning_units": ["hello", "you", "question"]
+          "meaning_units": [
+            "hello",
+            "you",
+            "question"
+          ]
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
           "text": "Fine, thank you. And you?",
-          "meaning_units": ["fine", "thank_you", "and_you", "question"]
+          "meaning_units": [
+            "fine",
+            "thank_you",
+            "and_you",
+            "question"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "friend",
           "line_type": "world_response",
           "text": "I'm fine too.",
-          "meaning_units": ["fine"]
+          "meaning_units": [
+            "fine"
+          ]
         }
       ]
     },
@@ -178,14 +252,23 @@
       "function_id": "introduce_self",
       "target_id": "en-target-my-name-is",
       "scene_id": "school-hallway-classmate",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "classmate",
           "line_type": "world_opener",
           "text": "What is your name?",
-          "meaning_units": ["your", "name", "question"]
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
         },
         {
           "index": 1,
@@ -193,14 +276,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-my-name-is",
           "text": "My name is Anna.",
-          "meaning_units": ["my", "name", "proper_noun"]
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "classmate",
           "line_type": "world_response",
           "text": "Nice to meet you, Anna.",
-          "meaning_units": ["proper_noun"]
+          "meaning_units": [
+            "proper_noun"
+          ]
         }
       ]
     },
@@ -210,14 +299,23 @@
       "function_id": "ask_for_repetition",
       "target_id": "en-target-say-it-slowly",
       "scene_id": "busy-service-counter",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "response_cue"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
           "text": "Please write your name here.",
-          "meaning_units": ["name", "here"]
+          "meaning_units": [
+            "name",
+            "here"
+          ]
         },
         {
           "index": 1,
@@ -225,14 +323,21 @@
           "line_type": "learner_target",
           "target_id": "en-target-say-it-slowly",
           "text": "Can you say it slowly?",
-          "meaning_units": ["you", "say", "slowly", "question"]
+          "meaning_units": [
+            "you",
+            "say",
+            "slowly",
+            "question"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
           "text": "Yes. Slowly.",
-          "meaning_units": ["slowly"]
+          "meaning_units": [
+            "slowly"
+          ]
         }
       ]
     },
@@ -242,14 +347,22 @@
       "function_id": "say_do_not_understand",
       "target_id": "en-target-i-dont-understand",
       "scene_id": "busy-service-counter",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "response_cue"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
           "text": "Please fill out this form.",
-          "meaning_units": ["this"]
+          "meaning_units": [
+            "this"
+          ]
         },
         {
           "index": 1,
@@ -257,14 +370,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-i-dont-understand",
           "text": "Sorry, I don't understand.",
-          "meaning_units": ["sorry", "not", "understand"]
+          "meaning_units": [
+            "sorry",
+            "not",
+            "understand"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
           "text": "That's okay. I can help.",
-          "meaning_units": ["help"]
+          "meaning_units": [
+            "help"
+          ]
         }
       ]
     },
@@ -274,7 +393,13 @@
       "function_id": "ask_where_place_is",
       "target_id": "en-target-where-is-bus-stop",
       "scene_id": "street-bus-stop",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "transfer"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "transfer"
+      ],
       "lines": [
         {
           "index": 0,
@@ -282,21 +407,29 @@
           "line_type": "learner_target",
           "target_id": "en-target-where-is-bus-stop",
           "text": "Where is the bus stop?",
-          "meaning_units": ["where", "place", "question"]
+          "meaning_units": [
+            "where",
+            "place",
+            "question"
+          ]
         },
         {
           "index": 1,
           "speaker_role": "local",
           "line_type": "world_response",
           "text": "Over there.",
-          "meaning_units": ["place"]
+          "meaning_units": [
+            "place"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "learner",
           "line_type": "learner_close",
           "text": "Thank you.",
-          "meaning_units": ["thank_you"]
+          "meaning_units": [
+            "thank_you"
+          ]
         }
       ]
     },
@@ -306,7 +439,13 @@
       "function_id": "request_basic_item",
       "target_id": "en-target-water-please",
       "scene_id": "corner-shop-water",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "free_response"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "free_response"
+      ],
       "lines": [
         {
           "index": 0,
@@ -314,21 +453,28 @@
           "line_type": "learner_target",
           "target_id": "en-target-water-please",
           "text": "Water, please.",
-          "meaning_units": ["item", "please"]
+          "meaning_units": [
+            "item",
+            "please"
+          ]
         },
         {
           "index": 1,
           "speaker_role": "shopkeeper",
           "line_type": "world_response",
           "text": "Here you go.",
-          "meaning_units": ["here"]
+          "meaning_units": [
+            "here"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "learner",
           "line_type": "learner_close",
           "text": "Thank you.",
-          "meaning_units": ["thank_you"]
+          "meaning_units": [
+            "thank_you"
+          ]
         }
       ]
     },
@@ -338,7 +484,13 @@
       "function_id": "ask_price",
       "target_id": "en-target-how-much-is-this",
       "scene_id": "market-stall-price",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "transfer"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "transfer"
+      ],
       "lines": [
         {
           "index": 0,
@@ -346,21 +498,29 @@
           "line_type": "learner_target",
           "target_id": "en-target-how-much-is-this",
           "text": "How much is this?",
-          "meaning_units": ["how_much", "this", "question"]
+          "meaning_units": [
+            "how_much",
+            "this",
+            "question"
+          ]
         },
         {
           "index": 1,
           "speaker_role": "vendor",
           "line_type": "world_response",
           "text": "Three dollars.",
-          "meaning_units": ["pay"]
+          "meaning_units": [
+            "pay"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "learner",
           "line_type": "learner_close",
           "text": "Thank you.",
-          "meaning_units": ["thank_you"]
+          "meaning_units": [
+            "thank_you"
+          ]
         }
       ]
     },
@@ -370,14 +530,21 @@
       "function_id": "pay_and_close",
       "target_id": "en-target-here-is-the-money",
       "scene_id": "market-stall-price",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "vendor",
           "line_type": "world_opener",
           "text": "Three dollars.",
-          "meaning_units": ["pay"]
+          "meaning_units": [
+            "pay"
+          ]
         },
         {
           "index": 1,
@@ -385,14 +552,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-here-is-the-money",
           "text": "Here is the money. Thank you.",
-          "meaning_units": ["here", "pay", "thank_you"]
+          "meaning_units": [
+            "here",
+            "pay",
+            "thank_you"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "vendor",
           "line_type": "world_response",
           "text": "Thank you.",
-          "meaning_units": ["thank_you"]
+          "meaning_units": [
+            "thank_you"
+          ]
         }
       ]
     },
@@ -402,14 +575,21 @@
       "function_id": "apologize",
       "target_id": "en-target-sorry",
       "scene_id": "busy-service-counter",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "learner",
           "line_type": "world_action",
           "text": "",
-          "meaning_units": ["mistake"]
+          "meaning_units": [
+            "mistake"
+          ]
         },
         {
           "index": 1,
@@ -417,14 +597,18 @@
           "line_type": "learner_target",
           "target_id": "en-target-sorry",
           "text": "Sorry.",
-          "meaning_units": ["sorry"]
+          "meaning_units": [
+            "sorry"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
           "text": "It's okay.",
-          "meaning_units": ["polite_softener"]
+          "meaning_units": [
+            "polite_softener"
+          ]
         }
       ]
     },
@@ -434,14 +618,22 @@
       "function_id": "say_speak_little_language",
       "target_id": "en-target-i-speak-a-little-english",
       "scene_id": "busy-service-counter",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "response_cue"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
           "text": "Please fill out this form.",
-          "meaning_units": ["this"]
+          "meaning_units": [
+            "this"
+          ]
         },
         {
           "index": 1,
@@ -449,14 +641,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-i-speak-a-little-english",
           "text": "I speak a little English.",
-          "meaning_units": ["speak", "little", "language"]
+          "meaning_units": [
+            "speak",
+            "little",
+            "language"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
           "text": "Okay. I will speak slowly.",
-          "meaning_units": ["slowly"]
+          "meaning_units": [
+            "slowly"
+          ]
         }
       ]
     },
@@ -466,14 +664,22 @@
       "function_id": "use_polite_basics",
       "target_id": "en-target-please-and-thank-you",
       "scene_id": "corner-shop-water",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "transfer"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "transfer"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "shopkeeper",
           "line_type": "world_opener",
           "text": "Water?",
-          "meaning_units": ["item"]
+          "meaning_units": [
+            "item"
+          ]
         },
         {
           "index": 1,
@@ -481,14 +687,19 @@
           "line_type": "learner_target",
           "target_id": "en-target-please-and-thank-you",
           "text": "Yes, please. Thank you.",
-          "meaning_units": ["please", "thank_you"]
+          "meaning_units": [
+            "please",
+            "thank_you"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "shopkeeper",
           "line_type": "world_response",
           "text": "You're welcome.",
-          "meaning_units": ["acknowledgement"]
+          "meaning_units": [
+            "acknowledgement"
+          ]
         }
       ]
     },
@@ -498,14 +709,22 @@
       "function_id": "order_local_food",
       "target_id": "en-target-one-local-food-please",
       "scene_id": "local-food-counter",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "free_response"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "free_response"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "server",
           "line_type": "world_opener",
           "text": "What would you like?",
-          "meaning_units": ["question"]
+          "meaning_units": [
+            "question"
+          ]
         },
         {
           "index": 1,
@@ -513,14 +732,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-one-local-food-please",
           "text": "One sandwich, please.",
-          "meaning_units": ["one", "food_item", "please"]
+          "meaning_units": [
+            "one",
+            "food_item",
+            "please"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "server",
           "line_type": "world_response",
           "text": "Okay.",
-          "meaning_units": ["acknowledgement"]
+          "meaning_units": [
+            "acknowledgement"
+          ]
         }
       ]
     },
@@ -530,29 +755,44 @@
       "function_id": "ask_where_hospital_is",
       "target_id": "en-target-where-is-hospital",
       "scene_id": "hospital-street-corner",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line", "response_cue"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "response_cue"
+      ],
       "lines": [
         {
           "index": 0,
+          "speaker_role": "local",
+          "line_type": "world_opener",
+          "text": "Can I help?",
+          "meaning_units": [
+            "help",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-where-is-hospital",
           "text": "Where is the hospital?",
-          "meaning_units": ["where", "hospital", "question"]
-        },
-        {
-          "index": 1,
-          "speaker_role": "local",
-          "line_type": "world_response",
-          "text": "Over there.",
-          "meaning_units": ["place"]
+          "meaning_units": [
+            "where",
+            "hospital",
+            "question"
+          ]
         },
         {
           "index": 2,
-          "speaker_role": "learner",
-          "line_type": "learner_close",
-          "text": "Thank you.",
-          "meaning_units": ["thank_you"]
+          "speaker_role": "local",
+          "line_type": "world_response",
+          "text": "Over there.",
+          "meaning_units": [
+            "place"
+          ]
         }
       ]
     },
@@ -562,14 +802,22 @@
       "function_id": "ask_pharmacy_medicine",
       "target_id": "en-target-cough-medicine-please",
       "scene_id": "pharmacy-counter",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "pharmacist",
           "line_type": "world_opener",
           "text": "Hello. Can I help?",
-          "meaning_units": ["help", "question"]
+          "meaning_units": [
+            "help",
+            "question"
+          ]
         },
         {
           "index": 1,
@@ -577,14 +825,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-cough-medicine-please",
           "text": "Cough medicine, please.",
-          "meaning_units": ["cough", "medicine", "please"]
+          "meaning_units": [
+            "cough",
+            "medicine",
+            "please"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "pharmacist",
           "line_type": "world_response",
           "text": "Okay. One moment.",
-          "meaning_units": ["acknowledgement"]
+          "meaning_units": [
+            "acknowledgement"
+          ]
         }
       ]
     },
@@ -594,7 +848,11 @@
       "function_id": "ask_pharmacy_medicine",
       "target_id": "en-target-diarrhea-medicine-please",
       "scene_id": "pharmacy-counter",
-      "review_modes": ["transfer", "produce_from_visual", "free_response"],
+      "review_modes": [
+        "transfer",
+        "produce_from_visual",
+        "free_response"
+      ],
       "source_anchor_id": "en-pharmacy-cough-medicine",
       "lines": [
         {
@@ -602,7 +860,10 @@
           "speaker_role": "pharmacist",
           "line_type": "world_opener",
           "text": "Hello. Can I help?",
-          "meaning_units": ["help", "question"]
+          "meaning_units": [
+            "help",
+            "question"
+          ]
         },
         {
           "index": 1,
@@ -610,14 +871,20 @@
           "line_type": "learner_target",
           "target_id": "en-target-diarrhea-medicine-please",
           "text": "Diarrhea medicine, please.",
-          "meaning_units": ["diarrhea", "medicine", "please"]
+          "meaning_units": [
+            "diarrhea",
+            "medicine",
+            "please"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "pharmacist",
           "line_type": "world_response",
           "text": "Okay. One moment.",
-          "meaning_units": ["acknowledgement"]
+          "meaning_units": [
+            "acknowledgement"
+          ]
         }
       ]
     },
@@ -627,14 +894,22 @@
       "function_id": "check_in_hostel",
       "target_id": "en-target-i-have-reservation",
       "scene_id": "hostel-front-desk",
-      "review_modes": ["listen", "echo", "produce_from_visual", "missing_line"],
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "receptionist",
           "line_type": "world_opener",
           "text": "Hello. Checking in?",
-          "meaning_units": ["check_in", "question"]
+          "meaning_units": [
+            "check_in",
+            "question"
+          ]
         },
         {
           "index": 1,
@@ -642,14 +917,21 @@
           "line_type": "learner_target",
           "target_id": "en-target-i-have-reservation",
           "text": "I have a reservation.",
-          "meaning_units": ["reservation", "check_in"]
+          "meaning_units": [
+            "reservation",
+            "check_in"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "receptionist",
           "line_type": "world_response",
           "text": "Your name, please?",
-          "meaning_units": ["name", "please", "question"]
+          "meaning_units": [
+            "name",
+            "please",
+            "question"
+          ]
         }
       ]
     },
@@ -659,15 +941,24 @@
       "function_id": "make_respectful_social_invitation",
       "target_id": "en-target-coffee-invitation",
       "scene_id": "cafe-social-chat",
-      "review_modes": ["listen", "echo", "free_response"],
-      "safety_notes": ["Teach polite refusal handling in a later review variant.", "Do not score persistence as success."],
+      "review_modes": [
+        "listen",
+        "echo",
+        "free_response"
+      ],
+      "safety_notes": [
+        "Teach polite refusal handling in a later review variant.",
+        "Do not score persistence as success."
+      ],
       "lines": [
         {
           "index": 0,
           "speaker_role": "conversation_partner",
           "line_type": "world_opener",
           "text": "This was nice.",
-          "meaning_units": ["acknowledgement"]
+          "meaning_units": [
+            "acknowledgement"
+          ]
         },
         {
           "index": 1,
@@ -675,21 +966,30 @@
           "line_type": "learner_target",
           "target_id": "en-target-coffee-invitation",
           "text": "Would you like to get coffee sometime?",
-          "meaning_units": ["coffee", "invitation"]
+          "meaning_units": [
+            "coffee",
+            "invitation"
+          ]
         },
         {
           "index": 2,
           "speaker_role": "conversation_partner",
           "line_type": "world_response",
           "text": "Yes, that sounds nice.",
-          "meaning_units": ["yes", "positive_response"]
+          "meaning_units": [
+            "yes",
+            "positive_response"
+          ]
         },
         {
           "index": 3,
           "speaker_role": "learner",
           "line_type": "learner_close",
           "text": "Great. See you soon.",
-          "meaning_units": ["positive_response", "goodbye"]
+          "meaning_units": [
+            "positive_response",
+            "goodbye"
+          ]
         }
       ]
     }
