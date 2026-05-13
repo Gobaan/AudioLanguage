@@ -36,6 +36,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def disable_browser_cache(request, call_next):
+    """Keep phone testing honest while assets and scenes are changing quickly."""
+    response = await call_next(request)
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
+
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 app.mount("/audio", StaticFiles(directory=str(AUDIO_DIR)), name="audio")
 app.mount("/visuals", StaticFiles(directory=str(VISUALS_DIR)), name="visuals")
