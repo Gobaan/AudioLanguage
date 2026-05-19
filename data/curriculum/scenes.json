@@ -641,7 +641,7 @@
       "mood": "movie-scene meet-cute, startled, embarrassed, warm, not angry",
       "physical_cues": {
         "world_opener": "learner and classmate have just bumped into each other and are both stumbling or falling backward, arms out for balance, notebooks slipping, loose papers flying dramatically all around them and scattering across the hallway floor; both faces are surprised and embarrassed, not angry",
-        "learner_target": "learner looks apologetic, raises one hand gently, and gives a small sorry bow or nod near the fallen papers",
+        "learner_target": "both characters are seated on the hallway floor after the bump, surrounded by scattered papers; the learner looks apologetic and hands a small stack of papers she picked up back to the classmate while saying sorry",
         "world_response": "classmate relaxes, smiles, and shows that it is okay while they begin gathering papers"
       }
     },
