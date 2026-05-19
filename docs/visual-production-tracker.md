@@ -7,14 +7,15 @@ This file tracks language-neutral visual assets and the recommended generation o
 Use this workflow for each three-frame scenario:
 
 1. Prototype prompts with `gpt-image-1-mini` + `quality low` if the scene blocking is still unknown.
-2. Promote the useful prompt wording, not the mini image.
-3. Generate MVP candidate art with `gpt-image-1` + `quality medium`.
-4. Use real reference inputs:
+2. Write prototype images to `visuals/Drafts/<dialogue-id>/`; do not overwrite production app assets during review.
+3. Promote the useful prompt wording, not the mini image.
+4. Generate MVP candidate art with `gpt-image-1` + `quality medium` using `--output-mode production` only after the draft is accepted.
+5. Use real reference inputs:
    - `visuals/style/examples/approved-comic-panel-sumimasen-cue.png`
    - needed character references from `visuals/style/characters/`
    - frame 0 as the stable scene/style anchor for later frames when consistency matters
-5. Do not bake text or speech bubbles into images. The app overlays turn-taking UI.
-6. Keep prompts language-neutral. Swap audio/evaluation targets per language; change visuals only when the scene or cultural action truly changes.
+6. Do not bake text or speech bubbles into images. The app overlays turn-taking UI.
+7. Keep prompts language-neutral. Swap audio/evaluation targets per language; change visuals only when the scene or cultural action truly changes.
 
 ## Current Approved/Working Set
 

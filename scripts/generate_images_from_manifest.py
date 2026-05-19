@@ -8,12 +8,13 @@ import re
 from contextlib import ExitStack
 from pathlib import Path
 
-from content_assets import list_language_dirs, path_exists, read_json, write_json
+from content_assets import list_language_dirs, read_json, write_json
 from load_secrets import load_secrets
 
 
 DEFAULT_MODEL = "gpt-image-1-mini"
 DEFAULT_QUALITY = "low"
+DEFAULT_DRAFT_ROOT = Path("visuals/Drafts")
 DEFAULT_STYLE_REFERENCE = Path("visuals/style/examples/approved-comic-panel-sumimasen-cue.png")
 REFERENCE_PATTERN = re.compile(r"visuals/style/(?:characters|examples)/[\w.-]+\.png")
 CHARACTER_REFERENCE_PATTERN = re.compile(r"\b[\w.-]+-reference\.png\b")
@@ -108,6 +109,32 @@ def generate_image(
     return reference_paths
 
 
+def draft_image_path(item: dict, draft_root: Path) -> str:
+    dialogue_id = item.get("dialogue_id")
+    line_index = item.get("line_index")
+    if dialogue_id is None or line_index is None:
+        raise ValueError("Manifest item needs dialogue_id and line_index to derive a draft path.")
+    return (draft_root / str(dialogue_id) / f"frame-{line_index}.png").as_posix()
+
+
+def output_image_path(item: dict, output_mode: str, draft_root: Path) -> str:
+    if output_mode == "draft":
+        return draft_image_path(item, draft_root)
+    return item["image_path"]
+
+
+def project_path(project_dir: Path, image_path: str) -> Path:
+    path = Path(image_path)
+    if path.is_absolute():
+        return path
+    return project_dir / path
+
+
+def path_has_content(project_dir: Path, image_path: str) -> bool:
+    path = project_path(project_dir, image_path)
+    return path.exists() and path.stat().st_size > 0
+
+
 def generate_language(
     *,
     data_dir: Path,
@@ -123,15 +150,20 @@ def generate_language(
     prompt_ids: set[str] | None,
     include_previous_frame: bool,
     explicit_reference_paths: list[Path],
+    output_mode: str,
+    draft_root: Path,
 ) -> tuple[int, int]:
     manifest_path = data_dir / "languages" / language / "visual_prompts.json"
     manifest = read_json(manifest_path)
     created = 0
     skipped = 0
     previous_frames = {
-        (item.get("dialogue_id"), item.get("line_index")): project_dir / item["image_path"]
+        (item.get("dialogue_id"), item.get("line_index")): project_path(
+            project_dir,
+            output_image_path(item, output_mode, draft_root),
+        )
         for item in manifest.get("prompts", [])
-        if "image_path" in item
+        if "image_path" in item or output_mode == "draft"
     }
 
     for item in manifest.get("prompts", []):
@@ -142,9 +174,10 @@ def generate_language(
         if limit is not None and created >= limit:
             break
 
-        image_path = item["image_path"]
-        if path_exists(project_dir, image_path) and not force:
-            item["status"] = "generated"
+        image_path = output_image_path(item, output_mode, draft_root)
+        if path_has_content(project_dir, image_path) and not force:
+            if output_mode == "production":
+                item["status"] = "generated"
             skipped += 1
             continue
 
@@ -157,7 +190,7 @@ def generate_language(
 
         reference_paths = generate_image(
             prompt=item["localized_prompt"],
-            out_path=project_dir / image_path,
+            out_path=project_path(project_dir, image_path),
             project_dir=project_dir,
             model=model,
             size=size,
@@ -165,14 +198,16 @@ def generate_language(
             reference_mode=reference_mode,
             extra_reference_paths=extra_reference_paths,
         )
-        item["status"] = "generated"
-        item["reference_images"] = [
-            str(path.relative_to(project_dir)).replace("\\", "/") for path in reference_paths
-        ]
+        if output_mode == "production":
+            item["status"] = "generated"
+            item["reference_images"] = [
+                str(path.relative_to(project_dir)).replace("\\", "/") for path in reference_paths
+            ]
         created += 1
         print(f"{language}: generated {image_path} with {len(reference_paths)} reference image(s)")
 
-    write_json(manifest_path, manifest)
+    if output_mode == "production":
+        write_json(manifest_path, manifest)
     return created, skipped
 
 
@@ -206,6 +241,21 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--limit", type=int, help="Maximum files to create per language.")
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--output-mode",
+        choices=["draft", "production"],
+        default="draft",
+        help=(
+            "Write generated images to visuals/Drafts by default. Use production only when "
+            "deliberately promoting assets to manifest image_path values under visuals/generated."
+        ),
+    )
+    parser.add_argument(
+        "--draft-root",
+        default=DEFAULT_DRAFT_ROOT,
+        type=Path,
+        help="Draft output root used when --output-mode draft.",
+    )
     return parser.parse_args()
 
 
@@ -235,8 +285,11 @@ def main() -> None:
             prompt_ids=set(args.prompt_id) if args.prompt_id else None,
             include_previous_frame=not args.no_previous_frame,
             explicit_reference_paths=explicit_reference_paths,
+            output_mode=args.output_mode,
+            draft_root=args.draft_root,
         )
-        print(f"{language}: created {created}, skipped {skipped}")
+        mode_label = "draft" if args.output_mode == "draft" else "production"
+        print(f"{language}: created {created}, skipped {skipped} ({mode_label} output)")
 
 
 if __name__ == "__main__":

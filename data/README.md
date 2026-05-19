@@ -107,6 +107,8 @@ Visual prompt manifests:
 - One entry per dialogue line, including silent visual setup beats.
 - Each entry keeps both a `shared_prompt` and a `localized_prompt`.
 - `image_path` points to `visuals/generated/{language}/{dialogue_id}/frame-{index}.png`.
+- Image generation defaults to draft output under `visuals/Drafts/{dialogue_id}/frame-{index}.png`.
+- Use `--output-mode production` only when deliberately promoting accepted art to the manifest `image_path`.
 
 Useful commands:
 
@@ -114,6 +116,8 @@ Useful commands:
 python scripts/build_audio_manifest.py
 python scripts/build_visual_prompt_manifest.py
 python scripts/export_visual_prompt_files.py --language ta
+python scripts/generate_images_from_manifest.py --language ja --prompt-id ja-first-hi-response-frame-0
+python scripts/generate_images_from_manifest.py --language ja --prompt-id ja-first-hi-response-frame-0 --output-mode production
 python scripts/validate_asset_manifests.py
 ```
 
@@ -124,7 +128,7 @@ python scripts/generate_tts_from_manifest.py --language ta --limit 3
 python scripts/generate_tts_from_manifest.py --language ja
 ```
 
-The visual prompt exporter writes prompt text files under `visuals/generated/{language}/{dialogue_id}/prompts/` so image and video tools can be driven from the same source data.
+The visual prompt exporter writes prompt text files under `visuals/generated/{language}/{dialogue_id}/prompts/` so image and video tools can be driven from the same source data. Draft image generation does not update `visual_prompts.json`; production generation records generated status and reference images.
 
 ## Practice Card Principle
 

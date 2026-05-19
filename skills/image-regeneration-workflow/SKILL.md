@@ -123,7 +123,8 @@ Accept only if the targeted defect is fixed without introducing a worse issue.
 
 ## Repo Command
 
-For this repo, include the current draft with `--reference-image` only for draft-reference revision mode:
+For this repo, image generation defaults to draft output under `visuals/Drafts/<dialogue-id>/`.
+Include the current draft with `--reference-image` only for draft-reference revision mode:
 
 ```powershell
 python scripts\generate_images_from_manifest.py --language ja --prompt-id <prompt-id> --limit 1 --force --reference-mode always --quality low --reference-image <current-draft.png>
@@ -134,3 +135,9 @@ Use `--no-previous-frame` for frame 0. For frame 1 or later, keep previous-frame
 For clean regeneration mode, omit `--reference-image`.
 
 Use `gpt-image-1-mini` and `--quality low` for prototype fixes. Upgrade to `gpt-image-1` and `--quality medium` only after the correction is visually working. Reserve `--quality high` for final polish after the scene direction is approved.
+
+Only write production app assets after a draft has been accepted:
+
+```powershell
+python scripts\generate_images_from_manifest.py --language ja --prompt-id <prompt-id> --output-mode production --model gpt-image-1 --quality medium --force
+```

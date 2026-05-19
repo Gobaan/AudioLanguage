@@ -1,14 +1,20 @@
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 BACKEND_DIR = PROJECT_DIR / "backend"
+SCRIPTS_DIR = PROJECT_DIR / "scripts"
 sys.path.insert(0, str(BACKEND_DIR))
+sys.path.insert(0, str(SCRIPTS_DIR))
 
 from app.content.loader import load_content_graph
 from app.content.data_graph import list_languages, load_language_session
+from content_assets import read_json, write_json
+from generate_images_from_manifest import generate_language
 
 
 class ContentLoaderTests(unittest.TestCase):
@@ -154,6 +160,57 @@ class StructuredDataGraphTests(unittest.TestCase):
         languages = list_languages(PROJECT_DIR / "data")
 
         self.assertIn({"id": "ta", "display_name": "Tamil"}, languages)
+
+
+class VisualGenerationScriptTests(unittest.TestCase):
+    def test_draft_generation_writes_drafts_without_updating_manifest(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            project_dir = Path(temp_dir)
+            data_dir = project_dir / "data"
+            manifest_path = data_dir / "languages" / "ja" / "visual_prompts.json"
+            manifest = {
+                "prompts": [
+                    {
+                        "id": "ja-test-frame-0",
+                        "dialogue_id": "ja-test",
+                        "line_index": 0,
+                        "localized_prompt": "A friendly greeting scene.",
+                        "image_path": "visuals/generated/ja/ja-test/frame-0.png",
+                        "status": "needs_generation",
+                    }
+                ]
+            }
+            write_json(manifest_path, manifest)
+
+            def fake_generate_image(**kwargs):
+                out_path = kwargs["out_path"]
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+                out_path.write_bytes(b"png")
+                return []
+
+            with patch("generate_images_from_manifest.generate_image", side_effect=fake_generate_image):
+                created, skipped = generate_language(
+                    data_dir=data_dir,
+                    project_dir=project_dir,
+                    language="ja",
+                    model="test-model",
+                    size="1024x1024",
+                    quality="low",
+                    reference_mode="never",
+                    force=False,
+                    limit=None,
+                    dialogue_ids=None,
+                    prompt_ids=None,
+                    include_previous_frame=False,
+                    explicit_reference_paths=[],
+                    output_mode="draft",
+                    draft_root=Path("visuals/Drafts"),
+                )
+
+            self.assertEqual((created, skipped), (1, 0))
+            self.assertTrue((project_dir / "visuals/Drafts/ja-test/frame-0.png").exists())
+            self.assertFalse((project_dir / "visuals/generated/ja/ja-test/frame-0.png").exists())
+            self.assertEqual(read_json(manifest_path), manifest)
 
 
 if __name__ == "__main__":
