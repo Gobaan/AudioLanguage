@@ -7,10 +7,22 @@
       "mvp_priority": 1,
       "description": "A learner studies at a desk when a friend enters and starts a friendly greeting.",
       "characters": [
-        { "role": "learner", "description": "seated at desk with notebook and headphones" },
-        { "role": "friend", "description": "friendly peer entering through doorway" }
+        {
+          "role": "learner",
+          "description": "seated at desk with notebook and headphones"
+        },
+        {
+          "role": "friend",
+          "description": "friendly peer entering through doorway"
+        }
       ],
-      "props": ["desk", "notebook", "pencil", "headphones", "open doorway"],
+      "props": [
+        "desk",
+        "notebook",
+        "pencil",
+        "headphones",
+        "open doorway"
+      ],
       "mood": "warm, casual, friendly",
       "physical_cues": {
         "world_opener": "friend enters, smiles, waves, and makes eye contact",
@@ -31,10 +43,21 @@
       "mvp_priority": 2,
       "description": "A neighbor pauses at a gate and greets the learner outside.",
       "characters": [
-        { "role": "learner", "description": "standing near a small front gate" },
-        { "role": "neighbor", "description": "friendly neighbor passing by" }
+        {
+          "role": "learner",
+          "description": "standing near a small front gate"
+        },
+        {
+          "role": "neighbor",
+          "description": "friendly neighbor passing by"
+        }
       ],
-      "props": ["front gate", "plants", "morning light", "pathway"],
+      "props": [
+        "front gate",
+        "plants",
+        "morning light",
+        "pathway"
+      ],
       "mood": "friendly, familiar, local",
       "physical_cues": {
         "world_opener": "neighbor pauses, waves, and smiles",
@@ -44,19 +67,30 @@
     },
     {
       "id": "school-hallway-classmate",
-      "environment": "school or language class hallway",
+      "environment": "school or language class hallway with name tags",
       "domain": "greetings",
       "mvp_priority": 3,
-      "description": "A classmate sees the learner before class and starts a quick greeting.",
+      "description": "A classmate sees the learner name tag before class and asks the learner to introduce herself.",
       "characters": [
-        { "role": "learner", "description": "standing with backpack or notebook" },
-        { "role": "classmate", "description": "friendly classmate approaching before class" }
+        {
+          "role": "learner",
+          "description": "standing with backpack or notebook and wearing a simple blank name tag"
+        },
+        {
+          "role": "classmate",
+          "description": "friendly classmate approaching before class, also wearing a simple blank name tag"
+        }
       ],
-      "props": ["backpack", "notebook", "classroom doorway"],
+      "props": [
+        "backpack",
+        "notebook",
+        "classroom doorway",
+        "blank name tags"
+      ],
       "mood": "casual, quick, friendly",
       "physical_cues": {
-        "world_opener": "classmate slows down and gives a quick wave",
-        "learner_target": "learner shifts attention from notebook and responds",
+        "world_opener": "classmate slows down, glances toward the learner name tag area, and asks for the learner name",
+        "learner_target": "learner points lightly to their own blank name tag while saying their name",
         "world_response": "classmate smiles and nods before moving on"
       }
     },
@@ -67,14 +101,25 @@
       "mvp_priority": 4,
       "description": "A staff member speaks quickly and the learner needs them to repeat slowly.",
       "characters": [
-        { "role": "learner", "description": "standing at a counter looking uncertain" },
-        { "role": "staff", "description": "helpful but busy person behind the counter" }
+        {
+          "role": "learner",
+          "description": "standing at a counter looking uncertain"
+        },
+        {
+          "role": "staff",
+          "description": "helpful but busy person behind the counter"
+        }
       ],
-      "props": ["counter", "forms", "small queue", "pen"],
+      "props": [
+        "counter",
+        "forms",
+        "small queue",
+        "pen"
+      ],
       "mood": "slightly pressured but helpful",
       "physical_cues": {
         "world_opener": "staff explains quickly while pointing to a form",
-        "learner_target": "learner looks confused, raises hand gently, and asks for slower repetition",
+        "learner_target": "learner looks confused, raises hand gently, and asks for slower repetition A small symbolic confusion cue such as floating question marks or a simple puzzled icon appears near the learner, without translations or dialogue text.",
         "world_response": "staff softens expression and repeats more slowly"
       }
     },
@@ -85,10 +130,21 @@
       "mvp_priority": 5,
       "description": "The learner needs to find a bus stop in an unfamiliar area.",
       "characters": [
-        { "role": "learner", "description": "holding a phone or small bag and looking around" },
-        { "role": "local", "description": "nearby person willing to point the way" }
+        {
+          "role": "learner",
+          "description": "holding a phone or small bag and looking around"
+        },
+        {
+          "role": "local",
+          "description": "nearby person willing to point the way"
+        }
       ],
-      "props": ["street corner", "shops", "phone map", "road"],
+      "props": [
+        "street corner",
+        "shops",
+        "phone map",
+        "road"
+      ],
       "mood": "practical, mildly urgent, relieved",
       "physical_cues": {
         "learner_target": "learner looks around, then asks with a palm-up searching gesture",
@@ -102,10 +158,21 @@
       "mvp_priority": 6,
       "description": "The learner wants to buy a bottle of water from a shopkeeper.",
       "characters": [
-        { "role": "learner", "description": "customer standing near a fridge or counter" },
-        { "role": "shopkeeper", "description": "friendly shopkeeper behind the counter" }
+        {
+          "role": "learner",
+          "description": "customer standing near a fridge or counter"
+        },
+        {
+          "role": "shopkeeper",
+          "description": "friendly shopkeeper behind the counter"
+        }
       ],
-      "props": ["water bottle", "counter", "small fridge", "cash tray"],
+      "props": [
+        "water bottle",
+        "counter",
+        "small fridge",
+        "cash tray"
+      ],
       "mood": "simple, practical, friendly",
       "physical_cues": {
         "learner_target": "learner points gently toward a water bottle and asks politely",
@@ -119,10 +186,21 @@
       "mvp_priority": 7,
       "description": "The learner points to an item at a market and asks the price.",
       "characters": [
-        { "role": "learner", "description": "customer looking at goods on a stall" },
-        { "role": "vendor", "description": "vendor standing behind displayed items" }
+        {
+          "role": "learner",
+          "description": "customer looking at goods on a stall"
+        },
+        {
+          "role": "vendor",
+          "description": "vendor standing behind displayed items"
+        }
       ],
-      "props": ["displayed goods", "price board without readable text", "cash", "bags"],
+      "props": [
+        "displayed goods",
+        "price board without readable text",
+        "cash",
+        "bags"
+      ],
       "mood": "busy, practical, polite",
       "physical_cues": {
         "learner_target": "learner points to an item and looks between item and vendor",
@@ -136,10 +214,21 @@
       "mvp_priority": 8,
       "description": "The learner orders one common local food item from a friendly server.",
       "characters": [
-        { "role": "learner", "description": "customer looking at visible food or a menu board" },
-        { "role": "server", "description": "busy but friendly food counter worker" }
+        {
+          "role": "learner",
+          "description": "customer looking at visible food or a menu board"
+        },
+        {
+          "role": "server",
+          "description": "busy but friendly food counter worker"
+        }
       ],
-      "props": ["food display", "menu board without readable text", "tray", "counter"],
+      "props": [
+        "food display",
+        "menu board without readable text",
+        "tray",
+        "counter"
+      ],
       "mood": "warm, hungry, practical",
       "physical_cues": {
         "learner_target": "learner points to a visible food item and holds up one finger",
@@ -148,19 +237,31 @@
     },
     {
       "id": "hospital-street-corner",
-      "environment": "street corner near a clinic or hospital district",
+      "environment": "street corner with a visible ambulance or emergency vehicle, no hospital building visible",
       "domain": "health_directions",
       "mvp_priority": 9,
-      "description": "The learner urgently asks a local person where the hospital is.",
+      "description": "The learner urgently approaches a paramedic or ambulance crew member because they need to find the hospital.",
       "characters": [
-        { "role": "learner", "description": "worried person holding a phone map" },
-        { "role": "local", "description": "nearby person who can point toward the hospital" }
+        {
+          "role": "learner",
+          "description": "worried person holding a phone map and approaching for help"
+        },
+        {
+          "role": "local",
+          "description": "paramedic or ambulance worker standing near an ambulance"
+        }
       ],
-      "props": ["phone map", "street signs without readable text", "medical cross symbol", "road"],
+      "props": [
+        "ambulance",
+        "medical cross symbol on vehicle",
+        "phone map",
+        "street corner"
+      ],
       "mood": "concerned, urgent, helpful",
       "physical_cues": {
-        "learner_target": "learner looks worried, shows phone, and asks with a searching gesture",
-        "world_response": "local points firmly toward the hospital direction"
+        "world_opener": "paramedic notices the worried learner approaching near the ambulance, with no hospital building visible",
+        "learner_target": "learner looks worried, shows phone map, and asks where the hospital is with a searching gesture",
+        "world_response": "paramedic points firmly toward the hospital direction away from the current scene"
       }
     },
     {
@@ -170,10 +271,21 @@
       "mvp_priority": 10,
       "description": "The learner asks a pharmacist for medicine for a simple symptom.",
       "characters": [
-        { "role": "learner", "description": "customer at the pharmacy counter looking uncomfortable" },
-        { "role": "pharmacist", "description": "attentive pharmacist behind the counter" }
+        {
+          "role": "learner",
+          "description": "customer at the pharmacy counter looking uncomfortable"
+        },
+        {
+          "role": "pharmacist",
+          "description": "attentive pharmacist behind the counter"
+        }
       ],
-      "props": ["medicine shelves", "counter", "small medicine boxes", "water bottle"],
+      "props": [
+        "medicine shelves",
+        "counter",
+        "small medicine boxes",
+        "water bottle"
+      ],
       "mood": "practical, slightly embarrassed, caring",
       "physical_cues": {
         "learner_target": "learner gestures to symptom gently and asks for medicine",
@@ -187,10 +299,22 @@
       "mvp_priority": 11,
       "description": "The learner arrives with a bag and starts a simple hostel check-in.",
       "characters": [
-        { "role": "learner", "description": "traveler with backpack, phone, and passport" },
-        { "role": "receptionist", "description": "hostel staff member at front desk" }
+        {
+          "role": "learner",
+          "description": "traveler with backpack, phone, and passport"
+        },
+        {
+          "role": "receptionist",
+          "description": "hostel staff member at front desk"
+        }
       ],
-      "props": ["front desk", "backpack", "passport", "phone booking", "room key"],
+      "props": [
+        "front desk",
+        "backpack",
+        "passport",
+        "phone booking",
+        "room key"
+      ],
       "mood": "tired, practical, relieved",
       "physical_cues": {
         "world_opener": "receptionist looks up from desk and smiles",
@@ -205,14 +329,380 @@
       "mvp_priority": 30,
       "description": "Two adults chat casually, and the learner makes a respectful low-pressure social invitation.",
       "characters": [
-        { "role": "learner", "description": "adult sitting at a cafe table with relaxed posture" },
-        { "role": "conversation_partner", "description": "adult conversation partner with comfortable personal space" }
+        {
+          "role": "learner",
+          "description": "adult sitting at a cafe table with relaxed posture"
+        },
+        {
+          "role": "conversation_partner",
+          "description": "adult conversation partner with comfortable personal space"
+        }
       ],
-      "props": ["coffee cups", "small table", "chairs", "daylight window"],
+      "props": [
+        "coffee cups",
+        "small table",
+        "chairs",
+        "daylight window"
+      ],
       "mood": "warm, respectful, low-pressure",
       "physical_cues": {
         "learner_target": "learner smiles politely and gestures lightly toward the coffee cups",
         "world_response": "conversation partner responds clearly; learner accepts the answer respectfully"
+      }
+    },
+    {
+      "id": "apartment-entry-neighbor",
+      "environment": "apartment building entrance",
+      "domain": "greetings",
+      "mvp_priority": 12,
+      "description": "A neighbor holds the door and gives the learner a friendly greeting at the building entrance.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "person entering with a small bag"
+        },
+        {
+          "role": "neighbor",
+          "description": "friendly neighbor holding the door"
+        }
+      ],
+      "props": [
+        "glass door",
+        "mailboxes without readable text",
+        "small bag",
+        "morning light"
+      ],
+      "mood": "friendly, quick, everyday",
+      "physical_cues": {
+        "world_opener": "neighbor smiles and greets while holding the door",
+        "learner_target": "learner smiles and answers the greeting",
+        "world_response": "neighbor nods and lets the learner pass"
+      }
+    },
+    {
+      "id": "language-class-name-tags",
+      "environment": "interview or placement check-in desk",
+      "domain": "greetings",
+      "mvp_priority": 13,
+      "description": "The learner enters, shakes hands with an interviewer, and gives their name.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "new learner arriving with a notebook and simple name tag"
+        },
+        {
+          "role": "class_partner",
+          "description": "friendly interviewer or placement helper at a desk"
+        }
+      ],
+      "props": [
+        "desk",
+        "blank form",
+        "pen",
+        "simple name tags without readable names",
+        "chairs"
+      ],
+      "mood": "warm, first meeting, low-pressure",
+      "physical_cues": {
+        "world_opener": "interviewer greets the learner with a handshake and asks for their name",
+        "learner_target": "learner points lightly to their name tag or gestures to self while giving their name",
+        "world_response": "interviewer smiles and gestures toward the chair or form"
+      }
+    },
+    {
+      "id": "community-table-introduction",
+      "environment": "community event registration table",
+      "domain": "greetings",
+      "mvp_priority": 14,
+      "description": "A host with a marker tries to register the learner by writing their name on a blank card at the table.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "new attendee standing by a registration table"
+        },
+        {
+          "role": "host",
+          "description": "friendly event host holding a marker and blank name card"
+        }
+      ],
+      "props": [
+        "registration table",
+        "marker",
+        "blank name card",
+        "blank forms",
+        "pens"
+      ],
+      "mood": "welcoming, slightly nervous",
+      "physical_cues": {
+        "world_opener": "host holds a marker over a blank name card and asks for the learner name",
+        "learner_target": "learner gestures to self and points lightly toward their blank card while giving their name",
+        "world_response": "host smiles and begins writing on the blank card without readable text"
+      }
+    },
+    {
+      "id": "ticket-machine-help",
+      "environment": "train station ticket machine",
+      "domain": "repair",
+      "mvp_priority": 15,
+      "description": "A station helper explains a ticket machine too quickly and the learner signals they do not understand.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "traveler looking uncertain at a ticket machine"
+        },
+        {
+          "role": "station_helper",
+          "description": "busy station helper pointing at the screen"
+        }
+      ],
+      "props": [
+        "ticket machine",
+        "blank screen",
+        "wallet",
+        "station wall"
+      ],
+      "mood": "busy, practical, helpful",
+      "physical_cues": {
+        "world_opener": "helper points to the machine screen and explains quickly",
+        "learner_target": "learner looks confused and gives a small apologetic hand raise A small symbolic confusion cue such as floating question marks or a simple puzzled icon appears near the learner, without translations or dialogue text.",
+        "world_response": "helper slows down and points more clearly"
+      }
+    },
+    {
+      "id": "clinic-form-counter",
+      "environment": "clinic reception counter",
+      "domain": "repair",
+      "mvp_priority": 16,
+      "description": "A clinic receptionist points to a form and the learner does not understand what to do.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "visitor holding a clipboard"
+        },
+        {
+          "role": "receptionist",
+          "description": "clinic receptionist behind the counter"
+        }
+      ],
+      "props": [
+        "clipboard",
+        "form with no readable text",
+        "pen",
+        "clinic counter"
+      ],
+      "mood": "quiet, cautious, helpful",
+      "physical_cues": {
+        "world_opener": "receptionist points to a blank form field",
+        "learner_target": "learner looks puzzled and gently signals not understanding A small symbolic confusion cue such as floating question marks or a simple puzzled icon appears near the learner, without translations or dialogue text.",
+        "world_response": "receptionist points slowly and offers help"
+      }
+    },
+    {
+      "id": "cafe-counter-attention",
+      "environment": "cafe dining area with tables",
+      "domain": "politeness",
+      "mvp_priority": 17,
+      "description": "The learner sits at a cafe table and politely gets the attention of a busy waiter who is walking toward another table with other guests.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "customer seated at a cafe table, trying to catch attention politely"
+        },
+        {
+          "role": "barista",
+          "description": "busy waiter walking away from the learner toward another table with other guests, not looking at the learner"
+        }
+      ],
+      "props": [
+        "learner cafe table",
+        "chair",
+        "menu",
+        "cup",
+        "waiter tray",
+        "another table with other guests"
+      ],
+      "mood": "polite, everyday, lightly busy",
+      "physical_cues": {
+        "world_opener": "waiter walks away from the learner toward another table with other guests, carrying a tray and looking at the other table rather than the learner",
+        "learner_target": "learner gives a small polite raised-hand gesture from their table to get attention while the waiter is still oriented elsewhere",
+        "world_response": "waiter turns back toward the learner and nods"
+      }
+    },
+    {
+      "id": "station-information-desk",
+      "environment": "train station information desk",
+      "domain": "politeness",
+      "mvp_priority": 18,
+      "description": "A station staff member is focused on a screen or paperwork, and the learner politely gets attention.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "traveler standing at an information desk"
+        },
+        {
+          "role": "staff",
+          "description": "station staff member looking down at a computer screen or paperwork"
+        }
+      ],
+      "props": [
+        "information desk",
+        "computer screen without readable text",
+        "paperwork",
+        "small suitcase"
+      ],
+      "mood": "practical, polite, focused",
+      "physical_cues": {
+        "world_opener": "staff is looking down at a screen or paperwork and has not noticed the learner yet",
+        "learner_target": "learner politely gets attention with a small raised hand or slight bow",
+        "world_response": "staff looks up and opens a hand toward the learner"
+      }
+    },
+    {
+      "id": "convenience-store-sandwich",
+      "environment": "convenience store counter",
+      "domain": "buying_ordering",
+      "mvp_priority": 19,
+      "description": "The learner holds a wrapped sandwich at the counter and orders it politely.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "customer clearly holding a wrapped sandwich"
+        },
+        {
+          "role": "cashier",
+          "description": "store cashier waiting at the counter"
+        }
+      ],
+      "props": [
+        "wrapped sandwich in learner hand",
+        "counter",
+        "chilled shelf",
+        "payment tray"
+      ],
+      "mood": "quick, practical, confident",
+      "physical_cues": {
+        "world_opener": "cashier waits for the order while the sandwich is clearly visible in the learner hand",
+        "learner_target": "learner holds up or points to the sandwich in their own hand and asks politely",
+        "world_response": "cashier nods and reaches toward the register"
+      }
+    },
+    {
+      "id": "bakery-counter-sandwich",
+      "environment": "bakery counter",
+      "domain": "buying_ordering",
+      "mvp_priority": 20,
+      "description": "The learner sees sandwiches in a bakery case and orders one politely.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "customer pointing at the display case"
+        },
+        {
+          "role": "server",
+          "description": "bakery worker behind the counter"
+        }
+      ],
+      "props": [
+        "sandwich display",
+        "tray",
+        "counter",
+        "tongs"
+      ],
+      "mood": "warm, hungry, polite",
+      "physical_cues": {
+        "world_opener": "server gestures toward the sandwich display and waits",
+        "learner_target": "learner points to a sandwich and asks politely",
+        "world_response": "server smiles and reaches for the sandwich"
+      }
+    },
+    {
+      "id": "hallway-small-bump",
+      "environment": "school or language class hallway",
+      "domain": "repair",
+      "mvp_priority": 21,
+      "description": "The learner and a friend are visibly bumping into each other in the hallway; loose papers fly around and land on the floor, then the learner apologizes.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "walking with notebook or backpack and surprised by a small accidental bump"
+        },
+        {
+          "role": "classmate",
+          "description": "friendly classmate lightly bumped in the hallway"
+        }
+      ],
+      "props": [
+        "notebook",
+        "backpack",
+        "classroom doorway",
+        "loose papers flying",
+        "papers scattered on floor"
+      ],
+      "mood": "small mistake, apologetic, quickly repaired",
+      "physical_cues": {
+        "world_opener": "learner and classmate are mid-bump, shoulders or arms lightly colliding, with loose papers flying around them and several papers scattered on the floor",
+        "learner_target": "learner looks apologetic, raises one hand gently, and gives a small sorry bow or nod near the fallen papers",
+        "world_response": "classmate relaxes, smiles, and shows that it is okay while they begin gathering papers"
+      }
+    },
+    {
+      "id": "cafe-small-spill",
+      "environment": "small cafe table",
+      "domain": "repair",
+      "mvp_priority": 22,
+      "description": "The learner is seated and accidentally spills a cup; a barista or waiter comes over to clean it, and the learner apologizes.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "seated customer who accidentally knocked over a cup"
+        },
+        {
+          "role": "barista",
+          "description": "barista or waiter approaching with napkins to clean the spill"
+        }
+      ],
+      "props": [
+        "tipped cup",
+        "visible small spill",
+        "napkins",
+        "cafe table",
+        "chair"
+      ],
+      "mood": "small accident, apologetic, easily repaired",
+      "physical_cues": {
+        "world_opener": "barista notices the tipped cup and small spill while approaching with napkins",
+        "learner_target": "learner remains seated, looks apologetic, and gestures sorry toward the barista and spill",
+        "world_response": "barista relaxes and starts cleaning with napkins, showing it is okay"
+      }
+    },
+    {
+      "id": "classroom-dropped-pencil",
+      "environment": "language class table",
+      "domain": "repair",
+      "mvp_priority": 23,
+      "description": "The learner bumps the shared class table, causing a friend notebook or book to slide off and fall to the floor, then apologizes.",
+      "characters": [
+        {
+          "role": "learner",
+          "description": "student at a shared class table who accidentally knocked something off"
+        },
+        {
+          "role": "classmate",
+          "description": "friend/classmate whose notebook or papers fell from the table"
+        }
+      ],
+      "props": [
+        "class table being bumped",
+        "friend notebook falling from table",
+        "book on floor",
+        "loose papers",
+        "pencil"
+      ],
+      "mood": "minor mistake, apologetic, friendly repair",
+      "physical_cues": {
+        "world_opener": "learner visibly bumps the class table; the friend notebook or book is falling off the table toward the floor while the classmate reacts with surprise",
+        "learner_target": "learner looks apologetic and reaches toward the falling notebook or gestures sorry",
+        "world_response": "classmate smiles and shows that it is okay while the learner helps pick up the book"
       }
     }
   ]

@@ -1,0 +1,14 @@
+Scenario: ja-greeting-neighbor-transfer
+Type: transfer
+Function: respond_to_greeting
+Scene: neighbor-gate
+
+English visual summary: A neighbor greets the learner outside near a gate.
+
+English dialogue for picture review:
+- 0. neighbor [world_opener]: Hi!
+- 1. learner [learner_target]: Hi!
+- 2. neighbor [world_response]: Hi there.
+
+Frame 0 image: visuals/Drafts/ja-greeting-neighbor-transfer/frame-0.png
+Frame 1 image: visuals/Drafts/ja-greeting-neighbor-transfer/frame-1.png

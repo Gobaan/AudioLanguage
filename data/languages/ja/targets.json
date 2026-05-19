@@ -10,10 +10,23 @@
       "canonical": "こんにちは！",
       "transliteration": "Konnichiwa!",
       "display_meaning": "Respond to Hi.",
-      "meaning_units": ["hello", "response"],
-      "accepted_variants": ["こんにちは。", "やあ。", "どうも。"],
-      "valid_but_off_target": ["さようなら。", "病院はどこですか？"],
-      "wrong_for_context_examples": ["さようなら。", "病院はどこですか？"],
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "accepted_variants": [
+        "こんにちは。",
+        "やあ。",
+        "どうも。"
+      ],
+      "valid_but_off_target": [
+        "さようなら。",
+        "病院はどこですか？"
+      ],
+      "wrong_for_context_examples": [
+        "さようなら。",
+        "病院はどこですか？"
+      ],
       "semantic_slots": {
         "required": {
           "speech_act": "greeting_response"
@@ -34,10 +47,22 @@
       "canonical": "アンナです。",
       "transliteration": "Anna desu.",
       "display_meaning": "My name is Anna.",
-      "meaning_units": ["my", "name", "proper_noun"],
-      "accepted_variants": ["私の名前はアンナです。", "アンナと言います。"],
-      "valid_but_off_target": ["アンナ。"],
-      "wrong_for_context_examples": ["こんにちは。", "ありがとう。"],
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "accepted_variants": [
+        "私の名前はアンナです。",
+        "アンナと言います。"
+      ],
+      "valid_but_off_target": [
+        "アンナ。"
+      ],
+      "wrong_for_context_examples": [
+        "こんにちは。",
+        "ありがとう。"
+      ],
       "semantic_slots": {
         "required": {
           "speech_act": "self_introduction",
@@ -59,10 +84,21 @@
       "canonical": "わかりません。",
       "transliteration": "Wakarimasen.",
       "display_meaning": "I don't understand.",
-      "meaning_units": ["not", "understand"],
-      "accepted_variants": ["すみません、わかりません。", "すみません、分かりません。"],
-      "valid_but_off_target": ["ゆっくり言ってください。"],
-      "wrong_for_context_examples": ["はい。", "サンドイッチを一つお願いします。"],
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "accepted_variants": [
+        "すみません、わかりません。",
+        "すみません、分かりません。"
+      ],
+      "valid_but_off_target": [
+        "ゆっくり言ってください。"
+      ],
+      "wrong_for_context_examples": [
+        "はい。",
+        "サンドイッチを一つお願いします。"
+      ],
       "semantic_slots": {
         "required": {
           "speech_act": "repair",
@@ -79,26 +115,39 @@
       }
     },
     {
-      "id": "ja-target-sorry-excuse-me",
-      "function_id": "apologize",
+      "id": "ja-target-excuse-me-attention",
+      "function_id": "get_attention_politely",
       "canonical": "すみません。",
       "transliteration": "Sumimasen.",
-      "display_meaning": "Excuse me / sorry.",
-      "meaning_units": ["sorry", "polite_softener"],
-      "accepted_variants": ["すみません", "ごめんなさい。"],
-      "valid_but_off_target": ["ありがとう。"],
-      "wrong_for_context_examples": ["こんにちは。", "サンドイッチください。"],
+      "display_meaning": "Excuse me.",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "accepted_variants": [
+        "すみません",
+        "ごめんなさい。"
+      ],
+      "valid_but_off_target": [
+        "ありがとう。"
+      ],
+      "wrong_for_context_examples": [
+        "こんにちは。",
+        "サンドイッチください。"
+      ],
       "semantic_slots": {
         "required": {
-          "speech_act": "apology_or_attention"
+          "speech_act": "attention_request"
         },
         "optional": {
-          "politeness": true
+          "politeness": true,
+          "apology_secondary_use": true
         }
       },
       "notes": {
         "register": "polite-basic",
-        "native_review_required": true
+        "native_review_required": true,
+        "usage": "Primary MVP use is getting attention from someone who is busy or not looking at the learner."
       }
     },
     {
@@ -107,10 +156,22 @@
       "canonical": "サンドイッチください。",
       "transliteration": "Sandoicchi kudasai.",
       "display_meaning": "Sandwich, please.",
-      "meaning_units": ["food_item", "please"],
-      "accepted_variants": ["サンドイッチをください。", "サンドイッチお願いします。", "サンドイッチを一つください。"],
-      "valid_but_off_target": ["サンドイッチを一つお願いします。"],
-      "wrong_for_context_examples": ["病院はどこですか？", "わかりません。"],
+      "meaning_units": [
+        "food_item",
+        "please"
+      ],
+      "accepted_variants": [
+        "サンドイッチをください。",
+        "サンドイッチお願いします。",
+        "サンドイッチを一つください。"
+      ],
+      "valid_but_off_target": [
+        "サンドイッチを一つお願いします。"
+      ],
+      "wrong_for_context_examples": [
+        "病院はどこですか？",
+        "わかりません。"
+      ],
       "semantic_slots": {
         "required": {
           "speech_act": "request_order",
@@ -132,10 +193,22 @@
       "canonical": "病院はどこですか？",
       "transliteration": "Byouin wa doko desu ka?",
       "display_meaning": "Where is the hospital?",
-      "meaning_units": ["where", "hospital", "question"],
-      "accepted_variants": ["すみません、病院はどこですか？", "病院はどちらですか？"],
-      "valid_but_off_target": ["病院を探しています。"],
-      "wrong_for_context_examples": ["いくらですか？", "サンドイッチをお願いします。"],
+      "meaning_units": [
+        "where",
+        "hospital",
+        "question"
+      ],
+      "accepted_variants": [
+        "すみません、病院はどこですか？",
+        "病院はどちらですか？"
+      ],
+      "valid_but_off_target": [
+        "病院を探しています。"
+      ],
+      "wrong_for_context_examples": [
+        "いくらですか？",
+        "サンドイッチをお願いします。"
+      ],
       "semantic_slots": {
         "required": {
           "speech_act": "ask_location",
@@ -148,6 +221,42 @@
       },
       "notes": {
         "register": "urgent-neutral",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ja-target-im-sorry",
+      "function_id": "apologize_for_mistake",
+      "canonical": "???????",
+      "transliteration": "Gomen nasai.",
+      "display_meaning": "I'm sorry.",
+      "meaning_units": [
+        "sorry",
+        "mistake",
+        "repair"
+      ],
+      "accepted_variants": [
+        "??????",
+        "????"
+      ],
+      "valid_but_off_target": [
+        "??????"
+      ],
+      "wrong_for_context_examples": [
+        "??????",
+        "???????????"
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "apology",
+          "cause": "small_mistake"
+        },
+        "optional": {
+          "politeness": true
+        }
+      },
+      "notes": {
+        "register": "polite-basic",
         "native_review_required": true
       }
     }

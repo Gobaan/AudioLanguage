@@ -1,0 +1,14 @@
+Scenario: ja-introduce-self
+Type: anchor
+Function: introduce_self
+Scene: school-hallway-classmate
+
+English visual summary: Two classmates wearing blank name tags meet, and the learner points to her tag while introducing herself.
+
+English dialogue for picture review:
+- 0. classmate [world_opener]: What is your name?
+- 1. learner [learner_target]: My name is Anna.
+- 2. classmate [world_response]: Nice to meet you.
+
+Frame 0 image: visuals/Drafts/ja-introduce-self/frame-0.png
+Frame 1 image: visuals/Drafts/ja-introduce-self/frame-1.png

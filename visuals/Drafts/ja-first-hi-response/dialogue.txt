@@ -1,0 +1,14 @@
+Scenario: ja-first-hi-response
+Type: anchor
+Function: respond_to_greeting
+Scene: study-room-friend
+
+English visual summary: A friend enters while the learner is studying and starts a greeting.
+
+English dialogue for picture review:
+- 0. friend [world_opener]: Hi!
+- 1. learner [learner_target]: Hi!
+- 2. friend [world_response]: Nice to see you.
+
+Frame 0 image: visuals/Drafts/ja-first-hi-response/frame-0.png
+Frame 1 image: visuals/Drafts/ja-first-hi-response/frame-1.png

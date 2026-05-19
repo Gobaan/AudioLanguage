@@ -25,6 +25,34 @@ LINE_TYPE_INTENTIONS = {
 }
 
 
+PARTNER_REFERENCE_BY_ROLE = {
+    "barista": "vendor-reference.png",
+    "cashier": "vendor-reference.png",
+    "class_partner": "friend-reference.png",
+    "classmate": "friend-reference.png",
+    "conversation_partner": "friend-reference.png",
+    "friend": "friend-reference.png",
+    "host": "staff-reference.png",
+    "local": "local-helper-reference.png",
+    "neighbor": "friend-reference.png",
+    "pharmacist": "pharmacist-reference.png",
+    "receptionist": "staff-reference.png",
+    "server": "vendor-reference.png",
+    "shopkeeper": "vendor-reference.png",
+    "staff": "staff-reference.png",
+    "station_helper": "staff-reference.png",
+    "vendor": "vendor-reference.png",
+}
+
+
+TURN_OVERLAY_BY_LINE_TYPE = {
+    "world_opener": "Do not draw speech bubbles. The app will overlay the partner turn bubble.",
+    "learner_target": "Do not draw speech bubbles. The app will overlay the learner turn bubble.",
+    "world_response": "Do not draw speech bubbles. The app will overlay the partner response bubble.",
+    "learner_close": "Do not draw speech bubbles. The app will overlay the learner closing bubble.",
+}
+
+
 def summarize_gestures(function: dict[str, Any], meaning_units: list[str]) -> str:
     grammar = function.get("gesture_grammar", {})
     cues: list[str] = []
@@ -33,6 +61,17 @@ def summarize_gestures(function: dict[str, Any], meaning_units: list[str]) -> st
         if unit_cues:
             cues.append(f"{unit}: {', '.join(unit_cues)}")
     return "; ".join(cues)
+
+
+def partner_reference_for(scene: dict[str, Any], line: dict[str, Any]) -> str:
+    speaker_role = str(line.get("speaker_role", ""))
+    if speaker_role == "learner":
+        for character in scene.get("characters", []):
+            role = str(character.get("role", ""))
+            if role != "learner":
+                return PARTNER_REFERENCE_BY_ROLE.get(role, "staff-reference.png")
+        return "staff-reference.png"
+    return PARTNER_REFERENCE_BY_ROLE.get(speaker_role, "staff-reference.png")
 
 
 def target_meaning(targets_by_id: dict[str, Any], dialogue: dict[str, Any], line: dict[str, Any]) -> str:
@@ -78,11 +117,39 @@ def prompt_for(
     gestures = summarize_gestures(function, line.get("meaning_units", []))
     intention = line_intention(function, targets_by_id, dialogue, line)
     localized_environment = scene.get("localized_variants", {}).get(language, scene.get("environment", ""))
+    partner_reference = partner_reference_for(scene, line)
+    turn_overlay_rule = TURN_OVERLAY_BY_LINE_TYPE.get(
+        line.get("line_type", ""),
+        "Do not draw speech bubbles. The app will overlay turn-taking UI.",
+    )
 
-    shared_prompt = " ".join(
+    learner_turn_direction = ""
+    if line.get("speaker_role") == "learner":
+        learner_turn_direction = (
+            "Learner action: the learner should direct gaze, face angle, and gesture toward the scene partner, "
+            "not toward the viewer or camera, unless the scene specifically requires addressing the viewer."
+        )
+
+    dialogue_scene = len(scene.get("characters", [])) >= 2
+    framing = (
+        "Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png."
+        if dialogue_scene
+        else "Square polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png."
+    )
+    framing_detail = (
+        "Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally."
+        if dialogue_scene
+        else "Use compact square staging for this simple visual beat."
+    )
+
+    shared_prompt = "\n\n".join(
         part
         for part in [
-            f"Realistic still image in a {scene.get('environment', 'natural everyday setting')}.",
+            framing,
+            "Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.",
+            "Use character references: visuals/style/characters/learner-reference.png for the recurring female learner avatar "
+            f"and visuals/style/characters/{partner_reference} for the scene partner archetype.",
+            f"Scene: {scene.get('environment', 'natural everyday setting')}.",
             scene.get("description", ""),
             f"Mood: {scene.get('mood', 'natural and conversational')}.",
             f"Characters: {characters}." if characters else "",
@@ -90,17 +157,24 @@ def prompt_for(
             f"Show this beat: {intention}",
             f"Body language: {physical_cue}." if physical_cue else "",
             f"Gesture cues: {gestures}." if gestures else "",
-            "No subtitles, no speech bubbles, no readable text, no logos.",
-            "The image must teach meaning through setting, faces, gaze, objects, and gesture.",
+            learner_turn_direction,
+            framing_detail,
+            "Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.",
+            turn_overlay_rule,
+            "Mobile-safe composition: keep active characters, faces, hands, speech bubbles, and meaning cues "
+            "in the central 70% of the frame and above the lower 25% so app controls do not hide them.",
+            "No subtitles, no translations, no target-language text, no source-language text, no readable dialogue text, no speech bubbles, no captions, no logos.",
+            "The image must teach meaning through setting, faces, gaze, objects, gesture, and the social result.",
+            "Reject rough sketchbook style, children's-book style, thick marker outlines, decorative sketch borders, photorealism, app screenshot layouts, close-up portraits, sticker poses, reaction shots, character reference sheets, staged two-character poses, and generic character drift.",
         ]
         if part
     )
-    localized_prompt = " ".join(
+    localized_prompt = "\n\n".join(
         [
             shared_prompt,
             f"Localize the environment as: {localized_environment}.",
-            "Use culturally ordinary clothing, posture, and interpersonal distance for the target language context.",
-            "Do not render the dialogue as written text.",
+            "Use culturally ordinary clothing, posture, and interpersonal distance for the scene context, but keep the communicative function language-neutral unless the scene explicitly requires a local cultural variant.",
+            "Do not render the dialogue, phonetics, translations, captions, signs, or labels as written text.",
         ]
     )
     return shared_prompt, localized_prompt

@@ -57,6 +57,11 @@ class StructuredDataGraphTests(unittest.TestCase):
 
         self.assertEqual(first["template_id"], "guided-dialogue-replay-v1")
         self.assertEqual(first["template"]["id"], "guided-dialogue-replay-v1")
+        self.assertEqual(
+            [step["type"] for step in first["template"]["playback_flow"]],
+            ["play_line", "play_line", "record_attempt", "play_line"],
+        )
+        self.assertEqual(first["template"]["playback_flow"][2]["judgement"], "deferred")
         self.assertTrue(first["support"]["play_full_dialogue_first"])
         self.assertTrue(first["support"]["autoplay_full_dialogue"])
         self.assertTrue(first["support"]["replay_until_learner_turn"])
@@ -89,8 +94,9 @@ class StructuredDataGraphTests(unittest.TestCase):
             for card in session["cards"]
         ]
 
+        self.assertEqual(len(session["cards"]), 15)
         self.assertEqual(
-            learner_lines,
+            learner_lines[:5],
             [
                 "Konnichiwa!",
                 "Anna desu.",
@@ -99,9 +105,50 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Sandoicchi kudasai.",
             ],
         )
+        self.assertEqual(
+            learner_lines[5:],
+            [
+                "Konnichiwa!",
+                "Anna desu.",
+                "Wakarimasen.",
+                "Sumimasen.",
+                "Sandoicchi kudasai.",
+                "Konnichiwa!",
+                "Anna desu.",
+                "Wakarimasen.",
+                "Sumimasen.",
+                "Sandoicchi kudasai.",
+            ],
+        )
+        self.assertEqual(
+            [card["stage"] for card in session["cards"]],
+            [
+                "guided_scene_production",
+                "guided_scene_production",
+                "guided_scene_production",
+                "guided_scene_production",
+                "guided_scene_production",
+                "same_day_transfer",
+                "same_day_transfer",
+                "same_day_transfer",
+                "same_day_transfer",
+                "same_day_transfer",
+                "delayed_review",
+                "delayed_review",
+                "delayed_review",
+                "delayed_review",
+                "delayed_review",
+            ],
+        )
         for card in session["cards"]:
             self.assertTrue(card["support"]["show_transliteration_after_failure"])
             self.assertTrue(card["dialogue"]["lines"][1]["audio"])
+            self.assertTrue(
+                all(
+                    str(line["visual"]).startswith("/visuals/generated/ja/")
+                    for line in card["dialogue"]["lines"]
+                )
+            )
 
     def test_lists_languages_from_data_graph(self):
         languages = list_languages(PROJECT_DIR / "data")

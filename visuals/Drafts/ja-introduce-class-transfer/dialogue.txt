@@ -1,0 +1,14 @@
+Scenario: ja-introduce-class-transfer
+Type: transfer
+Function: introduce_self
+Scene: language-class-name-tags
+
+English visual summary: The learner comes in, shakes hands with an interviewer, and gives their name.
+
+English dialogue for picture review:
+- 0. interviewer [world_opener]: What is your name?
+- 1. learner [learner_target]: My name is Anna.
+- 2. interviewer [world_response]: Nice to meet you.
+
+Frame 0 image: visuals/Drafts/ja-introduce-class-transfer/frame-0.png
+Frame 1 image: visuals/Drafts/ja-introduce-class-transfer/frame-1.png

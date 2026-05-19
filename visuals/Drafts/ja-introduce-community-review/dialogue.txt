@@ -1,0 +1,14 @@
+Scenario: ja-introduce-community-review
+Type: delayed_review
+Function: introduce_self
+Scene: community-table-introduction
+
+English visual summary: A host with a marker is registering the learner by writing their name on a blank card.
+
+English dialogue for picture review:
+- 0. host [world_opener]: What is your name?
+- 1. learner [learner_target]: My name is Anna.
+- 2. host [world_response]: Nice to meet you.
+
+Frame 0 image: visuals/Drafts/ja-introduce-community-review/frame-0.png
+Frame 1 image: visuals/Drafts/ja-introduce-community-review/frame-1.png

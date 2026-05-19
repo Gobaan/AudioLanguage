@@ -34,6 +34,8 @@ const state = {
   hasWatchedDialogue: false,
   hasAutoplayedDialogue: false,
   isAutoplayingDialogue: false,
+  playbackGeneration: 0,
+  cardRunId: 0,
 };
 
 const PROMPT_AUDIO = {
@@ -566,8 +568,9 @@ function renderGuidedDialogueControls(card) {
   const canHearTarget = state.speechMatched === false && Boolean(targetLine(card)?.audio);
   const continueLabel = hasNextCard ? 'Continue' : 'Finish';
   const skipLabel = hasNextCard ? 'Skip' : 'Finish';
+  const hasFlow = Boolean(cardPlaybackFlow(card).length);
 
-  if (!state.hasWatchedDialogue && (state.isAutoplayingDialogue || state.isPlaying)) {
+  if (!state.hasWatchedDialogue && (state.isAutoplayingDialogue || isBusy)) {
     return `
       <footer class="controls guided-controls">
         <button class="text-button subtle" data-action="next">${skipLabel}</button>
@@ -577,8 +580,8 @@ function renderGuidedDialogueControls(card) {
 
   return `
     <footer class="controls guided-controls">
-      ${!state.hasWatchedDialogue ? '<button class="text-button" data-action="watch-dialogue">Watch Dialogue</button>' : ''}
-      <button class="text-button primary" data-action="try-dialogue" ${isBusy || !state.hasWatchedDialogue ? 'disabled' : ''}>Try</button>
+      ${!state.hasWatchedDialogue ? `<button class="text-button primary" data-action="watch-dialogue" ${isBusy ? 'disabled' : ''}>Start</button>` : ''}
+      ${!hasFlow ? `<button class="text-button primary" data-action="try-dialogue" ${isBusy || !state.hasWatchedDialogue ? 'disabled' : ''}>Try</button>` : ''}
       ${canHearTarget ? `
         <button class="text-button" data-action="play-target" ${isBusy ? 'disabled' : ''}>Hear Line</button>
         <button class="text-button" data-action="play-target-slow" ${isBusy ? 'disabled' : ''}>Hear Slow</button>
@@ -677,6 +680,24 @@ function responseAfterLearnerSteps(card) {
   return nextLine?.audio ? [{ url: nextLine.audio, lineIndex: nextLine.index }] : [];
 }
 
+function cardPlaybackFlow(card) {
+  return card.playback_flow || card.template?.playback_flow || [];
+}
+
+function resolveFlowLine(card, step) {
+  const lines = card.dialogue.lines || [];
+  if (step.line_index !== undefined) {
+    return lines.find(line => Number(line.index) === Number(step.line_index)) || null;
+  }
+  if (step.line_type) {
+    return lines.find(line => line.line_type === step.line_type) || null;
+  }
+  if (step.target === true) {
+    return targetLine(card);
+  }
+  return null;
+}
+
 function findPreviousSpokenLine(lines, targetIndex) {
   for (let index = targetIndex - 1; index >= 0; index -= 1) {
     if (lines[index].audio) return lines[index];
@@ -724,24 +745,38 @@ function firstPartnerLine(card) {
 }
 
 async function watchDialogue(card) {
+  const runId = state.cardRunId;
   clearAttemptFeedback();
-  await playMany(fullDialogueSteps(card));
+  const flow = cardPlaybackFlow(card);
+  if (flow.length) {
+    const completed = await executeCardFlow(card, flow, runId);
+    if (!completed || !isCurrentCardRun(runId)) return;
+    state.hasWatchedDialogue = true;
+    render();
+    return;
+  }
+  const completed = await playMany(fullDialogueSteps(card), runId);
+  if (!completed || !isCurrentCardRun(runId)) return;
   state.hasWatchedDialogue = true;
   render();
 }
 
 async function tryDialogue(card) {
+  const runId = state.cardRunId;
   clearAttemptFeedback();
-  await playMany(openerToLearnerSteps(card));
+  const cueCompleted = await playMany(openerToLearnerSteps(card), runId);
+  if (!cueCompleted || !isCurrentCardRun(runId)) return;
   await recordAndVerify(card);
-  if (state.speechMatched) {
-    await playMany(responseAfterLearnerSteps(card));
+  if (state.speechMatched && isCurrentCardRun(runId)) {
+    await playMany(responseAfterLearnerSteps(card), runId);
   }
 }
 
 async function runPracticeTurn(card) {
+  const runId = state.cardRunId;
   clearAttemptFeedback();
-  await playMany(scenePlaybackSteps(card));
+  const completed = await playMany(scenePlaybackSteps(card), runId);
+  if (!completed || !isCurrentCardRun(runId)) return;
   if (card.mode === 'listen') return;
   await recordAndVerify(card);
 }
@@ -761,23 +796,92 @@ async function maybeAutoplayDialogue(card) {
   }
 }
 
-async function playTarget(card, playbackRate = 1) {
-  const line = targetLine(card);
-  if (line?.audio) await playMany([{ url: line.audio, lineIndex: line.index, playbackRate }]);
+async function executeCardFlow(card, flow, runId = state.cardRunId) {
+  for (const step of flow) {
+    if (!isCurrentCardRun(runId)) return false;
+    if (step.type === 'play_line') {
+      const line = resolveFlowLine(card, step);
+      if (!line?.audio) {
+        if (step.optional) continue;
+        return false;
+      }
+      const completed = await playMany([{ url: line.audio, lineIndex: line.index }], runId);
+      if (!completed || !isCurrentCardRun(runId)) return false;
+    } else if (step.type === 'record_attempt') {
+      const line = resolveFlowLine(card, step) || targetLine(card);
+      if (!line) return false;
+      const completed = step.judgement === 'live'
+        ? await recordAndVerify(card)
+        : await recordAttemptOnly(card, line, runId);
+      if (!completed || !isCurrentCardRun(runId)) return false;
+    }
+  }
+  return true;
 }
 
-async function playMany(steps) {
+async function recordAttemptOnly(card, line, runId = state.cardRunId) {
+  if (!isCurrentCardRun(runId)) return false;
+  state.heldVisual = activeVisual(card) || '';
+  state.activeLineIndex = Number(line.index);
+  setExpectedMouthHelp(card, line);
+
+  const recorder = await startRecorder();
+  if (!recorder) {
+    state.speechStatus = 'Microphone unavailable';
+    state.speechMatched = false;
+    render();
+    return false;
+  }
+
+  state.isListening = true;
+  state.speechStatus = `Listening. ${listeningInstruction(card)}`;
+  state.speechTranscript = '';
+  state.speechScore = null;
+  state.speechMatched = null;
+  state.communication = null;
+  render();
+
+  const recordingBlob = await recorder.recordFor(recordingPolicyFor(card, line));
+  if (!isCurrentCardRun(runId)) return false;
+  setLastRecording(recordingBlob, card);
+  state.isListening = false;
+  state.speechMatched = true;
+  state.speechScore = null;
+  state.speechStatus = 'Recorded';
+  state.communication = {
+    status: 'deferred',
+    message: 'Saved for the session scorecard.',
+  };
+  state.heldVisual = '';
+  render();
+  return true;
+}
+
+async function playTarget(card, playbackRate = 1) {
+  const line = targetLine(card);
+  if (line?.audio) await playMany([{ url: line.audio, lineIndex: line.index, playbackRate }], state.cardRunId);
+}
+
+async function playMany(steps, runId = state.cardRunId) {
+  const playbackGeneration = beginPlayback();
   state.isPlaying = true;
   render();
-  for (const step of steps) {
-    if (step.lineIndex !== undefined) {
-      state.activeLineIndex = Number(step.lineIndex);
+  try {
+    for (const step of steps) {
+      if (!isPlaybackCurrent(playbackGeneration) || !isCurrentCardRun(runId)) return false;
+      if (step.lineIndex !== undefined) {
+        state.activeLineIndex = Number(step.lineIndex);
+        render();
+      }
+      await playAudio(step.url, step.playbackRate, playbackGeneration);
+    }
+    return isPlaybackCurrent(playbackGeneration) && isCurrentCardRun(runId);
+  } finally {
+    if (isPlaybackCurrent(playbackGeneration)) {
+      state.isPlaying = false;
       render();
     }
-    await playAudio(step.url, step.playbackRate);
   }
-  state.isPlaying = false;
-  render();
 }
 
 async function recordAndVerify(card) {
@@ -792,7 +896,7 @@ async function recordAndVerify(card) {
     state.speechStatus = 'Microphone unavailable';
     state.speechMatched = false;
     render();
-    return;
+    return false;
   }
 
   state.isListening = true;
@@ -838,6 +942,7 @@ async function recordAndVerify(card) {
     state.heldVisual = '';
     render();
   }
+  return true;
 }
 
 async function startRecorder() {
@@ -1026,14 +1131,32 @@ function getAudioDuration(url) {
   });
 }
 
-function playAudio(url, playbackRate = 1) {
+function playAudio(url, playbackRate = 1, playbackGeneration = state.playbackGeneration) {
   return new Promise(resolve => {
     const audio = new Audio(url);
+    let settled = false;
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      if (window.currentAudio?.audio === audio) {
+        window.currentAudio = null;
+      }
+      resolve();
+    };
     audio.playbackRate = playbackRate;
-    window.currentAudio = audio;
-    audio.onended = resolve;
-    audio.onerror = resolve;
-    audio.play().catch(resolve);
+    window.currentAudio = {
+      audio,
+      generation: playbackGeneration,
+      stop() {
+        audio.pause();
+        audio.removeAttribute('src');
+        audio.load();
+        settle();
+      },
+    };
+    audio.onended = settle;
+    audio.onerror = settle;
+    audio.play().catch(settle);
   });
 }
 
@@ -1087,10 +1210,25 @@ function previousCard() {
 }
 
 function stopCurrentAudio() {
+  state.playbackGeneration += 1;
+  state.isPlaying = false;
   if (!window.currentAudio) return;
-  window.currentAudio.pause();
-  window.currentAudio.currentTime = 0;
+  window.currentAudio.stop?.();
   window.currentAudio = null;
+}
+
+function beginPlayback() {
+  stopCurrentAudio();
+  state.playbackGeneration += 1;
+  return state.playbackGeneration;
+}
+
+function isPlaybackCurrent(playbackGeneration) {
+  return state.playbackGeneration === playbackGeneration;
+}
+
+function isCurrentCardRun(runId) {
+  return state.cardRunId === runId;
 }
 
 function setLastRecording(recordingBlob, card) {
@@ -1109,6 +1247,7 @@ function clearLastRecording() {
 }
 
 function resetCardState() {
+  state.cardRunId += 1;
   state.activeLineIndex = 0;
   state.selectedChoiceIndex = null;
   state.isAnswerRevealed = false;

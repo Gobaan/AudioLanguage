@@ -1,0 +1,14 @@
+Scenario: ja-directions-hospital
+Type: anchor
+Function: ask_where_hospital_is
+Scene: hospital-street-corner
+
+English visual summary: A worried learner approaches an ambulance worker because the hospital is not visible and asks where it is.
+
+English dialogue for picture review:
+- 0. local [world_opener]: What is wrong?
+- 1. learner [learner_target]: Where is the hospital?
+- 2. local [world_response]: It is over there.
+
+Frame 0 image: visuals/Drafts/ja-directions-hospital/frame-0.png
+Frame 1 image: visuals/Drafts/ja-directions-hospital/frame-1.png

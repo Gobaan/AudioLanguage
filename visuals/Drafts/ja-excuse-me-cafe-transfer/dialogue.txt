@@ -1,0 +1,14 @@
+Scenario: ja-excuse-me-cafe-transfer
+Type: transfer
+Function: get_attention_politely
+Scene: cafe-counter-attention
+
+English visual summary: The learner is seated at a cafe table; the waiter is walking toward another table with other guests and is not looking at the learner.
+
+English dialogue for picture review:
+- 0. waiter [world_opener]: The waiter walks toward another table and does not notice the learner.
+- 1. learner [learner_target]: Excuse me.
+- 2. waiter [world_response]: Yes, go ahead.
+
+Frame 0 image: visuals/Drafts/ja-excuse-me-cafe-transfer/frame-0.png
+Frame 1 image: visuals/Drafts/ja-excuse-me-cafe-transfer/frame-1.png

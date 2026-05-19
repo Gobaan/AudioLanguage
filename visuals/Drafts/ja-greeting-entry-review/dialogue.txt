@@ -1,0 +1,14 @@
+Scenario: ja-greeting-entry-review
+Type: delayed_review
+Function: respond_to_greeting
+Scene: apartment-entry-neighbor
+
+English visual summary: A neighbor greets the learner while holding an apartment entrance door.
+
+English dialogue for picture review:
+- 0. neighbor [world_opener]: Hi.
+- 1. learner [learner_target]: Hi!
+- 2. neighbor [world_response]: Hi there.
+
+Frame 0 image: visuals/Drafts/ja-greeting-entry-review/frame-0.png
+Frame 1 image: visuals/Drafts/ja-greeting-entry-review/frame-1.png

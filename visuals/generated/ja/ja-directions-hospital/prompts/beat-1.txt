@@ -1,0 +1,43 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+Use character references: visuals/style/characters/learner-reference.png for the recurring female learner avatar and visuals/style/characters/local-helper-reference.png for the scene partner archetype.
+
+Scene: street corner with a visible ambulance or emergency vehicle, no hospital building visible.
+
+The learner urgently approaches a paramedic or ambulance crew member because they need to find the hospital.
+
+Mood: concerned, urgent, helpful.
+
+Characters: learner: worried person holding a phone map and approaching for help; local: paramedic or ambulance worker standing near an ambulance.
+
+Visible props: ambulance, medical cross symbol on vehicle, phone map, street corner.
+
+Show this beat: The learner-character needs to express the target intention clearly. Communicative function: Ask where the hospital is. Intention: Where is the hospital?.
+
+Body language: learner looks worried, shows phone map, and asks where the hospital is with a searching gesture.
+
+Gesture cues: where: looking around, palm-up searching gesture; hospital: phone map, medical cross sign, or clinic building visible; question: raised eyebrows, concerned eye contact.
+
+Learner action: the learner should direct gaze, face angle, and gesture toward the scene partner, not toward the viewer or camera, unless the scene specifically requires addressing the viewer.
+
+Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+Do not draw speech bubbles. The app will overlay the learner turn bubble.
+
+Mobile-safe composition: keep active characters, faces, hands, speech bubbles, and meaning cues in the central 70% of the frame and above the lower 25% so app controls do not hide them.
+
+No subtitles, no translations, no target-language text, no source-language text, no readable dialogue text, no speech bubbles, no captions, no logos.
+
+The image must teach meaning through setting, faces, gaze, objects, gesture, and the social result.
+
+Reject rough sketchbook style, children's-book style, thick marker outlines, decorative sketch borders, photorealism, app screenshot layouts, close-up portraits, sticker poses, reaction shots, character reference sheets, staged two-character poses, and generic character drift.
+
+Localize the environment as: street corner with a visible ambulance or emergency vehicle, no hospital building visible.
+
+Use culturally ordinary clothing, posture, and interpersonal distance for the scene context, but keep the communicative function language-neutral unless the scene explicitly requires a local cultural variant.
+
+Do not render the dialogue, phonetics, translations, captions, signs, or labels as written text.

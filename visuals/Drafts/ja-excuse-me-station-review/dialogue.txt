@@ -1,0 +1,14 @@
+Scenario: ja-excuse-me-station-review
+Type: delayed_review
+Function: get_attention_politely
+Scene: station-information-desk
+
+English visual summary: A station staff member is looking down at a screen or paperwork, and the learner politely gets attention.
+
+English dialogue for picture review:
+- 0. staff [world_opener]: The staff member is looking down.
+- 1. learner [learner_target]: Excuse me.
+- 2. staff [world_response]: Yes.
+
+Frame 0 image: visuals/Drafts/ja-excuse-me-station-review/frame-0.png
+Frame 1 image: visuals/Drafts/ja-excuse-me-station-review/frame-1.png

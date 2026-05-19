@@ -1,0 +1,14 @@
+Scenario: ja-im-sorry-cafe-transfer
+Type: transfer
+Function: apologize_for_mistake
+Scene: cafe-small-spill
+
+English visual summary: The learner is seated and has spilled a cup; the barista comes to clean it and the learner apologizes.
+
+English dialogue for picture review:
+- 0. barista [world_opener]: Oh!
+- 1. learner [learner_target]: I'm sorry.
+- 2. barista [world_response]: It's okay.
+
+Frame 0 image: visuals/Drafts/ja-im-sorry-cafe-transfer/frame-0.png
+Frame 1 image: visuals/Drafts/ja-im-sorry-cafe-transfer/frame-1.png

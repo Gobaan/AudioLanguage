@@ -1,0 +1,14 @@
+Scenario: ja-order-bakery-review
+Type: delayed_review
+Function: order_local_food
+Scene: bakery-counter-sandwich
+
+English visual summary: The learner orders a sandwich from a bakery case.
+
+English dialogue for picture review:
+- 0. server [world_opener]: What would you like?
+- 1. learner [learner_target]: Sandwich, please.
+- 2. server [world_response]: Okay.
+
+Frame 0 image: visuals/Drafts/ja-order-bakery-review/frame-0.png
+Frame 1 image: visuals/Drafts/ja-order-bakery-review/frame-1.png

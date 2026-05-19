@@ -1,0 +1,41 @@
+Yes, 5 scenarios is enough for an MVP test, but only if we’re clear about what it can prove.
+
+Right now you are not testing “can this teach Japanese.” You are testing a smaller, sharper thing:
+
+Does visual-context + audio + spoken response feel learnable enough that a beginner wants to keep going?
+
+With 5 cards, you can test:
+
+Can users understand what the scene wants without translation?
+Do the comic frames make the learner’s turn obvious?
+Does hearing the full mini-dialogue first help?
+Can users repeat or produce the target line after one exposure?
+Does AI feedback feel fair enough, or frustrating/random?
+Is the flow fun enough to do 5 cards without quitting?
+Do users remember any phrases 10 minutes later or the next day?
+What 5 cards cannot test well:
+
+Long-term retention
+Spaced repetition
+Whether this scales to 2,000 words
+Whether users can transfer phrases to many new contexts
+Whether people will pay
+Whether AI judging stays reliable across many languages
+The most important MVP test is this:
+
+Give a beginner 5 visual dialogue cards.
+Do not show translations up front.
+Let them watch, then speak in context.
+After the session, show the same situations again with slightly different visuals or order.
+Ask: can they choose/say the right phrase from the scene alone?
+The next day, test the same 5 again with one or two transfer scenes.
+Your success signals:
+
+They can complete 4/5 cards without needing text help.
+They can explain the rough meaning from the scene, not from English translation.
+They can recall at least 2-3 phrases after a delay.
+They say “I get what I’m supposed to do” instead of “I’m guessing.”
+The AI judge does not feel like the main obstacle.
+The biggest risk to test first is not content volume. It’s whether the learning loop feels fair: “I saw the situation, I heard the phrase, I tried it, the app understood me, and I improved.”
+
+So yes: 5 scenarios is enough for the first test. The next useful step is probably making those 5 polished and consistent, then testing with 3-5 real beginners before adding more content

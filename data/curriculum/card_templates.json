@@ -4,23 +4,38 @@
     {
       "id": "guided-dialogue-replay-v1",
       "name": "Guided dialogue replay",
-      "purpose": "Default template for beginner scenario cards: show one complete visual dialogue, replay the cue, prompt the learner to speak in context, then let the AI judge whether the attempt fits the scene.",
+      "purpose": "Default template for short beginner anchor cards: play the cue and correct learner line once, record the learner's attempt, then play the partner response.",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ],
       "runtime_behavior": {
-        "first_watch": [
-          "Autoplay the full dialogue once.",
-          "Rotate frames as each dialogue line plays.",
-          "Show a green listening glow while audio is playing.",
-          "Hide inactive controls during the autoplay."
-        ],
-        "practice_turn": [
-          "Replay the scene partner cue line while showing its frame.",
-          "Switch to the learner frame after the cue.",
-          "Start microphone recording after the cue finishes.",
-          "Show a blue glow and 'Now you try' only while the microphone is actually listening.",
-          "Hold the learner frame during recording and AI checking.",
-          "Show a warm checking glow while waiting for the AI judgement.",
-          "On success, play the next scene partner response when available.",
-          "On failure, show short AI feedback and keep the learner in the same card."
+        "anchor_flow": [
+          "Play the partner cue.",
+          "Play the correct learner line once.",
+          "Record the learner attempt immediately after the model line.",
+          "Do not block on live AI judgement for short anchor cards.",
+          "Play the partner response after recording to close the social loop.",
+          "Save the recording for later scorecard or debugging."
         ]
       },
       "default_support": {
@@ -93,7 +108,7 @@
         "stage": "guided_scene_production",
         "correct_function_id": "{function_id}",
         "target_id": "{language}-target-{target_slug}",
-        "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+        "prompt": "Listen once, then say your part when prompted.",
         "expected_response": "{target_line}",
         "ai_scene_contract": {
           "language_being_practiced": "{display_language}",

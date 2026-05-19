@@ -1,0 +1,41 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+Use character references: visuals/style/characters/learner-reference.png for the recurring female learner avatar and visuals/style/characters/friend-reference.png for the scene partner archetype.
+
+Scene: school or language class hallway with name tags.
+
+A classmate sees the learner name tag before class and asks the learner to introduce herself.
+
+Mood: casual, quick, friendly.
+
+Characters: learner: standing with backpack or notebook and wearing a simple blank name tag; classmate: friendly classmate approaching before class, also wearing a simple blank name tag.
+
+Visible props: backpack, notebook, classroom doorway, blank name tags.
+
+Show this beat: The scene partner opens the exchange and creates the need for the learner response. Meaning cues: your, name, question.
+
+Body language: classmate slows down, glances toward the learner name tag area, and asks for the learner name.
+
+Gesture cues: your: open-hand gesture toward the listener; name: small proper-noun label when helpful; question: raised eyebrows, attentive pause.
+
+Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+Do not draw speech bubbles. The app will overlay the partner turn bubble.
+
+Mobile-safe composition: keep active characters, faces, hands, speech bubbles, and meaning cues in the central 70% of the frame and above the lower 25% so app controls do not hide them.
+
+No subtitles, no translations, no target-language text, no source-language text, no readable dialogue text, no speech bubbles, no captions, no logos.
+
+The image must teach meaning through setting, faces, gaze, objects, gesture, and the social result.
+
+Reject rough sketchbook style, children's-book style, thick marker outlines, decorative sketch borders, photorealism, app screenshot layouts, close-up portraits, sticker poses, reaction shots, character reference sheets, staged two-character poses, and generic character drift.
+
+Localize the environment as: school or language class hallway with name tags.
+
+Use culturally ordinary clothing, posture, and interpersonal distance for the scene context, but keep the communicative function language-neutral unless the scene explicitly requires a local cultural variant.
+
+Do not render the dialogue, phonetics, translations, captions, signs, or labels as written text.

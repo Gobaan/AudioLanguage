@@ -1,0 +1,14 @@
+Scenario: ja-repair-dont-understand
+Type: anchor
+Function: say_do_not_understand
+Scene: busy-service-counter
+
+English visual summary: A staff member gives instructions too quickly and the learner signals confusion.
+
+English dialogue for picture review:
+- 0. staff [world_opener]: Please fill this in here.
+- 1. learner [learner_target]: I don't understand.
+- 2. staff [world_response]: It's okay. I'll help.
+
+Frame 0 image: visuals/Drafts/ja-repair-dont-understand/frame-0.png
+Frame 1 image: visuals/Drafts/ja-repair-dont-understand/frame-1.png

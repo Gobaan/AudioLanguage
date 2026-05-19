@@ -1,0 +1,14 @@
+Scenario: ja-repair-ticket-transfer
+Type: transfer
+Function: say_do_not_understand
+Scene: ticket-machine-help
+
+English visual summary: A station helper explains a ticket machine and the learner signals confusion.
+
+English dialogue for picture review:
+- 0. station_helper [world_opener]: Press here, please.
+- 1. learner [learner_target]: I don't understand.
+- 2. station_helper [world_response]: It's okay.
+
+Frame 0 image: visuals/Drafts/ja-repair-ticket-transfer/frame-0.png
+Frame 1 image: visuals/Drafts/ja-repair-ticket-transfer/frame-1.png

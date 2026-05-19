@@ -1,0 +1,14 @@
+Scenario: ja-excuse-me-attention
+Type: anchor
+Function: get_attention_politely
+Scene: station-information-desk
+
+English visual summary: A staff member is focused on something else, and the learner politely gets their attention.
+
+English dialogue for picture review:
+- 0. staff [world_opener]: The staff member is looking down or focused elsewhere.
+- 1. learner [learner_target]: Excuse me.
+- 2. staff [world_response]: Yes, go ahead.
+
+Frame 0 image: visuals/Drafts/ja-excuse-me-attention/frame-0.png
+Frame 1 image: visuals/Drafts/ja-excuse-me-attention/frame-1.png

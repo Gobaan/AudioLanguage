@@ -1,0 +1,14 @@
+Scenario: ja-im-sorry-small-mistake
+Type: anchor
+Function: apologize_for_mistake
+Scene: hallway-small-bump
+
+English visual summary: The learner and friend visibly bump into each other; papers fly and scatter on the floor, then the learner apologizes.
+
+English dialogue for picture review:
+- 0. classmate [world_opener]: Oh!
+- 1. learner [learner_target]: I'm sorry.
+- 2. classmate [world_response]: It's okay.
+
+Frame 0 image: visuals/Drafts/ja-im-sorry-small-mistake/frame-0.png
+Frame 1 image: visuals/Drafts/ja-im-sorry-small-mistake/frame-1.png

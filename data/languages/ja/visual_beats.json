@@ -13,11 +13,13 @@
       "line_index": 0,
       "line_text": "こんにちは！",
       "timing_role": "cue",
-      "meaning_units": ["hello"],
+      "meaning_units": [
+        "hello"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-0.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+        "image": "visuals/generated/ja/ja-first-hi-response/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -36,11 +38,14 @@
       "line_index": 1,
       "line_text": "こんにちは！",
       "timing_role": "learner_turn",
-      "meaning_units": ["hello", "response"],
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-1.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+        "image": "visuals/generated/ja/ja-first-hi-response/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -59,11 +64,13 @@
       "line_index": 2,
       "line_text": "会えてうれしいです。",
       "timing_role": "resolution",
-      "meaning_units": ["positive_response"],
+      "meaning_units": [
+        "positive_response"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-2.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+        "image": "visuals/generated/ja/ja-first-hi-response/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -82,11 +89,15 @@
       "line_index": 0,
       "line_text": "お名前は？",
       "timing_role": "cue",
-      "meaning_units": ["your", "name", "question"],
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-0.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+        "image": "visuals/generated/ja/ja-introduce-self/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-self/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-self/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -95,7 +106,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-introduce-self-1",
@@ -106,11 +117,15 @@
       "line_index": 1,
       "line_text": "アンナです。",
       "timing_role": "learner_turn",
-      "meaning_units": ["my", "name", "proper_noun"],
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-1.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+        "image": "visuals/generated/ja/ja-introduce-self/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-self/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-self/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -118,8 +133,10 @@
           "visual_cue": "learner touches chest and introduces themself; a small name label on notebook says Anna"
         }
       ],
-      "proper_noun_labels": ["Anna"],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-introduce-self-2",
@@ -130,11 +147,13 @@
       "line_index": 2,
       "line_text": "よろしくお願いします。",
       "timing_role": "resolution",
-      "meaning_units": ["positive_response"],
+      "meaning_units": [
+        "positive_response"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-2.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+        "image": "visuals/generated/ja/ja-introduce-self/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-self/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-self/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -143,7 +162,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-repair-dont-understand-0",
@@ -154,11 +173,13 @@
       "line_index": 0,
       "line_text": "こちらに記入してください。",
       "timing_role": "cue",
-      "meaning_units": ["this"],
+      "meaning_units": [
+        "this"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-0.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+        "image": "visuals/generated/ja/ja-repair-dont-understand/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -167,7 +188,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-repair-dont-understand-1",
@@ -178,11 +199,14 @@
       "line_index": 1,
       "line_text": "わかりません。",
       "timing_role": "learner_turn",
-      "meaning_units": ["not", "understand"],
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-1.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+        "image": "visuals/generated/ja/ja-repair-dont-understand/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -191,7 +215,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-repair-dont-understand-2",
@@ -202,11 +226,13 @@
       "line_index": 2,
       "line_text": "大丈夫です。手伝います。",
       "timing_role": "resolution",
-      "meaning_units": ["help"],
+      "meaning_units": [
+        "help"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-2.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+        "image": "visuals/generated/ja/ja-repair-dont-understand/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -215,22 +241,25 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
-      "id": "ja-vb-apologize-small-mistake-0",
-      "dialogue_id": "ja-apologize-small-mistake",
-      "function_id": "apologize",
-      "target_id": "ja-target-sorry-excuse-me",
+      "id": "ja-vb-excuse-me-attention-0",
+      "dialogue_id": "ja-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
       "scene_id": "busy-service-counter",
       "line_index": 0,
       "line_text": "次の方、どうぞ。",
       "timing_role": "cue",
-      "meaning_units": ["attention", "turn_prompt"],
+      "meaning_units": [
+        "attention",
+        "turn_prompt"
+      ],
       "asset_paths": {
-        "image": "visuals/ja/ja-apologize-small-mistake/frame-0.png",
-        "image_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-0.txt",
-        "video_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-0.txt"
+        "image": "visuals/generated/ja/ja-excuse-me-attention/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -239,22 +268,25 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
-      "id": "ja-vb-apologize-small-mistake-1",
-      "dialogue_id": "ja-apologize-small-mistake",
-      "function_id": "apologize",
-      "target_id": "ja-target-sorry-excuse-me",
+      "id": "ja-vb-excuse-me-attention-1",
+      "dialogue_id": "ja-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
       "scene_id": "busy-service-counter",
       "line_index": 1,
       "line_text": "すみません。",
       "timing_role": "learner_turn",
-      "meaning_units": ["attention_request", "polite_softener"],
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
       "asset_paths": {
-        "image": "visuals/ja/ja-apologize-small-mistake/frame-1.png",
-        "image_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-1.txt",
-        "video_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-1.txt"
+        "image": "visuals/generated/ja/ja-excuse-me-attention/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -263,22 +295,25 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
-      "id": "ja-vb-apologize-small-mistake-2",
-      "dialogue_id": "ja-apologize-small-mistake",
-      "function_id": "apologize",
-      "target_id": "ja-target-sorry-excuse-me",
+      "id": "ja-vb-excuse-me-attention-2",
+      "dialogue_id": "ja-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
       "scene_id": "busy-service-counter",
       "line_index": 2,
       "line_text": "はい、どうぞ。",
       "timing_role": "resolution",
-      "meaning_units": ["attention_received", "acknowledgement"],
+      "meaning_units": [
+        "attention_received",
+        "acknowledgement"
+      ],
       "asset_paths": {
-        "image": "visuals/ja/ja-apologize-small-mistake/frame-2.png",
-        "image_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-2.txt",
-        "video_prompt": "visuals/ja/ja-apologize-small-mistake/prompts/frame-2.txt"
+        "image": "visuals/generated/ja/ja-excuse-me-attention/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -287,7 +322,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-order-local-food-0",
@@ -298,11 +333,13 @@
       "line_index": 0,
       "line_text": "何にしますか？",
       "timing_role": "cue",
-      "meaning_units": ["question"],
+      "meaning_units": [
+        "question"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-0.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-0.txt"
+        "image": "visuals/generated/ja/ja-order-local-food/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-order-local-food/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-local-food/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -311,7 +348,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-order-local-food-1",
@@ -322,11 +359,14 @@
       "line_index": 1,
       "line_text": "サンドイッチください。",
       "timing_role": "learner_turn",
-      "meaning_units": ["food_item", "please"],
+      "meaning_units": [
+        "food_item",
+        "please"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-1.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-1.txt"
+        "image": "visuals/generated/ja/ja-order-local-food/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-order-local-food/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-local-food/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -335,7 +375,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-order-local-food-2",
@@ -346,11 +386,13 @@
       "line_index": 2,
       "line_text": "はい。",
       "timing_role": "resolution",
-      "meaning_units": ["acknowledgement"],
+      "meaning_units": [
+        "acknowledgement"
+      ],
       "asset_paths": {
-        "image": "visuals/ta-greeting-hello/frame-2.png",
-        "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
-        "video_prompt": "visuals/ta-greeting-hello/prompts/beat-2.txt"
+        "image": "visuals/generated/ja/ja-order-local-food/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-order-local-food/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-local-food/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -359,7 +401,7 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     },
     {
       "id": "ja-vb-directions-hospital-0",
@@ -370,7 +412,10 @@
       "line_index": 0,
       "line_text": "どうしましたか？",
       "timing_role": "cue",
-      "meaning_units": ["help", "question"],
+      "meaning_units": [
+        "help",
+        "question"
+      ],
       "asset_paths": {
         "image": "visuals/ta-greeting-hello/frame-0.png",
         "image_prompt": "visuals/ta-greeting-hello/prompts/frame-0.txt",
@@ -394,7 +439,11 @@
       "line_index": 1,
       "line_text": "病院はどこですか？",
       "timing_role": "learner_turn",
-      "meaning_units": ["where", "hospital", "question"],
+      "meaning_units": [
+        "where",
+        "hospital",
+        "question"
+      ],
       "asset_paths": {
         "image": "visuals/ta-greeting-hello/frame-1.png",
         "image_prompt": "visuals/ta-greeting-hello/prompts/frame-1.txt",
@@ -418,7 +467,9 @@
       "line_index": 2,
       "line_text": "あちらです。",
       "timing_role": "resolution",
-      "meaning_units": ["place"],
+      "meaning_units": [
+        "place"
+      ],
       "asset_paths": {
         "image": "visuals/ta-greeting-hello/frame-2.png",
         "image_prompt": "visuals/ta-greeting-hello/prompts/frame-2.txt",
@@ -432,6 +483,808 @@
       ],
       "proper_noun_labels": [],
       "notes": "Temporary generic frame reused for Japanese MVP flow testing."
+    },
+    {
+      "id": "ja-vb-greeting-neighbor-transfer-0",
+      "dialogue_id": "ja-greeting-neighbor-transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "line_index": 0,
+      "line_text": "こんにちは！",
+      "timing_role": "cue",
+      "meaning_units": [
+        "hello"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-greeting-neighbor-transfer/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "neighbor-gate world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-greeting-neighbor-transfer-1",
+      "dialogue_id": "ja-greeting-neighbor-transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "line_index": 1,
+      "line_text": "こんにちは！",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-greeting-neighbor-transfer/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello,response",
+          "visual_cue": "neighbor-gate learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-greeting-neighbor-transfer-2",
+      "dialogue_id": "ja-greeting-neighbor-transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "line_index": 2,
+      "line_text": "どうも。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-greeting-neighbor-transfer/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "neighbor-gate world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-greeting-entry-review-0",
+      "dialogue_id": "ja-greeting-entry-review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 0,
+      "line_text": "こんにちは。",
+      "timing_role": "cue",
+      "meaning_units": [
+        "hello"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-greeting-entry-review/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "apartment-entry-neighbor world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-greeting-entry-review-1",
+      "dialogue_id": "ja-greeting-entry-review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 1,
+      "line_text": "こんにちは！",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-greeting-entry-review/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello,response",
+          "visual_cue": "apartment-entry-neighbor learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-greeting-entry-review-2",
+      "dialogue_id": "ja-greeting-entry-review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ja-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 2,
+      "line_text": "どうも。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-greeting-entry-review/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "apartment-entry-neighbor world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-introduce-class-transfer-0",
+      "dialogue_id": "ja-introduce-class-transfer",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "line_index": 0,
+      "line_text": "お名前は？",
+      "timing_role": "cue",
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-introduce-class-transfer/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "language-class-name-tags world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-introduce-class-transfer-1",
+      "dialogue_id": "ja-introduce-class-transfer",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "line_index": 1,
+      "line_text": "アンナです。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-introduce-class-transfer/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "language-class-name-tags learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-introduce-class-transfer-2",
+      "dialogue_id": "ja-introduce-class-transfer",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "line_index": 2,
+      "line_text": "よろしくお願いします。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-introduce-class-transfer/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "language-class-name-tags world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-introduce-community-review-0",
+      "dialogue_id": "ja-introduce-community-review",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 0,
+      "line_text": "お名前は？",
+      "timing_role": "cue",
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-introduce-community-review/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "community-table-introduction world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-introduce-community-review-1",
+      "dialogue_id": "ja-introduce-community-review",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 1,
+      "line_text": "アンナです。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-introduce-community-review/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "community-table-introduction learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-introduce-community-review-2",
+      "dialogue_id": "ja-introduce-community-review",
+      "function_id": "introduce_self",
+      "target_id": "ja-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 2,
+      "line_text": "よろしく。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-introduce-community-review/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "community-table-introduction world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-repair-ticket-transfer-0",
+      "dialogue_id": "ja-repair-ticket-transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "line_index": 0,
+      "line_text": "ここを押してください。",
+      "timing_role": "cue",
+      "meaning_units": [
+        "this",
+        "instruction"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-repair-ticket-transfer/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this,instruction",
+          "visual_cue": "ticket-machine-help world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-repair-ticket-transfer-1",
+      "dialogue_id": "ja-repair-ticket-transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "line_index": 1,
+      "line_text": "わかりません。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-repair-ticket-transfer/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "not,understand",
+          "visual_cue": "ticket-machine-help learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-repair-ticket-transfer-2",
+      "dialogue_id": "ja-repair-ticket-transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "line_index": 2,
+      "line_text": "大丈夫です。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "help"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-repair-ticket-transfer/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "ticket-machine-help world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-repair-clinic-review-0",
+      "dialogue_id": "ja-repair-clinic-review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 0,
+      "line_text": "こちらです。",
+      "timing_role": "cue",
+      "meaning_units": [
+        "this"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-repair-clinic-review/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this",
+          "visual_cue": "clinic-form-counter world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-repair-clinic-review-1",
+      "dialogue_id": "ja-repair-clinic-review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 1,
+      "line_text": "わかりません。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-repair-clinic-review/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "not,understand",
+          "visual_cue": "clinic-form-counter learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-repair-clinic-review-2",
+      "dialogue_id": "ja-repair-clinic-review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ja-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 2,
+      "line_text": "手伝います。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "help"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-repair-clinic-review/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "clinic-form-counter world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-excuse-me-cafe-transfer-0",
+      "dialogue_id": "ja-excuse-me-cafe-transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 0,
+      "line_text": "少々お待ちください。",
+      "timing_role": "cue",
+      "meaning_units": [
+        "wait"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-excuse-me-cafe-transfer/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "wait",
+          "visual_cue": "cafe-counter-attention world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-excuse-me-cafe-transfer-1",
+      "dialogue_id": "ja-excuse-me-cafe-transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 1,
+      "line_text": "すみません。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-excuse-me-cafe-transfer/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_request,polite_softener",
+          "visual_cue": "cafe-counter-attention learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-excuse-me-cafe-transfer-2",
+      "dialogue_id": "ja-excuse-me-cafe-transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 2,
+      "line_text": "はい、どうぞ。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-excuse-me-cafe-transfer/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "cafe-counter-attention world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-excuse-me-station-review-0",
+      "dialogue_id": "ja-excuse-me-station-review",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 0,
+      "line_text": "次の方。",
+      "timing_role": "cue",
+      "meaning_units": [
+        "attention",
+        "turn_prompt"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-excuse-me-station-review/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention,turn_prompt",
+          "visual_cue": "station-information-desk world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-excuse-me-station-review-1",
+      "dialogue_id": "ja-excuse-me-station-review",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 1,
+      "line_text": "すみません。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-excuse-me-station-review/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_request,polite_softener",
+          "visual_cue": "station-information-desk learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-excuse-me-station-review-2",
+      "dialogue_id": "ja-excuse-me-station-review",
+      "function_id": "get_attention_politely",
+      "target_id": "ja-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 2,
+      "line_text": "はい。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-excuse-me-station-review/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "station-information-desk world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-order-convenience-transfer-0",
+      "dialogue_id": "ja-order-convenience-transfer",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 0,
+      "line_text": "ご注文は？",
+      "timing_role": "cue",
+      "meaning_units": [
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-order-convenience-transfer/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "convenience-store-sandwich world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-order-convenience-transfer-1",
+      "dialogue_id": "ja-order-convenience-transfer",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 1,
+      "line_text": "サンドイッチください。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "food_item",
+        "please"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-order-convenience-transfer/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "food_item,please",
+          "visual_cue": "convenience-store-sandwich learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-order-convenience-transfer-2",
+      "dialogue_id": "ja-order-convenience-transfer",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 2,
+      "line_text": "はい。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-order-convenience-transfer/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "convenience-store-sandwich world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-order-bakery-review-0",
+      "dialogue_id": "ja-order-bakery-review",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 0,
+      "line_text": "何にしますか？",
+      "timing_role": "cue",
+      "meaning_units": [
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-order-bakery-review/frame-0.png",
+        "image_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "bakery-counter-sandwich world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-order-bakery-review-1",
+      "dialogue_id": "ja-order-bakery-review",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 1,
+      "line_text": "サンドイッチください。",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "food_item",
+        "please"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-order-bakery-review/frame-1.png",
+        "image_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "food_item,please",
+          "visual_cue": "bakery-counter-sandwich learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ja-vb-order-bakery-review-2",
+      "dialogue_id": "ja-order-bakery-review",
+      "function_id": "order_local_food",
+      "target_id": "ja-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 2,
+      "line_text": "はい。",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/generated/ja/ja-order-bakery-review/frame-2.png",
+        "image_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "bakery-counter-sandwich world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
     }
   ]
 }

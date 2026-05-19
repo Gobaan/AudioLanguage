@@ -1,0 +1,14 @@
+Scenario: ja-repair-clinic-review
+Type: delayed_review
+Function: say_do_not_understand
+Scene: clinic-form-counter
+
+English visual summary: A clinic receptionist points to a form and the learner signals confusion.
+
+English dialogue for picture review:
+- 0. receptionist [world_opener]: This one here.
+- 1. learner [learner_target]: I don't understand.
+- 2. receptionist [world_response]: I'll help.
+
+Frame 0 image: visuals/Drafts/ja-repair-clinic-review/frame-0.png
+Frame 1 image: visuals/Drafts/ja-repair-clinic-review/frame-1.png
