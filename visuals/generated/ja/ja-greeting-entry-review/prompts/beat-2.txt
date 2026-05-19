@@ -6,7 +6,7 @@ Use character references: visuals/style/characters/learner-reference.png for the
 
 Scene: apartment building entrance.
 
-A neighbor holds the door and gives the learner a friendly greeting at the building entrance.
+After the door-holding moment, the learner and neighbor have stepped clear of the doorway and exchange a friendly final greeting in the apartment entrance hall.
 
 Mood: friendly, quick, everyday.
 
@@ -16,7 +16,7 @@ Visible props: glass door, mailboxes without readable text, small bag, morning l
 
 Show this beat: The scene partner responds so the learner can infer whether the attempt worked. Meaning cues: positive_response.
 
-Body language: neighbor nods and lets the learner pass.
+Body language: neighbor nods warmly with both hands relaxed visibly below his waist at his sides; learner also has both hands relaxed visibly below her waist. Both characters stand away from the door, no one touches or reaches toward a handle, and there are no waving or raised hands.
 
 Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
 

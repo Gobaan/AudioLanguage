@@ -27,7 +27,7 @@
       "physical_cues": {
         "world_opener": "friend enters, smiles, waves, and makes eye contact",
         "learner_target": "learner has taken her headphones off and wears them around her neck, looks toward her friend, raises one hand to wave back, and has set the pencil down on the open notebook; friend has both hands down, relaxed, and leans casually on the doorway",
-        "world_response": "friend smiles, nods, and relaxes"
+        "world_response": "friend smiles, nods, and relaxes with both hands down in a natural resting posture; learner also has hands relaxed, with no waving or raised hands"
       },
       "localized_variants": {
         "en": "cozy home study room",
@@ -62,7 +62,7 @@
       "physical_cues": {
         "world_opener": "neighbor pauses, waves, and smiles",
         "learner_target": "learner turns toward neighbor and answers politely",
-        "world_response": "neighbor nods and continues warmly"
+        "world_response": "neighbor nods and continues warmly with hands relaxed in a natural resting posture; learner also has hands relaxed, with no waving or raised hands"
       }
     },
     {
@@ -376,7 +376,7 @@
       "physical_cues": {
         "world_opener": "neighbor smiles and greets while holding the door",
         "learner_target": "learner smiles and answers the greeting",
-        "world_response": "neighbor nods and lets the learner pass"
+        "world_response": "neighbor nods and lets the learner pass with hands relaxed in a natural resting posture; learner also has hands relaxed, with no waving or raised hands"
       }
     },
     {
@@ -642,7 +642,7 @@
       "physical_cues": {
         "world_opener": "learner and classmate have just bumped into each other and are both stumbling or falling backward, arms out for balance, notebooks slipping, loose papers flying dramatically all around them and scattering across the hallway floor; both faces are surprised and embarrassed, not angry",
         "learner_target": "both characters are seated on the hallway floor after the bump, surrounded by scattered papers; the learner looks apologetic and hands a small stack of papers she picked up back to the classmate while saying sorry",
-        "world_response": "classmate relaxes, smiles, and shows that it is okay while they begin gathering papers"
+        "world_response": "classmate relaxes, smiles, and shows that it is okay while both characters remain on the hallway floor with the recovered papers gathered into a neat bundle or stack between them, not rescattered"
       }
     },
     {
@@ -680,11 +680,11 @@
       "environment": "language class table",
       "domain": "repair",
       "mvp_priority": 23,
-      "description": "The learner bumps the shared class table, causing a friend notebook or book to slide off and fall to the floor, then apologizes.",
+      "description": "The learner visibly bumps the shared class table and immediately apologizes as a friend's books and loose papers slide off the table and fall.",
       "characters": [
         {
           "role": "learner",
-          "description": "student at a shared class table who accidentally knocked something off"
+          "description": "student at a shared class table who has just bumped the table and is the first speaker apologizing"
         },
         {
           "role": "classmate",
@@ -692,16 +692,16 @@
         }
       ],
       "props": [
-        "class table being bumped",
-        "friend notebook falling from table",
-        "book on floor",
-        "loose papers",
+        "class table visibly jolting or tilted from the bump",
+        "friend books and notebook sliding off the table edge",
+        "book mid-fall above the floor",
+        "loose papers spilling from the falling books",
         "pencil"
       ],
       "mood": "minor mistake, apologetic, friendly repair",
       "physical_cues": {
-        "world_opener": "learner visibly bumps the class table; the friend notebook or book is falling off the table toward the floor while the classmate reacts with surprise",
-        "learner_target": "learner looks apologetic and reaches toward the falling notebook or gestures sorry",
+        "world_opener": "learner is the first speaker: she visibly bumps the class table with her hip or hand, looks apologetic, and starts saying sorry while the friend's books and notebook slide off the table edge, papers spill out, and the classmate reacts with surprise",
+        "learner_target": "learner remains the active speaker, looking apologetic toward the classmate while reaching toward the falling books or making a small sorry gesture",
         "world_response": "classmate smiles and shows that it is okay while the learner helps pick up the book"
       }
     }

@@ -16,7 +16,7 @@ Visible props: desk, notebook, pencil, headphones, open doorway.
 
 Show this beat: The scene partner responds so the learner can infer whether the attempt worked. Meaning cues: positive_response.
 
-Body language: friend smiles, nods, and relaxes.
+Body language: friend smiles, nods, and relaxes with both hands down in a natural resting posture; learner also has hands relaxed, with no waving or raised hands.
 
 Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
 
