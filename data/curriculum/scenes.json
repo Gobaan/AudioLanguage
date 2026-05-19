@@ -620,15 +620,15 @@
       "environment": "school or language class hallway",
       "domain": "repair",
       "mvp_priority": 21,
-      "description": "The learner and a friend are visibly bumping into each other in the hallway; loose papers fly around and land on the floor, then the learner apologizes.",
+      "description": "The learner and a friendly classmate collide in a cinematic hallway meet-cute: both are off balance, stumbling or starting to fall, notebooks slip loose, and papers fly everywhere before the learner apologizes.",
       "characters": [
         {
           "role": "learner",
-          "description": "walking with notebook or backpack and surprised by a small accidental bump"
+          "description": "walking with notebook or backpack, surprised and off balance after bumping into a classmate"
         },
         {
           "role": "classmate",
-          "description": "friendly classmate lightly bumped in the hallway"
+          "description": "friendly classmate also off balance, surprised but not angry"
         }
       ],
       "props": [
@@ -638,9 +638,9 @@
         "loose papers flying",
         "papers scattered on floor"
       ],
-      "mood": "small mistake, apologetic, quickly repaired",
+      "mood": "movie-scene meet-cute, startled, embarrassed, warm, not angry",
       "physical_cues": {
-        "world_opener": "learner and classmate are mid-bump, shoulders or arms lightly colliding, with loose papers flying around them and several papers scattered on the floor",
+        "world_opener": "learner and classmate have just bumped into each other and are both stumbling or falling backward, arms out for balance, notebooks slipping, loose papers flying dramatically all around them and scattering across the hallway floor; both faces are surprised and embarrassed, not angry",
         "learner_target": "learner looks apologetic, raises one hand gently, and gives a small sorry bow or nod near the fallen papers",
         "world_response": "classmate relaxes, smiles, and shows that it is okay while they begin gathering papers"
       }

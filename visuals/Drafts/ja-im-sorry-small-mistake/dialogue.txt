@@ -3,7 +3,7 @@ Type: anchor
 Function: apologize_for_mistake
 Scene: hallway-small-bump
 
-English visual summary: The learner and friend visibly bump into each other; papers fly and scatter on the floor, then the learner apologizes.
+English visual summary: The learner and friend collide in a warm meet-cute hallway moment; both stumble or start to fall, papers fly everywhere, and the learner apologizes. No anger.
 
 English dialogue for picture review:
 - 0. classmate [world_opener]: Oh!
