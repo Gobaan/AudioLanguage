@@ -6,17 +6,17 @@ Use character references: visuals/style/characters/learner-reference.png for the
 
 Scene: convenience store counter.
 
-The learner holds a wrapped sandwich at the counter and orders it politely.
+The learner is called up to the convenience store counter by the cashier, then politely orders one sandwich from the counter display.
 
 Mood: quick, practical, confident.
 
-Characters: learner: customer clearly holding a wrapped sandwich; cashier: store cashier waiting at the counter.
+Characters: learner: customer at the counter with empty hands, looking toward the cashier and sandwich display; cashier: store cashier waiting at the counter.
 
-Visible props: wrapped sandwich in learner hand, counter, chilled shelf, payment tray.
+Visible props: wrapped sandwich visible on counter display, counter, chilled shelf, payment tray.
 
 Show this beat: The scene partner opens the exchange and creates the need for the learner response. Meaning cues: question.
 
-Body language: cashier waits for the order while the sandwich is clearly visible in the learner hand.
+Body language: cashier looks toward the learner and gestures or opens one hand to call her up to the counter; wrapped sandwiches are visible on the counter display or chilled shelf, not in the learner's hands.
 
 Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
 

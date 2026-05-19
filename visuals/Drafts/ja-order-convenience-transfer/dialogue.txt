@@ -3,7 +3,7 @@ Type: transfer
 Function: order_local_food
 Scene: convenience-store-sandwich
 
-English visual summary: The learner clearly holds a wrapped sandwich at a convenience store counter and orders it.
+English visual summary: The cashier calls the learner up to the convenience store counter, then the learner orders one sandwich from the counter display with empty hands.
 
 English dialogue for picture review:
 - 0. cashier [world_opener]: What would you like?

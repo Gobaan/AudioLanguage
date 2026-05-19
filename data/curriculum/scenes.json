@@ -562,11 +562,11 @@
       "environment": "convenience store counter",
       "domain": "buying_ordering",
       "mvp_priority": 19,
-      "description": "The learner holds a wrapped sandwich at the counter and orders it politely.",
+      "description": "The learner is called up to the convenience store counter by the cashier, then politely orders one sandwich from the counter display.",
       "characters": [
         {
           "role": "learner",
-          "description": "customer clearly holding a wrapped sandwich"
+          "description": "customer at the counter with empty hands, looking toward the cashier and sandwich display"
         },
         {
           "role": "cashier",
@@ -574,15 +574,15 @@
         }
       ],
       "props": [
-        "wrapped sandwich in learner hand",
+        "wrapped sandwich visible on counter display",
         "counter",
         "chilled shelf",
         "payment tray"
       ],
       "mood": "quick, practical, confident",
       "physical_cues": {
-        "world_opener": "cashier waits for the order while the sandwich is clearly visible in the learner hand",
-        "learner_target": "learner holds up or points to the sandwich in their own hand and asks politely",
+        "world_opener": "cashier looks toward the learner and gestures or opens one hand to call her up to the counter; wrapped sandwiches are visible on the counter display or chilled shelf, not in the learner's hands",
+        "learner_target": "learner stands at the counter with empty hands, looks at the cashier, and politely indicates one sandwich from the counter display or chilled shelf",
         "world_response": "cashier nods and reaches toward the register"
       }
     },
