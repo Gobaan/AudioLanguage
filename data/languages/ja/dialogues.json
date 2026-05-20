@@ -851,16 +851,6 @@
       "lines": [
         {
           "index": 0,
-          "speaker_role": "classmate",
-          "line_type": "world_opener",
-          "text": "???",
-          "transliteration": "Ah.",
-          "meaning_units": [
-            "mistake"
-          ]
-        },
-        {
-          "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-im-sorry",
@@ -873,7 +863,7 @@
           ]
         },
         {
-          "index": 2,
+          "index": 1,
           "speaker_role": "classmate",
           "line_type": "world_response",
           "text": "??????",

@@ -6,17 +6,17 @@ Use character references: visuals/style/characters/learner-reference.png for the
 
 Scene: language class table.
 
-The learner bumps the shared class table, causing a friend notebook or book to slide off and fall to the floor, then apologizes.
+The learner visibly bumps the shared class table and immediately apologizes as a friend's books and loose papers slide off the table and fall.
 
 Mood: minor mistake, apologetic, friendly repair.
 
-Characters: learner: student at a shared class table who accidentally knocked something off; classmate: friend/classmate whose notebook or papers fell from the table.
+Characters: learner: student at a shared class table who has just bumped the table and is the first speaker apologizing; classmate: friend/classmate whose books and papers are falling from the table.
 
-Visible props: class table being bumped, friend notebook falling from table, book on floor, loose papers, pencil.
+Visible props: class table visibly jolting or tilted from the bump, friend books and notebook sliding off the table edge, book mid-fall above the floor, loose papers spilling from the falling books, pencil.
 
-Show this beat: The scene partner opens the exchange and creates the need for the learner response. Meaning cues: mistake.
+Show this beat: The learner is the first speaker and apologizes immediately after causing the mistake. Meaning cues: sorry, mistake.
 
-Body language: learner visibly bumps the class table; the friend notebook or book is falling off the table toward the floor while the classmate reacts with surprise.
+Body language: learner visibly bumps the class table with her hip or hand, looks apologetic, and starts saying sorry while the friend's books and notebook slide off the table edge, papers spill out, and the classmate reacts with surprise.
 
 Gesture cues: mistake: brief surprised pause, self-correction gesture, look at the affected person.
 
@@ -24,11 +24,11 @@ Use landscape side-view staging for this two-person dialogue scene so both peopl
 
 Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
 
-Do not draw speech bubbles. The app will overlay the partner turn bubble.
+Speech bubble contract: Speaker for this frame: learner. Speaker visual identity and position: recurring female learner avatar near the bumped table, visibly apologetic. Draw exactly one clean white speech bubble containing exactly: ... Bubble tail must point to the learner, not the classmate. Do not attach the bubble to the classmate.
 
 Mobile-safe composition: keep active characters, faces, hands, speech bubbles, and meaning cues in the central 70% of the frame and above the lower 25% so app controls do not hide them.
 
-No subtitles, no translations, no target-language text, no source-language text, no readable dialogue text, no speech bubbles, no captions, no logos.
+No subtitles, no translations, no target-language text, no source-language text, no readable dialogue words, no captions, no logos. The only text-like mark allowed is the three-dot ellipsis inside the learner speech bubble.
 
 The image must teach meaning through setting, faces, gaze, objects, gesture, and the social result.
 

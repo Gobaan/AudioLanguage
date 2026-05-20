@@ -17,6 +17,34 @@ Attach:
 
 Attach the current rejected draft only when it helps. Tell the model what to preserve and what to change.
 
+For final dialogue images, add a deterministic speech-bubble contract before generation:
+
+- Read the dialogue metadata for the exact frame speaker before writing the image prompt.
+- If the frame has an active speaking character, draw exactly one clean white speech bubble containing exactly `...`.
+- Attach the bubble tail to that frame's speaker only. Name the role, visual identity, and intended left/right/center position in the prompt.
+- Explicitly forbid attaching the bubble to the other character.
+- If the frame is a silent action/setup beat, draw no speech bubble.
+- Never include any other readable text, including target language, translations, signs, labels, captions, or accidental words such as "hello".
+
+Use this prompt shape:
+
+```text
+Speech bubble contract:
+- Speaker for this frame: <role>.
+- Speaker visual identity and position: <description, left/right/center>.
+- Draw exactly one white speech bubble containing exactly: ...
+- Bubble tail must point to <role>, not <other role>.
+- Do not attach the bubble to <other role>.
+```
+
+For silent openers:
+
+```text
+Speech bubble contract:
+- This frame has no speaking character.
+- Draw no speech bubble.
+```
+
 ## Two Regeneration Modes
 
 Use **draft-reference revision** for crop, layout, color, framing, and small environment fixes where the current draft is mostly right.
@@ -124,6 +152,8 @@ Accept only if the targeted defect is fixed without introducing a worse issue.
 ## Repo Command
 
 For this repo, image generation defaults to draft output under `visuals/Drafts/<dialogue-id>/`.
+
+Draft output is only for prototype images: `gpt-image-1-mini` with `--quality low`. Never write medium-quality, high-quality, or full `gpt-image-1` generations into Drafts. Those are good-copy or production assets and must use `--output-mode production`.
 Include the current draft with `--reference-image` only for draft-reference revision mode:
 
 ```powershell
@@ -134,10 +164,12 @@ Use `--no-previous-frame` for frame 0. For frame 1 or later, keep previous-frame
 
 For clean regeneration mode, omit `--reference-image`.
 
-Use `gpt-image-1-mini` and `--quality low` for prototype fixes. Upgrade to `gpt-image-1` and `--quality medium` only after the correction is visually working. Reserve `--quality high` for final polish after the scene direction is approved.
+Use `gpt-image-1-mini` and `--quality low` for prototype fixes. Upgrade to `gpt-image-1` and `--quality medium` only after the correction is visually working. Medium-quality upgrades must be generated with `--output-mode production`, not Drafts. Reserve `--quality high` for final polish after the scene direction is approved.
 
 Only write production app assets after a draft has been accepted:
 
 ```powershell
 python scripts\generate_images_from_manifest.py --language ja --prompt-id <prompt-id> --output-mode production --model gpt-image-1 --quality medium --force
 ```
+
+Before generating frame 1 or frame 2 as a good copy, verify the previous frame reference is itself an accepted production/good-copy image. If frame 0 is still only a low-quality draft, regenerate/promote frame 0 first or explicitly tell the user that frame 1 will inherit a draft anchor.
