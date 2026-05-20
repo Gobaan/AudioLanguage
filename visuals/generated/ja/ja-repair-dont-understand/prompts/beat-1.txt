@@ -26,11 +26,11 @@ Use landscape side-view staging for this two-person dialogue scene so both peopl
 
 Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
 
-Do not draw speech bubbles. The app will overlay the learner turn bubble.
+Draw exactly one clean comic speech bubble attached to the learner. The speech bubble must contain only three dots: ...
 
 Mobile-safe composition: keep active characters, faces, hands, speech bubbles, and meaning cues in the central 70% of the frame and above the lower 25% so app controls do not hide them.
 
-No subtitles, no translations, no target-language text, no source-language text, no readable dialogue text, no speech bubbles, no captions, no logos.
+No subtitles, no translations, no target-language text, no source-language text, no readable dialogue text except the learner speech bubble containing only three dots, no captions, no logos.
 
 The image must teach meaning through setting, faces, gaze, objects, gesture, and the social result.
 
@@ -41,3 +41,5 @@ Localize the environment as: busy service counter.
 Use culturally ordinary clothing, posture, and interpersonal distance for the scene context, but keep the communicative function language-neutral unless the scene explicitly requires a local cultural variant.
 
 Do not render the dialogue, phonetics, translations, captions, signs, or labels as written text.
+
+Good-copy frame 1 requirement: this is the learner speaking turn. The speech bubble must visually attach to the learner, not the partner, and must not cover the learner face, hands, key gesture, or important object. The bubble text is exactly "..." and nothing else.

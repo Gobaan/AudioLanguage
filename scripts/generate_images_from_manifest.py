@@ -203,6 +203,7 @@ def generate_language(
             item["reference_images"] = [
                 str(path.relative_to(project_dir)).replace("\\", "/") for path in reference_paths
             ]
+            write_json(manifest_path, manifest)
         created += 1
         print(f"{language}: generated {image_path} with {len(reference_paths)} reference image(s)")
 
@@ -259,8 +260,21 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def validate_args(args: argparse.Namespace) -> None:
+    """Keep prototype and production image lifecycles from getting mixed."""
+    is_prototype_model = args.model == DEFAULT_MODEL
+    is_prototype_quality = args.quality == DEFAULT_QUALITY
+    if args.output_mode == "draft" and not (is_prototype_model and is_prototype_quality):
+        raise SystemExit(
+            "Refusing to write non-prototype images to visuals/Drafts. "
+            "Use --output-mode production for gpt-image-1 or medium/high quality, "
+            "or use the default gpt-image-1-mini + low quality for drafts."
+        )
+
+
 def main() -> None:
     args = parse_args()
+    validate_args(args)
     load_secrets()
 
     data_dir = args.data_dir.resolve()

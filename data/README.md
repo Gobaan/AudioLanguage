@@ -108,7 +108,9 @@ Visual prompt manifests:
 - Each entry keeps both a `shared_prompt` and a `localized_prompt`.
 - `image_path` points to `visuals/generated/{language}/{dialogue_id}/frame-{index}.png`.
 - Image generation defaults to draft output under `visuals/Drafts/{dialogue_id}/frame-{index}.png`.
-- Use `--output-mode production` only when deliberately promoting accepted art to the manifest `image_path`.
+- Draft output is only for prototype images: `gpt-image-1-mini` with `--quality low`.
+- Medium-quality, high-quality, or full `gpt-image-1` good copies must use `--output-mode production`; the generator refuses to write those assets into `visuals/Drafts`.
+- Before generating frame 1 or frame 2 as a good copy, make sure the previous frame reference is also an accepted production/good-copy asset. Do not accidentally anchor medium frame 1 art to a low-quality draft frame 0.
 
 Useful commands:
 
@@ -117,7 +119,7 @@ python scripts/build_audio_manifest.py
 python scripts/build_visual_prompt_manifest.py
 python scripts/export_visual_prompt_files.py --language ta
 python scripts/generate_images_from_manifest.py --language ja --prompt-id ja-first-hi-response-frame-0
-python scripts/generate_images_from_manifest.py --language ja --prompt-id ja-first-hi-response-frame-0 --output-mode production
+python scripts/generate_images_from_manifest.py --language ja --prompt-id ja-first-hi-response-frame-0 --output-mode production --model gpt-image-1 --quality medium
 python scripts/validate_asset_manifests.py
 ```
 

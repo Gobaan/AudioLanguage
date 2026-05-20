@@ -118,7 +118,15 @@ python scripts\generate_images_from_manifest.py --language ja --dialogue-id <dia
 
 The manifest entry should record `reference_images` after generation. If it does not, the panel was not generated with real visual references.
 
-During prototype visual exploration, use `gpt-image-1-mini` and `--quality low` by default. Move to `gpt-image-1` and `--quality medium` only when composition and prompt shape are mostly working. Use `--quality high` only for final or near-final assets after the user approves the scene direction. Do not burn high-quality generations while still discovering composition.
+During prototype visual exploration, use `gpt-image-1-mini` and `--quality low` by default. Draft images belong under `visuals/Drafts/<dialogue-id>/`.
+
+Move to `gpt-image-1` and `--quality medium` only when composition and prompt shape are mostly working. Medium-quality "good copies" are not drafts. Generate them with `--output-mode production` so they write to the manifest `image_path` under `visuals/generated/...` and update `visual_prompts.json`.
+
+Do not generate `gpt-image-1`, medium-quality, or high-quality images into `visuals/Drafts`. If a command would do that, stop and add `--output-mode production` or switch back to `gpt-image-1-mini --quality low`.
+
+When generating frame 1 or frame 2 good copies, first confirm that the previous frame being used as continuity is also an accepted production/good-copy asset. Do not use a low-quality draft frame 0 as the reference for a medium-quality frame 1 unless the user explicitly says the draft frame 0 is approved as the style/composition anchor.
+
+Use `--quality high` only for final or near-final assets after the user approves the scene direction. Do not burn high-quality generations while still discovering composition.
 
 ## Human Review Workflow
 
