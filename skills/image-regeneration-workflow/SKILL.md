@@ -17,6 +17,14 @@ Attach:
 
 Attach the current rejected draft only when it helps. Tell the model what to preserve and what to change.
 
+For both draft and final generations, make character continuity explicit in the prompt:
+
+- Name the recurring learner and scene partner roles in plain language, not only by reference image path.
+- State which reference image controls each character identity.
+- Preserve the same character identity, age impression, hairstyle, outfit family, body type, and role across frames unless the user explicitly requests a change.
+- If generating frame 1 or frame 2, mention the previous accepted frame's character identities and positions so the model does not swap, redesign, or drift characters.
+- If the scene partner changes archetype between scenes, say so directly; otherwise assume the same partner should remain visually continuous within the scene.
+
 For final dialogue images, add a deterministic speech-bubble contract before generation:
 
 - Read the dialogue metadata for the exact frame speaker before writing the image prompt.
