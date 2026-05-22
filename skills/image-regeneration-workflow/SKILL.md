@@ -25,14 +25,17 @@ For both draft and final generations, make character continuity explicit in the 
 - If generating frame 1 or frame 2, mention the previous accepted frame's character identities and positions so the model does not swap, redesign, or drift characters.
 - If the scene partner changes archetype between scenes, say so directly; otherwise assume the same partner should remain visually continuous within the scene.
 
-For final dialogue images, add a deterministic speech-bubble contract before generation:
+For draft and final dialogue images, add a deterministic speech-bubble contract before generation. Draft bubbles are part of validation: include them in prototype images so wrong-speaker tails, accidental text, and extra symbols are caught before promoting the scene to good-copy art.
 
 - Read the dialogue metadata for the exact frame speaker before writing the image prompt.
 - If the frame has an active speaking character, draw exactly one clean white speech bubble containing exactly `...`.
 - Attach the bubble tail to that frame's speaker only. Name the role, visual identity, and intended left/right/center position in the prompt.
 - Explicitly forbid attaching the bubble to the other character.
+- Standardize bubble geometry: use a simple horizontal oval or rounded balloon, about 16-22% of image width and 10-14% of image height, placed in the upper third with the center around 12-18% down from the top. Keep the tail short and triangular, pointing down toward the speaker's mouth/head, never crossing a face.
+- Place the bubble on the same side of the image as the speaker whenever possible. Avoid center-floating bubbles unless the speaker is centered.
 - If the frame is a silent action/setup beat, draw no speech bubble.
 - Never include any other readable text, including target language, translations, signs, labels, captions, or accidental words such as "hello".
+- Review drafts for the bubble contract before approving posture, blocking, or character continuity. A draft with good pose but a wrong bubble tail is not accepted; either regenerate with stronger speaker geometry or plan a deterministic bubble overlay for the final asset.
 
 Use this prompt shape:
 
@@ -41,8 +44,10 @@ Speech bubble contract:
 - Speaker for this frame: <role>.
 - Speaker visual identity and position: <description, left/right/center>.
 - Draw exactly one white speech bubble containing exactly: ...
+- Bubble geometry: simple horizontal oval, consistent size, upper third, center around 12-18% from the top.
 - Bubble tail must point to <role>, not <other role>.
 - Do not attach the bubble to <other role>.
+- Keep the tail short; do not let the bubble or tail overlap either character's face.
 ```
 
 For silent openers:
