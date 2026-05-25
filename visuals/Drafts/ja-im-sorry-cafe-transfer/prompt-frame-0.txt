@@ -1,0 +1,34 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+Use character references: visuals/style/characters/learner-reference.png for the recurring female learner avatar and visuals/style/characters/vendor-reference.png for the scene partner archetype.
+
+Scene: small cafe table.
+
+The learner is seated and accidentally spills a cup; a barista or waiter comes over to clean it, and the learner apologizes.
+
+Mood: small accident, apologetic, easily repaired.
+
+Characters: learner: seated customer who accidentally knocked over a cup; barista: barista or waiter approaching with napkins to clean the spill.
+
+Visible props: tipped cup, visible small spill, napkins, cafe table, chair.
+
+Show this beat: The scene partner opens the exchange and creates the need for the learner response..
+
+Body language: barista notices the tipped cup and small spill while approaching with napkins.
+
+Gesture cues: brief surprised pause, self-correction gesture, look at the affected person.
+
+Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+Mobile-safe composition: keep active characters, faces, hands, and key action in the central 70% of the frame and above the lower 25% so app controls do not hide them.
+
+OVERRIDE FOR NEW DRAFT WORKFLOW:
+Create frame 0, the clean base setting for this dialogue scene.
+This is not a spoken dialogue beat.
+Leave the composition clear for the app UI: no captions, signs, labels, subtitles, or readable text anywhere.
+Establish the stable room/location geometry, camera angle, character identities, character scale, lighting, and prop layout for the whole scene.
+Both characters should be visible in a natural pre-dialogue or just-before-speaking moment. Keep the learner as the recurring female learner from learner-reference.png. Keep the scene partner exactly as the barista controlled by vendor-reference.png in all later frames.

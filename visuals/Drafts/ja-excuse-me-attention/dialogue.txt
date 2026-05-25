@@ -1,14 +1,15 @@
-Scenario: ja-excuse-me-attention
+﻿Scenario: ja-excuse-me-attention
 Type: anchor
 Function: get_attention_politely
-Scene: station-information-desk
+Scene: dropped-wallet-sidewalk
 
-English visual summary: A staff member is focused on something else, and the learner politely gets their attention.
+English visual summary: A passerby drops a wallet, and the learner politely gets their attention to return it.
 
 English dialogue for picture review:
-- 0. staff [world_opener]: The staff member is looking down or focused elsewhere.
+- 0. passerby [world_opener]: The passerby walks away after dropping a wallet.
 - 1. learner [learner_target]: Excuse me.
-- 2. staff [world_response]: Yes, go ahead.
+- 2. passerby [world_response]: Thank you.
 
-Frame 0 image: visuals/Drafts/ja-excuse-me-attention/frame-0.png
 Frame 1 image: visuals/Drafts/ja-excuse-me-attention/frame-1.png
+Frame 2 image: visuals/Drafts/ja-excuse-me-attention/frame-2.png
+Frame 3 image: visuals/Drafts/ja-excuse-me-attention/frame-3.png

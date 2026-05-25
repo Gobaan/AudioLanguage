@@ -1,0 +1,44 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-character-free.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+
+Scene: bright neighborhood coin laundry with washing machines.
+
+The learner is trying to use a coin laundry machine and does not understand the machine controls. A helpful laundry attendant stands nearby.
+
+Mood: everyday, mildly confused, helpful.
+
+Characters: learner: visitor with a laundry basket, coins, and detergent, unsure how to start the machine; laundry_attendant: helpful staff member beside the washing machine controls.
+
+Visible props: row of washing machines, laundry basket, detergent bottle, coin slot, simple button panel with no readable labels.
+
+Use landscape side-view staging for this two-person dialogue scene so both people, the machines, and their sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real laundromat with believable distance, machines, counter, baskets, and sightlines. Avoid oversized foreground portraits. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+Mobile-safe composition: keep active characters, faces, hands, and key action in the central 70% of the frame and above the lower 25% so app controls do not hide them.
+
+Show this beat: The learner needs to express that she does not understand.
+
+Body language: learner looks puzzled, glances between the laundry attendant and the machine controls, and gently raises one open hand in a confused stop gesture while holding coins or detergent with the other hand.
+
+Gesture cues: small head shake, open palm stop gesture; points lightly toward the machine controls, then looks back to the attendant.
+
+Learner action: the learner should direct gaze, face angle, and gesture toward the laundry attendant or machine controls, not toward the viewer.
+
+OVERRIDE FOR NEW DRAFT WORKFLOW:
+Create frame 2 as a dialogue action beat using the character references and accepted frame 1 continuity anchor.
+Show the body language, gaze, and scene action for this speaker turn.
+Use the accepted frame 1 as the continuity anchor. Preserve its setting, camera angle, character identities, character scale, lighting, and prop layout while changing only the action beat for frame 2.
+Stage the characters with clear readable separation: no overlapping faces, heads, torsos, or hands, and leave visible space between people unless the action explicitly requires a handoff.
+Create one single continuous scene in one location. Do not create split-screen panels, multiple vignettes, before/after layouts, or separate scenes inside the same image.
+Do not add captions, signs, labels, subtitles, translations, dialogue marks, or readable words. Exception: add only two or three small floating question marks near the learner to show confusion.
+For frame 1, if the learner is not the active speaker, keep the learner listening or observing with hands relaxed and down. Do not show the learner waving, raising a hand, pointing, or already responding unless the prompt explicitly says the learner is acting first.
+
+Character continuity:
+- The learner is the recurring female learner controlled by learner-reference.png.
+- The scene partner is exactly the laundry_attendant controlled by samir-reference.png.
+- Preserve clothing family, hairstyle, body type, and age impression across the scene.
+
+Show the learner clearly confused beside the washing machine controls: puzzled face, furrowed brow, looking between the control panel and attendant. Add two or three small floating question marks near the learner.

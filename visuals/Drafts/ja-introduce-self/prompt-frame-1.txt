@@ -1,0 +1,38 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+
+Scene: school or language class hallway with name tags.
+
+A classmate sees the learner name tag before class and asks the learner to introduce herself.
+
+Mood: casual, quick, friendly.
+
+Characters: learner: standing with backpack or notebook and wearing a simple blank name tag; classmate: friendly classmate approaching before class, also wearing a simple blank name tag.
+
+Visible props: backpack, notebook, classroom doorway, blank name tags.
+
+Show this beat: The scene partner opens the exchange and creates the need for the learner response..
+
+Body language: classmate slows down, glances toward the learner name tag area, and asks for the learner name.
+
+Gesture cues: open-hand gesture toward the listener; small proper-noun label when helpful; raised eyebrows, attentive pause.
+
+Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+Mobile-safe composition: keep active characters, faces, hands, and key action in the central 70% of the frame and above the lower 25% so app controls do not hide them.
+
+OVERRIDE FOR NEW DRAFT WORKFLOW:
+Create frame 1 as a dialogue action beat using the approved character-free style reference and character references.
+Show the body language, gaze, and scene action for this speaker turn.
+Establish the scene anchor for this dialogue: setting, camera angle, character identities, character scale, lighting, and prop layout.
+Stage the characters with clear readable separation: no overlapping faces, heads, torsos, or hands, and leave visible space between people unless the action explicitly requires a handoff.
+Do not add captions, signs, labels, subtitles, translations, punctuation symbols, dialogue marks, or any readable text.
+
+Character continuity:
+- The learner is the recurring female learner controlled by learner-reference.png.
+- The scene partner is exactly Aiko, a calm East Asian classmate with shoulder-length black hair, navy cardigan, and white blouse controlled by aiko-reference.png.
+- Preserve clothing family, hairstyle, body type, and age impression across the scene.
