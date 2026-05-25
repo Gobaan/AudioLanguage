@@ -36,7 +36,7 @@ For frame 1, if the learner is not the active speaker, keep the learner listenin
 
 Character continuity:
 - The learner is the recurring female learner controlled by learner-reference.png.
-- The scene partner is exactly the local controlled by kwame-reference.png.
+- The scene partner is exactly the paramedic / ambulance worker beside the ambulance controlled by kwame-reference.png.
 - Preserve clothing family, hairstyle, body type, and age impression across the scene.
 
 Make the speaking turn readable through the paramedic / ambulance worker beside the ambulance's gaze, posture, and reaction only. Do not draw speech bubbles or dialogue symbols.

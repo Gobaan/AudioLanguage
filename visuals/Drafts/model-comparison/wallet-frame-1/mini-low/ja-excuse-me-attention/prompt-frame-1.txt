@@ -35,5 +35,5 @@ For frame 1, if the learner is not the active speaker, keep the learner listenin
 
 Character continuity:
 - The learner is the recurring female learner controlled by learner-reference.png.
-- The scene partner is exactly the staff controlled by sofia-reference.png.
+- The scene partner is exactly the passerby who dropped the wallet controlled by sofia-reference.png.
 - Preserve clothing family, hairstyle, body type, and age impression across the scene.

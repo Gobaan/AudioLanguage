@@ -65,25 +65,25 @@ $FullRegenerationDialogues = @(
 )
 
 $ScenePartnerByDialogue = @{
-    "ja-directions-hospital" = @{ File = "kwame-reference.png"; Identity = "Kwame, a steady broad-built Black man in a light blue collared shirt and charcoal utility vest" }
-    "ja-excuse-me-attention" = @{ File = "sofia-reference.png"; Identity = "Sofia, an older Latina woman with a silver curly bob, cobalt blouse, and patterned scarf" }
-    "ja-excuse-me-cafe-transfer" = @{ File = "diego-reference.png"; Identity = "Diego, a relaxed Latino cafe worker with short wavy dark hair, trimmed beard, and denim overshirt" }
-    "ja-excuse-me-station-review" = @{ File = "elena-reference.png"; Identity = "Elena, a focused Eastern European station worker with an auburn bob, glasses, and mustard sweater" }
-    "ja-first-hi-response" = @{ File = "liam-reference.png"; Identity = "Liam, a cheerful young white man with sandy blond hair, freckles, and a forest-green hoodie" }
-    "ja-greeting-entry-review" = @{ File = "mara-reference.png"; Identity = "Mara, a warm Black woman with short natural curls, rust cardigan, and cream shirt" }
-    "ja-greeting-neighbor-transfer" = @{ File = "sofia-reference.png"; Identity = "Sofia, an older Latina neighbor with a silver curly bob, cobalt blouse, and patterned scarf" }
-    "ja-im-sorry-cafe-transfer" = @{ File = "elena-reference.png"; Identity = "Elena, a focused Eastern European cafe worker with an auburn bob, glasses, and mustard sweater" }
-    "ja-im-sorry-classroom-review" = @{ File = "liam-reference.png"; Identity = "Liam, a cheerful young white classmate with sandy blond hair, freckles, and a forest-green hoodie" }
-    "ja-im-sorry-small-mistake" = @{ File = "tariq-reference.png"; Identity = "Tariq, an energetic North African teen classmate with curly dark hair and a burgundy sweatshirt" }
-    "ja-introduce-class-transfer" = @{ File = "tariq-reference.png"; Identity = "Tariq, an energetic North African teen class partner with curly dark hair and a burgundy sweatshirt" }
-    "ja-introduce-community-review" = @{ File = "nadia-reference.png"; Identity = "Nadia, a welcoming Middle Eastern community member with a patterned headscarf and plum tunic" }
-    "ja-introduce-self" = @{ File = "aiko-reference.png"; Identity = "Aiko, a calm East Asian classmate with shoulder-length black hair, navy cardigan, and white blouse" }
-    "ja-order-bakery-review" = @{ File = "nadia-reference.png"; Identity = "Nadia, a lively Middle Eastern bakery server with a patterned headscarf and plum tunic" }
-    "ja-order-convenience-transfer" = @{ File = "aiko-reference.png"; Identity = "Aiko, a calm East Asian cashier with shoulder-length black hair, navy cardigan, and white blouse" }
-    "ja-order-local-food" = @{ File = "samir-reference.png"; Identity = "Samir, a patient South Asian food stall worker with salt-and-pepper hair, mustache, and teal shirt" }
-    "ja-repair-clinic-review" = @{ File = "samir-reference.png"; Identity = "Samir, a patient South Asian laundry attendant with salt-and-pepper hair, mustache, and teal shirt" }
-    "ja-repair-dont-understand" = @{ File = "elena-reference.png"; Identity = "Elena, a focused Eastern European service worker with an auburn bob, glasses, and mustard sweater" }
-    "ja-repair-ticket-transfer" = @{ File = "kwame-reference.png"; Identity = "Kwame, a steady broad-built Black station helper in a light blue collared shirt and charcoal utility vest" }
+    "ja-directions-hospital" = @{ File = "kwame-reference.png" }
+    "ja-excuse-me-attention" = @{ File = "sofia-reference.png" }
+    "ja-excuse-me-cafe-transfer" = @{ File = "diego-reference.png" }
+    "ja-excuse-me-station-review" = @{ File = "elena-reference.png" }
+    "ja-first-hi-response" = @{ File = "liam-reference.png" }
+    "ja-greeting-entry-review" = @{ File = "mara-reference.png" }
+    "ja-greeting-neighbor-transfer" = @{ File = "sofia-reference.png" }
+    "ja-im-sorry-cafe-transfer" = @{ File = "elena-reference.png" }
+    "ja-im-sorry-classroom-review" = @{ File = "liam-reference.png" }
+    "ja-im-sorry-small-mistake" = @{ File = "tariq-reference.png" }
+    "ja-introduce-class-transfer" = @{ File = "tariq-reference.png" }
+    "ja-introduce-community-review" = @{ File = "nadia-reference.png" }
+    "ja-introduce-self" = @{ File = "aiko-reference.png" }
+    "ja-order-bakery-review" = @{ File = "nadia-reference.png" }
+    "ja-order-convenience-transfer" = @{ File = "aiko-reference.png" }
+    "ja-order-local-food" = @{ File = "samir-reference.png" }
+    "ja-repair-clinic-review" = @{ File = "samir-reference.png" }
+    "ja-repair-dont-understand" = @{ File = "elena-reference.png" }
+    "ja-repair-ticket-transfer" = @{ File = "kwame-reference.png" }
 }
 
 $SingleFrameFixes = @(
@@ -130,7 +130,7 @@ function Find-ScenePartnerReference($Dialogue) {
 }
 
 function Get-ScenePartnerIdentity($Dialogue, [string]$FallbackRole) {
-    return "the $FallbackRole"
+    return Get-VisualRoleDescription $Dialogue $FallbackRole
 }
 
 function Allows-QuestionMarks($Dialogue, [int]$OutputFrame) {
@@ -148,6 +148,9 @@ function Find-ScenePartnerRole($Dialogue) {
     if ([string]$Dialogue.id -eq "ja-repair-clinic-review") {
         return "laundry_attendant"
     }
+    if ([string]$Dialogue.id -eq "ja-excuse-me-attention") {
+        return "passerby"
+    }
     foreach ($lineItem in $Dialogue.lines) {
         $role = [string]$lineItem.speaker_role
         if ($role -and $role -ne "learner") {
@@ -158,6 +161,9 @@ function Find-ScenePartnerRole($Dialogue) {
 }
 
 function Find-PartnerReferenceByRole([string]$Role) {
+    if ($Role -eq "passerby") {
+        return Join-Path $ExpandedCharacterDir "sofia-reference.png"
+    }
     if ($PartnerReferenceByRole.ContainsKey($Role)) {
         return Join-Path $CharacterDir $PartnerReferenceByRole[$Role]
     }
@@ -325,7 +331,7 @@ function Get-SpecialFrameInstruction($Dialogue, [int]$OutputFrame) {
         "ja-order-bakery-review"
     ) -contains [string]$Dialogue.id) {
         $speaker = Get-VisualRoleDescription $Dialogue (Find-ScenePartnerRole $Dialogue)
-        return "Make the speaking turn readable through $speaker's gaze, posture, and reaction only. Do not draw speech bubbles or dialogue symbols."
+        return "Make this response beat readable through $speaker's gaze, posture, and reaction."
     }
     if ([string]$Dialogue.id -eq "ja-im-sorry-small-mistake" -and $OutputFrame -eq 3) {
         return "Continue directly from frame 2: both characters remain on the ground, the recovered papers stay bundled together in their hands, and the papers must not be scattered again. Show the classmate responding kindly while accepting the bundled papers."
@@ -336,6 +342,9 @@ function Get-SpecialFrameInstruction($Dialogue, [int]$OutputFrame) {
 function Get-VisualRoleDescription($Dialogue, [string]$Role) {
     if ($Role -eq "learner") {
         return "the recurring female learner"
+    }
+    if ([string]$Dialogue.id -eq "ja-excuse-me-attention" -and ($Role -eq "staff" -or $Role -eq "passerby")) {
+        return "the passerby who dropped the wallet"
     }
     if ([string]$Dialogue.id -eq "ja-directions-hospital" -and $Role -eq "local") {
         return "the paramedic / ambulance worker beside the ambulance"
@@ -360,7 +369,7 @@ function Get-VisualRoleDescription($Dialogue, [string]$Role) {
 
 function Get-LocalizedPromptForDraft($PromptItem) {
     if ([string]$PromptItem.dialogue_id -eq "ja-excuse-me-attention") {
-        return Get-ExcuseMeAttentionWalletPrompt $PromptItem
+        return (Get-ExcuseMeAttentionWalletPrompt $PromptItem)
     }
     if ([string]$PromptItem.dialogue_id -ne "ja-repair-clinic-review") {
         return [string]$PromptItem.localized_prompt
@@ -488,6 +497,21 @@ function Remove-SpokenBubbleConflictLanguage([string]$Prompt) {
 
 function Remove-PromptNoise([string]$Prompt) {
     $clean = $Prompt
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Get attention politely\. Intention: Excuse me\.\.', 'Show this beat: The learner politely tries to get the scene partner''s attention through gaze, approach, and body language.'
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Say I am sorry\. Intention: I''m sorry\.\.', 'Show this beat: The learner apologizes through posture, facial expression, and a careful repair action.'
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Say you do not understand\. Intention: I don''t understand\.\.', 'Show this beat: The learner shows confusion through gaze, posture, and a gentle hesitation gesture.'
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Respond to a greeting\. Intention: Respond to Hi\.\.', 'Show this beat: The learner warmly returns the greeting through eye contact, expression, and relaxed body language.'
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Introduce yourself\. Intention: My name is Anna\.\.', 'Show this beat: The learner introduces herself through a polite self-presenting gesture and friendly eye contact.'
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Order local food\. Intention: Sandwich, please\.\.', 'Show this beat: The learner politely orders by indicating the desired food item and interacting with the server.'
+    $clean = $clean -replace 'Show this beat: The learner-character needs to express the target intention clearly\. Communicative function: Ask where the hospital is\. Intention: Where is the hospital\?\.', 'Show this beat: The learner urgently asks for directions through worried eye contact, a phone map, and a searching gesture.'
+    $clean = $clean -replace 'Communicative function:\s*[^.]+\.\s*Intention:\s*[^.\r\n]+\.*', ''
+    $clean = $clean -replace '\s*Intention:\s*[^\r\n]+', ''
+    $clean = $clean -replace '\bwhile saying\b\s+[^.;,\r\n]+', 'with nonverbal expression'
+    $clean = $clean -replace '\bstarts saying\b\s+[^.;,\r\n]+', 'reacts with nonverbal expression'
+    $clean = $clean -replace '\bsaying sorry\b', 'showing an apologetic expression'
+    $clean = $clean -replace '(?m)^Do not draw speech bubbles\..*\r?\n\r?\n?', ''
+    $clean = $clean -replace '(?m)^.*speech bubbles?.*\r?\n\r?\n?', ''
+    $clean = $clean -replace '(?m)^.*Speech bubble.*\r?\n\r?\n?', ''
     $clean = $clean -replace '\s*Meaning cues:[^\r\n.]*\.', '.'
     $clean = $clean -replace ' A small symbolic confusion cue such as floating question marks or a simple puzzled icon appears near the learner, without translations or dialogue text\.', ''
     $clean = $clean -replace 'A small symbolic confusion cue such as floating question marks or a simple puzzled icon appears near the learner, without translations or dialogue text\.', ''

@@ -1,0 +1,36 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-sumimasen-cue.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+
+Scene: community event registration table.
+
+A host with a marker tries to register the learner by writing their name on a blank card at the table.
+
+Mood: welcoming, slightly nervous.
+
+Characters: learner: new attendee standing by a registration table; host: friendly event host holding a marker and blank name card.
+
+Visible props: registration table, marker, blank name card, blank forms, pens.
+
+Show this beat: The scene partner responds so the learner can infer whether the attempt worked..
+
+Body language: host smiles and begins writing on the blank card without readable text.
+
+Use landscape side-view staging for this two-person dialogue scene so both people, the environment, and their sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Characters should feel placed inside a real room with believable distance, furniture, doorway, counters, and sightlines. Avoid oversized foreground portraits. Avoid having characters face the camera unless the scene requires it. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+OVERRIDE FOR NEW DRAFT WORKFLOW:
+Create frame 3 as a dialogue action beat using the character references and accepted frame 1 continuity anchor.
+Show the body language, gaze, and scene action for this speaker turn.
+Use the accepted frame 1 as the continuity anchor. Preserve its setting, camera angle, character identities, character scale, lighting, and prop layout while changing only the action beat for frame 3.
+Stage the characters with clear readable separation: no overlapping faces, heads, torsos, or hands, and leave visible space between people unless the action explicitly requires a handoff.
+Create one single continuous scene in one location. Do not create split-screen panels, multiple vignettes, before/after layouts, or separate scenes inside the same image.
+Do not add captions, signs, labels, subtitles, translations, punctuation symbols, dialogue marks, or any readable text.
+For frame 1, if the learner is not the active speaker, keep the learner listening or observing with hands relaxed and down. Do not show the learner waving, raising a hand, pointing, or already responding unless the prompt explicitly says the learner is acting first.
+
+Character continuity:
+- The learner is the recurring female learner controlled by learner-reference.png.
+- The scene partner is exactly the host controlled by nadia-reference.png.
+- Preserve clothing family, hairstyle, body type, and age impression across the scene.

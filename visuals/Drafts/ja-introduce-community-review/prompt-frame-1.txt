@@ -30,9 +30,13 @@ Create frame 1 as a dialogue action beat using the approved character-free style
 Show the body language, gaze, and scene action for this speaker turn.
 Establish the scene anchor for this dialogue: setting, camera angle, character identities, character scale, lighting, and prop layout.
 Stage the characters with clear readable separation: no overlapping faces, heads, torsos, or hands, and leave visible space between people unless the action explicitly requires a handoff.
+Create one single continuous scene in one location. Do not create split-screen panels, multiple vignettes, before/after layouts, or separate scenes inside the same image.
 Do not add captions, signs, labels, subtitles, translations, punctuation symbols, dialogue marks, or any readable text.
+For frame 1, if the learner is not the active speaker, keep the learner listening or observing with hands relaxed and down. Do not show the learner waving, raising a hand, pointing, or already responding unless the prompt explicitly says the learner is acting first.
 
 Character continuity:
 - The learner is the recurring female learner controlled by learner-reference.png.
-- The scene partner is exactly Nadia, a welcoming Middle Eastern community member with a patterned headscarf and plum tunic controlled by nadia-reference.png.
+- The scene partner is exactly the host controlled by nadia-reference.png.
 - Preserve clothing family, hairstyle, body type, and age impression across the scene.
+
+Frame 1 correction: place the blank name tag on the table as a visible object, not on clothing, not floating, and not in anyone's hand.

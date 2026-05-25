@@ -1,0 +1,11 @@
+Create a reusable single-character reference sheet for a language-learning comic app.
+
+Style: polished clean anime/comic illustration matching the attached character-free style reference: crisp controlled linework, warm flat colors, subtle cel shading, readable face and hands, ordinary human proportions, mobile-friendly clarity.
+
+Character profile: Middle Eastern woman, early 30s, curvy build, olive skin, soft round face, patterned headscarf. Outfit: plum tunic, long beige cardigan, dark pants. Lively, welcoming, practical.
+
+Reference sheet layout: show exactly one character identity repeated in three views on a plain warm neutral background: front-facing neutral standing pose, three-quarter conversational pose, and a smaller expression/gesture variation. The repeated views must clearly be the same person with the same clothing, hairstyle, body type, age impression, skin tone, and accessories.
+
+Use this character as a reusable scene partner, not tied to any single phrase or scenario. Make the person look ordinary, grounded, approachable, and suitable for everyday public dialogue scenes.
+
+Constraints: no other people, no speech bubbles, no captions, no labels, no readable text, no logos, no UI, no name tags with writing, no decorative border, no photorealism, no mascot style, no exaggerated fantasy clothing.

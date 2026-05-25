@@ -38,7 +38,7 @@ For frame 1, if the learner is not the active speaker, keep the learner listenin
 
 Character continuity:
 - The learner is the recurring female learner controlled by learner-reference.png.
-- The scene partner is exactly the barista controlled by diego-reference.png.
+- The scene partner is exactly the waiter / barista carrying a tray controlled by diego-reference.png.
 - Preserve clothing family, hairstyle, body type, and age impression across the scene.
 
 Make the speaking turn readable through the waiter / barista carrying a tray's gaze, posture, and reaction only. Do not draw speech bubbles or dialogue symbols.
