@@ -1,0 +1,39 @@
+Landscape 3:2 polished clean anime/comic panel matching visuals/style/examples/approved-comic-panel-character-free.png.
+
+Use crisp controlled linework, warm flat colors, light environmental detail, readable human faces, and mobile-safe composition.
+
+Scene: busy sidewalk near a small transit stop or shopping street.
+
+A passerby has dropped a wallet while walking away, and the learner notices in time to return it.
+
+Mood: alert, helpful, everyday, friendly.
+
+Characters: learner: recurring female learner with her tan crossbody bag; passerby: ordinary person walking ahead, unaware their wallet has fallen.
+
+Visible props: wallet, sidewalk, small transit stop or shopfront background, learner's tan crossbody bag.
+
+Use landscape side-view staging for this two-person sidewalk scene so the learner, passerby, wallet, and sightlines fit naturally.
+
+Composition: natural candid comic-scene composition, not a character showcase. Keep the learner, passerby, and wallet clearly separated and readable. Avoid oversized foreground portraits. Camera at human eye level with medium-wide framing and enough room context to understand where both people are.
+
+Mobile-safe composition: keep active characters, faces, hands, wallet, and key action in the central 70% of the frame and above the lower 25% so app controls do not hide them.
+
+Show this beat: The scene creates the need for the learner to politely get someone's attention.
+
+Body language: passerby is walking away, not looking back. The wallet is visible on the ground behind the passerby. Learner has just spotted the wallet and looks from the wallet to the passerby with concern.
+
+Action requirement: keep the wallet clearly visible on the ground between learner and passerby. The learner has not picked it up yet.
+
+OVERRIDE FOR NEW DRAFT WORKFLOW:
+Create frame 1 as a dialogue action beat using the approved character-free style reference and character references.
+Show the body language, gaze, and scene action for this speaker turn.
+Establish the scene anchor for this dialogue: setting, camera angle, character identities, character scale, lighting, and prop layout.
+Stage the characters with clear readable separation: no overlapping faces, heads, torsos, or hands, and leave visible space between people unless the action explicitly requires a handoff.
+Create one single continuous scene in one location. Do not create split-screen panels, multiple vignettes, before/after layouts, or separate scenes inside the same image.
+Do not add captions, signs, labels, subtitles, translations, punctuation symbols, dialogue marks, or any readable text.
+For frame 1, if the learner is not the active speaker, keep the learner listening or observing with hands relaxed and down. Do not show the learner waving, raising a hand, pointing, or already responding unless the prompt explicitly says the learner is acting first.
+
+Character continuity:
+- The learner is the recurring female learner controlled by learner-reference.png.
+- The scene partner is exactly the staff controlled by sofia-reference.png.
+- Preserve clothing family, hairstyle, body type, and age impression across the scene.

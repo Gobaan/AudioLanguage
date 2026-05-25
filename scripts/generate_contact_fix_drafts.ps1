@@ -4,6 +4,7 @@ param(
     [int]$OnlyFrame = -1,
     [string]$Model = "gpt-image-1-mini",
     [string]$Quality = "low",
+    [string]$OutputRoot = "visuals/Drafts",
     [switch]$Force,
     [switch]$PromptOnly
 )
@@ -11,6 +12,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 $ProjectDir = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$ResolvedOutputRoot = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
+    $OutputRoot
+} else {
+    Join-Path $ProjectDir $OutputRoot
+}
 $SecretsPath = Join-Path $ProjectDir "config/secrets.local.json"
 $DataPath = Join-Path $ProjectDir "data/languages/ja/dialogues.json"
 $PromptsPath = Join-Path $ProjectDir "data/languages/ja/visual_prompts.json"
@@ -630,7 +636,7 @@ foreach ($job in $jobs) {
     $outputFrame = [int]$job.OutputFrame
     $line = @($dialogue.lines | Where-Object { [int]$_.index -eq $lineIndex })[0]
     $promptItem = Get-PromptItem $promptManifest $job.DialogueId $lineIndex
-    $outPath = Join-Path $ProjectDir ("visuals/Drafts/{0}/frame-{1}.png" -f $job.DialogueId, $outputFrame)
+    $outPath = Join-Path $ResolvedOutputRoot ("{0}/frame-{1}.png" -f $job.DialogueId, $outputFrame)
     if ((Test-Path -LiteralPath $outPath) -and -not $Force -and -not $PromptOnly) {
         Write-Host "skip $((Relative-Path $outPath))"
         $skipped += 1
@@ -647,7 +653,7 @@ foreach ($job in $jobs) {
     }
     if ($outputFrame -gt 1) {
         $anchorFrame = Get-ContinuityAnchorFrame $dialogue $outputFrame
-        $anchorPath = Join-Path $ProjectDir ("visuals/Drafts/{0}/frame-{1}.png" -f $job.DialogueId, $anchorFrame)
+        $anchorPath = Join-Path $ResolvedOutputRoot ("{0}/frame-{1}.png" -f $job.DialogueId, $anchorFrame)
         if (Test-Path -LiteralPath $anchorPath) {
             $references += $anchorPath
         }
@@ -658,6 +664,7 @@ foreach ($job in $jobs) {
         Build-SpokenPrompt $promptItem $dialogue $line $outputFrame ([string]$job.Note)
     }
     $promptPath = Join-Path (Split-Path -Parent $outPath) ("prompt-frame-{0}.txt" -f $outputFrame)
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $outPath) | Out-Null
     [System.IO.File]::WriteAllText($promptPath, $prompt, [System.Text.UTF8Encoding]::new($false))
     if ($PromptOnly) {
         Write-Host "prompt $((Relative-Path $promptPath))"
