@@ -6,6 +6,7 @@ import argparse
 from pathlib import Path
 
 from content_assets import list_language_dirs, read_json
+from audiolanguage.paths import repo_file_for_relative_path
 
 
 def export_language(data_dir: Path, project_dir: Path, language: str, prompt_kind: str) -> int:
@@ -16,8 +17,8 @@ def export_language(data_dir: Path, project_dir: Path, language: str, prompt_kin
     for item in manifest.get("prompts", []):
         prompt = item["localized_prompt"] if prompt_kind == "localized" else item["shared_prompt"]
 
-        image_prompt_path = project_dir / item["image_prompt_path"]
-        video_prompt_path = project_dir / item["video_prompt_path"]
+        image_prompt_path = repo_file_for_relative_path(project_dir, item["image_prompt_path"])
+        video_prompt_path = repo_file_for_relative_path(project_dir, item["video_prompt_path"])
         image_prompt_path.parent.mkdir(parents=True, exist_ok=True)
         video_prompt_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -42,7 +43,7 @@ def export_language(data_dir: Path, project_dir: Path, language: str, prompt_kin
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="data", type=Path)
+    parser.add_argument("--data-dir", default="model/content", type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to export. Repeatable.")
     parser.add_argument("--prompt-kind", choices=["localized", "shared"], default="localized")

@@ -82,7 +82,7 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="data", type=Path)
+    parser.add_argument("--data-dir", default="model/content", type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to build. Repeatable.")
     return parser.parse_args()

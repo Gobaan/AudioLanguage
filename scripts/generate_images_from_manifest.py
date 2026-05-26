@@ -9,6 +9,7 @@ from contextlib import ExitStack
 from pathlib import Path
 
 from content_assets import list_language_dirs, read_json, write_json
+from audiolanguage.paths import repo_file_for_relative_path
 from load_secrets import load_secrets
 
 
@@ -26,7 +27,7 @@ def find_reference_paths(project_dir: Path, prompt: str) -> list[Path]:
     seen: set[Path] = set()
 
     def add_reference(relative_path: Path) -> None:
-        path = project_dir / relative_path
+        path = repo_file_for_relative_path(project_dir, relative_path)
         if path.exists() and path not in seen:
             references.append(path)
             seen.add(path)
@@ -124,10 +125,7 @@ def output_image_path(item: dict, output_mode: str, draft_root: Path) -> str:
 
 
 def project_path(project_dir: Path, image_path: str) -> Path:
-    path = Path(image_path)
-    if path.is_absolute():
-        return path
-    return project_dir / path
+    return repo_file_for_relative_path(project_dir, image_path)
 
 
 def path_has_content(project_dir: Path, image_path: str) -> bool:
@@ -214,7 +212,7 @@ def generate_language(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="data", type=Path)
+    parser.add_argument("--data-dir", default="model/content", type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to generate. Repeatable.")
     parser.add_argument("--dialogue-id", action="append", help="Only generate this dialogue id. Repeatable.")
@@ -281,7 +279,8 @@ def main() -> None:
     project_dir = args.project_dir.resolve()
     languages = args.language or [path.name for path in list_language_dirs(data_dir)]
     explicit_reference_paths = [
-        path if path.is_absolute() else project_dir / path for path in args.reference_image
+        path if path.is_absolute() else repo_file_for_relative_path(project_dir, path)
+        for path in args.reference_image
     ]
 
     for language in languages:

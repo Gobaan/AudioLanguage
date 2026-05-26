@@ -9,7 +9,7 @@ The goal is to make the curriculum inspectable before wiring it into the app.
 Split data into language-independent curriculum and language-specific realizations.
 
 ```text
-data/
+model/content/
   curriculum/
     functions.json
     scenes.json
@@ -34,9 +34,9 @@ data/
 Future languages should add their own folder:
 
 ```text
-data/languages/es/
-data/languages/ta/
-data/languages/ru/
+model/content/languages/es/
+model/content/languages/ta/
+model/content/languages/ru/
 ```
 
 Current language folders:
@@ -93,7 +93,7 @@ The app should treat audio and visuals as generated assets attached to the conte
 
 Audio manifests:
 
-- `data/languages/{language}/audio_assets.json`
+- `model/content/languages/{language}/audio_assets.json`
 - Generated with `python scripts/build_audio_manifest.py`
 - One entry per spoken dialogue line.
 - Each speaker role gets a hard-coded, stable `voice_profile` from `scripts/voice_registry.py`.
@@ -102,14 +102,14 @@ Audio manifests:
 
 Visual prompt manifests:
 
-- `data/languages/{language}/visual_prompts.json`
+- `model/content/languages/{language}/visual_prompts.json`
 - Generated with `python scripts/build_visual_prompt_manifest.py`
 - One entry per dialogue line, including silent visual setup beats.
 - Each entry keeps both a `shared_prompt` and a `localized_prompt`.
 - `image_path` points to `visuals/generated/{language}/{dialogue_id}/frame-{index}.png`.
-- Image generation defaults to draft output under `visuals/Drafts/{dialogue_id}/frame-{index}.png`.
+- Image generation defaults to draft output under `model/assets/visuals/Drafts/{dialogue_id}/frame-{index}.png`.
 - Draft output is only for prototype images: `gpt-image-1-mini` with `--quality low`.
-- Medium-quality, high-quality, or full `gpt-image-1` good copies must use `--output-mode production`; the generator refuses to write those assets into `visuals/Drafts`.
+- Medium-quality, high-quality, or full `gpt-image-1` good copies must use `--output-mode production`; the generator refuses to write those assets into `model/assets/visuals/Drafts`.
 - Before generating frame 1 or frame 2 as a good copy, make sure the previous frame reference is also an accepted production/good-copy asset. Do not accidentally anchor medium frame 1 art to a low-quality draft frame 0.
 
 Useful commands:
@@ -130,13 +130,13 @@ python scripts/generate_tts_from_manifest.py --language ta --limit 3
 python scripts/generate_tts_from_manifest.py --language ja
 ```
 
-The visual prompt exporter writes prompt text files under `visuals/generated/{language}/{dialogue_id}/prompts/` so image and video tools can be driven from the same source data. Draft image generation does not update `visual_prompts.json`; production generation records generated status and reference images.
+The visual prompt exporter writes prompt text files under `model/assets/visuals/generated/{language}/{dialogue_id}/prompts/` so image and video tools can be driven from the same source data. Draft image generation does not update `visual_prompts.json`; production generation records generated status and reference images.
 
 ## Practice Card Principle
 
 Learning-engine decisions are documented in `skills/learning-engine-flow/SKILL.md`.
 
-The default new-card template is `guided-dialogue-replay-v1` in `data/curriculum/card_templates.json`.
+The default new-card template is `guided-dialogue-replay-v1` in `model/content/curriculum/card_templates.json`.
 
 It uses the working first-card loop:
 
@@ -196,4 +196,4 @@ The MVP focuses on the first situations a new language learner needs to survive 
 - paying
 - thanking and closing politely
 
-The source app still has `audio_sources/dialogues.json`; this directory is the emerging richer graph for the MVP curriculum.
+The source app still has `model/assets/audio_sources/dialogues.json`; this directory is the richer graph for the MVP curriculum.

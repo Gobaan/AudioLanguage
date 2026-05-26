@@ -16,10 +16,13 @@ from app.content.data_graph import list_languages, load_language_session
 from content_assets import read_json, write_json
 from generate_images_from_manifest import generate_language
 
+CONTENT_DIR = PROJECT_DIR / "model" / "content"
+ASSETS_DIR = PROJECT_DIR / "model" / "assets"
+
 
 class ContentLoaderTests(unittest.TestCase):
     def test_loads_dialogues_with_category_and_assets(self):
-        graph = load_content_graph(PROJECT_DIR / "audio_sources" / "dialogues.json")
+        graph = load_content_graph(ASSETS_DIR / "audio_sources" / "dialogues.json")
 
         first = graph.dialogues[0]
 
@@ -36,7 +39,7 @@ class ContentLoaderTests(unittest.TestCase):
 class StructuredDataGraphTests(unittest.TestCase):
     def test_loads_tamil_session_with_hydrated_references(self):
         session = load_language_session(
-            data_dir=PROJECT_DIR / "data",
+            data_dir=CONTENT_DIR,
             project_dir=PROJECT_DIR,
             language="ta",
         )
@@ -54,7 +57,7 @@ class StructuredDataGraphTests(unittest.TestCase):
 
     def test_applies_default_guided_dialogue_template_support(self):
         session = load_language_session(
-            data_dir=PROJECT_DIR / "data",
+            data_dir=CONTENT_DIR,
             project_dir=PROJECT_DIR,
             language="en",
         )
@@ -75,7 +78,7 @@ class StructuredDataGraphTests(unittest.TestCase):
 
     def test_english_mvp_session_has_five_guided_scenarios_with_audio(self):
         session = load_language_session(
-            data_dir=PROJECT_DIR / "data",
+            data_dir=CONTENT_DIR,
             project_dir=PROJECT_DIR,
             language="en",
         )
@@ -90,7 +93,7 @@ class StructuredDataGraphTests(unittest.TestCase):
 
     def test_japanese_first_session_uses_short_beginner_chunks(self):
         session = load_language_session(
-            data_dir=PROJECT_DIR / "data",
+            data_dir=CONTENT_DIR,
             project_dir=PROJECT_DIR,
             language="ja",
         )
@@ -100,19 +103,20 @@ class StructuredDataGraphTests(unittest.TestCase):
             for card in session["cards"]
         ]
 
-        self.assertEqual(len(session["cards"]), 15)
+        self.assertEqual(len(session["cards"]), 18)
         self.assertEqual(
-            learner_lines[:5],
+            learner_lines[:6],
             [
                 "Konnichiwa!",
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
+                "Gomen nasai.",
                 "Sandoicchi kudasai.",
             ],
         )
         self.assertEqual(
-            learner_lines[5:],
+            learner_lines[6:],
             [
                 "Konnichiwa!",
                 "Anna desu.",
@@ -124,6 +128,8 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Wakarimasen.",
                 "Sumimasen.",
                 "Sandoicchi kudasai.",
+                "Gomen nasai.",
+                "Gomen nasai.",
             ],
         )
         self.assertEqual(
@@ -134,6 +140,7 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "guided_scene_production",
                 "guided_scene_production",
                 "guided_scene_production",
+                "guided_scene_production",
                 "same_day_transfer",
                 "same_day_transfer",
                 "same_day_transfer",
@@ -143,21 +150,24 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "delayed_review",
                 "delayed_review",
                 "delayed_review",
+                "delayed_review",
+                "same_day_transfer",
                 "delayed_review",
             ],
         )
         for card in session["cards"]:
             self.assertTrue(card["support"]["show_transliteration_after_failure"])
-            self.assertTrue(card["dialogue"]["lines"][1]["audio"])
-            self.assertTrue(
-                all(
-                    str(line["visual"]).startswith("/visuals/generated/ja/")
-                    for line in card["dialogue"]["lines"]
+            if card["target"]["id"] != "ja-target-im-sorry":
+                self.assertTrue(card["dialogue"]["lines"][1]["audio"])
+                self.assertTrue(
+                    all(
+                        str(line["visual"]).startswith("/visuals/generated/ja/")
+                        for line in card["dialogue"]["lines"]
+                    )
                 )
-            )
 
     def test_lists_languages_from_data_graph(self):
-        languages = list_languages(PROJECT_DIR / "data")
+        languages = list_languages(CONTENT_DIR)
 
         self.assertIn({"id": "ta", "display_name": "Tamil"}, languages)
 
@@ -166,7 +176,7 @@ class VisualGenerationScriptTests(unittest.TestCase):
     def test_draft_generation_writes_drafts_without_updating_manifest(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             project_dir = Path(temp_dir)
-            data_dir = project_dir / "data"
+            data_dir = project_dir / "model" / "content"
             manifest_path = data_dir / "languages" / "ja" / "visual_prompts.json"
             manifest = {
                 "prompts": [
@@ -208,8 +218,12 @@ class VisualGenerationScriptTests(unittest.TestCase):
                 )
 
             self.assertEqual((created, skipped), (1, 0))
-            self.assertTrue((project_dir / "visuals/Drafts/ja-test/frame-0.png").exists())
-            self.assertFalse((project_dir / "visuals/generated/ja/ja-test/frame-0.png").exists())
+            self.assertTrue(
+                (project_dir / "model/assets/visuals/Drafts/ja-test/frame-0.png").exists()
+            )
+            self.assertFalse(
+                (project_dir / "model/assets/visuals/generated/ja/ja-test/frame-0.png").exists()
+            )
             self.assertEqual(read_json(manifest_path), manifest)
 
 

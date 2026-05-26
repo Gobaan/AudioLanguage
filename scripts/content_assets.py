@@ -3,8 +3,15 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+if str(PROJECT_DIR) not in sys.path:
+    sys.path.insert(0, str(PROJECT_DIR))
+
+from audiolanguage.paths import repo_file_for_relative_path
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -53,5 +60,5 @@ def relative_posix(path: Path) -> str:
 
 
 def path_exists(project_dir: Path, relative_path: str) -> bool:
-    path = project_dir / relative_path
+    path = repo_file_for_relative_path(project_dir, relative_path)
     return path.exists() and path.stat().st_size > 0

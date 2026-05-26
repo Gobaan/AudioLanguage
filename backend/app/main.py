@@ -14,14 +14,16 @@ from app.content.loader import load_content_graph
 from app.speech.language import romanize_for_language
 from app.speech.similarity import normalize_for_match, text_similarity
 from app.scenes import scenes
+from audiolanguage.paths import repo_paths
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-PROJECT_DIR = BASE_DIR.parent
-STATIC_DIR = BASE_DIR / "static"
-AUDIO_DIR = PROJECT_DIR / "audio"
-VISUALS_DIR = PROJECT_DIR / "visuals"
-AUDIO_SOURCES_DIR = PROJECT_DIR / "audio_sources"
-DATA_DIR = PROJECT_DIR / "data"
+PATHS = repo_paths()
+PROJECT_DIR = PATHS.root
+STATIC_DIR = PATHS.static_dir
+AUDIO_DIR = PATHS.audio_dir
+VISUALS_DIR = PATHS.visuals_dir
+AUDIO_SOURCES_DIR = PATHS.audio_sources_dir
+DATA_DIR = PATHS.content_dir
 DIALOGUES_PATH = AUDIO_SOURCES_DIR / "dialogues.json"
 PROMPTS_PATH = AUDIO_SOURCES_DIR / "prompts.json"
 

@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from audiolanguage.paths import repo_file_for_relative_path
+
 
 class DataGraphError(ValueError):
     """Raised when the structured content graph cannot be loaded."""
@@ -155,16 +157,16 @@ def hydrate_line(
 
     if not audio_path:
         manifest_audio = audio_assets.get((dialogue_id, line_index))
-        if manifest_audio and (project_dir / manifest_audio).exists():
+        if manifest_audio and repo_file_for_relative_path(project_dir, manifest_audio).exists():
             audio_path = manifest_audio
 
     if not audio_path:
         derived_audio = f"audio/{dialogue_id}-{line_index}.mp3"
-        audio_path = derived_audio if (project_dir / derived_audio).exists() else None
+        audio_path = derived_audio if repo_file_for_relative_path(project_dir, derived_audio).exists() else None
 
     if not image_path:
         derived_image = f"visuals/{asset_slug}/frame-{line_index}.png"
-        image_path = derived_image if (project_dir / derived_image).exists() else None
+        image_path = derived_image if repo_file_for_relative_path(project_dir, derived_image).exists() else None
 
     return {
         **line,

@@ -84,7 +84,7 @@ def validate_language(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="data", type=Path)
+    parser.add_argument("--data-dir", default="model/content", type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to validate. Repeatable.")
     parser.add_argument("--require-generated", action="store_true")
