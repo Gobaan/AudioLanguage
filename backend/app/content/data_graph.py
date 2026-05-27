@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from audiolanguage.paths import repo_file_for_relative_path
+from project_config.paths import repo_file_for_relative_path
 
 
 class DataGraphError(ValueError):

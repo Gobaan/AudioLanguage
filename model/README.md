@@ -9,4 +9,4 @@ The model layer owns language-learning content and media assets.
 - `assets/storyboards/`: storyboard source material for visual production.
 
 Manifest paths intentionally keep public URL-style prefixes such as `audio/...` and `visuals/...`.
-Runtime code resolves those paths through `audiolanguage.paths`.
+Runtime code resolves those paths through `project_config.paths`.

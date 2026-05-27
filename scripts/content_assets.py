@@ -11,7 +11,7 @@ PROJECT_DIR = Path(__file__).resolve().parents[1]
 if str(PROJECT_DIR) not in sys.path:
     sys.path.insert(0, str(PROJECT_DIR))
 
-from audiolanguage.paths import repo_file_for_relative_path
+from project_config.paths import repo_file_for_relative_path
 
 
 def read_json(path: Path) -> dict[str, Any]:

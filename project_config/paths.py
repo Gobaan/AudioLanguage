@@ -10,6 +10,7 @@ class RepoPaths:
     model_dir: Path
     content_dir: Path
     assets_dir: Path
+    config_dir: Path
     view_dir: Path
     static_dir: Path
     audio_sources_dir: Path
@@ -17,6 +18,8 @@ class RepoPaths:
     prompts_audio_dir: Path
     visuals_dir: Path
     storyboards_dir: Path
+    secrets_example_json: Path
+    secrets_local_json: Path
     dialogues_json: Path
     prompts_json: Path
 
@@ -32,6 +35,7 @@ def repo_paths() -> RepoPaths:
     model_dir = root / "model"
     content_dir = model_dir / "content"
     assets_dir = model_dir / "assets"
+    config_dir = root / "project_config" / "config"
     view_dir = root / "view"
     static_dir = view_dir / "static"
     audio_sources_dir = assets_dir / "audio_sources"
@@ -45,6 +49,7 @@ def repo_paths() -> RepoPaths:
         model_dir=model_dir,
         content_dir=content_dir,
         assets_dir=assets_dir,
+        config_dir=config_dir,
         view_dir=view_dir,
         static_dir=static_dir,
         audio_sources_dir=audio_sources_dir,
@@ -52,6 +57,8 @@ def repo_paths() -> RepoPaths:
         prompts_audio_dir=prompts_audio_dir,
         visuals_dir=visuals_dir,
         storyboards_dir=storyboards_dir,
+        secrets_example_json=config_dir / "secrets.example.json",
+        secrets_local_json=config_dir / "secrets.local.json",
         dialogues_json=audio_sources_dir / "dialogues.json",
         prompts_json=audio_sources_dir / "prompts.json",
     )

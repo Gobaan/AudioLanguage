@@ -5,7 +5,7 @@ __pycache__/
 venv/
 env/
 .env
-config/secrets.local.json
+project_config/config/secrets.local.json
 audio/generated/*
 node_modules/
 .DS_Store

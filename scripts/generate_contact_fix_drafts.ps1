@@ -17,7 +17,7 @@ $ResolvedOutputRoot = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
 } else {
     Join-Path $ProjectDir $OutputRoot
 }
-$SecretsPath = Join-Path $ProjectDir "config/secrets.local.json"
+$SecretsPath = Join-Path $ProjectDir "project_config/config/secrets.local.json"
 $DataPath = Join-Path $ProjectDir "data/languages/ja/dialogues.json"
 $PromptsPath = Join-Path $ProjectDir "data/languages/ja/visual_prompts.json"
 $StyleReference = Join-Path $ProjectDir "visuals/style/examples/approved-comic-panel-character-free.png"

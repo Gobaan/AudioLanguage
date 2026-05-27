@@ -2,14 +2,14 @@ param(
     [string]$Target = "lordofall@gobaan.com",
     [string]$RemoteDir = "~/AudioLanguage",
     [int]$Port = 8000,
-    [string]$ServiceName = "audiolanguage"
+    [string]$ServiceName = "language-learning"
 )
 
 $ErrorActionPreference = "Stop"
 
 $ProjectDir = Resolve-Path (Join-Path $PSScriptRoot "..")
-$ArchivePath = Join-Path ([System.IO.Path]::GetTempPath()) "audiolanguage-deploy.tar.gz"
-$RemoteTmp = "/tmp/audiolanguage-deploy.tar.gz"
+$ArchivePath = Join-Path ([System.IO.Path]::GetTempPath()) "language-learning-deploy.tar.gz"
+$RemoteTmp = "/tmp/language-learning-deploy.tar.gz"
 
 Write-Host "Packaging $ProjectDir"
 if (Test-Path $ArchivePath) {
@@ -28,7 +28,7 @@ try {
         --exclude="*.pyc" `
         --exclude="server.log" `
         --exclude="server.err.log" `
-        --exclude="config/secrets.local.json" `
+        --exclude="project_config/config/secrets.local.json" `
         -czf $ArchivePath .
 }
 finally {

@@ -7,7 +7,7 @@ import asyncio
 from pathlib import Path
 
 from content_assets import list_language_dirs, path_exists, read_json
-from audiolanguage.paths import repo_file_for_relative_path
+from project_config.paths import repo_file_for_relative_path
 from voice_registry import voice_profile_for
 
 

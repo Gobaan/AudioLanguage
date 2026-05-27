@@ -7,7 +7,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $ProjectDir = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-$SecretsPath = Join-Path $ProjectDir "config/secrets.local.json"
+$SecretsPath = Join-Path $ProjectDir "project_config/config/secrets.local.json"
 $StyleReference = Join-Path $ProjectDir "visuals/style/examples/approved-comic-panel-character-free.png"
 $OutDir = Join-Path $ProjectDir "visuals/style/characters/expanded"
 $Size = "1536x1024"

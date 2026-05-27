@@ -6,7 +6,7 @@ import argparse
 from pathlib import Path
 
 from content_assets import list_language_dirs, read_json
-from audiolanguage.paths import repo_file_for_relative_path
+from project_config.paths import repo_file_for_relative_path
 
 
 def export_language(data_dir: Path, project_dir: Path, language: str, prompt_kind: str) -> int:

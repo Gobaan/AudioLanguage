@@ -14,7 +14,7 @@ from app.content.loader import load_content_graph
 from app.speech.language import romanize_for_language
 from app.speech.similarity import normalize_for_match, text_similarity
 from app.scenes import scenes
-from audiolanguage.paths import repo_paths
+from project_config.paths import repo_paths
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PATHS = repo_paths()

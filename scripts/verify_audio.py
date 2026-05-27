@@ -11,7 +11,7 @@ def add_repo_root_to_syspath() -> None:
 
 add_repo_root_to_syspath()
 
-from audiolanguage.paths import repo_paths  # noqa: E402
+from project_config.paths import repo_paths  # noqa: E402
 
 def load_dialogues(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))

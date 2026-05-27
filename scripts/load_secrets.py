@@ -5,9 +5,11 @@ import json
 import os
 from pathlib import Path
 
+from project_config.paths import repo_paths
+
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-DEFAULT_SECRETS_PATH = PROJECT_DIR / "config" / "secrets.local.json"
+DEFAULT_SECRETS_PATH = repo_paths().secrets_local_json
 PLACEHOLDER_VALUES = {
     "",
     "replace-with-your-openai-project-api-key",
@@ -16,7 +18,7 @@ PLACEHOLDER_VALUES = {
 
 
 def load_secrets(path: Path = DEFAULT_SECRETS_PATH, *, override: bool = False) -> dict[str, str]:
-    """Load local JSON config/secrets into environment variables.
+    """Load local JSON project_config/config secrets into environment variables.
 
     The real secrets file is intentionally git-ignored. Environment variables
     already set by the shell or deployment platform win unless override=True.
@@ -48,7 +50,7 @@ def load_secrets(path: Path = DEFAULT_SECRETS_PATH, *, override: bool = False) -
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate and preview local JSON config/secrets.")
+    parser = argparse.ArgumentParser(description="Validate and preview local JSON project config secrets.")
     parser.add_argument("--path", default=DEFAULT_SECRETS_PATH, type=Path)
     parser.add_argument("--override", action="store_true")
     return parser.parse_args()
