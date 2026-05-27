@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Component Contact Sheet</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #202124;
+        --muted: #5f6672;
+        --line: #d9dde5;
+        --panel: #ffffff;
+        --page: #f5f6f8;
+        --accent: #0f766e;
+        --accent-soft: #d7f2ee;
+        --focus: #2563eb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.96);
+        padding: 14px 18px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      header p {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 3px;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 16px;
+        padding: 16px;
+      }
+
+      article {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      article > h2 {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 12px;
+        font-size: 14px;
+        background: #fafbfc;
+      }
+
+      .sample {
+        padding: 12px;
+      }
+
+      button {
+        min-height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+        cursor: pointer;
+      }
+
+      button:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--focus) 30%, transparent);
+        outline-offset: 2px;
+      }
+
+      button.primary,
+      .audio-button.playing,
+      .mode-selector button.selected,
+      .choice-prompt button.selected {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: white;
+      }
+
+      .mode-selector,
+      .frame-strip,
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .mode-selector button {
+        text-transform: capitalize;
+        padding: 0 14px;
+      }
+
+      .scene-frame {
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f0f2f5;
+      }
+
+      .scene-frame.active {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-soft);
+      }
+
+      .scene-frame img,
+      .frame-strip img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .scene-frame img,
+      .scene-frame-placeholder {
+        aspect-ratio: 3 / 2;
+        background:
+          linear-gradient(135deg, #dce7ef, #f7efe1);
+      }
+
+      .scene-frame figcaption {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .scene-frame figcaption strong {
+        color: var(--ink);
+      }
+
+      .frame-strip button {
+        width: 92px;
+        min-height: 84px;
+        padding: 4px;
+        text-align: left;
+      }
+
+      .frame-strip button.active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .frame-strip img {
+        aspect-ratio: 3 / 2;
+        border-radius: 4px;
+        margin-bottom: 5px;
+      }
+
+      .frame-strip span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+
+      .audio-button {
+        padding: 0 14px;
+      }
+
+      .mic-prompt,
+      .production-prompt,
+      .mini-roleplay,
+      .audio-only-recognition,
+      .similar-phrase-contrast,
+      .traveller-lesson-player,
+      .tv-lesson-player,
+      .backward-build,
+      .progress-card {
+        display: grid;
+        gap: 10px;
+      }
+
+      .mic-prompt {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        background: #fbfcfd;
+      }
+
+      .mic-prompt.listening {
+        border-color: var(--focus);
+        background: #eff6ff;
+      }
+
+      .mic-prompt p,
+      .production-prompt small,
+      .similar-phrase-contrast p {
+        color: var(--muted);
+      }
+
+      .choice-prompt {
+        display: grid;
+        gap: 8px;
+        border: 0;
+        padding: 0;
+        margin: 0;
+      }
+
+      .choice-prompt legend {
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      .choice-prompt button {
+        width: 100%;
+        text-align: left;
+        padding: 8px 10px;
+      }
+
+      .translation-reveal {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        padding: 8px 12px;
+      }
+
+      p.translation-reveal {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fbfcfd;
+      }
+
+      .chunk-breakdown {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+      }
+
+      .chunk-breakdown div {
+        display: grid;
+        grid-template-columns: minmax(84px, 0.8fr) minmax(120px, 1fr);
+        gap: 8px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 8px;
+      }
+
+      .chunk-breakdown dt {
+        font-weight: 700;
+      }
+
+      .chunk-breakdown dd {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .progress-card ul {
+        display: grid;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .progress-card li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 8px;
+      }
+
+      .player-wide {
+        grid-column: span 2;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+
+        .player-wide {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>View Component Contact Sheet</h1>
+      <p>Static mock renderings for the TSX component scaffolds in this folder, with localized label examples.</p>
+    </header>
+
+    <main>
+      <article>
+        <h2>ModeSelector</h2>
+        <div class="sample">
+          <div class="mode-selector" role="tablist" aria-label="Lesson mode">
+            <button type="button" role="tab">旅行</button>
+            <button type="button" role="tab" class="selected">テレビ</button>
+            <button type="button" role="tab">練習</button>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <h2>SceneFrame</h2>
+        <div class="sample">
+          <figure class="scene-frame active">
+            <img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-0.png" alt="Friend greets the learner">
+            <figcaption><strong>Friend greets</strong><span>partner</span></figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article>
+        <h2>FrameStrip</h2>
+        <div class="sample">
+          <div class="frame-strip" aria-label="Scene frames">
+            <button type="button" class="active">
+              <img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-0.png" alt="">
+              <span>Cue</span>
+            </button>
+            <button type="button">
+              <img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-1.png" alt="">
+              <span>Turn</span>
+            </button>
+            <button type="button">
+              <img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-2.png" alt="">
+              <span>Result</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <h2>AudioButton</h2>
+        <div class="sample actions">
+          <button type="button" class="audio-button">音声を再生</button>
+          <button type="button" class="audio-button playing">再生中</button>
+        </div>
+      </article>
+
+      <article>
+        <h2>MicPrompt</h2>
+        <div class="sample">
+          <section class="mic-prompt listening">
+            <p>聞いています...</p>
+            <button type="button" disabled>はじめる</button>
+          </section>
+        </div>
+      </article>
+
+      <article>
+        <h2>ChoicePrompt</h2>
+        <div class="sample">
+          <fieldset class="choice-prompt">
+            <legend>いちばん合う返事を選ぶ</legend>
+            <button type="button">こんにちは！</button>
+            <button type="button" class="selected">わかりません。</button>
+            <button type="button">ありがとうございます。</button>
+          </fieldset>
+        </div>
+      </article>
+
+      <article>
+        <h2>TranslationReveal</h2>
+        <div class="sample actions">
+          <button type="button" class="translation-reveal">意味を見る</button>
+          <p class="translation-reveal">I do not understand.</p>
+        </div>
+      </article>
+
+      <article>
+        <h2>ChunkBreakdown</h2>
+        <div class="sample">
+          <dl class="chunk-breakdown">
+            <div><dt>Wakari</dt><dd>understand</dd></div>
+            <div><dt>masen</dt><dd>not / polite negative</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article>
+        <h2>ProgressCard</h2>
+        <div class="sample">
+          <section class="progress-card" aria-label="Progress">
+            <h3>Progress</h3>
+            <ul>
+              <li><span>Cards</span><strong>8</strong></li>
+              <li><span>Accuracy</span><strong>82%</strong></li>
+              <li><span>Review due</span><strong>3</strong></li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <article class="player-wide">
+        <h2>TravellerLessonPlayer</h2>
+        <div class="sample">
+          <main class="traveller-lesson-player">
+            <h3>Traveller lesson</h3>
+            <figure class="scene-frame active">
+              <img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-1.png" alt="Learner responds">
+              <figcaption><strong>Learner responds</strong><span>learner</span></figcaption>
+            </figure>
+            <div class="frame-strip" aria-label="Scene frames">
+              <button type="button"><img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-0.png" alt=""><span>Cue</span></button>
+              <button type="button" class="active"><img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-1.png" alt=""><span>Turn</span></button>
+              <button type="button"><img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-2.png" alt=""><span>Result</span></button>
+            </div>
+            <div class="actions">
+              <button type="button" class="audio-button">場面を再生</button>
+              <button type="button" class="primary">はじめる</button>
+            </div>
+          </main>
+        </div>
+      </article>
+
+      <article>
+        <h2>TVLessonPlayer</h2>
+        <div class="sample">
+          <main class="tv-lesson-player">
+            <h3>TV lesson</h3>
+            <figure class="scene-frame active">
+              <img src="../../model/assets/visuals/generated/ja/ja-first-hi-response/frame-2.png" alt="Friend responds">
+              <figcaption><strong>Result</strong><span>partner</span></figcaption>
+            </figure>
+            <button type="button" class="audio-button">もう一度見る</button>
+          </main>
+        </div>
+      </article>
+
+      <article>
+        <h2>BackwardBuild</h2>
+        <div class="sample">
+          <section class="backward-build">
+            <h3>Wakarimasen.</h3>
+            <dl class="chunk-breakdown">
+              <div><dt>masen</dt><dd>not</dd></div>
+              <div><dt>wakari</dt><dd>understand</dd></div>
+            </dl>
+          </section>
+        </div>
+      </article>
+
+      <article>
+        <h2>ProductionPrompt</h2>
+        <div class="sample">
+          <section class="production-prompt">
+            <p>Respond to the scene</p>
+            <small>Say you do not understand.</small>
+            <section class="mic-prompt">
+              <p>Try saying it</p>
+              <button type="button">Start</button>
+            </section>
+          </section>
+        </div>
+      </article>
+
+      <article class="player-wide">
+        <h2>MiniRoleplay</h2>
+        <div class="sample">
+          <section class="mini-roleplay">
+            <h3>Station helper speaks too quickly</h3>
+            <figure class="scene-frame">
+              <img src="../../model/assets/visuals/generated/ja/ja-repair-dont-understand/frame-0.png" alt="Station scene">
+              <figcaption><strong>Fast explanation</strong><span>staff</span></figcaption>
+            </figure>
+            <section class="production-prompt">
+              <p>Repair the conversation</p>
+              <small>Signal that you do not understand.</small>
+            </section>
+          </section>
+        </div>
+      </article>
+
+      <article>
+        <h2>AudioOnlyRecognition</h2>
+        <div class="sample">
+          <section class="audio-only-recognition">
+            <h3>Listen, then repeat</h3>
+            <button type="button" class="audio-button">Play prompt</button>
+            <section class="mic-prompt">
+              <p>Try saying it</p>
+              <button type="button">Start</button>
+            </section>
+          </section>
+        </div>
+      </article>
+
+      <article>
+        <h2>SimilarPhraseContrast</h2>
+        <div class="sample">
+          <section class="similar-phrase-contrast">
+            <p>Pick the phrase that matches the scene.</p>
+            <fieldset class="choice-prompt">
+              <legend>Similar phrases</legend>
+              <button type="button">Excuse me.</button>
+              <button type="button" class="selected">I am sorry.</button>
+              <button type="button">Thank you.</button>
+            </fieldset>
+          </section>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>
