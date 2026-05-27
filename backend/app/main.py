@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from app.conversation.factory import create_conversation_coach
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.content.data_graph import DataGraphError, list_languages, load_language_session
+from app.content.lessons import lessons_from_session
 from app.content.loader import load_content_graph
 from app.speech.language import romanize_for_language
 from app.speech.similarity import normalize_for_match, text_similarity
@@ -104,6 +105,25 @@ def get_language_session(language: str):
         )
     except DataGraphError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
+
+
+@app.get("/api/languages/{language}/lessons")
+def get_language_lessons(language: str):
+    """Return frontend-renderable lessons for one language."""
+    try:
+        session = load_language_session(
+            data_dir=DATA_DIR,
+            project_dir=PROJECT_DIR,
+            language=language,
+        )
+    except DataGraphError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+
+    return {
+        "language": session["language"],
+        "display_name": session["display_name"],
+        "lessons": lessons_from_session(session),
+    }
 
 
 @app.post("/api/transcribe")

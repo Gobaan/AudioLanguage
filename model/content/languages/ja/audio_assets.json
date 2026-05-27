@@ -32,7 +32,7 @@
       },
       "text": "こんにちは！",
       "transliteration": "Konnichiwa!",
-      "audio_path": "audio/generated/ja/ja-first-hi-response/line-0.mp3",
+      "audio_path": "audio/generated/ja/first-hi-response/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -58,7 +58,7 @@
       },
       "text": "こんにちは！",
       "transliteration": "Konnichiwa!",
-      "audio_path": "audio/generated/ja/ja-first-hi-response/line-1.mp3",
+      "audio_path": "audio/generated/ja/first-hi-response/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -84,7 +84,7 @@
       },
       "text": "会えてうれしいです。",
       "transliteration": "Aete ureshii desu.",
-      "audio_path": "audio/generated/ja/ja-first-hi-response/line-2.mp3",
+      "audio_path": "audio/generated/ja/first-hi-response/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -110,7 +110,7 @@
       },
       "text": "お名前は？",
       "transliteration": "Onamae wa?",
-      "audio_path": "audio/generated/ja/ja-introduce-self/line-0.mp3",
+      "audio_path": "audio/generated/ja/introduce-self/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -136,7 +136,7 @@
       },
       "text": "アンナです。",
       "transliteration": "Anna desu.",
-      "audio_path": "audio/generated/ja/ja-introduce-self/line-1.mp3",
+      "audio_path": "audio/generated/ja/introduce-self/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -162,7 +162,7 @@
       },
       "text": "よろしくお願いします。",
       "transliteration": "Yoroshiku onegaishimasu.",
-      "audio_path": "audio/generated/ja/ja-introduce-self/line-2.mp3",
+      "audio_path": "audio/generated/ja/introduce-self/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -188,7 +188,7 @@
       },
       "text": "こちらに記入してください。",
       "transliteration": "Kochira ni kinyuu shite kudasai.",
-      "audio_path": "audio/generated/ja/ja-repair-dont-understand/line-0.mp3",
+      "audio_path": "audio/generated/ja/repair-dont-understand/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -214,7 +214,7 @@
       },
       "text": "わかりません。",
       "transliteration": "Wakarimasen.",
-      "audio_path": "audio/generated/ja/ja-repair-dont-understand/line-1.mp3",
+      "audio_path": "audio/generated/ja/repair-dont-understand/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -240,7 +240,7 @@
       },
       "text": "大丈夫です。手伝います。",
       "transliteration": "Daijoubu desu. Tetsudaimasu.",
-      "audio_path": "audio/generated/ja/ja-repair-dont-understand/line-2.mp3",
+      "audio_path": "audio/generated/ja/repair-dont-understand/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -266,7 +266,7 @@
       },
       "text": "次の方、どうぞ。",
       "transliteration": "Tsugi no kata, douzo.",
-      "audio_path": "audio/generated/ja/ja-apologize-small-mistake/line-0.mp3",
+      "audio_path": "audio/generated/ja/apologize-small-mistake/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -292,7 +292,7 @@
       },
       "text": "すみません。",
       "transliteration": "Sumimasen.",
-      "audio_path": "audio/generated/ja/ja-apologize-small-mistake/line-1.mp3",
+      "audio_path": "audio/generated/ja/apologize-small-mistake/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -318,7 +318,7 @@
       },
       "text": "はい、どうぞ。",
       "transliteration": "Hai, douzo.",
-      "audio_path": "audio/generated/ja/ja-apologize-small-mistake/line-2.mp3",
+      "audio_path": "audio/generated/ja/apologize-small-mistake/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -344,7 +344,7 @@
       },
       "text": "何にしますか？",
       "transliteration": "Nani ni shimasu ka?",
-      "audio_path": "audio/generated/ja/ja-order-local-food/line-0.mp3",
+      "audio_path": "audio/generated/ja/order-local-food/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -370,7 +370,7 @@
       },
       "text": "サンドイッチください。",
       "transliteration": "Sandoicchi kudasai.",
-      "audio_path": "audio/generated/ja/ja-order-local-food/line-1.mp3",
+      "audio_path": "audio/generated/ja/order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -396,7 +396,7 @@
       },
       "text": "はい。",
       "transliteration": "Hai.",
-      "audio_path": "audio/generated/ja/ja-order-local-food/line-2.mp3",
+      "audio_path": "audio/generated/ja/order-local-food/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -422,7 +422,7 @@
       },
       "text": "どうしましたか？",
       "transliteration": "Dou shimashita ka?",
-      "audio_path": "audio/generated/ja/ja-directions-hospital/line-0.mp3",
+      "audio_path": "audio/generated/ja/directions-hospital/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -448,7 +448,7 @@
       },
       "text": "病院はどこですか？",
       "transliteration": "Byouin wa doko desu ka?",
-      "audio_path": "audio/generated/ja/ja-directions-hospital/line-1.mp3",
+      "audio_path": "audio/generated/ja/directions-hospital/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -474,7 +474,7 @@
       },
       "text": "あちらです。",
       "transliteration": "Achira desu.",
-      "audio_path": "audio/generated/ja/ja-directions-hospital/line-2.mp3",
+      "audio_path": "audio/generated/ja/directions-hospital/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -500,7 +500,7 @@
       },
       "text": "こんにちは！",
       "transliteration": "Konnichiwa!",
-      "audio_path": "audio/generated/ja/ja-greeting-neighbor-transfer/line-0.mp3",
+      "audio_path": "audio/generated/ja/greeting-neighbor-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -526,7 +526,7 @@
       },
       "text": "こんにちは！",
       "transliteration": "Konnichiwa!",
-      "audio_path": "audio/generated/ja/ja-greeting-neighbor-transfer/line-1.mp3",
+      "audio_path": "audio/generated/ja/greeting-neighbor-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -552,7 +552,7 @@
       },
       "text": "どうも。",
       "transliteration": "Doumo.",
-      "audio_path": "audio/generated/ja/ja-greeting-neighbor-transfer/line-2.mp3",
+      "audio_path": "audio/generated/ja/greeting-neighbor-transfer/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -578,7 +578,7 @@
       },
       "text": "こんにちは。",
       "transliteration": "Konnichiwa.",
-      "audio_path": "audio/generated/ja/ja-greeting-entry-review/line-0.mp3",
+      "audio_path": "audio/generated/ja/greeting-entry-review/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -604,7 +604,7 @@
       },
       "text": "こんにちは！",
       "transliteration": "Konnichiwa!",
-      "audio_path": "audio/generated/ja/ja-greeting-entry-review/line-1.mp3",
+      "audio_path": "audio/generated/ja/greeting-entry-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -630,7 +630,7 @@
       },
       "text": "どうも。",
       "transliteration": "Doumo.",
-      "audio_path": "audio/generated/ja/ja-greeting-entry-review/line-2.mp3",
+      "audio_path": "audio/generated/ja/greeting-entry-review/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -656,7 +656,7 @@
       },
       "text": "お名前は？",
       "transliteration": "Onamae wa?",
-      "audio_path": "audio/generated/ja/ja-introduce-class-transfer/line-0.mp3",
+      "audio_path": "audio/generated/ja/introduce-class-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -682,7 +682,7 @@
       },
       "text": "アンナです。",
       "transliteration": "Anna desu.",
-      "audio_path": "audio/generated/ja/ja-introduce-class-transfer/line-1.mp3",
+      "audio_path": "audio/generated/ja/introduce-class-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -708,7 +708,7 @@
       },
       "text": "よろしくお願いします。",
       "transliteration": "Yoroshiku onegaishimasu.",
-      "audio_path": "audio/generated/ja/ja-introduce-class-transfer/line-2.mp3",
+      "audio_path": "audio/generated/ja/introduce-class-transfer/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -734,7 +734,7 @@
       },
       "text": "お名前は？",
       "transliteration": "Onamae wa?",
-      "audio_path": "audio/generated/ja/ja-introduce-community-review/line-0.mp3",
+      "audio_path": "audio/generated/ja/introduce-community-review/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -760,7 +760,7 @@
       },
       "text": "アンナです。",
       "transliteration": "Anna desu.",
-      "audio_path": "audio/generated/ja/ja-introduce-community-review/line-1.mp3",
+      "audio_path": "audio/generated/ja/introduce-community-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -786,7 +786,7 @@
       },
       "text": "よろしく。",
       "transliteration": "Yoroshiku.",
-      "audio_path": "audio/generated/ja/ja-introduce-community-review/line-2.mp3",
+      "audio_path": "audio/generated/ja/introduce-community-review/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -812,7 +812,7 @@
       },
       "text": "ここを押してください。",
       "transliteration": "Koko o oshite kudasai.",
-      "audio_path": "audio/generated/ja/ja-repair-ticket-transfer/line-0.mp3",
+      "audio_path": "audio/generated/ja/repair-ticket-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -838,7 +838,7 @@
       },
       "text": "わかりません。",
       "transliteration": "Wakarimasen.",
-      "audio_path": "audio/generated/ja/ja-repair-ticket-transfer/line-1.mp3",
+      "audio_path": "audio/generated/ja/repair-ticket-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -864,7 +864,7 @@
       },
       "text": "大丈夫です。",
       "transliteration": "Daijoubu desu.",
-      "audio_path": "audio/generated/ja/ja-repair-ticket-transfer/line-2.mp3",
+      "audio_path": "audio/generated/ja/repair-ticket-transfer/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -890,7 +890,7 @@
       },
       "text": "こちらです。",
       "transliteration": "Kochira desu.",
-      "audio_path": "audio/generated/ja/ja-repair-clinic-review/line-0.mp3",
+      "audio_path": "audio/generated/ja/repair-clinic-review/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -916,7 +916,7 @@
       },
       "text": "わかりません。",
       "transliteration": "Wakarimasen.",
-      "audio_path": "audio/generated/ja/ja-repair-clinic-review/line-1.mp3",
+      "audio_path": "audio/generated/ja/repair-clinic-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -942,7 +942,7 @@
       },
       "text": "手伝います。",
       "transliteration": "Tetsudaimasu.",
-      "audio_path": "audio/generated/ja/ja-repair-clinic-review/line-2.mp3",
+      "audio_path": "audio/generated/ja/repair-clinic-review/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -968,7 +968,7 @@
       },
       "text": "少々お待ちください。",
       "transliteration": "Shoushou omachi kudasai.",
-      "audio_path": "audio/generated/ja/ja-sumimasen-cafe-transfer/line-0.mp3",
+      "audio_path": "audio/generated/ja/sumimasen-cafe-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -994,7 +994,7 @@
       },
       "text": "すみません。",
       "transliteration": "Sumimasen.",
-      "audio_path": "audio/generated/ja/ja-sumimasen-cafe-transfer/line-1.mp3",
+      "audio_path": "audio/generated/ja/sumimasen-cafe-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1020,7 +1020,7 @@
       },
       "text": "はい、どうぞ。",
       "transliteration": "Hai, douzo.",
-      "audio_path": "audio/generated/ja/ja-sumimasen-cafe-transfer/line-2.mp3",
+      "audio_path": "audio/generated/ja/sumimasen-cafe-transfer/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1046,7 +1046,7 @@
       },
       "text": "次の方。",
       "transliteration": "Tsugi no kata.",
-      "audio_path": "audio/generated/ja/ja-sumimasen-station-review/line-0.mp3",
+      "audio_path": "audio/generated/ja/sumimasen-station-review/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1072,7 +1072,7 @@
       },
       "text": "すみません。",
       "transliteration": "Sumimasen.",
-      "audio_path": "audio/generated/ja/ja-sumimasen-station-review/line-1.mp3",
+      "audio_path": "audio/generated/ja/sumimasen-station-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1098,7 +1098,7 @@
       },
       "text": "はい。",
       "transliteration": "Hai.",
-      "audio_path": "audio/generated/ja/ja-sumimasen-station-review/line-2.mp3",
+      "audio_path": "audio/generated/ja/sumimasen-station-review/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1124,7 +1124,7 @@
       },
       "text": "ご注文は？",
       "transliteration": "Gochuumon wa?",
-      "audio_path": "audio/generated/ja/ja-order-convenience-transfer/line-0.mp3",
+      "audio_path": "audio/generated/ja/order-convenience-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1150,7 +1150,7 @@
       },
       "text": "サンドイッチください。",
       "transliteration": "Sandoicchi kudasai.",
-      "audio_path": "audio/generated/ja/ja-order-convenience-transfer/line-1.mp3",
+      "audio_path": "audio/generated/ja/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1176,7 +1176,7 @@
       },
       "text": "はい。",
       "transliteration": "Hai.",
-      "audio_path": "audio/generated/ja/ja-order-convenience-transfer/line-2.mp3",
+      "audio_path": "audio/generated/ja/order-convenience-transfer/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1202,7 +1202,7 @@
       },
       "text": "何にしますか？",
       "transliteration": "Nani ni shimasu ka?",
-      "audio_path": "audio/generated/ja/ja-order-bakery-review/line-0.mp3",
+      "audio_path": "audio/generated/ja/order-bakery-review/line-0.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1228,7 +1228,7 @@
       },
       "text": "サンドイッチください。",
       "transliteration": "Sandoicchi kudasai.",
-      "audio_path": "audio/generated/ja/ja-order-bakery-review/line-1.mp3",
+      "audio_path": "audio/generated/ja/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true
     },
@@ -1254,7 +1254,7 @@
       },
       "text": "はい。",
       "transliteration": "Hai.",
-      "audio_path": "audio/generated/ja/ja-order-bakery-review/line-2.mp3",
+      "audio_path": "audio/generated/ja/order-bakery-review/line-2.mp3",
       "status": "generated",
       "native_review_required": true
     }

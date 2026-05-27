@@ -1,0 +1,263 @@
+{
+  "api": "GET /api/languages/en/lessons",
+  "language": "en",
+  "display_name": "English",
+  "lesson": {
+    "id": "en-card-first-hi-dialogue-practice",
+    "language": "en",
+    "title": "Watch the scene once. Then replay the cue and say your part when prompted.",
+    "mode": "ai_guided_response",
+    "stage": "guided_scene_production",
+    "player_component": "TravellerLessonPlayer",
+    "target": {
+      "id": "en-target-respond-hi",
+      "text": "Hi!",
+      "transliteration": "",
+      "meaning": "Respond to Hi."
+    },
+    "frames": [
+      {
+        "id": "line-0",
+        "lineIndex": 0,
+        "imageUrl": "/visuals/ta-greeting-hello/frame-0.png",
+        "audioUrl": "/audio/generated/en/en-first-hi-response/line-0.mp3",
+        "title": "World Opener",
+        "speaker": "friend",
+        "text": "Hi!",
+        "transliteration": "",
+        "lineType": "world_opener"
+      },
+      {
+        "id": "line-1",
+        "lineIndex": 1,
+        "imageUrl": "/visuals/ta-greeting-hello/frame-1.png",
+        "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
+        "title": "Learner Target",
+        "speaker": "learner",
+        "text": "Hi!",
+        "transliteration": "",
+        "lineType": "learner_target"
+      },
+      {
+        "id": "line-2",
+        "lineIndex": 2,
+        "imageUrl": "/visuals/ta-greeting-hello/frame-2.png",
+        "audioUrl": "/audio/generated/en/en-first-hi-response/line-2.mp3",
+        "title": "World Response",
+        "speaker": "friend",
+        "text": "Nice to see you.",
+        "transliteration": "",
+        "lineType": "world_response"
+      }
+    ],
+    "steps": [
+      {
+        "id": "scene_setup",
+        "type": "scene_setup",
+        "component": "SceneFrame",
+        "props": {
+          "initialFrameId": "line-0",
+          "frames": [
+            {
+              "id": "line-0",
+              "lineIndex": 0,
+              "imageUrl": "/visuals/ta-greeting-hello/frame-0.png",
+              "audioUrl": "/audio/generated/en/en-first-hi-response/line-0.mp3",
+              "title": "World Opener",
+              "speaker": "friend",
+              "text": "Hi!",
+              "transliteration": "",
+              "lineType": "world_opener"
+            },
+            {
+              "id": "line-1",
+              "lineIndex": 1,
+              "imageUrl": "/visuals/ta-greeting-hello/frame-1.png",
+              "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
+              "title": "Learner Target",
+              "speaker": "learner",
+              "text": "Hi!",
+              "transliteration": "",
+              "lineType": "learner_target"
+            },
+            {
+              "id": "line-2",
+              "lineIndex": 2,
+              "imageUrl": "/visuals/ta-greeting-hello/frame-2.png",
+              "audioUrl": "/audio/generated/en/en-first-hi-response/line-2.mp3",
+              "title": "World Response",
+              "speaker": "friend",
+              "text": "Nice to see you.",
+              "transliteration": "",
+              "lineType": "world_response"
+            }
+          ]
+        }
+      },
+      {
+        "id": "target_audio",
+        "type": "target_audio",
+        "component": "AudioButton",
+        "props": {
+          "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
+          "text": {
+            "playLabel": "Play audio",
+            "playingLabel": "Playing"
+          }
+        }
+      },
+      {
+        "id": "broad_meaning_guess",
+        "type": "broad_meaning_guess",
+        "component": "ChoicePrompt",
+        "props": {
+          "question": "Watch the scene once. Then replay the cue and say your part when prompted.",
+          "choices": [
+            {
+              "id": "en-target-respond-hi",
+              "label": "Respond to Hi.",
+              "isCorrect": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "translation_reveal",
+        "type": "translation_reveal",
+        "component": "TranslationReveal",
+        "props": {
+          "translation": "Respond to Hi."
+        }
+      },
+      {
+        "id": "audio_replay",
+        "type": "audio_replay",
+        "component": "AudioButton",
+        "props": {
+          "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
+          "text": {
+            "playLabel": "Play audio",
+            "playingLabel": "Playing"
+          }
+        }
+      },
+      {
+        "id": "repeat_with_mic",
+        "type": "repeat_with_mic",
+        "component": "MicPrompt",
+        "props": {
+          "expectedText": "Hi!",
+          "expectedTransliteration": "",
+          "text": {
+            "prompt": "Try saying it",
+            "listeningLabel": "Listening...",
+            "startLabel": "Start"
+          }
+        }
+      },
+      {
+        "id": "backward_build",
+        "type": "backward_build",
+        "component": "BackwardBuild",
+        "props": {
+          "targetPhrase": "",
+          "chunks": [
+            {
+              "id": "en-target-respond-hi-chunk-0",
+              "text": "hello",
+              "meaning": "hello"
+            },
+            {
+              "id": "en-target-respond-hi-chunk-1",
+              "text": "response",
+              "meaning": "response"
+            }
+          ]
+        }
+      },
+      {
+        "id": "production_prompt",
+        "type": "production_prompt",
+        "component": "ProductionPrompt",
+        "props": {
+          "cue": "Watch the scene once. Then replay the cue and say your part when prompted.",
+          "targetMeaning": "Respond to Hi.",
+          "micText": {
+            "prompt": "Try saying it",
+            "listeningLabel": "Listening...",
+            "startLabel": "Start"
+          }
+        }
+      },
+      {
+        "id": "mini_roleplay",
+        "type": "mini_roleplay",
+        "component": "MiniRoleplay",
+        "props": {
+          "scenario": "A friendly person sees the learner at a casual community event.",
+          "targetMeaning": "Respond to Hi."
+        }
+      },
+      {
+        "id": "audio_only_recognition",
+        "type": "audio_only_recognition",
+        "component": "AudioOnlyRecognition",
+        "props": {
+          "prompt": "Respond to Hi.",
+          "audioText": {
+            "playLabel": "Play audio",
+            "playingLabel": "Playing"
+          },
+          "micText": {
+            "prompt": "Try saying it",
+            "listeningLabel": "Listening...",
+            "startLabel": "Start"
+          }
+        }
+      },
+      {
+        "id": "similar_phrase_contrast",
+        "type": "similar_phrase_contrast",
+        "component": "SimilarPhraseContrast",
+        "props": {
+          "explanation": "Choose the phrase that matches this scene.",
+          "choices": [
+            {
+              "id": "en-target-respond-hi-target",
+              "label": "Hi!",
+              "isCorrect": true
+            },
+            {
+              "id": "en-target-respond-hi-contrast-0",
+              "label": "Goodbye.",
+              "isCorrect": false
+            },
+            {
+              "id": "en-target-respond-hi-contrast-1",
+              "label": "Where is the hospital?",
+              "isCorrect": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "schedule_review",
+        "type": "schedule_review",
+        "component": "ProgressCard",
+        "props": {
+          "title": "Review schedule",
+          "metrics": [
+            {
+              "label": "Stage",
+              "value": "guided_scene_production"
+            },
+            {
+              "label": "Mode",
+              "value": "ai_guided_response"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

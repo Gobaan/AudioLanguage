@@ -17,9 +17,9 @@
         "hello"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-first-hi-response/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/beat-0.txt"
+        "image": "visuals/final/first-hi-response/frame-0.png",
+        "image_prompt": "visuals/final/first-hi-response/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/first-hi-response/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -43,9 +43,9 @@
         "response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-first-hi-response/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/beat-1.txt"
+        "image": "visuals/final/first-hi-response/frame-1.png",
+        "image_prompt": "visuals/final/first-hi-response/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/first-hi-response/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -68,9 +68,9 @@
         "positive_response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-first-hi-response/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-first-hi-response/prompts/beat-2.txt"
+        "image": "visuals/final/first-hi-response/frame-2.png",
+        "image_prompt": "visuals/final/first-hi-response/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/first-hi-response/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -95,9 +95,9 @@
         "question"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-self/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-self/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-self/prompts/beat-0.txt"
+        "image": "visuals/final/introduce-self/frame-0.png",
+        "image_prompt": "visuals/final/introduce-self/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/introduce-self/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -123,9 +123,9 @@
         "proper_noun"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-self/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-self/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-self/prompts/beat-1.txt"
+        "image": "visuals/final/introduce-self/frame-1.png",
+        "image_prompt": "visuals/final/introduce-self/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/introduce-self/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -151,9 +151,9 @@
         "positive_response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-self/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-self/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-self/prompts/beat-2.txt"
+        "image": "visuals/final/introduce-self/frame-2.png",
+        "image_prompt": "visuals/final/introduce-self/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/introduce-self/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -177,9 +177,9 @@
         "this"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-dont-understand/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/beat-0.txt"
+        "image": "visuals/final/repair-dont-understand/frame-0.png",
+        "image_prompt": "visuals/final/repair-dont-understand/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/repair-dont-understand/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -204,9 +204,9 @@
         "understand"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-dont-understand/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/beat-1.txt"
+        "image": "visuals/final/repair-dont-understand/frame-1.png",
+        "image_prompt": "visuals/final/repair-dont-understand/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/repair-dont-understand/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -230,9 +230,9 @@
         "help"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-dont-understand/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-dont-understand/prompts/beat-2.txt"
+        "image": "visuals/final/repair-dont-understand/frame-2.png",
+        "image_prompt": "visuals/final/repair-dont-understand/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/repair-dont-understand/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -257,9 +257,9 @@
         "turn_prompt"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-attention/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/beat-0.txt"
+        "image": "visuals/final/excuse-me-attention/frame-0.png",
+        "image_prompt": "visuals/final/excuse-me-attention/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/excuse-me-attention/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -284,9 +284,9 @@
         "polite_softener"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-attention/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/beat-1.txt"
+        "image": "visuals/final/excuse-me-attention/frame-1.png",
+        "image_prompt": "visuals/final/excuse-me-attention/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/excuse-me-attention/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -311,9 +311,9 @@
         "acknowledgement"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-attention/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-attention/prompts/beat-2.txt"
+        "image": "visuals/final/excuse-me-attention/frame-2.png",
+        "image_prompt": "visuals/final/excuse-me-attention/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/excuse-me-attention/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -337,9 +337,9 @@
         "question"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-local-food/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-order-local-food/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-local-food/prompts/beat-0.txt"
+        "image": "visuals/final/order-local-food/frame-0.png",
+        "image_prompt": "visuals/final/order-local-food/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/order-local-food/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -364,9 +364,9 @@
         "please"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-local-food/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-order-local-food/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-local-food/prompts/beat-1.txt"
+        "image": "visuals/final/order-local-food/frame-1.png",
+        "image_prompt": "visuals/final/order-local-food/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/order-local-food/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -390,9 +390,9 @@
         "acknowledgement"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-local-food/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-order-local-food/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-local-food/prompts/beat-2.txt"
+        "image": "visuals/final/order-local-food/frame-2.png",
+        "image_prompt": "visuals/final/order-local-food/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/order-local-food/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -497,9 +497,9 @@
         "hello"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-greeting-neighbor-transfer/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/beat-0.txt"
+        "image": "visuals/final/greeting-neighbor-transfer/frame-0.png",
+        "image_prompt": "visuals/final/greeting-neighbor-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/greeting-neighbor-transfer/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -524,9 +524,9 @@
         "response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-greeting-neighbor-transfer/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/beat-1.txt"
+        "image": "visuals/final/greeting-neighbor-transfer/frame-1.png",
+        "image_prompt": "visuals/final/greeting-neighbor-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/greeting-neighbor-transfer/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -550,9 +550,9 @@
         "positive_response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-greeting-neighbor-transfer/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-greeting-neighbor-transfer/prompts/beat-2.txt"
+        "image": "visuals/final/greeting-neighbor-transfer/frame-2.png",
+        "image_prompt": "visuals/final/greeting-neighbor-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/greeting-neighbor-transfer/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -576,9 +576,9 @@
         "hello"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-greeting-entry-review/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/beat-0.txt"
+        "image": "visuals/final/greeting-entry-review/frame-0.png",
+        "image_prompt": "visuals/final/greeting-entry-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/greeting-entry-review/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -603,9 +603,9 @@
         "response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-greeting-entry-review/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/beat-1.txt"
+        "image": "visuals/final/greeting-entry-review/frame-1.png",
+        "image_prompt": "visuals/final/greeting-entry-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/greeting-entry-review/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -629,9 +629,9 @@
         "positive_response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-greeting-entry-review/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-greeting-entry-review/prompts/beat-2.txt"
+        "image": "visuals/final/greeting-entry-review/frame-2.png",
+        "image_prompt": "visuals/final/greeting-entry-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/greeting-entry-review/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -657,9 +657,9 @@
         "question"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-class-transfer/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/beat-0.txt"
+        "image": "visuals/final/introduce-class-transfer/frame-0.png",
+        "image_prompt": "visuals/final/introduce-class-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/introduce-class-transfer/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -685,9 +685,9 @@
         "proper_noun"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-class-transfer/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/beat-1.txt"
+        "image": "visuals/final/introduce-class-transfer/frame-1.png",
+        "image_prompt": "visuals/final/introduce-class-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/introduce-class-transfer/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -713,9 +713,9 @@
         "positive_response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-class-transfer/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-class-transfer/prompts/beat-2.txt"
+        "image": "visuals/final/introduce-class-transfer/frame-2.png",
+        "image_prompt": "visuals/final/introduce-class-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/introduce-class-transfer/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -741,9 +741,9 @@
         "question"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-community-review/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/beat-0.txt"
+        "image": "visuals/final/introduce-community-review/frame-0.png",
+        "image_prompt": "visuals/final/introduce-community-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/introduce-community-review/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -769,9 +769,9 @@
         "proper_noun"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-community-review/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/beat-1.txt"
+        "image": "visuals/final/introduce-community-review/frame-1.png",
+        "image_prompt": "visuals/final/introduce-community-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/introduce-community-review/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -797,9 +797,9 @@
         "positive_response"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-introduce-community-review/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-introduce-community-review/prompts/beat-2.txt"
+        "image": "visuals/final/introduce-community-review/frame-2.png",
+        "image_prompt": "visuals/final/introduce-community-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/introduce-community-review/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -824,9 +824,9 @@
         "instruction"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-ticket-transfer/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/beat-0.txt"
+        "image": "visuals/final/repair-ticket-transfer/frame-0.png",
+        "image_prompt": "visuals/final/repair-ticket-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/repair-ticket-transfer/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -851,9 +851,9 @@
         "understand"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-ticket-transfer/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/beat-1.txt"
+        "image": "visuals/final/repair-ticket-transfer/frame-1.png",
+        "image_prompt": "visuals/final/repair-ticket-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/repair-ticket-transfer/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -877,9 +877,9 @@
         "help"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-ticket-transfer/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-ticket-transfer/prompts/beat-2.txt"
+        "image": "visuals/final/repair-ticket-transfer/frame-2.png",
+        "image_prompt": "visuals/final/repair-ticket-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/repair-ticket-transfer/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -903,9 +903,9 @@
         "this"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-clinic-review/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/beat-0.txt"
+        "image": "visuals/final/repair-clinic-review/frame-0.png",
+        "image_prompt": "visuals/final/repair-clinic-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/repair-clinic-review/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -930,9 +930,9 @@
         "understand"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-clinic-review/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/beat-1.txt"
+        "image": "visuals/final/repair-clinic-review/frame-1.png",
+        "image_prompt": "visuals/final/repair-clinic-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/repair-clinic-review/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -956,9 +956,9 @@
         "help"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-repair-clinic-review/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-repair-clinic-review/prompts/beat-2.txt"
+        "image": "visuals/final/repair-clinic-review/frame-2.png",
+        "image_prompt": "visuals/final/repair-clinic-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/repair-clinic-review/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -982,9 +982,9 @@
         "wait"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-cafe-transfer/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/beat-0.txt"
+        "image": "visuals/final/excuse-me-cafe-transfer/frame-0.png",
+        "image_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -1009,9 +1009,9 @@
         "polite_softener"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-cafe-transfer/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/beat-1.txt"
+        "image": "visuals/final/excuse-me-cafe-transfer/frame-1.png",
+        "image_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -1035,9 +1035,9 @@
         "acknowledgement"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-cafe-transfer/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-cafe-transfer/prompts/beat-2.txt"
+        "image": "visuals/final/excuse-me-cafe-transfer/frame-2.png",
+        "image_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -1062,9 +1062,9 @@
         "turn_prompt"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-station-review/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/beat-0.txt"
+        "image": "visuals/final/excuse-me-station-review/frame-0.png",
+        "image_prompt": "visuals/final/excuse-me-station-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/excuse-me-station-review/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -1089,9 +1089,9 @@
         "polite_softener"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-station-review/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/beat-1.txt"
+        "image": "visuals/final/excuse-me-station-review/frame-1.png",
+        "image_prompt": "visuals/final/excuse-me-station-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/excuse-me-station-review/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -1115,9 +1115,9 @@
         "acknowledgement"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-excuse-me-station-review/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-excuse-me-station-review/prompts/beat-2.txt"
+        "image": "visuals/final/excuse-me-station-review/frame-2.png",
+        "image_prompt": "visuals/final/excuse-me-station-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/excuse-me-station-review/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -1141,9 +1141,9 @@
         "question"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-convenience-transfer/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/beat-0.txt"
+        "image": "visuals/final/order-convenience-transfer/frame-0.png",
+        "image_prompt": "visuals/final/order-convenience-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/order-convenience-transfer/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -1168,9 +1168,9 @@
         "please"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-convenience-transfer/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/beat-1.txt"
+        "image": "visuals/final/order-convenience-transfer/frame-1.png",
+        "image_prompt": "visuals/final/order-convenience-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/order-convenience-transfer/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -1194,9 +1194,9 @@
         "acknowledgement"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-convenience-transfer/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-convenience-transfer/prompts/beat-2.txt"
+        "image": "visuals/final/order-convenience-transfer/frame-2.png",
+        "image_prompt": "visuals/final/order-convenience-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/order-convenience-transfer/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {
@@ -1220,9 +1220,9 @@
         "question"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-bakery-review/frame-0.png",
-        "image_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/frame-0.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/beat-0.txt"
+        "image": "visuals/final/order-bakery-review/frame-0.png",
+        "image_prompt": "visuals/final/order-bakery-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/order-bakery-review/prompts/beat-0.txt"
       },
       "gesture_mapping": [
         {
@@ -1247,9 +1247,9 @@
         "please"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-bakery-review/frame-1.png",
-        "image_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/frame-1.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/beat-1.txt"
+        "image": "visuals/final/order-bakery-review/frame-1.png",
+        "image_prompt": "visuals/final/order-bakery-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/order-bakery-review/prompts/beat-1.txt"
       },
       "gesture_mapping": [
         {
@@ -1273,9 +1273,9 @@
         "acknowledgement"
       ],
       "asset_paths": {
-        "image": "visuals/generated/ja/ja-order-bakery-review/frame-2.png",
-        "image_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/frame-2.txt",
-        "video_prompt": "visuals/generated/ja/ja-order-bakery-review/prompts/beat-2.txt"
+        "image": "visuals/final/order-bakery-review/frame-2.png",
+        "image_prompt": "visuals/final/order-bakery-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/order-bakery-review/prompts/beat-2.txt"
       },
       "gesture_mapping": [
         {

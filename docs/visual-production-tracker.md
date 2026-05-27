@@ -27,20 +27,20 @@ Current files:
 
 | Frame | Role | File | Status | Notes |
 |---|---|---|---|---|
-| 0 | Cue | `visuals/generated/ja/ja-first-hi-response/frame-0.png` | Working anchor | Landscape 3:2, full model, high quality. Friend greets from doorway; learner looks toward friend. |
-| 1 | Learner turn | `visuals/generated/ja/ja-first-hi-response/frame-1.png` | Working | Landscape 3:2, full model. Learner responds toward friend. |
-| 2 | Resolution | `visuals/generated/ja/ja-first-hi-response/frame-2.png` | Working prototype/MVP candidate | Landscape 3:2, full model medium. Friend responds with lowered hand. |
+| 0 | Cue | `visuals/final/first-hi-response/frame-0.png` | Working anchor | Landscape 3:2, full model, high quality. Friend greets from doorway; learner looks toward friend. |
+| 1 | Learner turn | `visuals/final/first-hi-response/frame-1.png` | Working | Landscape 3:2, full model. Learner responds toward friend. |
+| 2 | Resolution | `visuals/final/first-hi-response/frame-2.png` | Working prototype/MVP candidate | Landscape 3:2, full model medium. Friend responds with lowered hand. |
 
 Prompt files:
 
-- `visuals/generated/ja/ja-first-hi-response/prompts/frame-0.txt`
-- `visuals/generated/ja/ja-first-hi-response/prompts/frame-1.txt`
-- `visuals/generated/ja/ja-first-hi-response/prompts/frame-2.txt`
+- `visuals/final/first-hi-response/prompts/frame-0.txt`
+- `visuals/final/first-hi-response/prompts/frame-1.txt`
+- `visuals/final/first-hi-response/prompts/frame-2.txt`
 
 Quality comparison folder:
 
-- `visuals/generated/ja/ja-first-hi-response/quality-examples/frame-0-high-anchor.png`
-- `visuals/generated/ja/ja-first-hi-response/quality-examples/frame-2-medium-current.png`
+- `visuals/final/first-hi-response/quality-examples/frame-0-high-anchor.png`
+- `visuals/final/first-hi-response/quality-examples/frame-2-medium-current.png`
 
 Note: a low-quality comparison was attempted, but the saved `frame-2-low.png` needs to be regenerated if needed.
 

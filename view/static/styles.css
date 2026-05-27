@@ -926,3 +926,346 @@ figcaption span {
     flex: 1 1 auto;
   }
 }
+
+.lesson-prototype-body {
+  align-items: stretch;
+  background: #eef3f2;
+  justify-content: center;
+  padding: 16px;
+}
+
+.traveller-lesson-app {
+  width: min(880px, 100%);
+}
+
+.traveller-shell {
+  background: #ffffff;
+  border: 1px solid rgba(33, 45, 43, 0.16);
+  border-radius: 8px;
+  box-shadow: 0 16px 44px rgba(33, 45, 43, 0.14);
+  display: grid;
+  gap: 14px;
+  margin: 0 auto;
+  min-height: calc(100vh - 32px);
+  padding: 16px;
+}
+
+.traveller-header {
+  align-items: start;
+  border-bottom: 1px solid rgba(33, 45, 43, 0.12);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding-bottom: 12px;
+}
+
+.traveller-header div {
+  display: grid;
+  gap: 4px;
+}
+
+.traveller-header span,
+.traveller-step-title span {
+  color: #63706d;
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.traveller-header h1 {
+  font-size: clamp(1.05rem, 3vw, 1.45rem);
+  line-height: 1.25;
+}
+
+.traveller-header > strong {
+  background: #e5f1ee;
+  border-radius: 999px;
+  color: #1f625c;
+  flex: 0 0 auto;
+  padding: 6px 10px;
+}
+
+.traveller-stage,
+.traveller-step-card,
+.traveller-component,
+.traveller-production,
+.traveller-audio-only {
+  display: grid;
+  gap: 12px;
+}
+
+.scene-frame-card {
+  background: #dbe4e2;
+  border: 1px solid rgba(33, 45, 43, 0.16);
+  border-radius: 8px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.scene-frame-card.active {
+  border-color: #2f756e;
+  box-shadow: 0 0 0 3px rgba(47, 117, 110, 0.14);
+}
+
+.scene-frame-card img,
+.scene-frame-placeholder {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #d6e5e1, #f0e0c8);
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.scene-frame-card figcaption {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  max-width: none;
+  padding: 9px 12px;
+  position: absolute;
+  width: 100%;
+}
+
+.scene-frame-card figcaption span {
+  color: #63706d;
+  font-weight: 750;
+}
+
+.traveller-frame-strip {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.traveller-frame-strip button,
+.traveller-step-rail button,
+.lesson-action,
+.traveller-choice-prompt button {
+  border: 1px solid rgba(33, 45, 43, 0.16);
+  border-radius: 8px;
+  color: #202a28;
+}
+
+.traveller-frame-strip button {
+  align-items: stretch;
+  background: #f7faf9;
+  display: grid;
+  gap: 6px;
+  justify-content: stretch;
+  min-height: 94px;
+  padding: 6px;
+  text-align: left;
+}
+
+.traveller-frame-strip button.active {
+  background: #e5f1ee;
+  border-color: #2f756e;
+}
+
+.traveller-frame-strip img,
+.thumb-placeholder {
+  aspect-ratio: 16 / 9;
+  background: #dbe4e2;
+  border-radius: 6px;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.traveller-frame-strip span {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.traveller-step-card {
+  background: #f8faf9;
+  border: 1px solid rgba(33, 45, 43, 0.12);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.traveller-step-title {
+  align-items: baseline;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.traveller-step-title strong {
+  color: #2f756e;
+  font-size: 0.95rem;
+}
+
+.lesson-action {
+  background: #edf2f1;
+  font-weight: 850;
+  min-height: 42px;
+  padding: 0 14px;
+  width: fit-content;
+}
+
+.lesson-action.primary,
+.lesson-action.playing {
+  background: #2f756e;
+  color: #ffffff;
+}
+
+.traveller-choice-prompt {
+  border: 0;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.traveller-choice-prompt legend {
+  font-weight: 850;
+  margin-bottom: 4px;
+}
+
+.traveller-choice-prompt button {
+  align-items: start;
+  background: #ffffff;
+  display: grid;
+  gap: 4px;
+  justify-content: stretch;
+  min-height: 48px;
+  padding: 10px 12px;
+  text-align: left;
+  width: 100%;
+}
+
+.traveller-choice-prompt button.selected {
+  background: #e5f1ee;
+  border-color: #2f756e;
+}
+
+.traveller-choice-prompt small {
+  color: #63706d;
+}
+
+.translation-card,
+.traveller-mic-prompt,
+.traveller-roleplay,
+.traveller-progress {
+  background: #ffffff;
+  border: 1px solid rgba(33, 45, 43, 0.12);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.traveller-mic-prompt {
+  display: grid;
+  gap: 8px;
+}
+
+.traveller-mic-prompt.listening {
+  border-color: #2f6de0;
+  box-shadow: 0 0 0 3px rgba(47, 109, 224, 0.14);
+}
+
+.traveller-build h2,
+.traveller-progress h2 {
+  font-size: 1rem;
+}
+
+.traveller-build dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.traveller-build dl div,
+.traveller-progress li {
+  align-items: baseline;
+  border-bottom: 1px solid rgba(33, 45, 43, 0.12);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+
+.traveller-build dd {
+  color: #63706d;
+  margin: 0;
+}
+
+.traveller-production small {
+  color: #63706d;
+}
+
+.traveller-progress ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.traveller-step-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.traveller-step-rail button {
+  background: #f7faf9;
+  font-size: 0.78rem;
+  font-weight: 850;
+  height: 30px;
+  width: 30px;
+}
+
+.traveller-step-rail button.active {
+  background: #2f756e;
+  color: #ffffff;
+}
+
+.traveller-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.traveller-json {
+  background: #202a28;
+  border-radius: 8px;
+  color: #ffffff;
+  max-height: 260px;
+  overflow: auto;
+  padding: 12px;
+}
+
+@media (max-width: 620px) {
+  .lesson-prototype-body {
+    padding: 10px;
+  }
+
+  .traveller-shell {
+    min-height: calc(100vh - 20px);
+    padding: 10px;
+  }
+
+  .traveller-header {
+    display: grid;
+  }
+
+  .traveller-frame-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .traveller-controls .lesson-action {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}

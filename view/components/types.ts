@@ -46,3 +46,52 @@ export type MicPromptText = {
 export type TranslationRevealText = {
   revealLabel: string;
 };
+
+export type LessonStepType =
+  | 'scene_setup'
+  | 'target_audio'
+  | 'broad_meaning_guess'
+  | 'translation_reveal'
+  | 'audio_replay'
+  | 'repeat_with_mic'
+  | 'backward_build'
+  | 'production_prompt'
+  | 'scene_recall'
+  | 'transfer_scene'
+  | 'micro_note'
+  | 'mini_roleplay'
+  | 'audio_only_recognition'
+  | 'different_speaker'
+  | 'natural_speed'
+  | 'similar_phrase_contrast'
+  | 'schedule_review';
+
+export type LessonStep = {
+  id: string;
+  type: LessonStepType;
+  component: string;
+  props: Record<string, unknown>;
+};
+
+export type Lesson = {
+  id: string;
+  language: string;
+  title: string;
+  mode?: string;
+  stage?: string;
+  player_component: string;
+  target: {
+    id: string;
+    text: string;
+    transliteration: string;
+    meaning: string;
+  };
+  frames: SceneFrameData[];
+  steps: LessonStep[];
+};
+
+export type LessonListResponse = {
+  language: string;
+  display_name: string;
+  lessons: Lesson[];
+};
