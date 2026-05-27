@@ -41,7 +41,8 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertIn("scene_setup", step_types)
         self.assertIn("target_audio", step_types)
         self.assertIn("repeat_with_mic", step_types)
-        self.assertIn("schedule_review", step_types)
+        self.assertNotIn("scorecard", step_types)
+        self.assertNotIn("schedule_review", step_types)
 
 
 if __name__ == "__main__":

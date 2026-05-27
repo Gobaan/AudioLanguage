@@ -161,7 +161,7 @@ class StructuredDataGraphTests(unittest.TestCase):
                 self.assertTrue(card["dialogue"]["lines"][1]["audio"])
                 self.assertTrue(
                     all(
-                        str(line["visual"]).startswith("/visuals/final/")
+                        str(line["visual"]).startswith(("/visuals/final/", "/visuals/Drafts/"))
                         for line in card["dialogue"]["lines"]
                     )
                 )

@@ -20,7 +20,6 @@ LESSON_STEP_TYPES = [
     "different_speaker",
     "natural_speed",
     "similar_phrase_contrast",
-    "schedule_review",
 ]
 
 
@@ -62,11 +61,26 @@ def lesson_steps(
     learner_line: dict[str, Any],
     frames: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
+    target_text = learner_line.get("text") or target.get("canonical", "")
+    target_transliteration = learner_line.get("transliteration") or target.get("transliteration", "")
+    target_phrase = target_transliteration or target_text
+    target_meaning = target.get("display_meaning", "")
+    opener_frame = frame_for_line_type(frames, "world_opener") or first_frame(frames)
+    learner_frame = frame_for_line_type(frames, "learner_target") or opener_frame
+    response_frame = frame_for_line_type(frames, "world_response") or learner_frame
+    opener_audio = opener_frame.get("audioUrl") if opener_frame else None
+    target_audio = learner_line.get("audio")
+
     steps = [
         step(
             "scene_setup",
             "SceneFrame",
-            {
+            frame_id=opener_frame.get("id") if opener_frame else None,
+            frame_mode="single",
+            display_text="Listen.",
+            audio=audio_behavior(opener_audio, autoplay=True, replayable=True),
+            mic=mic_off(),
+            props={
                 "initialFrameId": frames[0]["id"] if frames else None,
                 "frames": frames,
             },
@@ -74,15 +88,25 @@ def lesson_steps(
         step(
             "target_audio",
             "AudioButton",
-            {
-                "audioUrl": learner_line.get("audio"),
+            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_mode="single",
+            display_text="Listen to what they say.",
+            audio=audio_behavior(target_audio, autoplay=True, replayable=True),
+            mic=mic_off(),
+            props={
+                "audioUrl": target_audio,
                 "text": localized_audio_text(card),
             },
         ),
         step(
             "broad_meaning_guess",
             "ChoicePrompt",
-            {
+            frame_id=response_frame.get("id") if response_frame else None,
+            frame_mode="single",
+            display_text="What happened?",
+            audio=audio_behavior(target_audio, autoplay=False, replayable=True),
+            mic=mic_off(),
+            props={
                 "question": card.get("prompt") or "What does the learner need to do?",
                 "choices": meaning_choices(target, card),
             },
@@ -90,125 +114,209 @@ def lesson_steps(
         step(
             "translation_reveal",
             "TranslationReveal",
-            {
-                "translation": target.get("display_meaning", ""),
+            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_mode="strip",
+            display_text=target_text,
+            audio=audio_behavior(target_audio, autoplay=True, replayable=True),
+            mic=mic_off(),
+            props={
+                "translation": target_meaning,
+                "usage": target_meaning,
             },
         ),
         step(
             "audio_replay",
             "AudioButton",
-            {
-                "audioUrl": learner_line.get("audio"),
+            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_mode="single",
+            display_text="Listen again.",
+            audio=audio_behavior(target_audio, autoplay=True, replayable=True),
+            mic=mic_off(),
+            props={
+                "audioUrl": target_audio,
                 "text": localized_audio_text(card),
             },
         ),
         step(
             "repeat_with_mic",
             "MicPrompt",
-            {
-                "expectedText": learner_line.get("text") or target.get("canonical", ""),
-                "expectedTransliteration": learner_line.get("transliteration") or target.get("transliteration", ""),
+            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_mode="single",
+            display_text="Now say it.",
+            audio=audio_behavior(target_audio, autoplay=True, replayable=True, play_before_mic=True),
+            mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
+            props={
+                "expectedText": target_text,
+                "expectedTransliteration": target_transliteration,
                 "text": localized_mic_text(card),
             },
         ),
         step(
             "backward_build",
             "BackwardBuild",
-            {
-                "targetPhrase": learner_line.get("transliteration") or target.get("transliteration", ""),
+            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_mode="neutral",
+            display_text="Build it from the end.",
+            audio=audio_behavior(target_audio, autoplay=False, replayable=True),
+            mic=recording_mic(target_text, target_transliteration),
+            props={
+                "targetPhrase": target_phrase,
                 "chunks": chunks_for_target(target),
+                "prompts": backward_build_prompts(target=target, target_phrase=target_phrase, target_audio=target_audio),
             },
         ),
         step(
             "production_prompt",
             "ProductionPrompt",
-            {
+            frame_id=None,
+            frame_mode="neutral",
+            display_text=f"How do you say: {prompt_text(target_meaning)}?",
+            audio=audio_behavior(None, autoplay=False, replayable=False),
+            mic=recording_mic(target_text, target_transliteration),
+            props={
                 "cue": card.get("prompt") or target.get("display_meaning", ""),
-                "targetMeaning": target.get("display_meaning", ""),
+                "targetMeaning": target_meaning,
                 "micText": localized_mic_text(card),
             },
         ),
         step(
-            "mini_roleplay",
-            "MiniRoleplay",
-            {
-                "scenario": card.get("ai_scene_contract", {}).get("physical_scene") or scene.get("description", ""),
-                "targetMeaning": target.get("display_meaning", ""),
-            },
-        ),
-        step(
-            "audio_only_recognition",
-            "AudioOnlyRecognition",
-            {
-                "prompt": target.get("display_meaning", ""),
-                "audioText": localized_audio_text(card),
-                "micText": localized_mic_text(card),
-            },
-        ),
-        step(
-            "similar_phrase_contrast",
-            "SimilarPhraseContrast",
-            {
-                "explanation": "Choose the phrase that matches this scene.",
-                "choices": phrase_contrast_choices(target),
-            },
-        ),
-        step(
-            "schedule_review",
-            "ProgressCard",
-            {
-                "title": "Review schedule",
-                "metrics": review_metrics(card),
+            "scene_recall",
+            "SceneFrame",
+            frame_id=opener_frame.get("id") if opener_frame else None,
+            frame_mode="single",
+            display_text="What would you say?",
+            audio=audio_behavior(opener_audio, autoplay=True, replayable=True, play_before_mic=True),
+            mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
+            props={
+                "initialFrameId": opener_frame.get("id") if opener_frame else None,
+                "frames": frames,
             },
         ),
     ]
 
-    if card.get("stage") == "same_day_transfer":
-        steps.insert(
-            8,
-            step(
-                "transfer_scene",
-                "SceneFrame",
-                {
-                    "initialFrameId": frames[0]["id"] if frames else None,
-                    "frames": frames,
-                },
-            ),
-        )
-    if card.get("stage") == "delayed_review":
-        steps.insert(
-            8,
-            step(
-                "scene_recall",
-                "SceneFrame",
-                {
-                    "initialFrameId": frames[0]["id"] if frames else None,
-                    "frames": frames,
-                },
-            ),
-        )
-
     return steps
 
 
-def step(step_type: str, component: str, props: dict[str, Any]) -> dict[str, Any]:
+def step(
+    step_type: str,
+    component: str,
+    *,
+    frame_id: str | None,
+    frame_mode: str,
+    display_text: str,
+    audio: dict[str, Any],
+    mic: dict[str, Any],
+    props: dict[str, Any],
+) -> dict[str, Any]:
     if step_type not in LESSON_STEP_TYPES:
         raise ValueError(f"Unknown lesson step type: {step_type}")
     return {
         "id": step_type,
         "type": step_type,
         "component": component,
+        "frameId": frame_id,
+        "frameMode": frame_mode,
+        "displayText": display_text,
+        "audio": audio,
+        "mic": mic,
         "props": props,
     }
+
+
+def first_frame(frames: list[dict[str, Any]]) -> dict[str, Any] | None:
+    return frames[0] if frames else None
+
+
+def frame_for_line_type(frames: list[dict[str, Any]], line_type: str) -> dict[str, Any] | None:
+    for frame in frames:
+        if frame.get("lineType") == line_type:
+            return frame
+    return None
+
+
+def audio_behavior(
+    url: str | None,
+    *,
+    autoplay: bool,
+    replayable: bool,
+    play_before_mic: bool = False,
+) -> dict[str, Any]:
+    return {
+        "url": url,
+        "autoplay": autoplay,
+        "replayable": replayable,
+        "playBeforeMic": play_before_mic,
+    }
+
+
+def mic_off() -> dict[str, Any]:
+    return {
+        "enabled": False,
+        "record": False,
+        "scoring": "none",
+    }
+
+
+def recording_mic(
+    expected_text: str,
+    expected_transliteration: str,
+    *,
+    starts_after_audio: bool = False,
+) -> dict[str, Any]:
+    return {
+        "enabled": True,
+        "record": True,
+        "startsAfterAudio": starts_after_audio,
+        "expectedText": expected_text,
+        "expectedTransliteration": expected_transliteration,
+        "scoring": "deferred",
+        "continueOnRecord": True,
+        "blockingFeedback": False,
+    }
+
+
+def backward_build_prompts(
+    *,
+    target: dict[str, Any],
+    target_phrase: str,
+    target_audio: str | None,
+) -> list[dict[str, Any]]:
+    units = [str(unit).replace("_", " ") for unit in target.get("meaning_units", [])]
+    prompts = []
+    for index in range(len(units)):
+        text = " ".join(units[index:])
+        prompts.append(
+            {
+                "id": f"{target['id']}-build-{index}",
+                "text": text,
+                "audioUrl": target_audio,
+                "mic": recording_mic(text, ""),
+            }
+        )
+    prompts.append(
+        {
+            "id": f"{target['id']}-build-full",
+            "text": target_phrase,
+            "audioUrl": target_audio,
+            "mic": recording_mic(target_phrase, ""),
+        }
+    )
+    return prompts
+
+
+def prompt_text(value: str) -> str:
+    return value.rstrip(" .?!")
 
 
 def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
     frames = []
     for line in lines:
+        line_index = line.get("index", len(frames))
         frames.append(
             {
-                "id": f"line-{line.get('index', len(frames))}",
-                "lineIndex": line.get("index"),
+                "id": f"line-{line_index}",
+                "lineIndex": line_index,
+                "frameNumber": int(line_index) + 1,
                 "imageUrl": line.get("visual"),
                 "audioUrl": line.get("audio"),
                 "title": line.get("line_type", "scene").replace("_", " ").title(),
@@ -280,13 +388,6 @@ def chunks_for_target(target: dict[str, Any]) -> list[dict[str, Any]]:
             "meaning": str(unit).replace("_", " "),
         }
         for index, unit in enumerate(target.get("meaning_units", []))
-    ]
-
-
-def review_metrics(card: dict[str, Any]) -> list[dict[str, str]]:
-    return [
-        {"label": "Stage", "value": str(card.get("stage", ""))},
-        {"label": "Mode", "value": str(card.get("mode", ""))},
     ]
 
 

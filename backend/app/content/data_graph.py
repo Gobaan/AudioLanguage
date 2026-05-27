@@ -153,7 +153,7 @@ def hydrate_line(
     beat = find_visual_beat(visual_beats, dialogue_id, line_index)
     beat_assets = beat.get("asset_paths", {}) if beat else {}
     audio_path = line.get("audio_path") or beat_assets.get("audio")
-    image_path = beat_assets.get("image")
+    image_path = existing_asset_path(project_dir, beat_assets.get("image"))
 
     if not audio_path:
         manifest_audio = audio_assets.get((dialogue_id, line_index))
@@ -165,8 +165,22 @@ def hydrate_line(
         audio_path = derived_audio if repo_file_for_relative_path(project_dir, derived_audio).exists() else None
 
     if not image_path:
-        derived_image = f"visuals/{asset_slug}/frame-{line_index}.png"
-        image_path = derived_image if repo_file_for_relative_path(project_dir, derived_image).exists() else None
+        frame_number = line_index + 1
+        image_path = first_existing_asset_path(
+            project_dir,
+            [
+                f"visuals/final/{asset_folder_slug(dialogue_id)}/frame-{frame_number}.png",
+                f"visuals/Drafts/{asset_folder_slug(dialogue_id)}/frame-{frame_number}.png",
+                f"visuals/final/{asset_folder_slug(asset_slug)}/frame-{frame_number}.png",
+                f"visuals/Drafts/{asset_folder_slug(asset_slug)}/frame-{frame_number}.png",
+                f"visuals/{asset_slug}/frame-{frame_number}.png",
+                f"visuals/final/{asset_folder_slug(dialogue_id)}/frame-{line_index}.png",
+                f"visuals/Drafts/{asset_folder_slug(dialogue_id)}/frame-{line_index}.png",
+                f"visuals/final/{asset_folder_slug(asset_slug)}/frame-{line_index}.png",
+                f"visuals/Drafts/{asset_folder_slug(asset_slug)}/frame-{line_index}.png",
+                f"visuals/{asset_slug}/frame-{line_index}.png",
+            ],
+        )
 
     return {
         **line,
@@ -186,6 +200,26 @@ def find_visual_beat(
         if beat.get("dialogue_id") == dialogue_id and int(beat.get("line_index", -1)) == line_index:
             return beat
     return None
+
+
+def existing_asset_path(project_dir: Path, path: str | None) -> str | None:
+    if path and repo_file_for_relative_path(project_dir, path).exists():
+        return path
+    return None
+
+
+def first_existing_asset_path(project_dir: Path, candidates: list[str]) -> str | None:
+    for candidate in candidates:
+        if repo_file_for_relative_path(project_dir, candidate).exists():
+            return candidate
+    return None
+
+
+def asset_folder_slug(value: str) -> str:
+    parts = value.split("-", 1)
+    if len(parts) == 2 and parts[0] in {"en", "es", "fr", "ja", "ta"}:
+        return parts[1]
+    return value
 
 
 def read_json(path: Path) -> dict[str, Any]:

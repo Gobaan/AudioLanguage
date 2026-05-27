@@ -8,10 +8,15 @@ export type ModeOption = {
 
 export type SceneFrameData = {
   id: string;
+  frameNumber?: number;
+  lineIndex?: number;
   imageUrl?: string;
   alt?: string;
   title?: string;
   speaker?: string;
+  text?: string;
+  transliteration?: string;
+  lineType?: string;
 };
 
 export type ChoiceOption = {
@@ -63,13 +68,31 @@ export type LessonStepType =
   | 'audio_only_recognition'
   | 'different_speaker'
   | 'natural_speed'
-  | 'similar_phrase_contrast'
-  | 'schedule_review';
+  | 'similar_phrase_contrast';
 
 export type LessonStep = {
   id: string;
   type: LessonStepType;
   component: string;
+  frameId?: string | null;
+  frameMode?: 'single' | 'strip' | 'neutral' | string;
+  displayText?: string;
+  audio?: {
+    url?: string | null;
+    autoplay: boolean;
+    replayable: boolean;
+    playBeforeMic?: boolean;
+  };
+  mic?: {
+    enabled: boolean;
+    record: boolean;
+    startsAfterAudio?: boolean;
+    expectedText?: string;
+    expectedTransliteration?: string;
+    scoring: 'none' | 'deferred' | string;
+    continueOnRecord?: boolean;
+    blockingFeedback?: boolean;
+  };
   props: Record<string, unknown>;
 };
 
