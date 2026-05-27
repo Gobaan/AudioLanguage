@@ -3,6 +3,7 @@ import type { SceneFrameData } from './types';
 type SceneFrameProps = {
   frame?: SceneFrameData;
   isActive?: boolean;
+  showCaption?: boolean;
   placeholderLabel?: string;
   fallbackTitle?: string;
 };
@@ -10,6 +11,7 @@ type SceneFrameProps = {
 export function SceneFrame({
   frame,
   isActive = false,
+  showCaption = true,
   placeholderLabel = 'Scene frame placeholder',
   fallbackTitle = 'Scene frame',
 }: SceneFrameProps) {
@@ -20,10 +22,12 @@ export function SceneFrame({
       ) : (
         <div className="scene-frame-placeholder" aria-label={placeholderLabel} />
       )}
-      <figcaption>
-        <strong>{frame?.title || fallbackTitle}</strong>
-        {frame?.speaker ? <span>{frame.speaker}</span> : null}
-      </figcaption>
+      {showCaption ? (
+        <figcaption>
+          <strong>{frame?.title || fallbackTitle}</strong>
+          {frame?.speaker ? <span>{frame.speaker}</span> : null}
+        </figcaption>
+      ) : null}
     </figure>
   );
 }

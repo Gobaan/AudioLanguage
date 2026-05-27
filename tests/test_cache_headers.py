@@ -22,7 +22,8 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertEqual(response.headers["expires"], "0")
 
     def test_static_assets_disable_browser_cache(self):
-        response = TestClient(app).get("/static/styles.css")
+        css_asset = next((PROJECT_DIR / "view" / "static" / "assets").glob("*.css"))
+        response = TestClient(app).get(f"/static/assets/{css_asset.name}")
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("no-store", response.headers["cache-control"])
