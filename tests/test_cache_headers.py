@@ -35,6 +35,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         payload = response.json()
         first_lesson = payload["lessons"][0]
         step_types = [step["type"] for step in first_lesson["steps"]]
+        meaning_step = next(step for step in first_lesson["steps"] if step["type"] == "broad_meaning_guess")
 
         self.assertEqual(payload["language"], "ja")
         self.assertEqual(first_lesson["player_component"], "TravellerLessonPlayer")
@@ -44,6 +45,20 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertIn("repeat_with_mic", step_types)
         self.assertNotIn("scorecard", step_types)
         self.assertNotIn("schedule_review", step_types)
+        self.assertGreaterEqual(len(meaning_step["props"]["choices"]), 2)
+
+    def test_distractors_endpoint_returns_dialogue_levels(self):
+        response = TestClient(app).get("/api/languages/en/distractors")
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        first_set = payload["dialogue_distractors"][0]
+
+        self.assertEqual(payload["language"], "en")
+        self.assertIn("dialogue_id", first_set)
+        self.assertIn("easy", first_set["levels"])
+        self.assertIn("medium", first_set["levels"])
+        self.assertIn("hard", first_set["levels"])
 
 
 if __name__ == "__main__":

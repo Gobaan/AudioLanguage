@@ -159,12 +159,32 @@
           "scoring": "none"
         },
         "props": {
-          "question": "Watch the scene once. Then replay the cue and say your part when prompted.",
+          "question": "What happened?",
+          "difficulty": "easy",
           "choices": [
             {
-              "id": "en-target-respond-hi",
-              "label": "Respond to Hi.",
-              "isCorrect": true
+              "id": "respond_to_greeting",
+              "label": "They greeted the person back.",
+              "isCorrect": true,
+              "difficulty": "easy"
+            },
+            {
+              "id": "say_goodbye",
+              "label": "They said goodbye.",
+              "isCorrect": false,
+              "difficulty": "easy"
+            },
+            {
+              "id": "ask_location",
+              "label": "They asked where something is.",
+              "isCorrect": false,
+              "difficulty": "easy"
+            },
+            {
+              "id": "apologize",
+              "label": "They apologized.",
+              "isCorrect": false,
+              "difficulty": "easy"
             }
           ]
         }

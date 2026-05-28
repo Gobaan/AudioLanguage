@@ -1,0 +1,270 @@
+{
+  "language": "en",
+  "dialogue_distractors": [
+    {
+      "dialogue_id": "en-first-hi-response",
+      "target_id": "en-target-respond-hi",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "respond_to_greeting",
+        "label": "They greeted the person back."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "say_goodbye",
+            "label": "They said goodbye."
+          },
+          {
+            "id": "ask_location",
+            "label": "They asked where something is."
+          },
+          {
+            "id": "apologize",
+            "label": "They apologized."
+          }
+        ],
+        "medium": [
+          {
+            "id": "greet_only_without_response",
+            "label": "They ignored the greeting."
+          },
+          {
+            "id": "ask_name",
+            "label": "They asked for the other person's name."
+          },
+          {
+            "id": "thank_person",
+            "label": "They thanked the person."
+          }
+        ],
+        "hard": [
+          {
+            "id": "start_introduction",
+            "label": "They introduced themself."
+          },
+          {
+            "id": "ask_how_are_you",
+            "label": "They asked how the person was doing."
+          },
+          {
+            "id": "close_conversation",
+            "label": "They ended the conversation politely."
+          }
+        ]
+      }
+    },
+    {
+      "dialogue_id": "en-introduce-self",
+      "target_id": "en-target-my-name-is",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "introduce_self",
+        "label": "They gave their name."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "greet_back",
+            "label": "They greeted the person back."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "They asked for help."
+          },
+          {
+            "id": "say_goodbye",
+            "label": "They said goodbye."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_name",
+            "label": "They asked for the other person's name."
+          },
+          {
+            "id": "thank_person",
+            "label": "They thanked the person."
+          },
+          {
+            "id": "say_dont_understand",
+            "label": "They said they did not understand."
+          }
+        ],
+        "hard": [
+          {
+            "id": "greet_and_continue",
+            "label": "They greeted and kept the conversation open."
+          },
+          {
+            "id": "identify_other_person",
+            "label": "They identified the other person."
+          },
+          {
+            "id": "ask_person_to_repeat",
+            "label": "They asked the person to repeat."
+          }
+        ]
+      }
+    },
+    {
+      "dialogue_id": "en-repair-dont-understand",
+      "target_id": "en-target-i-dont-understand",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "say_do_not_understand",
+        "label": "They said they did not understand."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "order_food",
+            "label": "They ordered food."
+          },
+          {
+            "id": "ask_location",
+            "label": "They asked where something is."
+          },
+          {
+            "id": "introduce_self",
+            "label": "They gave their name."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_slowly",
+            "label": "They asked the person to speak slowly."
+          },
+          {
+            "id": "agree_anyway",
+            "label": "They agreed even though they were confused."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "They asked for help."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_repeat",
+            "label": "They asked the person to repeat it."
+          },
+          {
+            "id": "say_speak_little_language",
+            "label": "They said they speak only a little."
+          },
+          {
+            "id": "apologize_only",
+            "label": "They only apologized."
+          }
+        ]
+      }
+    },
+    {
+      "dialogue_id": "en-order-local-food",
+      "target_id": "en-target-one-local-food-please",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "order_food",
+        "label": "They ordered one food item."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "ask_hospital",
+            "label": "They asked where the hospital is."
+          },
+          {
+            "id": "introduce_self",
+            "label": "They gave their name."
+          },
+          {
+            "id": "say_dont_understand",
+            "label": "They said they did not understand."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_price",
+            "label": "They asked how much it costs."
+          },
+          {
+            "id": "ask_for_water",
+            "label": "They asked for water."
+          },
+          {
+            "id": "thank_server",
+            "label": "They thanked the server."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_menu_question",
+            "label": "They asked a question about the menu."
+          },
+          {
+            "id": "pay_for_food",
+            "label": "They paid for the food."
+          },
+          {
+            "id": "ask_for_help_ordering",
+            "label": "They asked for help ordering."
+          }
+        ]
+      }
+    },
+    {
+      "dialogue_id": "en-directions-hospital",
+      "target_id": "en-target-where-is-hospital",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "ask_hospital_location",
+        "label": "They asked where the hospital is."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "order_food",
+            "label": "They ordered food."
+          },
+          {
+            "id": "greet_back",
+            "label": "They greeted the person back."
+          },
+          {
+            "id": "introduce_self",
+            "label": "They gave their name."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_bus_stop",
+            "label": "They asked where the bus stop is."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "They asked for help."
+          },
+          {
+            "id": "ask_price",
+            "label": "They asked how much something costs."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_pharmacy",
+            "label": "They asked where the pharmacy is."
+          },
+          {
+            "id": "say_need_doctor",
+            "label": "They said they need a doctor."
+          },
+          {
+            "id": "ask_directions_general",
+            "label": "They asked for directions without saying the place."
+          }
+        ]
+      }
+    }
+  ]
+}

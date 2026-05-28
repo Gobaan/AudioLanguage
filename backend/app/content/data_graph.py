@@ -49,6 +49,7 @@ def load_language_session(
     dialogues_data = read_json(language_dir / "dialogues.json")
     practice_data = read_json(language_dir / "practice_cards.json")
     visual_data = read_json(language_dir / "visual_beats.json")
+    distractors = load_distractors(language_dir)
     audio_assets = load_audio_assets(language_dir)
 
     targets = index_by_id(targets_data, "targets")
@@ -71,6 +72,7 @@ def load_language_session(
                 targets=targets,
                 dialogues=dialogues,
                 visual_beats=visual_beats,
+                distractors=distractors,
                 audio_assets=audio_assets,
                 project_dir=project_dir,
             )
@@ -96,6 +98,7 @@ def hydrate_practice_card(
     targets: dict[str, dict[str, Any]],
     dialogues: dict[str, dict[str, Any]],
     visual_beats: list[dict[str, Any]],
+    distractors: dict[str, dict[str, Any]],
     audio_assets: dict[tuple[str, int], str],
     project_dir: Path,
 ) -> dict[str, Any]:
@@ -129,6 +132,7 @@ def hydrate_practice_card(
         "scene": scene,
         "review_mode": review_mode,
         "dialogue": hydrated_dialogue,
+        "distractors": distractors.get(str(dialogue["id"])),
     }
     if template:
         hydrated_card["template"] = template
@@ -244,6 +248,20 @@ def load_audio_assets(language_dir: Path) -> dict[tuple[str, int], str]:
         key = (str(dialogue_id), int(line_index))
         assets[key] = str(audio_path)
     return assets
+
+
+def load_distractors(language_dir: Path) -> dict[str, dict[str, Any]]:
+    distractor_path = language_dir / "distractor.json"
+    if not distractor_path.exists():
+        return {}
+
+    distractor_data = read_json(distractor_path)
+    distractors: dict[str, dict[str, Any]] = {}
+    for item in distractor_data.get("dialogue_distractors", []):
+        dialogue_id = item.get("dialogue_id")
+        if dialogue_id:
+            distractors[str(dialogue_id)] = item
+    return distractors
 
 
 def index_by_id(data: dict[str, Any], key: str) -> dict[str, dict[str, Any]]:

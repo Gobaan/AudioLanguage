@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchLessons } from '../api/lessons';
-import { SceneFrame } from '../components';
-import type { Lesson, SceneFrameData } from '../components';
+import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import { LessonStepRenderer } from './LessonStepRenderer';
 
 const FALLBACK_LESSON: Lesson = {
   id: 'en-card-first-hi-dialogue-practice',
@@ -29,8 +29,126 @@ const FALLBACK_LESSON: Lesson = {
       transliteration: '',
       lineType: 'world_opener',
     },
+    {
+      id: 'line-1',
+      lineIndex: 1,
+      frameNumber: 2,
+      imageUrl: '/visuals/final/first-hi-response/frame-2.png',
+      audioUrl: '/audio/generated/en/en-first-hi-response/line-1.mp3',
+      title: 'Learner Target',
+      speaker: 'learner',
+      text: 'Hi!',
+      transliteration: '',
+      lineType: 'learner_target',
+    },
+    {
+      id: 'line-2',
+      lineIndex: 2,
+      frameNumber: 3,
+      imageUrl: '/visuals/final/first-hi-response/frame-3.png',
+      audioUrl: '/audio/generated/en/en-first-hi-response/line-2.mp3',
+      title: 'World Response',
+      speaker: 'friend',
+      text: 'Nice to see you.',
+      transliteration: '',
+      lineType: 'world_response',
+    },
   ],
-  steps: [],
+  steps: [
+    {
+      id: 'scene_setup',
+      type: 'scene_setup',
+      component: 'SceneFrame',
+      frameId: 'line-0',
+      frameMode: 'single',
+      displayText: 'Listen.',
+      audio: {
+        url: '/audio/generated/en/en-first-hi-response/line-0.mp3',
+        autoplay: true,
+        replayable: true,
+        playBeforeMic: false,
+      },
+      mic: {
+        enabled: false,
+        record: false,
+        scoring: 'none',
+      },
+      props: {
+        initialFrameId: 'line-0',
+        frames: [],
+      },
+    },
+    {
+      id: 'target_audio',
+      type: 'target_audio',
+      component: 'AudioButton',
+      frameId: 'line-1',
+      frameMode: 'single',
+      displayText: 'Listen to what they say.',
+      audio: {
+        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
+        autoplay: true,
+        replayable: true,
+        playBeforeMic: false,
+      },
+      mic: {
+        enabled: false,
+        record: false,
+        scoring: 'none',
+      },
+      props: {
+        audioUrl: '/audio/generated/en/en-first-hi-response/line-1.mp3',
+        text: {
+          playLabel: 'Play',
+          playingLabel: 'Playing',
+        },
+      },
+    },
+    {
+      id: 'broad_meaning_guess',
+      type: 'broad_meaning_guess',
+      component: 'ChoicePrompt',
+      frameId: 'line-2',
+      frameMode: 'single',
+      displayText: 'What happened?',
+      audio: {
+        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
+        autoplay: false,
+        replayable: true,
+        playBeforeMic: false,
+      },
+      mic: {
+        enabled: false,
+        record: false,
+        scoring: 'none',
+      },
+      props: {
+        question: 'What happened?',
+        choices: [
+          {
+            id: 'respond_to_greeting',
+            label: 'They greeted the person back.',
+            isCorrect: true,
+          },
+          {
+            id: 'say_goodbye',
+            label: 'They said goodbye.',
+            isCorrect: false,
+          },
+          {
+            id: 'ask_location',
+            label: 'They asked where something is.',
+            isCorrect: false,
+          },
+          {
+            id: 'apologize',
+            label: 'They apologized.',
+            isCorrect: false,
+          },
+        ],
+      },
+    },
+  ],
 };
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -38,6 +156,10 @@ type LoadState = 'loading' | 'ready' | 'error';
 export function TravellerMvpApp() {
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('loading');
+  const [stepIndex, setStepIndex] = useState(0);
+  const [selectedChoiceByStep, setSelectedChoiceByStep] = useState<Record<string, string>>({});
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     let isCurrent = true;
@@ -59,45 +181,130 @@ export function TravellerMvpApp() {
     };
   }, []);
 
-  const firstFrame = lesson?.frames[0];
-  const visibleFrame = useMemo(() => withAssetUrls(firstFrame), [firstFrame]);
+  const currentStep = lesson?.steps[stepIndex];
+  const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
+  const step = useMemo(() => withStepAssetUrls(currentStep), [currentStep]);
 
   useEffect(() => {
-    if (!firstFrame?.audioUrl || loadState !== 'ready') return;
-
-    const audio = new Audio(assetUrl(firstFrame.audioUrl));
-    audio.play().catch(() => {
-      // Browser autoplay policy may require one user interaction before sound can play.
-    });
-
     return () => {
-      audio.pause();
-      audio.currentTime = 0;
+      stopAudio(audioRef.current);
     };
-  }, [firstFrame?.audioUrl, loadState]);
+  }, []);
+
+  useEffect(() => {
+    stopAudio(audioRef.current);
+    audioRef.current = null;
+    setIsPlaying(false);
+  }, [stepIndex]);
+
+  function playStepAudio() {
+    const audioUrl = step?.audio?.url;
+    if (!audioUrl) return;
+
+    stopAudio(audioRef.current);
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+    setIsPlaying(true);
+
+    audio.addEventListener(
+      'ended',
+      () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+      },
+      { once: true },
+    );
+
+    audio.addEventListener(
+      'error',
+      () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+      },
+      { once: true },
+    );
+
+    audio.play().catch(() => {
+      setIsPlaying(false);
+      audioRef.current = null;
+    });
+  }
+
+  function selectChoice(stepId: string, choice: ChoiceOption) {
+    setSelectedChoiceByStep((current) => ({
+      ...current,
+      [stepId]: choice.id,
+    }));
+  }
 
   if (loadState === 'loading') {
-    return <div className="frame-placeholder" aria-label="Loading first frame" />;
+    return <div className="frame-placeholder" aria-label="Loading first MVP step" />;
   }
 
-  if (loadState === 'error' || !visibleFrame) {
-    return <div className="frame-placeholder" aria-label="First frame unavailable" />;
+  if (loadState === 'error' || !stepLesson || !step) {
+    return <div className="frame-placeholder" aria-label="MVP step unavailable" />;
   }
+
+  const isFirstStep = stepIndex === 0;
+  const isLastStep = stepIndex >= stepLesson.steps.length - 1;
 
   return (
-    <section className="first-frame-app" aria-label="First lesson frame">
-      <SceneFrame frame={visibleFrame} isActive showCaption={false} placeholderLabel="First lesson frame" />
+    <section className="traveller-mvp-app" aria-label="Traveller MVP step">
+      <LessonStepRenderer
+        lesson={stepLesson}
+        step={step}
+        isPlaying={isPlaying}
+        selectedChoiceId={selectedChoiceByStep[step.id]}
+        onPlayAudio={playStepAudio}
+        onSelectChoice={selectChoice}
+      />
+      <nav className="step-controls" aria-label="Lesson step controls">
+        <button type="button" onClick={() => setStepIndex((value) => Math.max(0, value - 1))} disabled={isFirstStep}>
+          Previous
+        </button>
+        <button
+          type="button"
+          onClick={() => setStepIndex((value) => Math.min(stepLesson.steps.length - 1, value + 1))}
+          disabled={isLastStep}
+        >
+          Next
+        </button>
+      </nav>
     </section>
   );
 }
 
-function withAssetUrls(frame: SceneFrameData | undefined): SceneFrameData | undefined {
-  if (!frame) return undefined;
+function stopAudio(audio: HTMLAudioElement | null) {
+  if (!audio) return;
+
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+function withAssetUrls(lesson: Lesson | null): Lesson | null {
+  if (!lesson) return null;
 
   return {
-    ...frame,
-    imageUrl: frame.imageUrl ? assetUrl(frame.imageUrl) : frame.imageUrl,
-    audioUrl: frame.audioUrl ? assetUrl(frame.audioUrl) : frame.audioUrl,
+    ...lesson,
+    frames: lesson.frames.map((frame) => ({
+      ...frame,
+      imageUrl: frame.imageUrl ? assetUrl(frame.imageUrl) : frame.imageUrl,
+      audioUrl: frame.audioUrl ? assetUrl(frame.audioUrl) : frame.audioUrl,
+    })),
+  };
+}
+
+function withStepAssetUrls(step: LessonStep | undefined): LessonStep | undefined {
+  if (!step) return undefined;
+
+  return {
+    ...step,
+    audio: step.audio
+      ? {
+          ...step.audio,
+          url: step.audio.url ? assetUrl(step.audio.url) : step.audio.url,
+        }
+      : step.audio,
   };
 }
 

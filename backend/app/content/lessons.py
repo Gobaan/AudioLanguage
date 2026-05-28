@@ -107,7 +107,8 @@ def lesson_steps(
             audio=audio_behavior(target_audio, autoplay=False, replayable=True),
             mic=mic_off(),
             props={
-                "question": card.get("prompt") or "What does the learner need to do?",
+                "question": "What happened?",
+                "difficulty": meaning_choice_difficulty(card),
                 "choices": meaning_choices(target, card),
             },
         ),
@@ -353,9 +354,39 @@ def player_component_for(card: dict[str, Any]) -> str:
 
 
 def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[str, Any]]:
+    distractor_set = card.get("distractors")
+    if distractor_set:
+        difficulty = meaning_choice_difficulty(card)
+        levels = distractor_set.get("levels", {})
+        distractors = levels.get(difficulty) or levels.get("easy", [])
+        correct = distractor_set.get("correct") or {
+            "id": target["id"],
+            "label": target.get("display_meaning", target["id"]),
+        }
+        choices = [
+            {
+                "id": str(correct.get("id", target["id"])),
+                "label": str(correct.get("label", target.get("display_meaning", target["id"]))),
+                "isCorrect": True,
+                "difficulty": difficulty,
+            }
+        ]
+        for distractor in distractors:
+            choices.append(
+                {
+                    "id": str(distractor.get("id", distractor.get("label", "distractor"))),
+                    "label": str(distractor.get("label", distractor.get("id", "Distractor"))),
+                    "isCorrect": False,
+                    "difficulty": difficulty,
+                }
+            )
+        if len(choices) > 1:
+            return choices
+
     choices = [{"id": target["id"], "label": target.get("display_meaning", target["id"]), "isCorrect": True}]
     contract = card.get("ai_scene_contract", {})
-    for wrong_intent in contract.get("likely_wrong_intents", [])[:3]:
+    wrong_intents = contract.get("likely_wrong_intents") or contract.get("wrong_intents", [])
+    for wrong_intent in wrong_intents[:3]:
         wrong_id = wrong_intent.get("id", wrong_intent.get("definition", "wrong"))
         choices.append(
             {
@@ -365,6 +396,10 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
             }
         )
     return choices
+
+
+def meaning_choice_difficulty(card: dict[str, Any]) -> str:
+    return str(card.get("meaning_choice_difficulty") or "easy")
 
 
 def phrase_contrast_choices(target: dict[str, Any]) -> list[dict[str, Any]]:

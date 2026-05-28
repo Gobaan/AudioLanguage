@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.conversation.factory import create_conversation_coach
 from app.conversation.models import ConversationContext, LearnerAttempt
-from app.content.data_graph import DataGraphError, list_languages, load_language_session
+from app.content.data_graph import DataGraphError, list_languages, load_distractors, load_language_session
 from app.content.lessons import lessons_from_session
 from app.content.loader import load_content_graph
 from app.speech.language import romanize_for_language
@@ -123,6 +123,19 @@ def get_language_lessons(language: str):
         "language": session["language"],
         "display_name": session["display_name"],
         "lessons": lessons_from_session(session),
+    }
+
+
+@app.get("/api/languages/{language}/distractors")
+def get_language_distractors(language: str):
+    """Return broad-meaning distractor sets for one language."""
+    language_dir = DATA_DIR / "languages" / language
+    if not language_dir.exists():
+        raise HTTPException(status_code=404, detail=f"Language '{language}' not found")
+
+    return {
+        "language": language,
+        "dialogue_distractors": list(load_distractors(language_dir).values()),
     }
 
 
