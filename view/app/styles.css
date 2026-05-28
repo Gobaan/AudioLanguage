@@ -108,6 +108,18 @@ body {
   color: var(--accent-ink);
 }
 
+.choice-prompt button.correct {
+  background: #267247;
+  border-color: #267247;
+  color: #ffffff;
+}
+
+.choice-prompt button.selected.incorrect {
+  background: #b94332;
+  border-color: #b94332;
+  color: #ffffff;
+}
+
 .step-controls {
   display: flex;
   gap: 10px;

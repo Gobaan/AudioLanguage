@@ -15,6 +15,8 @@ export function ChoicePrompt({
   fallbackQuestion = 'Choose the best response',
   onSelectChoice,
 }: ChoicePromptProps) {
+  const hasSelection = Boolean(selectedChoiceId);
+
   return (
     <fieldset className="choice-prompt">
       <legend>{question || fallbackQuestion}</legend>
@@ -22,7 +24,8 @@ export function ChoicePrompt({
         <button
           key={choice.id}
           type="button"
-          className={choice.id === selectedChoiceId ? 'selected' : ''}
+          className={choiceClassName(choice, selectedChoiceId)}
+          aria-pressed={choice.id === selectedChoiceId}
           onClick={() => onSelectChoice?.(choice)}
         >
           {choice.label}
@@ -30,4 +33,16 @@ export function ChoicePrompt({
       ))}
     </fieldset>
   );
+
+  function choiceClassName(choice: ChoiceOption): string {
+    if (!hasSelection) {
+      return '';
+    }
+
+    if (choice.isCorrect) {
+      return 'correct';
+    }
+
+    return choice.id === selectedChoiceId ? 'selected incorrect' : '';
+  }
 }
