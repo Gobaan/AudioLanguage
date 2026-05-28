@@ -3,6 +3,7 @@ export * from './AudioOnlyRecognition';
 export * from './BackwardBuild';
 export * from './ChoicePrompt';
 export * from './ChunkBreakdown';
+export * from './DialogueReveal';
 export * from './FrameStrip';
 export * from './MicPrompt';
 export * from './MiniRoleplay';
@@ -15,4 +16,3 @@ export * from './TranslationReveal';
 export * from './TravellerLessonPlayer';
 export * from './TVLessonPlayer';
 export * from './types';
-

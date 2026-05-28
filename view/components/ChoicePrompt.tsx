@@ -24,7 +24,7 @@ export function ChoicePrompt({
         <button
           key={choice.id}
           type="button"
-          className={choiceClassName(choice, selectedChoiceId)}
+          className={choiceClassName(choice)}
           aria-pressed={choice.id === selectedChoiceId}
           onClick={() => onSelectChoice?.(choice)}
         >

@@ -1,5 +1,5 @@
-import { AudioButton, ChoicePrompt, SceneFrame } from '../components';
-import type { ChoiceOption, Lesson, LessonStep, SceneFrameData } from '../components';
+import { AudioButton, ChoicePrompt, DialogueReveal, SceneFrame } from '../components';
+import type { ChoiceOption, DialogueRevealLine, Lesson, LessonStep, SceneFrameData } from '../components';
 
 type LessonStepRendererProps = {
   lesson: Lesson;
@@ -55,12 +55,15 @@ export function LessonStepRenderer({
           showCaption={false}
           placeholderLabel="Lesson scene frame"
         />
-        <ChoicePrompt
-          question={choiceQuestion(step)}
-          choices={choiceOptions(step)}
-          selectedChoiceId={selectedChoiceId}
-          onSelectChoice={(choice) => onSelectChoice?.(step.id, choice)}
-        />
+        <div className={selectedChoiceId ? 'choice-with-reveal revealed' : 'choice-with-reveal'}>
+          <ChoicePrompt
+            question={choiceQuestion(step)}
+            choices={choiceOptions(step)}
+            selectedChoiceId={selectedChoiceId}
+            onSelectChoice={(choice) => onSelectChoice?.(step.id, choice)}
+          />
+          {selectedChoiceId ? <DialogueReveal lines={dialogueRevealLines(lesson)} /> : null}
+        </div>
         <StepAudioButton step={step} isPlaying={isPlaying} onPlayAudio={onPlayAudio} />
       </section>
     );
@@ -95,4 +98,21 @@ function choiceQuestion(step: LessonStep): string | undefined {
 
 function choiceOptions(step: LessonStep): ChoiceOption[] {
   return Array.isArray(step.props.choices) ? (step.props.choices as ChoiceOption[]).slice(0, 4) : [];
+}
+
+function dialogueRevealLines(lesson: Lesson): DialogueRevealLine[] {
+  const learnerFrame = lesson.frames.find((frame) => frame.lineType === 'learner_target') ?? lesson.frames[1];
+
+  return lesson.frames.map((frame) => {
+    const isTranslated = frame.id === learnerFrame?.id;
+
+    return {
+      id: frame.id,
+      speaker: frame.speaker,
+      text: frame.text,
+      audioUrl: frame.audioUrl,
+      isTranslated,
+      translation: isTranslated ? lesson.target.meaning : undefined,
+    };
+  });
 }
