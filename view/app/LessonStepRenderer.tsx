@@ -1,4 +1,4 @@
-import { AudioButton, ChoicePrompt, DialogueReveal, SceneFrame } from '../components';
+import { AudioButton, ChoicePrompt, DialogueReveal, PromptedRecording, SceneFrame } from '../components';
 import type { ChoiceOption, DialogueRevealLine, Lesson, LessonStep, SceneFrameData } from '../components';
 
 type LessonStepRendererProps = {
@@ -65,6 +65,35 @@ export function LessonStepRenderer({
           {selectedChoiceId ? <DialogueReveal lines={dialogueRevealLines(lesson)} /> : null}
         </div>
         <StepAudioButton step={step} isPlaying={isPlaying} onPlayAudio={onPlayAudio} />
+      </section>
+    );
+  }
+
+  if (step.component === 'TranslationReveal') {
+    return (
+      <section className="lesson-step-view" aria-label={step.type}>
+        <SceneFrame
+          frame={frameForStep(lesson, step)}
+          isActive
+          showCaption={false}
+          placeholderLabel="Lesson scene frame"
+        />
+        <DialogueReveal lines={dialogueRevealLines(lesson)} />
+        <StepAudioButton step={step} isPlaying={isPlaying} onPlayAudio={onPlayAudio} />
+      </section>
+    );
+  }
+
+  if (step.component === 'MicPrompt') {
+    return (
+      <section className="lesson-step-view" aria-label={step.type}>
+        <SceneFrame
+          frame={frameForStep(lesson, step)}
+          isActive
+          showCaption={false}
+          placeholderLabel="Lesson scene frame"
+        />
+        <PromptedRecording audioUrl={step.audio?.url} prompt="Now you say it." />
       </section>
     );
   }

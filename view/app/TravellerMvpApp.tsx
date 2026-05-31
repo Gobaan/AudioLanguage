@@ -148,6 +148,32 @@ const FALLBACK_LESSON: Lesson = {
         ],
       },
     },
+    {
+      id: 'repeat_with_mic',
+      type: 'repeat_with_mic',
+      component: 'MicPrompt',
+      frameId: 'line-1',
+      frameMode: 'single',
+      displayText: 'Now you say it.',
+      audio: {
+        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
+        autoplay: true,
+        replayable: true,
+        playBeforeMic: true,
+      },
+      mic: {
+        enabled: true,
+        record: true,
+        startsAfterAudio: true,
+        scoring: 'deferred',
+        continueOnRecord: true,
+        blockingFeedback: false,
+      },
+      props: {
+        expectedText: 'Hi!',
+        expectedTransliteration: '',
+      },
+    },
   ],
 };
 

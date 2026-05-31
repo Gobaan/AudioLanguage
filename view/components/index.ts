@@ -9,6 +9,7 @@ export * from './MicPrompt';
 export * from './MiniRoleplay';
 export * from './ModeSelector';
 export * from './ProductionPrompt';
+export * from './PromptedRecording';
 export * from './ProgressCard';
 export * from './SceneFrame';
 export * from './SimilarPhraseContrast';
