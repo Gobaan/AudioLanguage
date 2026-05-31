@@ -15,8 +15,11 @@ export function SceneFrame({
   placeholderLabel = 'Scene frame placeholder',
   fallbackTitle = 'Scene frame',
 }: SceneFrameProps) {
+  const frameNumber = displayFrameNumber(frame);
+
   return (
     <figure className={`scene-frame ${isActive ? 'active' : ''}`}>
+      {frameNumber ? <span className="scene-frame-number">Frame {frameNumber}</span> : null}
       {frame?.imageUrl ? (
         <img src={frame.imageUrl} alt={frame.alt || frame.title || placeholderLabel} />
       ) : (
@@ -30,4 +33,16 @@ export function SceneFrame({
       ) : null}
     </figure>
   );
+}
+
+function displayFrameNumber(frame?: SceneFrameData): number | undefined {
+  if (typeof frame?.frameNumber === 'number') {
+    return frame.frameNumber;
+  }
+
+  if (typeof frame?.lineIndex === 'number') {
+    return frame.lineIndex + 1;
+  }
+
+  return undefined;
 }
