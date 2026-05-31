@@ -13,6 +13,11 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from app.content.loader import load_content_graph
 from app.content.data_graph import list_languages, load_language_session
+from app.content.lessons import (
+    backward_build_prompts,
+    lessons_from_session,
+    should_include_backward_build,
+)
 from content_assets import read_json, write_json
 from generate_images_from_manifest import generate_language
 
@@ -90,6 +95,38 @@ class StructuredDataGraphTests(unittest.TestCase):
             self.assertTrue(card["ai_scene_contract"]["target_function"]["definition"])
             self.assertTrue(card["ai_scene_contract"]["required_slots"])
             self.assertTrue(all(line.get("audio") for line in card["dialogue"]["lines"]))
+
+    def test_short_targets_skip_backward_build(self):
+        session = load_language_session(
+            data_dir=CONTENT_DIR,
+            project_dir=PROJECT_DIR,
+            language="en",
+        )
+
+        lesson = lessons_from_session(session)[0]
+
+        self.assertEqual(lesson["target"]["text"], "Hi!")
+        self.assertNotIn("backward_build", [step["id"] for step in lesson["steps"]])
+
+    def test_backward_build_uses_phrase_units_not_meaning_tags(self):
+        target = {
+            "id": "en-target-test",
+            "canonical": "Where is the bus stop?",
+            "meaning_units": ["where", "place", "question"],
+        }
+
+        self.assertTrue(should_include_backward_build(target=target, target_phrase=target["canonical"]))
+        self.assertEqual(
+            [prompt["text"] for prompt in backward_build_prompts(target=target, target_phrase=target["canonical"], target_audio=None)],
+            [
+                "Where is the bus stop",
+                "is the bus stop",
+                "the bus stop",
+                "bus stop",
+                "stop",
+                "Where is the bus stop?",
+            ],
+        )
 
     def test_japanese_first_session_uses_short_beginner_chunks(self):
         session = load_language_session(

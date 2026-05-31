@@ -233,71 +233,7 @@ JSON:
 }
 ```
 
-## Step 6: Backward Build
-
-MVP behavior:
-
-- Practice smaller chunks.
-- Each prompt records and continues.
-- Feedback is deferred.
-
-JSON:
-
-```json
-{
-  "id": "backward_build",
-  "type": "backward_build",
-  "component": "BackwardBuild",
-  "frameMode": "neutral",
-  "displayText": "Build it from the end.",
-  "mic": {
-    "enabled": true,
-    "record": true,
-    "scoring": "deferred",
-    "continueOnRecord": true,
-    "blockingFeedback": false
-  },
-  "props": {
-    "prompts": [
-      {
-        "text": "hello response",
-        "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-        "mic": {
-          "enabled": true,
-          "record": true,
-          "scoring": "deferred",
-          "continueOnRecord": true,
-          "blockingFeedback": false
-        }
-      },
-      {
-        "text": "response",
-        "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-        "mic": {
-          "enabled": true,
-          "record": true,
-          "scoring": "deferred",
-          "continueOnRecord": true,
-          "blockingFeedback": false
-        }
-      },
-      {
-        "text": "Hi!",
-        "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-        "mic": {
-          "enabled": true,
-          "record": true,
-          "scoring": "deferred",
-          "continueOnRecord": true,
-          "blockingFeedback": false
-        }
-      }
-    ]
-  }
-}
-```
-
-## Step 7: Pimsleur-Style Prompt
+## Step 6: Pimsleur-Style Prompt
 
 MVP behavior:
 
@@ -325,7 +261,7 @@ JSON:
 }
 ```
 
-## Step 8: Scene-Based Spoken Recall
+## Step 7: Scene-Based Spoken Recall
 
 MVP behavior:
 
@@ -361,6 +297,12 @@ JSON:
   }
 }
 ```
+
+## Conditional Step: Backward Build
+
+Backward build is not included for this first hello lesson because the target phrase is only one word.
+
+The backend only emits `backward_build` when a target has explicit `backward_build_units` or at least three phrase words, so meaning tags such as `hello` and `response` are never turned into spoken build prompts.
 
 ## Future Task: Transfer Scene
 

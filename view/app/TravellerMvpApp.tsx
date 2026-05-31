@@ -313,8 +313,20 @@ function stopAudio(audio: HTMLAudioElement | null) {
 function activeMvpLesson(lesson: Lesson): Lesson {
   return {
     ...lesson,
-    steps: lesson.steps.filter((step) => step.id !== 'translation_reveal'),
+    steps: lesson.steps.filter((step) => {
+      if (step.id === 'translation_reveal') return false;
+      if (step.id === 'backward_build') return shouldShowBackwardBuild(lesson.target.text);
+      return true;
+    }),
   };
+}
+
+function shouldShowBackwardBuild(targetText: string): boolean {
+  return phraseWords(targetText).length >= 3;
+}
+
+function phraseWords(value: string): string[] {
+  return value.match(/[\p{L}\p{N}']+/gu) ?? [];
 }
 
 function withAssetUrls(lesson: Lesson | null): Lesson | null {

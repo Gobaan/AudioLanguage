@@ -1,5 +1,13 @@
-import { AudioButton, ChoicePrompt, DialogueReveal, PromptedRecording, SceneFrame } from '../components';
-import type { ChoiceOption, DialogueRevealLine, Lesson, LessonStep, SceneFrameData } from '../components';
+import { AudioButton, BackwardBuild, ChoicePrompt, DialogueReveal, PromptedRecording, SceneFrame } from '../components';
+import type {
+  BackwardBuildPrompt,
+  ChoiceOption,
+  Chunk,
+  DialogueRevealLine,
+  Lesson,
+  LessonStep,
+  SceneFrameData,
+} from '../components';
 
 type LessonStepRendererProps = {
   lesson: Lesson;
@@ -98,6 +106,25 @@ export function LessonStepRenderer({
     );
   }
 
+  if (step.component === 'BackwardBuild') {
+    return (
+      <section className="lesson-step-view" aria-label={step.type}>
+        <SceneFrame
+          frame={frameForStep(lesson, step)}
+          isActive
+          showCaption={false}
+          placeholderLabel="Lesson scene frame"
+        />
+        <BackwardBuild
+          targetPhrase={backwardBuildTarget(step)}
+          chunks={backwardBuildChunks(step)}
+          prompts={backwardBuildPrompts(step)}
+          fallbackMeaning={lesson.target.meaning}
+        />
+      </section>
+    );
+  }
+
   return <div className="frame-placeholder" aria-label="Lesson step unavailable" />;
 }
 
@@ -144,4 +171,16 @@ function dialogueRevealLines(lesson: Lesson): DialogueRevealLine[] {
       translation: isTranslated ? lesson.target.meaning : undefined,
     };
   });
+}
+
+function backwardBuildTarget(step: LessonStep): string | undefined {
+  return typeof step.props.targetPhrase === 'string' ? step.props.targetPhrase : undefined;
+}
+
+function backwardBuildChunks(step: LessonStep): Chunk[] {
+  return Array.isArray(step.props.chunks) ? (step.props.chunks as Chunk[]) : [];
+}
+
+function backwardBuildPrompts(step: LessonStep): BackwardBuildPrompt[] {
+  return Array.isArray(step.props.prompts) ? (step.props.prompts as BackwardBuildPrompt[]) : [];
 }

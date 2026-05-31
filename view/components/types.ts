@@ -32,6 +32,13 @@ export type Chunk = {
   audioUrl?: string;
 };
 
+export type BackwardBuildPrompt = {
+  id: string;
+  text: string;
+  audioUrl?: string | null;
+  mic?: LessonStep['mic'];
+};
+
 export type ProgressMetric = {
   label: string;
   value: string | number;

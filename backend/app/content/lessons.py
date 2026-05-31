@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any
 
 
@@ -138,20 +139,32 @@ def lesson_steps(
                 "text": localized_mic_text(card),
             },
         ),
-        step(
-            "backward_build",
-            "BackwardBuild",
-            frame_id=learner_frame.get("id") if learner_frame else None,
-            frame_mode="neutral",
-            display_text="Build it from the end.",
-            audio=audio_behavior(target_audio, autoplay=False, replayable=True),
-            mic=recording_mic(target_text, target_transliteration),
-            props={
-                "targetPhrase": target_phrase,
-                "chunks": chunks_for_target(target),
-                "prompts": backward_build_prompts(target=target, target_phrase=target_phrase, target_audio=target_audio),
-            },
-        ),
+    ]
+
+    if should_include_backward_build(target=target, target_phrase=target_phrase):
+        steps.append(
+            step(
+                "backward_build",
+                "BackwardBuild",
+                frame_id=learner_frame.get("id") if learner_frame else None,
+                frame_mode="neutral",
+                display_text="Build it from the end.",
+                audio=audio_behavior(target_audio, autoplay=False, replayable=True),
+                mic=recording_mic(target_text, target_transliteration),
+                props={
+                    "targetPhrase": target_phrase,
+                    "chunks": chunks_for_target(target),
+                    "prompts": backward_build_prompts(
+                        target=target,
+                        target_phrase=target_phrase,
+                        target_audio=target_audio,
+                    ),
+                },
+            )
+        )
+
+    steps.extend(
+        [
         step(
             "production_prompt",
             "ProductionPrompt",
@@ -179,7 +192,8 @@ def lesson_steps(
                 "frames": frames,
             },
         ),
-    ]
+        ]
+    )
 
     return steps
 
@@ -268,7 +282,7 @@ def backward_build_prompts(
     target_phrase: str,
     target_audio: str | None,
 ) -> list[dict[str, Any]]:
-    units = [str(unit).replace("_", " ") for unit in target.get("meaning_units", [])]
+    units = backward_build_units(target=target, target_phrase=target_phrase)
     prompts = []
     for index in range(len(units)):
         text = " ".join(units[index:])
@@ -289,6 +303,20 @@ def backward_build_prompts(
         }
     )
     return prompts
+
+
+def should_include_backward_build(*, target: dict[str, Any], target_phrase: str) -> bool:
+    return len(backward_build_units(target=target, target_phrase=target_phrase)) >= 3
+
+
+def backward_build_units(*, target: dict[str, Any], target_phrase: str) -> list[str]:
+    explicit_units = target.get("backward_build_units")
+    if isinstance(explicit_units, list):
+        units = [str(unit).strip() for unit in explicit_units if str(unit).strip()]
+        if units:
+            return units
+
+    return re.findall(r"[\w']+", target_phrase, flags=re.UNICODE)
 
 
 def prompt_text(value: str) -> str:
