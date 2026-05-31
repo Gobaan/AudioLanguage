@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchLessons } from '../api/lessons';
 import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import { ADVANCED_FALLBACK_LESSON } from './advancedLesson';
 import { LessonStepRenderer } from './LessonStepRenderer';
 
 const FALLBACK_LESSON: Lesson = {
@@ -178,8 +179,10 @@ const FALLBACK_LESSON: Lesson = {
 };
 
 type LoadState = 'loading' | 'ready' | 'error';
+type LessonPage = 'hello' | 'advanced';
 
 export function TravellerMvpApp() {
+  const [lessonPage, setLessonPage] = useState<LessonPage>(() => lessonPageFromUrl());
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [stepIndex, setStepIndex] = useState(0);
@@ -189,6 +192,14 @@ export function TravellerMvpApp() {
 
   useEffect(() => {
     let isCurrent = true;
+
+    if (lessonPage === 'advanced') {
+      setLesson(activeMvpLesson(ADVANCED_FALLBACK_LESSON));
+      setLoadState('ready');
+      return () => {
+        isCurrent = false;
+      };
+    }
 
     fetchLessons('en')
       .then((payload) => {
@@ -205,7 +216,12 @@ export function TravellerMvpApp() {
     return () => {
       isCurrent = false;
     };
-  }, []);
+  }, [lessonPage]);
+
+  useEffect(() => {
+    setStepIndex(0);
+    setSelectedChoiceByStep({});
+  }, [lessonPage]);
 
   const currentStep = lesson?.steps[stepIndex];
   const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
@@ -263,6 +279,17 @@ export function TravellerMvpApp() {
     }));
   }
 
+  function selectLessonPage(nextPage: LessonPage) {
+    setLessonPage(nextPage);
+    const url = new URL(window.location.href);
+    if (nextPage === 'advanced') {
+      url.searchParams.set('lesson', 'advanced');
+    } else {
+      url.searchParams.delete('lesson');
+    }
+    window.history.pushState({}, '', url);
+  }
+
   if (loadState === 'loading') {
     return <div className="frame-placeholder" aria-label="Loading first MVP step" />;
   }
@@ -276,6 +303,18 @@ export function TravellerMvpApp() {
 
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
+      <nav className="lesson-switcher" aria-label="Lesson test pages">
+        <button type="button" className={lessonPage === 'hello' ? 'active' : ''} onClick={() => selectLessonPage('hello')}>
+          Hello
+        </button>
+        <button
+          type="button"
+          className={lessonPage === 'advanced' ? 'active' : ''}
+          onClick={() => selectLessonPage('advanced')}
+        >
+          Hospital
+        </button>
+      </nav>
       <div className="page-number" aria-label={`Page ${stepIndex + 1} of ${stepLesson.steps.length}`}>
         Page {stepIndex + 1} / {stepLesson.steps.length}
       </div>
@@ -303,6 +342,10 @@ export function TravellerMvpApp() {
   );
 }
 
+function lessonPageFromUrl(): LessonPage {
+  return new URLSearchParams(window.location.search).get('lesson') === 'advanced' ? 'advanced' : 'hello';
+}
+
 function stopAudio(audio: HTMLAudioElement | null) {
   if (!audio) return;
 
@@ -315,6 +358,7 @@ function activeMvpLesson(lesson: Lesson): Lesson {
     ...lesson,
     steps: lesson.steps.filter((step) => {
       if (step.id === 'translation_reveal') return false;
+      if (step.id === 'audio_replay') return false;
       if (step.id === 'production_prompt') return false;
       if (step.id === 'backward_build') return shouldShowBackwardBuild(lesson.target.text);
       return true;
