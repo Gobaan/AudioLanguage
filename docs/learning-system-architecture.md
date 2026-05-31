@@ -163,6 +163,8 @@ Support ladder:
 5. Transfer: same function in a new scene.
 6. Free response: respond naturally.
 
+Meaning-cued production prompts are not part of the default same-session first exposure flow. Keep them available for the learning engine as delayed review, rescue, or calibration steps after the learner has already attempted scene recall.
+
 ## Scoring Layers
 
 Attempt results should distinguish:

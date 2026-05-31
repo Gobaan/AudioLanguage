@@ -164,43 +164,13 @@ JSON:
 }
 ```
 
-## Step 4: Replay Audio
+## Step 4: User Repeats With Mic
 
 MVP behavior:
 
-- Replay the target audio before speaking practice.
-- Mic is off.
-
-JSON:
-
-```json
-{
-  "id": "audio_replay",
-  "type": "audio_replay",
-  "component": "AudioButton",
-  "frameId": "line-1",
-  "frameMode": "single",
-  "displayText": "Listen again.",
-  "audio": {
-    "url": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-    "autoplay": true,
-    "replayable": true,
-    "playBeforeMic": false
-  },
-  "mic": {
-    "enabled": false,
-    "record": false,
-    "scoring": "none"
-  }
-}
-```
-
-## Step 5: User Repeats With Mic
-
-MVP behavior:
-
-- Play target audio.
-- Then turn mic on.
+- Play the target audio on this same page.
+- Then say "Now you say it."
+- Turn mic on after the audio.
 - Record the learner.
 - Continue without waiting for feedback.
 
@@ -233,35 +203,7 @@ JSON:
 }
 ```
 
-## Step 6: Pimsleur-Style Prompt
-
-MVP behavior:
-
-- Ask from meaning.
-- Mic is on.
-- Record and continue.
-
-JSON:
-
-```json
-{
-  "id": "production_prompt",
-  "type": "production_prompt",
-  "component": "ProductionPrompt",
-  "frameMode": "neutral",
-  "displayText": "How do you say: Respond to Hi?",
-  "mic": {
-    "enabled": true,
-    "record": true,
-    "expectedText": "Hi!",
-    "scoring": "deferred",
-    "continueOnRecord": true,
-    "blockingFeedback": false
-  }
-}
-```
-
-## Step 7: Scene-Based Spoken Recall
+## Step 5: Scene-Based Spoken Recall
 
 MVP behavior:
 
@@ -303,6 +245,10 @@ JSON:
 Backward build is not included for this first hello lesson because the target phrase is only one word.
 
 The backend only emits `backward_build` when a target has explicit `backward_build_units` or at least three phrase words, so meaning tags such as `hello` and `response` are never turned into spoken build prompts.
+
+## Future Review Step: Meaning-Cued Production Prompt
+
+The first-session Traveller MVP does not include `production_prompt`. A meaning-cued prompt may still be useful later in the learning engine as a delayed review, rescue, or calibration step after scene recall has been attempted.
 
 ## Future Task: Transfer Scene
 

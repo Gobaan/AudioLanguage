@@ -113,19 +113,6 @@ def lesson_steps(
             },
         ),
         step(
-            "audio_replay",
-            "AudioButton",
-            frame_id=learner_frame.get("id") if learner_frame else None,
-            frame_mode="single",
-            display_text="Listen again.",
-            audio=audio_behavior(target_audio, autoplay=True, replayable=True),
-            mic=mic_off(),
-            props={
-                "audioUrl": target_audio,
-                "text": localized_audio_text(card),
-            },
-        ),
-        step(
             "repeat_with_mic",
             "MicPrompt",
             frame_id=learner_frame.get("id") if learner_frame else None,
@@ -163,22 +150,7 @@ def lesson_steps(
             )
         )
 
-    steps.extend(
-        [
-        step(
-            "production_prompt",
-            "ProductionPrompt",
-            frame_id=None,
-            frame_mode="neutral",
-            display_text=f"How do you say: {prompt_text(target_meaning)}?",
-            audio=audio_behavior(None, autoplay=False, replayable=False),
-            mic=recording_mic(target_text, target_transliteration),
-            props={
-                "cue": card.get("prompt") or target.get("display_meaning", ""),
-                "targetMeaning": target_meaning,
-                "micText": localized_mic_text(card),
-            },
-        ),
+    steps.append(
         step(
             "scene_recall",
             "SceneFrame",
@@ -191,8 +163,7 @@ def lesson_steps(
                 "initialFrameId": opener_frame.get("id") if opener_frame else None,
                 "frames": frames,
             },
-        ),
-        ]
+        )
     )
 
     return steps
@@ -317,10 +288,6 @@ def backward_build_units(*, target: dict[str, Any], target_phrase: str) -> list[
             return units
 
     return re.findall(r"[\w']+", target_phrase, flags=re.UNICODE)
-
-
-def prompt_text(value: str) -> str:
-    return value.rstrip(" .?!")
 
 
 def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:

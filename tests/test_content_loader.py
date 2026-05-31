@@ -104,9 +104,22 @@ class StructuredDataGraphTests(unittest.TestCase):
         )
 
         lesson = lessons_from_session(session)[0]
+        step_ids = [step["id"] for step in lesson["steps"]]
 
         self.assertEqual(lesson["target"]["text"], "Hi!")
-        self.assertNotIn("backward_build", [step["id"] for step in lesson["steps"]])
+        self.assertNotIn("backward_build", step_ids)
+        self.assertNotIn("audio_replay", step_ids)
+
+    def test_first_session_excludes_meaning_cued_production_prompt(self):
+        session = load_language_session(
+            data_dir=CONTENT_DIR,
+            project_dir=PROJECT_DIR,
+            language="en",
+        )
+
+        lesson = lessons_from_session(session)[0]
+
+        self.assertNotIn("production_prompt", [step["id"] for step in lesson["steps"]])
 
     def test_backward_build_uses_phrase_units_not_meaning_tags(self):
         target = {

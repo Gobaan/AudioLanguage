@@ -190,32 +190,6 @@
         }
       },
       {
-        "id": "audio_replay",
-        "type": "audio_replay",
-        "component": "AudioButton",
-        "frameId": "line-1",
-        "frameMode": "single",
-        "displayText": "Listen again.",
-        "audio": {
-          "url": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-          "autoplay": true,
-          "replayable": true,
-          "playBeforeMic": false
-        },
-        "mic": {
-          "enabled": false,
-          "record": false,
-          "scoring": "none"
-        },
-        "props": {
-          "audioUrl": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-          "text": {
-            "playLabel": "Play audio",
-            "playingLabel": "Playing"
-          }
-        }
-      },
-      {
         "id": "repeat_with_mic",
         "type": "repeat_with_mic",
         "component": "MicPrompt",
@@ -242,39 +216,6 @@
           "expectedText": "Hi!",
           "expectedTransliteration": "",
           "text": {
-            "prompt": "Try saying it",
-            "listeningLabel": "Listening...",
-            "startLabel": "Start"
-          }
-        }
-      },
-      {
-        "id": "production_prompt",
-        "type": "production_prompt",
-        "component": "ProductionPrompt",
-        "frameId": null,
-        "frameMode": "neutral",
-        "displayText": "How do you say: Respond to Hi?",
-        "audio": {
-          "url": null,
-          "autoplay": false,
-          "replayable": false,
-          "playBeforeMic": false
-        },
-        "mic": {
-          "enabled": true,
-          "record": true,
-          "startsAfterAudio": false,
-          "expectedText": "Hi!",
-          "expectedTransliteration": "",
-          "scoring": "deferred",
-          "continueOnRecord": true,
-          "blockingFeedback": false
-        },
-        "props": {
-          "cue": "Watch the scene once. Then replay the cue and say your part when prompted.",
-          "targetMeaning": "Respond to Hi.",
-          "micText": {
             "prompt": "Try saying it",
             "listeningLabel": "Listening...",
             "startLabel": "Start"

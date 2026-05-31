@@ -5,13 +5,23 @@ type RecordingState = 'ready' | 'prompting' | 'recording' | 'captured' | 'blocke
 type PromptedRecordingProps = {
   audioUrl?: string | null;
   prompt?: string;
+  playbackPrompt?: string;
   recordingMs?: number;
+  startMode?: 'auto' | 'manual';
+  startLabel?: string;
+  onRecording?: () => void;
+  onCaptured?: () => void;
 };
 
 export function PromptedRecording({
   audioUrl,
   prompt = 'Now you say it.',
+  playbackPrompt = 'Listen.',
   recordingMs = 4000,
+  startMode = 'auto',
+  startLabel = 'Record',
+  onRecording,
+  onCaptured,
 }: PromptedRecordingProps) {
   const [state, setState] = useState<RecordingState>('ready');
   const [recordingUrl, setRecordingUrl] = useState<string | null>(null);
@@ -22,12 +32,20 @@ export function PromptedRecording({
   const stopTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    startPromptFlow();
+    setState('ready');
+    setRecordingUrl((currentUrl) => {
+      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      return null;
+    });
+
+    if (startMode === 'auto') {
+      startPromptFlow();
+    }
 
     return () => {
       cleanup();
     };
-  }, [audioUrl]);
+  }, [audioUrl, startMode]);
 
   useEffect(() => {
     recordingUrlRef.current = recordingUrl;
@@ -101,12 +119,14 @@ export function PromptedRecording({
           streamRef.current = null;
           mediaRecorderRef.current = null;
           setState('captured');
+          onCaptured?.();
         },
         { once: true },
       );
 
       recorder.start();
       setState('recording');
+      onRecording?.();
       stopTimerRef.current = window.setTimeout(() => {
         stopRecorder(recorder);
       }, recordingMs);
@@ -143,7 +163,12 @@ export function PromptedRecording({
 
   return (
     <section className={`prompted-recording ${state}`} aria-live="polite">
-      <p>{statusText(state, prompt)}</p>
+      <p>{statusText(state, prompt, playbackPrompt)}</p>
+      {state === 'ready' && startMode === 'manual' ? (
+        <button type="button" className="record-button" onClick={startPromptFlow}>
+          {startLabel}
+        </button>
+      ) : null}
       {recordingUrl ? (
         <audio className="recording-playback" controls src={recordingUrl} />
       ) : null}
@@ -151,9 +176,9 @@ export function PromptedRecording({
   );
 }
 
-function statusText(state: RecordingState, prompt: string): string {
-  if (state === 'prompting') return prompt;
-  if (state === 'recording') return 'Listening...';
+function statusText(state: RecordingState, prompt: string, playbackPrompt: string): string {
+  if (state === 'prompting') return playbackPrompt;
+  if (state === 'recording') return prompt;
   if (state === 'captured') return 'Captured.';
   if (state === 'blocked') return 'Microphone access is needed.';
   return prompt;

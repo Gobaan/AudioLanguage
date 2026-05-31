@@ -315,6 +315,7 @@ function activeMvpLesson(lesson: Lesson): Lesson {
     ...lesson,
     steps: lesson.steps.filter((step) => {
       if (step.id === 'translation_reveal') return false;
+      if (step.id === 'production_prompt') return false;
       if (step.id === 'backward_build') return shouldShowBackwardBuild(lesson.target.text);
       return true;
     }),

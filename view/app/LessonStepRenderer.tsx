@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { AudioButton, BackwardBuild, ChoicePrompt, DialogueReveal, PromptedRecording, SceneFrame } from '../components';
 import type {
   BackwardBuildPrompt,
@@ -26,6 +27,30 @@ export function LessonStepRenderer({
   onPlayAudio,
   onSelectChoice,
 }: LessonStepRendererProps) {
+  if (step.component === 'ProductionPrompt') {
+    return (
+      <ProductionPracticeStep
+        lesson={lesson}
+        step={step}
+        frame={frameForStep(lesson, step)}
+        prompt={productionPromptText(step)}
+        recordingAudioUrl={step.audio?.url}
+      />
+    );
+  }
+
+  if (step.type === 'scene_recall' && step.mic?.enabled) {
+    return (
+      <ProductionPracticeStep
+        lesson={lesson}
+        step={step}
+        frame={frameForStep(lesson, step)}
+        prompt="What do you say?"
+        recordingAudioUrl={step.audio?.url}
+      />
+    );
+  }
+
   if (step.component === 'SceneFrame') {
     return (
       <section className="lesson-step-view" aria-label={step.type}>
@@ -128,6 +153,97 @@ export function LessonStepRenderer({
   return <div className="frame-placeholder" aria-label="Lesson step unavailable" />;
 }
 
+function ProductionPracticeStep({
+  lesson,
+  step,
+  frame,
+  prompt,
+  recordingAudioUrl,
+}: {
+  lesson: Lesson;
+  step: LessonStep;
+  frame?: SceneFrameData;
+  prompt: string;
+  recordingAudioUrl?: string | null;
+}) {
+  const [phase, setPhase] = useState<'cue' | 'recording' | 'response'>('cue');
+  const learnerFrame = learnerFrameForLesson(lesson);
+  const responseFrame = responseFrameForLesson(lesson);
+  const displayFrame = phase === 'response' ? responseFrame ?? frame : phase === 'recording' ? learnerFrame ?? frame : frame;
+
+  useEffect(() => {
+    setPhase('cue');
+  }, [step.id]);
+
+  return (
+    <section className="lesson-step-view" aria-label={step.type}>
+      <SceneFrame frame={displayFrame} isActive showCaption={false} placeholderLabel="Lesson scene frame" />
+      <section className="production-practice">
+        <p>{prompt}</p>
+        {phase !== 'response' ? (
+          <PromptedRecording
+            audioUrl={recordingAudioUrl}
+            prompt="Now you say it."
+            startMode={step.type === 'scene_recall' ? 'auto' : 'manual'}
+            startLabel="Record"
+            onRecording={() => setPhase('recording')}
+            onCaptured={() => setPhase('response')}
+          />
+        ) : null}
+        {phase === 'response' && responseFrame?.audioUrl ? <ResponsePlayback audioUrl={responseFrame.audioUrl} /> : null}
+      </section>
+    </section>
+  );
+}
+
+function ResponsePlayback({ audioUrl }: { audioUrl: string }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    playResponse();
+    return () => {
+      stopAudio(audioRef.current);
+    };
+  }, [audioUrl]);
+
+  function playResponse() {
+    stopAudio(audioRef.current);
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+    setIsPlaying(true);
+
+    audio.addEventListener(
+      'ended',
+      () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+      },
+      { once: true },
+    );
+
+    audio.addEventListener(
+      'error',
+      () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+      },
+      { once: true },
+    );
+
+    audio.play().catch(() => {
+      setIsPlaying(false);
+      audioRef.current = null;
+    });
+  }
+
+  return (
+    <div className="response-playback">
+      <AudioButton label="Play response" isPlaying={isPlaying} disabled={isPlaying} onPlay={playResponse} />
+    </div>
+  );
+}
+
 export function frameForStep(lesson: Lesson, step: LessonStep): SceneFrameData | undefined {
   return lesson.frames.find((frame) => frame.id === step.frameId) ?? lesson.frames[0];
 }
@@ -171,6 +287,33 @@ function dialogueRevealLines(lesson: Lesson): DialogueRevealLine[] {
       translation: isTranslated ? lesson.target.meaning : undefined,
     };
   });
+}
+
+function productionPromptText(step: LessonStep): string {
+  if (typeof step.displayText === 'string' && step.displayText) {
+    return step.displayText;
+  }
+
+  if (typeof step.props.targetMeaning === 'string' && step.props.targetMeaning) {
+    return `How do you say: ${step.props.targetMeaning}`;
+  }
+
+  return 'What do you say?';
+}
+
+function responseFrameForLesson(lesson: Lesson): SceneFrameData | undefined {
+  return lesson.frames.find((frame) => frame.lineType === 'world_response');
+}
+
+function learnerFrameForLesson(lesson: Lesson): SceneFrameData | undefined {
+  return lesson.frames.find((frame) => frame.lineType === 'learner_target');
+}
+
+function stopAudio(audio: HTMLAudioElement | null) {
+  if (!audio) return;
+
+  audio.pause();
+  audio.currentTime = 0;
 }
 
 function backwardBuildTarget(step: LessonStep): string | undefined {
