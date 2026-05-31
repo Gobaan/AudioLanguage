@@ -276,6 +276,9 @@ export function TravellerMvpApp() {
 
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
+      <div className="page-number" aria-label={`Page ${stepIndex + 1} of ${stepLesson.steps.length}`}>
+        Page {stepIndex + 1} / {stepLesson.steps.length}
+      </div>
       <LessonStepRenderer
         lesson={stepLesson}
         step={step}
