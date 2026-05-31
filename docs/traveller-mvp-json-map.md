@@ -128,6 +128,7 @@ MVP behavior:
 - Show the social outcome.
 - Ask what happened.
 - Learner chooses meaning.
+- After the learner guesses, the UI reveals the full dialogue with the learner line translated.
 - Mic is off.
 
 JSON:
@@ -163,44 +164,7 @@ JSON:
 }
 ```
 
-## Step 4: Reveal Translation
-
-MVP behavior:
-
-- Show the strip.
-- Reveal phrase meaning.
-- Replay target audio.
-- Mic is off.
-
-JSON:
-
-```json
-{
-  "id": "translation_reveal",
-  "type": "translation_reveal",
-  "component": "TranslationReveal",
-  "frameId": "line-1",
-  "frameMode": "strip",
-  "displayText": "Hi!",
-  "audio": {
-    "url": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-    "autoplay": true,
-    "replayable": true,
-    "playBeforeMic": false
-  },
-  "mic": {
-    "enabled": false,
-    "record": false,
-    "scoring": "none"
-  },
-  "props": {
-    "translation": "Respond to Hi.",
-    "usage": "Respond to Hi."
-  }
-}
-```
-
-## Step 5: Replay Audio
+## Step 4: Replay Audio
 
 MVP behavior:
 
@@ -231,7 +195,7 @@ JSON:
 }
 ```
 
-## Step 6: User Repeats With Mic
+## Step 5: User Repeats With Mic
 
 MVP behavior:
 
@@ -269,7 +233,7 @@ JSON:
 }
 ```
 
-## Step 7: Backward Build
+## Step 6: Backward Build
 
 MVP behavior:
 
@@ -333,7 +297,7 @@ JSON:
 }
 ```
 
-## Step 8: Pimsleur-Style Prompt
+## Step 7: Pimsleur-Style Prompt
 
 MVP behavior:
 
@@ -361,7 +325,7 @@ JSON:
 }
 ```
 
-## Step 9: Scene-Based Spoken Recall
+## Step 8: Scene-Based Spoken Recall
 
 MVP behavior:
 

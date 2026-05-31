@@ -7,7 +7,6 @@ LESSON_STEP_TYPES = [
     "scene_setup",
     "target_audio",
     "broad_meaning_guess",
-    "translation_reveal",
     "audio_replay",
     "repeat_with_mic",
     "backward_build",
@@ -110,19 +109,6 @@ def lesson_steps(
                 "question": "What happened?",
                 "difficulty": meaning_choice_difficulty(card),
                 "choices": meaning_choices(target, card),
-            },
-        ),
-        step(
-            "translation_reveal",
-            "TranslationReveal",
-            frame_id=learner_frame.get("id") if learner_frame else None,
-            frame_mode="strip",
-            display_text=target_text,
-            audio=audio_behavior(target_audio, autoplay=True, replayable=True),
-            mic=mic_off(),
-            props={
-                "translation": target_meaning,
-                "usage": target_meaning,
             },
         ),
         step(

@@ -190,29 +190,6 @@
         }
       },
       {
-        "id": "translation_reveal",
-        "type": "translation_reveal",
-        "component": "TranslationReveal",
-        "frameId": "line-1",
-        "frameMode": "strip",
-        "displayText": "Hi!",
-        "audio": {
-          "url": "/audio/generated/en/en-first-hi-response/line-1.mp3",
-          "autoplay": true,
-          "replayable": true,
-          "playBeforeMic": false
-        },
-        "mic": {
-          "enabled": false,
-          "record": false,
-          "scoring": "none"
-        },
-        "props": {
-          "translation": "Respond to Hi.",
-          "usage": "Respond to Hi."
-        }
-      },
-      {
         "id": "audio_replay",
         "type": "audio_replay",
         "component": "AudioButton",

@@ -193,12 +193,12 @@ export function TravellerMvpApp() {
     fetchLessons('en')
       .then((payload) => {
         if (!isCurrent) return;
-        setLesson(payload.lessons[0] ?? FALLBACK_LESSON);
+        setLesson(activeMvpLesson(payload.lessons[0] ?? FALLBACK_LESSON));
         setLoadState('ready');
       })
       .catch(() => {
         if (!isCurrent) return;
-        setLesson(FALLBACK_LESSON);
+        setLesson(activeMvpLesson(FALLBACK_LESSON));
         setLoadState('ready');
       });
 
@@ -308,6 +308,13 @@ function stopAudio(audio: HTMLAudioElement | null) {
 
   audio.pause();
   audio.currentTime = 0;
+}
+
+function activeMvpLesson(lesson: Lesson): Lesson {
+  return {
+    ...lesson,
+    steps: lesson.steps.filter((step) => step.id !== 'translation_reveal'),
+  };
 }
 
 function withAssetUrls(lesson: Lesson | null): Lesson | null {
