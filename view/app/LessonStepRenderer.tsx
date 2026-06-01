@@ -183,7 +183,7 @@ function ProductionPracticeStep({
         {phase !== 'response' ? (
           <PromptedRecording
             audioUrl={recordingAudioUrl}
-            prompt="Now you say it."
+            prompt={recordingPromptText(step)}
             startMode={step.type === 'scene_recall' ? 'auto' : 'manual'}
             startLabel="Record"
             onRecording={() => setPhase('recording')}
@@ -299,6 +299,10 @@ function productionPromptText(step: LessonStep): string {
   }
 
   return 'What do you say?';
+}
+
+function recordingPromptText(step: LessonStep): string {
+  return step.type === 'scene_recall' ? 'Now you respond.' : 'Now you say it.';
 }
 
 function responseFrameForLesson(lesson: Lesson): SceneFrameData | undefined {

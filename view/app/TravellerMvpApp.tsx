@@ -1,7 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchLessons } from '../api/lessons';
-import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import type { ChoiceOption, Lesson, LessonListResponse, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
+
+type LanguageOption = {
+  id: string;
+  label: string;
+};
+
+type LessonTab = {
+  id: string;
+  label: string;
+};
+
+const LANGUAGE_OPTIONS: LanguageOption[] = [
+  { id: 'ja', label: 'Japanese' },
+  { id: 'en', label: 'English' },
+];
+
+const DEFAULT_LANGUAGE = 'ja';
+const DEFAULT_LESSON = 'hello';
 
 const FALLBACK_LESSON: Lesson = {
   id: 'en-card-first-hi-dialogue-practice',
@@ -178,18 +196,11 @@ const FALLBACK_LESSON: Lesson = {
 };
 
 type LoadState = 'loading' | 'ready' | 'error';
-type LessonPage = 'hello' | 'introduce' | 'repair' | 'food-order' | 'hospital';
-
-const LESSON_TABS: Array<{ id: LessonPage; label: string }> = [
-  { id: 'hello', label: 'Hello' },
-  { id: 'introduce', label: 'Introduce' },
-  { id: 'repair', label: 'Repair' },
-  { id: 'food-order', label: 'Food' },
-  { id: 'hospital', label: 'Hospital' },
-];
 
 export function TravellerMvpApp() {
-  const [lessonPage, setLessonPage] = useState<LessonPage>(() => lessonPageFromUrl());
+  const [language, setLanguage] = useState(() => languageFromUrl());
+  const [lessonPage, setLessonPage] = useState(() => lessonPageFromUrl());
+  const [lessonTabs, setLessonTabs] = useState<LessonTab[]>([]);
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [stepIndex, setStepIndex] = useState(0);
@@ -200,27 +211,46 @@ export function TravellerMvpApp() {
   useEffect(() => {
     let isCurrent = true;
 
-    fetchLessons('en', lessonPage)
-      .then((payload) => {
+    async function loadLesson() {
+      setLoadState('loading');
+      try {
+        const payload = await fetchLessons(language, lessonPage);
         if (!isCurrent) return;
-        setLesson(activeMvpLesson(payload.lessons[0] ?? FALLBACK_LESSON));
+        applyLessonPayload(payload);
         setLoadState('ready');
-      })
-      .catch(() => {
-        if (!isCurrent) return;
-        setLesson(activeMvpLesson(FALLBACK_LESSON));
-        setLoadState('ready');
-      });
+      } catch {
+        try {
+          const payload = await fetchLessons(language, DEFAULT_LESSON);
+          if (!isCurrent) return;
+          applyLessonPayload(payload);
+          setLessonPage(DEFAULT_LESSON);
+          updateUrl(language, DEFAULT_LESSON, true);
+          setLoadState('ready');
+        } catch {
+          if (!isCurrent) return;
+          setLessonTabs([]);
+          setLesson(activeMvpLesson(FALLBACK_LESSON));
+          setLoadState('ready');
+        }
+      }
+    }
+
+    function applyLessonPayload(payload: LessonListResponse) {
+      setLessonTabs(payload.lesson_tabs ?? []);
+      setLesson(activeMvpLesson(payload.lessons[0] ?? FALLBACK_LESSON));
+    }
+
+    loadLesson();
 
     return () => {
       isCurrent = false;
     };
-  }, [lessonPage]);
+  }, [language, lessonPage]);
 
   useEffect(() => {
     setStepIndex(0);
     setSelectedChoiceByStep({});
-  }, [lessonPage]);
+  }, [language, lessonPage]);
 
   const currentStep = lesson?.steps[stepIndex];
   const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
@@ -278,11 +308,15 @@ export function TravellerMvpApp() {
     }));
   }
 
-  function selectLessonPage(nextPage: LessonPage) {
+  function selectLanguage(nextLanguage: string) {
+    setLanguage(nextLanguage);
+    setLessonPage(DEFAULT_LESSON);
+    updateUrl(nextLanguage, DEFAULT_LESSON);
+  }
+
+  function selectLessonPage(nextPage: string) {
     setLessonPage(nextPage);
-    const url = new URL(window.location.href);
-    url.searchParams.set('lesson', nextPage);
-    window.history.pushState({}, '', url);
+    updateUrl(language, nextPage);
   }
 
   if (loadState === 'loading') {
@@ -298,8 +332,20 @@ export function TravellerMvpApp() {
 
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
+      <nav className="language-switcher" aria-label="Language">
+        {LANGUAGE_OPTIONS.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            className={language === option.id ? 'active' : ''}
+            onClick={() => selectLanguage(option.id)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </nav>
       <nav className="lesson-switcher" aria-label="Lesson test pages">
-        {LESSON_TABS.map((tab) => (
+        {lessonTabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
@@ -336,10 +382,24 @@ export function TravellerMvpApp() {
     </section>
   );
 }
+function languageFromUrl(): string {
+  const language = new URLSearchParams(window.location.search).get('language');
+  return LANGUAGE_OPTIONS.some((option) => option.id === language) ? language : DEFAULT_LANGUAGE;
+}
 
-function lessonPageFromUrl(): LessonPage {
-  const lesson = new URLSearchParams(window.location.search).get('lesson');
-  return LESSON_TABS.some((tab) => tab.id === lesson) ? (lesson as LessonPage) : 'hello';
+function lessonPageFromUrl(): string {
+  return new URLSearchParams(window.location.search).get('lesson') ?? DEFAULT_LESSON;
+}
+
+function updateUrl(language: string, lesson: string, replace = false) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('language', language);
+  url.searchParams.set('lesson', lesson);
+  if (replace) {
+    window.history.replaceState({}, '', url);
+  } else {
+    window.history.pushState({}, '', url);
+  }
 }
 
 function stopAudio(audio: HTMLAudioElement | null) {

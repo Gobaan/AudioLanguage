@@ -7,6 +7,33 @@
     "goal": "Practice the first five useful beginner responses inside visual dialogue scenes.",
     "estimated_minutes": 10,
     "unlock_after": [],
+    "lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Hello",
+        "card_id": "en-card-first-hi-dialogue-practice"
+      },
+      {
+        "id": "introduce",
+        "label": "Introduce",
+        "card_id": "en-card-introduce-self-dialogue-practice"
+      },
+      {
+        "id": "repair",
+        "label": "Repair",
+        "card_id": "en-card-dont-understand-dialogue-practice"
+      },
+      {
+        "id": "food-order",
+        "label": "Food",
+        "card_id": "en-card-order-food-dialogue-practice"
+      },
+      {
+        "id": "hospital",
+        "label": "Hospital",
+        "card_id": "en-card-hospital-directions-dialogue-practice"
+      }
+    ],
     "cards": [
       "en-card-first-hi-dialogue-practice",
       "en-card-introduce-self-dialogue-practice",

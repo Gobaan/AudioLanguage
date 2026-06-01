@@ -1,6 +1,6 @@
 import type { LessonListResponse } from '../components/types';
 
-export async function fetchLessons(language: string, lesson?: string): Promise<LessonListResponse> {
+export async function fetchLessons(language: string, lesson?: string | null): Promise<LessonListResponse> {
   const params = new URLSearchParams();
   if (lesson) {
     params.set('lesson', lesson);

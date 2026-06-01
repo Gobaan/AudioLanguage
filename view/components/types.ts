@@ -123,5 +123,9 @@ export type Lesson = {
 export type LessonListResponse = {
   language: string;
   display_name: string;
+  lesson_tabs?: Array<{
+    id: string;
+    label: string;
+  }>;
   lessons: Lesson[];
 };

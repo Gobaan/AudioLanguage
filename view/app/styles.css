@@ -40,6 +40,7 @@ body {
   padding: 8px 11px;
 }
 
+.language-switcher,
 .lesson-switcher {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -50,6 +51,7 @@ body {
   padding: 4px;
 }
 
+.language-switcher button,
 .lesson-switcher button {
   background: transparent;
   border: 0;
@@ -61,6 +63,7 @@ body {
   padding: 0 14px;
 }
 
+.language-switcher button.active,
 .lesson-switcher button.active {
   background: var(--accent);
   color: var(--accent-ink);

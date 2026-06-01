@@ -9,6 +9,33 @@
     "goal": "Test whether five short Japanese chunks transfer from anchor scenes into new visual contexts and delayed review scenes.",
     "estimated_minutes": 18,
     "unlock_after": [],
+    "lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Hello",
+        "card_id": "ja-card-first-hi-dialogue-practice"
+      },
+      {
+        "id": "introduce",
+        "label": "Introduce",
+        "card_id": "ja-card-introduce-self-dialogue-practice"
+      },
+      {
+        "id": "repair",
+        "label": "Repair",
+        "card_id": "ja-card-dont-understand-dialogue-practice"
+      },
+      {
+        "id": "excuse-me",
+        "label": "Excuse Me",
+        "card_id": "ja-card-excuse-me-dialogue-practice"
+      },
+      {
+        "id": "food-order",
+        "label": "Food",
+        "card_id": "ja-card-order-food-dialogue-practice"
+      }
+    ],
     "cards": [
       "ja-card-first-hi-dialogue-practice",
       "ja-card-introduce-self-dialogue-practice",

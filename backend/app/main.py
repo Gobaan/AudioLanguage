@@ -120,31 +120,60 @@ def get_language_lessons(language: str, lesson: str | None = Query(default=None)
         raise HTTPException(status_code=404, detail=str(error)) from error
 
     lessons = lessons_from_session(session)
+    session_config = session["session"]
     if lesson:
-        lessons = selected_lessons(lessons, lesson)
+        lessons = selected_lessons(lessons, lesson, session_config)
         if not lessons:
             raise HTTPException(status_code=404, detail=f"Lesson '{lesson}' not found")
 
     return {
         "language": session["language"],
         "display_name": session["display_name"],
+        "lesson_tabs": lesson_tabs_from_session(session_config),
         "lessons": lessons,
     }
 
 
-LESSON_ALIASES = {
-    "hello": "en-card-first-hi-dialogue-practice",
-    "introduce": "en-card-introduce-self-dialogue-practice",
-    "repair": "en-card-dont-understand-dialogue-practice",
-    "food-order": "en-card-order-food-dialogue-practice",
-    "hospital": "en-card-hospital-directions-dialogue-practice",
-    "advanced": "en-card-hospital-directions-dialogue-practice",
-}
+def lesson_tabs_from_session(session_config: dict) -> list[dict[str, str]]:
+    tabs = session_config.get("lesson_tabs", [])
+    if not isinstance(tabs, list):
+        return []
+
+    lesson_tabs = []
+    for tab in tabs:
+        if not isinstance(tab, dict):
+            continue
+
+        tab_id = tab.get("id")
+        label = tab.get("label", tab_id)
+        if tab_id and label:
+            lesson_tabs.append({"id": str(tab_id), "label": str(label)})
+
+    return lesson_tabs
 
 
-def selected_lessons(lessons: list[dict], lesson: str) -> list[dict]:
-    lesson_id = LESSON_ALIASES.get(lesson, lesson)
+def selected_lessons(lessons: list[dict], lesson: str, session_config: dict) -> list[dict]:
+    lesson_aliases = lesson_aliases_from_session(session_config)
+    lesson_id = lesson_aliases.get(lesson, lesson)
     return [item for item in lessons if item.get("id") == lesson_id]
+
+
+def lesson_aliases_from_session(session_config: dict) -> dict[str, str]:
+    tabs = session_config.get("lesson_tabs", [])
+    if not isinstance(tabs, list):
+        return {}
+
+    aliases = {}
+    for tab in tabs:
+        if not isinstance(tab, dict):
+            continue
+
+        tab_id = tab.get("id")
+        card_id = tab.get("card_id")
+        if tab_id and card_id:
+            aliases[str(tab_id)] = str(card_id)
+
+    return aliases
 
 
 @app.get("/api/languages/{language}/distractors")

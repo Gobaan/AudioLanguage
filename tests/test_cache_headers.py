@@ -38,11 +38,16 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         meaning_step = next(step for step in first_lesson["steps"] if step["type"] == "broad_meaning_guess")
 
         self.assertEqual(payload["language"], "ja")
+        self.assertEqual(
+            [tab["id"] for tab in payload["lesson_tabs"]],
+            ["hello", "introduce", "repair", "excuse-me", "food-order"],
+        )
         self.assertEqual(first_lesson["player_component"], "TravellerLessonPlayer")
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].startswith("/visuals/"))
         self.assertIn("scene_setup", step_types)
         self.assertIn("target_audio", step_types)
         self.assertIn("repeat_with_mic", step_types)
+        self.assertNotIn("scene_recall", step_types)
         self.assertNotIn("scorecard", step_types)
         self.assertNotIn("schedule_review", step_types)
         self.assertGreaterEqual(len(meaning_step["props"]["choices"]), 2)
@@ -59,6 +64,10 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertEqual(lessons[0]["id"], "en-card-hospital-directions-dialogue-practice")
         self.assertEqual(lessons[0]["target"]["text"], "Where is the hospital?")
         self.assertIn("backward_build", step_types)
+        self.assertEqual(
+            [tab["id"] for tab in payload["lesson_tabs"]],
+            ["hello", "introduce", "repair", "food-order", "hospital"],
+        )
 
     def test_lessons_endpoint_supports_all_mvp_lesson_aliases(self):
         aliases = {
@@ -77,6 +86,34 @@ class BrowserCacheHeaderTests(unittest.TestCase):
                 lessons = response.json()["lessons"]
                 self.assertEqual(len(lessons), 1)
                 self.assertEqual(lessons[0]["id"], lesson_id)
+
+    def test_lessons_endpoint_supports_japanese_lesson_aliases(self):
+        aliases = {
+            "hello": "ja-card-first-hi-dialogue-practice",
+            "introduce": "ja-card-introduce-self-dialogue-practice",
+            "repair": "ja-card-dont-understand-dialogue-practice",
+            "excuse-me": "ja-card-excuse-me-dialogue-practice",
+            "food-order": "ja-card-order-food-dialogue-practice",
+        }
+
+        for alias, lesson_id in aliases.items():
+            with self.subTest(alias=alias):
+                response = TestClient(app).get(f"/api/languages/ja/lessons?lesson={alias}")
+
+                self.assertEqual(response.status_code, 200)
+                lessons = response.json()["lessons"]
+                self.assertEqual(len(lessons), 1)
+                self.assertEqual(lessons[0]["id"], lesson_id)
+
+    def test_transfer_lesson_uses_scene_recall_without_target_replay(self):
+        response = TestClient(app).get(
+            "/api/languages/ja/lessons?lesson=ja-card-greeting-neighbor-transfer-same_day_transfer"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        step_types = [step["type"] for step in response.json()["lessons"][0]["steps"]]
+
+        self.assertEqual(step_types, ["scene_setup", "broad_meaning_guess", "scene_recall"])
 
     def test_lessons_endpoint_rejects_unknown_preview_lesson(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=missing")

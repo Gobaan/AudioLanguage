@@ -64,12 +64,12 @@ def lesson_steps(
     target_text = learner_line.get("text") or target.get("canonical", "")
     target_transliteration = learner_line.get("transliteration") or target.get("transliteration", "")
     target_phrase = target_transliteration or target_text
-    target_meaning = target.get("display_meaning", "")
     opener_frame = frame_for_line_type(frames, "world_opener") or first_frame(frames)
     learner_frame = frame_for_line_type(frames, "learner_target") or opener_frame
     response_frame = frame_for_line_type(frames, "world_response") or learner_frame
     opener_audio = opener_frame.get("audioUrl") if opener_frame else None
     target_audio = learner_line.get("audio")
+    is_anchor_lesson = card.get("stage") == "guided_scene_production"
 
     steps = [
         step(
@@ -84,86 +84,110 @@ def lesson_steps(
                 "initialFrameId": frames[0]["id"] if frames else None,
                 "frames": frames,
             },
-        ),
-        step(
-            "target_audio",
-            "AudioButton",
-            frame_id=learner_frame.get("id") if learner_frame else None,
-            frame_mode="single",
-            display_text="Listen to what they say.",
-            audio=audio_behavior(target_audio, autoplay=True, replayable=True),
-            mic=mic_off(),
-            props={
-                "audioUrl": target_audio,
-                "text": localized_audio_text(card),
-            },
-        ),
-        step(
-            "broad_meaning_guess",
-            "ChoicePrompt",
-            frame_id=response_frame.get("id") if response_frame else None,
-            frame_mode="single",
-            display_text="What happened?",
-            audio=audio_behavior(target_audio, autoplay=False, replayable=True),
-            mic=mic_off(),
-            props={
-                "question": "What happened?",
-                "difficulty": meaning_choice_difficulty(card),
-                "choices": meaning_choices(target, card),
-            },
-        ),
-        step(
-            "repeat_with_mic",
-            "MicPrompt",
-            frame_id=learner_frame.get("id") if learner_frame else None,
-            frame_mode="single",
-            display_text="Now say it.",
-            audio=audio_behavior(target_audio, autoplay=True, replayable=True, play_before_mic=True),
-            mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
-            props={
-                "expectedText": target_text,
-                "expectedTransliteration": target_transliteration,
-                "text": localized_mic_text(card),
-            },
-        ),
+        )
     ]
 
-    if should_include_backward_build(target=target, target_phrase=target_phrase):
-        steps.append(
-            step(
-                "backward_build",
-                "BackwardBuild",
-                frame_id=learner_frame.get("id") if learner_frame else None,
-                frame_mode="neutral",
-                display_text="Build it from the end.",
-                audio=audio_behavior(target_audio, autoplay=False, replayable=True),
-                mic=recording_mic(target_text, target_transliteration),
-                props={
-                    "targetPhrase": target_phrase,
-                    "chunks": chunks_for_target(target),
-                    "prompts": backward_build_prompts(
-                        target=target,
-                        target_phrase=target_phrase,
-                        target_audio=target_audio,
-                    ),
-                },
-            )
+    if is_anchor_lesson:
+        steps.extend(
+            [
+                step(
+                    "target_audio",
+                    "AudioButton",
+                    frame_id=learner_frame.get("id") if learner_frame else None,
+                    frame_mode="single",
+                    display_text="Listen to what they say.",
+                    audio=audio_behavior(target_audio, autoplay=True, replayable=True),
+                    mic=mic_off(),
+                    props={
+                        "audioUrl": target_audio,
+                        "text": localized_audio_text(card),
+                    },
+                ),
+                step(
+                    "broad_meaning_guess",
+                    "ChoicePrompt",
+                    frame_id=response_frame.get("id") if response_frame else None,
+                    frame_mode="single",
+                    display_text="What happened?",
+                    audio=audio_behavior(target_audio, autoplay=False, replayable=True),
+                    mic=mic_off(),
+                    props={
+                        "question": "What happened?",
+                        "difficulty": meaning_choice_difficulty(card),
+                        "choices": meaning_choices(target, card),
+                    },
+                ),
+                step(
+                    "repeat_with_mic",
+                    "MicPrompt",
+                    frame_id=learner_frame.get("id") if learner_frame else None,
+                    frame_mode="single",
+                    display_text="Now say it.",
+                    audio=audio_behavior(target_audio, autoplay=True, replayable=True, play_before_mic=True),
+                    mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
+                    props={
+                        "expectedText": target_text,
+                        "expectedTransliteration": target_transliteration,
+                        "text": localized_mic_text(card),
+                    },
+                ),
+            ]
         )
 
-    steps.append(
-        step(
-            "scene_recall",
-            "SceneFrame",
-            frame_id=opener_frame.get("id") if opener_frame else None,
-            frame_mode="single",
-            display_text="What would you say?",
-            audio=audio_behavior(opener_audio, autoplay=True, replayable=True, play_before_mic=True),
-            mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
-            props={
-                "initialFrameId": opener_frame.get("id") if opener_frame else None,
-                "frames": frames,
-            },
-        )
+        if should_include_backward_build(target=target, target_phrase=target_phrase):
+            steps.append(
+                step(
+                    "backward_build",
+                    "BackwardBuild",
+                    frame_id=learner_frame.get("id") if learner_frame else None,
+                    frame_mode="neutral",
+                    display_text="Build it from the end.",
+                    audio=audio_behavior(target_audio, autoplay=False, replayable=True),
+                    mic=recording_mic(target_text, target_transliteration),
+                    props={
+                        "targetPhrase": target_phrase,
+                        "chunks": chunks_for_target(target),
+                        "prompts": backward_build_prompts(
+                            target=target,
+                            target_phrase=target_phrase,
+                            target_audio=target_audio,
+                        ),
+                    },
+                )
+            )
+
+        return steps
+
+    steps.extend(
+        [
+            step(
+                "broad_meaning_guess",
+                "ChoicePrompt",
+                frame_id=response_frame.get("id") if response_frame else None,
+                frame_mode="single",
+                display_text="What happened?",
+                audio=audio_behavior(opener_audio, autoplay=False, replayable=True),
+                mic=mic_off(),
+                props={
+                    "question": "What happened?",
+                    "difficulty": meaning_choice_difficulty(card),
+                    "choices": meaning_choices(target, card),
+                },
+            ),
+            step(
+                "scene_recall",
+                "SceneFrame",
+                frame_id=opener_frame.get("id") if opener_frame else None,
+                frame_mode="single",
+                display_text="What would you say?",
+                audio=audio_behavior(opener_audio, autoplay=True, replayable=True, play_before_mic=True),
+                mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
+                props={
+                    "initialFrameId": opener_frame.get("id") if opener_frame else None,
+                    "frames": frames,
+                },
+            ),
+        ]
     )
 
     return steps
