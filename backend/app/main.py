@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 import tempfile
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -108,7 +108,7 @@ def get_language_session(language: str):
 
 
 @app.get("/api/languages/{language}/lessons")
-def get_language_lessons(language: str):
+def get_language_lessons(language: str, lesson: str | None = Query(default=None)):
     """Return frontend-renderable lessons for one language."""
     try:
         session = load_language_session(
@@ -119,11 +119,32 @@ def get_language_lessons(language: str):
     except DataGraphError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
 
+    lessons = lessons_from_session(session)
+    if lesson:
+        lessons = selected_lessons(lessons, lesson)
+        if not lessons:
+            raise HTTPException(status_code=404, detail=f"Lesson '{lesson}' not found")
+
     return {
         "language": session["language"],
         "display_name": session["display_name"],
-        "lessons": lessons_from_session(session),
+        "lessons": lessons,
     }
+
+
+LESSON_ALIASES = {
+    "hello": "en-card-first-hi-dialogue-practice",
+    "introduce": "en-card-introduce-self-dialogue-practice",
+    "repair": "en-card-dont-understand-dialogue-practice",
+    "food-order": "en-card-order-food-dialogue-practice",
+    "hospital": "en-card-hospital-directions-dialogue-practice",
+    "advanced": "en-card-hospital-directions-dialogue-practice",
+}
+
+
+def selected_lessons(lessons: list[dict], lesson: str) -> list[dict]:
+    lesson_id = LESSON_ALIASES.get(lesson, lesson)
+    return [item for item in lessons if item.get("id") == lesson_id]
 
 
 @app.get("/api/languages/{language}/distractors")

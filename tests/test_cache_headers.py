@@ -47,6 +47,42 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertNotIn("schedule_review", step_types)
         self.assertGreaterEqual(len(meaning_step["props"]["choices"]), 2)
 
+    def test_lessons_endpoint_can_return_named_preview_lesson(self):
+        response = TestClient(app).get("/api/languages/en/lessons?lesson=hospital")
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        lessons = payload["lessons"]
+        step_types = [step["type"] for step in lessons[0]["steps"]]
+
+        self.assertEqual(len(lessons), 1)
+        self.assertEqual(lessons[0]["id"], "en-card-hospital-directions-dialogue-practice")
+        self.assertEqual(lessons[0]["target"]["text"], "Where is the hospital?")
+        self.assertIn("backward_build", step_types)
+
+    def test_lessons_endpoint_supports_all_mvp_lesson_aliases(self):
+        aliases = {
+            "hello": "en-card-first-hi-dialogue-practice",
+            "introduce": "en-card-introduce-self-dialogue-practice",
+            "repair": "en-card-dont-understand-dialogue-practice",
+            "food-order": "en-card-order-food-dialogue-practice",
+            "hospital": "en-card-hospital-directions-dialogue-practice",
+        }
+
+        for alias, lesson_id in aliases.items():
+            with self.subTest(alias=alias):
+                response = TestClient(app).get(f"/api/languages/en/lessons?lesson={alias}")
+
+                self.assertEqual(response.status_code, 200)
+                lessons = response.json()["lessons"]
+                self.assertEqual(len(lessons), 1)
+                self.assertEqual(lessons[0]["id"], lesson_id)
+
+    def test_lessons_endpoint_rejects_unknown_preview_lesson(self):
+        response = TestClient(app).get("/api/languages/en/lessons?lesson=missing")
+
+        self.assertEqual(response.status_code, 404)
+
     def test_distractors_endpoint_returns_dialogue_levels(self):
         response = TestClient(app).get("/api/languages/en/distractors")
 

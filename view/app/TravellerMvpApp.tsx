@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchLessons } from '../api/lessons';
 import type { ChoiceOption, Lesson, LessonStep } from '../components';
-import { ADVANCED_FALLBACK_LESSON } from './advancedLesson';
 import { LessonStepRenderer } from './LessonStepRenderer';
 
 const FALLBACK_LESSON: Lesson = {
@@ -179,7 +178,15 @@ const FALLBACK_LESSON: Lesson = {
 };
 
 type LoadState = 'loading' | 'ready' | 'error';
-type LessonPage = 'hello' | 'advanced';
+type LessonPage = 'hello' | 'introduce' | 'repair' | 'food-order' | 'hospital';
+
+const LESSON_TABS: Array<{ id: LessonPage; label: string }> = [
+  { id: 'hello', label: 'Hello' },
+  { id: 'introduce', label: 'Introduce' },
+  { id: 'repair', label: 'Repair' },
+  { id: 'food-order', label: 'Food' },
+  { id: 'hospital', label: 'Hospital' },
+];
 
 export function TravellerMvpApp() {
   const [lessonPage, setLessonPage] = useState<LessonPage>(() => lessonPageFromUrl());
@@ -193,15 +200,7 @@ export function TravellerMvpApp() {
   useEffect(() => {
     let isCurrent = true;
 
-    if (lessonPage === 'advanced') {
-      setLesson(activeMvpLesson(ADVANCED_FALLBACK_LESSON));
-      setLoadState('ready');
-      return () => {
-        isCurrent = false;
-      };
-    }
-
-    fetchLessons('en')
+    fetchLessons('en', lessonPage)
       .then((payload) => {
         if (!isCurrent) return;
         setLesson(activeMvpLesson(payload.lessons[0] ?? FALLBACK_LESSON));
@@ -282,11 +281,7 @@ export function TravellerMvpApp() {
   function selectLessonPage(nextPage: LessonPage) {
     setLessonPage(nextPage);
     const url = new URL(window.location.href);
-    if (nextPage === 'advanced') {
-      url.searchParams.set('lesson', 'advanced');
-    } else {
-      url.searchParams.delete('lesson');
-    }
+    url.searchParams.set('lesson', nextPage);
     window.history.pushState({}, '', url);
   }
 
@@ -304,16 +299,16 @@ export function TravellerMvpApp() {
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
       <nav className="lesson-switcher" aria-label="Lesson test pages">
-        <button type="button" className={lessonPage === 'hello' ? 'active' : ''} onClick={() => selectLessonPage('hello')}>
-          Hello
-        </button>
-        <button
-          type="button"
-          className={lessonPage === 'advanced' ? 'active' : ''}
-          onClick={() => selectLessonPage('advanced')}
-        >
-          Hospital
-        </button>
+        {LESSON_TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            className={lessonPage === tab.id ? 'active' : ''}
+            onClick={() => selectLessonPage(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </nav>
       <div className="page-number" aria-label={`Page ${stepIndex + 1} of ${stepLesson.steps.length}`}>
         Page {stepIndex + 1} / {stepLesson.steps.length}
@@ -343,7 +338,8 @@ export function TravellerMvpApp() {
 }
 
 function lessonPageFromUrl(): LessonPage {
-  return new URLSearchParams(window.location.search).get('lesson') === 'advanced' ? 'advanced' : 'hello';
+  const lesson = new URLSearchParams(window.location.search).get('lesson');
+  return LESSON_TABS.some((tab) => tab.id === lesson) ? (lesson as LessonPage) : 'hello';
 }
 
 function stopAudio(audio: HTMLAudioElement | null) {
