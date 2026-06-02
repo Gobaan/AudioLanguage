@@ -178,14 +178,16 @@ def lesson_aliases_from_session(session_config: dict) -> dict[str, str]:
 
 @app.get("/api/languages/{language}/distractors")
 def get_language_distractors(language: str):
-    """Return broad-meaning distractor sets for one language."""
+    """Return broad-meaning distractor sets available to one language."""
     language_dir = DATA_DIR / "languages" / language
     if not language_dir.exists():
         raise HTTPException(status_code=404, detail=f"Language '{language}' not found")
 
+    distractors = list(load_distractors(DATA_DIR, language_dir).values())
     return {
         "language": language,
-        "dialogue_distractors": list(load_distractors(language_dir).values()),
+        "dialogue_distractors": distractors,
+        "meaning_distractors": distractors,
     }
 
 

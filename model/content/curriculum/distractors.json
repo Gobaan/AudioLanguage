@@ -1,0 +1,369 @@
+{
+  "function_distractors": [
+    {
+      "function_id": "respond_to_greeting",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "respond_to_greeting",
+        "label": "A greeting back."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "say_goodbye",
+            "label": "A polite goodbye."
+          },
+          {
+            "id": "ask_location",
+            "label": "A question about where something is."
+          },
+          {
+            "id": "apologize",
+            "label": "An apology."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ignore_greeting",
+            "label": "No greeting in return."
+          },
+          {
+            "id": "ask_name",
+            "label": "Asking for the other person's name."
+          },
+          {
+            "id": "thank_person",
+            "label": "Thanking the person."
+          }
+        ],
+        "hard": [
+          {
+            "id": "start_introduction",
+            "label": "Starting a self-introduction."
+          },
+          {
+            "id": "ask_how_are_you",
+            "label": "Asking how the person is doing."
+          },
+          {
+            "id": "close_conversation",
+            "label": "Ending the exchange politely."
+          }
+        ]
+      }
+    },
+    {
+      "function_id": "introduce_self",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "introduce_self",
+        "label": "Giving their name."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "greet_back",
+            "label": "A greeting back."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "Asking for help."
+          },
+          {
+            "id": "say_goodbye",
+            "label": "A polite goodbye."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_name",
+            "label": "Asking for the other person's name."
+          },
+          {
+            "id": "thank_person",
+            "label": "Thanking the person."
+          },
+          {
+            "id": "say_dont_understand",
+            "label": "Saying they do not understand."
+          }
+        ],
+        "hard": [
+          {
+            "id": "greet_and_continue",
+            "label": "Greeting and keeping the conversation open."
+          },
+          {
+            "id": "identify_other_person",
+            "label": "Identifying the other person."
+          },
+          {
+            "id": "ask_person_to_repeat",
+            "label": "Asking the person to repeat."
+          }
+        ]
+      }
+    },
+    {
+      "function_id": "say_do_not_understand",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "say_do_not_understand",
+        "label": "Saying they do not understand."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "order_food",
+            "label": "Ordering food."
+          },
+          {
+            "id": "ask_location",
+            "label": "Asking where something is."
+          },
+          {
+            "id": "introduce_self",
+            "label": "Giving their name."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_slowly",
+            "label": "Asking the person to speak slowly."
+          },
+          {
+            "id": "agree_anyway",
+            "label": "Agreeing despite being confused."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "Asking for help."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_repeat",
+            "label": "Asking the person to repeat it."
+          },
+          {
+            "id": "say_speak_little_language",
+            "label": "Saying they speak only a little."
+          },
+          {
+            "id": "apologize_only",
+            "label": "Only apologizing."
+          }
+        ]
+      }
+    },
+    {
+      "function_id": "get_attention_politely",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "get_attention",
+        "label": "Politely getting someone's attention."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "say_goodbye",
+            "label": "A polite goodbye."
+          },
+          {
+            "id": "order_food",
+            "label": "Ordering food."
+          },
+          {
+            "id": "introduce_self",
+            "label": "Giving their name."
+          }
+        ],
+        "medium": [
+          {
+            "id": "apologize_for_mistake",
+            "label": "Apologizing for a mistake."
+          },
+          {
+            "id": "thank_person",
+            "label": "Thanking the person."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "Asking for help."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_to_pass",
+            "label": "Asking to pass through."
+          },
+          {
+            "id": "ask_repeat",
+            "label": "Asking the person to repeat."
+          },
+          {
+            "id": "call_waiter",
+            "label": "Calling over a server."
+          }
+        ]
+      }
+    },
+    {
+      "function_id": "order_local_food",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "order_food",
+        "label": "Ordering one food item."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "ask_hospital",
+            "label": "Asking where the hospital is."
+          },
+          {
+            "id": "introduce_self",
+            "label": "Giving their name."
+          },
+          {
+            "id": "say_dont_understand",
+            "label": "Saying they do not understand."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_price",
+            "label": "Asking how much it costs."
+          },
+          {
+            "id": "ask_for_water",
+            "label": "Asking for water."
+          },
+          {
+            "id": "thank_server",
+            "label": "Thanking the server."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_menu_question",
+            "label": "Asking a question about the menu."
+          },
+          {
+            "id": "pay_for_food",
+            "label": "Paying for the food."
+          },
+          {
+            "id": "ask_for_help_ordering",
+            "label": "Asking for help ordering."
+          }
+        ]
+      }
+    },
+    {
+      "function_id": "ask_where_hospital_is",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "ask_hospital_location",
+        "label": "Asking where the hospital is."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "order_food",
+            "label": "Ordering food."
+          },
+          {
+            "id": "greet_back",
+            "label": "A greeting back."
+          },
+          {
+            "id": "introduce_self",
+            "label": "Giving their name."
+          }
+        ],
+        "medium": [
+          {
+            "id": "ask_bus_stop",
+            "label": "Asking where the bus stop is."
+          },
+          {
+            "id": "ask_for_help",
+            "label": "Asking for help."
+          },
+          {
+            "id": "ask_price",
+            "label": "Asking how much something costs."
+          }
+        ],
+        "hard": [
+          {
+            "id": "ask_pharmacy",
+            "label": "Asking where the pharmacy is."
+          },
+          {
+            "id": "say_need_doctor",
+            "label": "Saying they need a doctor."
+          },
+          {
+            "id": "ask_directions_general",
+            "label": "Asking for directions without naming the place."
+          }
+        ]
+      }
+    },
+    {
+      "function_id": "apologize_for_mistake",
+      "step_type": "broad_meaning_guess",
+      "correct": {
+        "id": "apologize_for_mistake",
+        "label": "Apologizing for a mistake."
+      },
+      "levels": {
+        "easy": [
+          {
+            "id": "greet_back",
+            "label": "A greeting back."
+          },
+          {
+            "id": "order_food",
+            "label": "Ordering food."
+          },
+          {
+            "id": "ask_location",
+            "label": "Asking where something is."
+          }
+        ],
+        "medium": [
+          {
+            "id": "get_attention",
+            "label": "Politely getting someone's attention."
+          },
+          {
+            "id": "thank_person",
+            "label": "Thanking the person."
+          },
+          {
+            "id": "say_dont_understand",
+            "label": "Saying they do not understand."
+          }
+        ],
+        "hard": [
+          {
+            "id": "take_responsibility",
+            "label": "Taking responsibility for the problem."
+          },
+          {
+            "id": "ask_for_help_fixing",
+            "label": "Asking for help fixing the mistake."
+          },
+          {
+            "id": "excuse_self",
+            "label": "Excusing oneself to pass by."
+          }
+        ]
+      }
+    }
+  ],
+  "dialogue_distractors": []
+}

@@ -51,6 +51,9 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertNotIn("scorecard", step_types)
         self.assertNotIn("schedule_review", step_types)
         self.assertGreaterEqual(len(meaning_step["props"]["choices"]), 2)
+        self.assertFalse(
+            any(choice["label"].startswith("The learner says") for choice in meaning_step["props"]["choices"])
+        )
 
     def test_lessons_endpoint_can_return_named_preview_lesson(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=hospital")
@@ -115,20 +118,34 @@ class BrowserCacheHeaderTests(unittest.TestCase):
 
         self.assertEqual(step_types, ["scene_setup", "broad_meaning_guess", "scene_recall"])
 
+    def test_fallback_choices_do_not_repeat_learner_says_prefix(self):
+        response = TestClient(app).get(
+            "/api/languages/ja/lessons?lesson=ja-card-greeting-neighbor-transfer-same_day_transfer"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        meaning_step = next(
+            step for step in response.json()["lessons"][0]["steps"] if step["type"] == "broad_meaning_guess"
+        )
+
+        self.assertFalse(
+            any(choice["label"].startswith("The learner says") for choice in meaning_step["props"]["choices"])
+        )
+
     def test_lessons_endpoint_rejects_unknown_preview_lesson(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=missing")
 
         self.assertEqual(response.status_code, 404)
 
-    def test_distractors_endpoint_returns_dialogue_levels(self):
+    def test_distractors_endpoint_returns_shared_meaning_levels(self):
         response = TestClient(app).get("/api/languages/en/distractors")
 
         self.assertEqual(response.status_code, 200)
         payload = response.json()
-        first_set = payload["dialogue_distractors"][0]
+        first_set = payload["meaning_distractors"][0]
 
         self.assertEqual(payload["language"], "en")
-        self.assertIn("dialogue_id", first_set)
+        self.assertIn("function_id", first_set)
         self.assertIn("easy", first_set["levels"])
         self.assertIn("medium", first_set["levels"])
         self.assertIn("hard", first_set["levels"])

@@ -371,7 +371,7 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
         choices = [
             {
                 "id": str(correct.get("id", target["id"])),
-                "label": str(correct.get("label", target.get("display_meaning", target["id"]))),
+                "label": clean_choice_label(correct.get("label", target.get("display_meaning", target["id"]))),
                 "isCorrect": True,
                 "difficulty": difficulty,
             }
@@ -380,7 +380,7 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
             choices.append(
                 {
                     "id": str(distractor.get("id", distractor.get("label", "distractor"))),
-                    "label": str(distractor.get("label", distractor.get("id", "Distractor"))),
+                    "label": clean_choice_label(distractor.get("label", distractor.get("id", "Distractor"))),
                     "isCorrect": False,
                     "difficulty": difficulty,
                 }
@@ -388,7 +388,7 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
         if len(choices) > 1:
             return choices
 
-    choices = [{"id": target["id"], "label": target.get("display_meaning", target["id"]), "isCorrect": True}]
+    choices = [{"id": target["id"], "label": clean_choice_label(target.get("display_meaning", target["id"])), "isCorrect": True}]
     contract = card.get("ai_scene_contract", {})
     wrong_intents = contract.get("likely_wrong_intents") or contract.get("wrong_intents", [])
     for wrong_intent in wrong_intents[:3]:
@@ -396,11 +396,29 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
         choices.append(
             {
                 "id": str(wrong_id),
-                "label": wrong_intent.get("definition", str(wrong_id)),
+                "label": clean_choice_label(wrong_intent.get("definition", str(wrong_id))),
                 "isCorrect": False,
             }
         )
     return choices
+
+
+def clean_choice_label(value: Any) -> str:
+    label = str(value).strip()
+    prefixes = (
+        "The learner says that they ",
+        "The learner says they ",
+        "The learner says ",
+        "Learner says that they ",
+        "Learner says they ",
+        "Learner says ",
+    )
+    for prefix in prefixes:
+        if label.startswith(prefix):
+            label = label[len(prefix) :]
+            break
+
+    return label[:1].upper() + label[1:] if label else label
 
 
 def meaning_choice_difficulty(card: dict[str, Any]) -> str:

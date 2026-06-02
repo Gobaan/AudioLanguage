@@ -49,7 +49,7 @@ def load_language_session(
     dialogues_data = read_json(language_dir / "dialogues.json")
     practice_data = read_json(language_dir / "practice_cards.json")
     visual_data = read_json(language_dir / "visual_beats.json")
-    distractors = load_distractors(language_dir)
+    distractors = load_distractors(data_dir, language_dir)
     audio_assets = load_audio_assets(language_dir)
 
     targets = index_by_id(targets_data, "targets")
@@ -132,7 +132,7 @@ def hydrate_practice_card(
         "scene": scene,
         "review_mode": review_mode,
         "dialogue": hydrated_dialogue,
-        "distractors": distractors.get(str(dialogue["id"])),
+        "distractors": distractors.get(str(dialogue["id"])) or distractors.get(str(function["id"])),
     }
     if template:
         hydrated_card["template"] = template
@@ -250,13 +250,31 @@ def load_audio_assets(language_dir: Path) -> dict[tuple[str, int], str]:
     return assets
 
 
-def load_distractors(language_dir: Path) -> dict[str, dict[str, Any]]:
+def load_distractors(data_dir: Path, language_dir: Path) -> dict[str, dict[str, Any]]:
+    distractors = load_curriculum_distractors(data_dir)
     distractor_path = language_dir / "distractor.json"
+    if not distractor_path.exists():
+        return distractors
+
+    distractor_data = read_json(distractor_path)
+    for item in distractor_data.get("dialogue_distractors", []):
+        dialogue_id = item.get("dialogue_id")
+        if dialogue_id:
+            distractors[str(dialogue_id)] = item
+    return distractors
+
+
+def load_curriculum_distractors(data_dir: Path) -> dict[str, dict[str, Any]]:
+    distractor_path = data_dir / "curriculum" / "distractors.json"
     if not distractor_path.exists():
         return {}
 
     distractor_data = read_json(distractor_path)
     distractors: dict[str, dict[str, Any]] = {}
+    for item in distractor_data.get("function_distractors", []):
+        function_id = item.get("function_id")
+        if function_id:
+            distractors[str(function_id)] = item
     for item in distractor_data.get("dialogue_distractors", []):
         dialogue_id = item.get("dialogue_id")
         if dialogue_id:
