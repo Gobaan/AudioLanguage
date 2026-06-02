@@ -157,7 +157,7 @@ def hydrate_line(
     beat = find_visual_beat(visual_beats, dialogue_id, line_index)
     beat_assets = beat.get("asset_paths", {}) if beat else {}
     audio_path = line.get("audio_path") or beat_assets.get("audio")
-    image_path = existing_asset_path(project_dir, beat_assets.get("image"))
+    image_path = final_frame_asset_path(project_dir, beat_assets.get("image"), line_index)
 
     if not audio_path:
         manifest_audio = audio_assets.get((dialogue_id, line_index))
@@ -210,6 +210,15 @@ def existing_asset_path(project_dir: Path, path: str | None) -> str | None:
     if path and repo_file_for_relative_path(project_dir, path).exists():
         return path
     return None
+
+
+def final_frame_asset_path(project_dir: Path, path: str | None, line_index: int) -> str | None:
+    if path and path.startswith("visuals/final/"):
+        expected_path = str(Path(path).with_name(f"frame-{line_index + 1}.png")).replace("\\", "/")
+        if repo_file_for_relative_path(project_dir, expected_path).exists():
+            return expected_path
+
+    return existing_asset_path(project_dir, path)
 
 
 def first_existing_asset_path(project_dir: Path, candidates: list[str]) -> str | None:
