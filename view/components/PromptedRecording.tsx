@@ -4,17 +4,19 @@ type RecordingState = 'ready' | 'prompting' | 'recording' | 'captured' | 'blocke
 
 type PromptedRecordingProps = {
   audioUrl?: string | null;
+  audioText?: string | null;
   prompt?: string;
   playbackPrompt?: string;
   recordingMs?: number;
   startMode?: 'auto' | 'manual';
   startLabel?: string;
   onRecording?: () => void;
-  onCaptured?: () => void;
+  onCaptured?: (recording: { blob: Blob; durationMs: number; mimeType: string }) => void;
 };
 
 export function PromptedRecording({
   audioUrl,
+  audioText,
   prompt = 'Now you say it.',
   playbackPrompt = 'Listen.',
   recordingMs = 4000,
@@ -26,10 +28,12 @@ export function PromptedRecording({
   const [state, setState] = useState<RecordingState>('ready');
   const [recordingUrl, setRecordingUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const recordingUrlRef = useRef<string | null>(null);
   const stopTimerRef = useRef<number | null>(null);
+  const recordingStartedAtRef = useRef<number | null>(null);
 
   useEffect(() => {
     setState('ready');
@@ -45,7 +49,7 @@ export function PromptedRecording({
     return () => {
       cleanup();
     };
-  }, [audioUrl, startMode]);
+  }, [audioUrl, audioText, startMode]);
 
   useEffect(() => {
     recordingUrlRef.current = recordingUrl;
@@ -55,7 +59,7 @@ export function PromptedRecording({
     cleanupActiveFlow();
 
     if (!audioUrl) {
-      startRecording();
+      speakPromptThenRecord();
       return;
     }
 
@@ -83,8 +87,38 @@ export function PromptedRecording({
 
     audio.play().catch(() => {
       audioRef.current = null;
-      startRecording();
+      speakPromptThenRecord();
     });
+  }
+
+  function speakPromptThenRecord() {
+    const text = audioText?.trim();
+    if (!text || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      startRecording();
+      return;
+    }
+
+    setState('prompting');
+    const utterance = new SpeechSynthesisUtterance(text);
+    utteranceRef.current = utterance;
+    utterance.addEventListener(
+      'end',
+      () => {
+        utteranceRef.current = null;
+        startRecording();
+      },
+      { once: true },
+    );
+    utterance.addEventListener(
+      'error',
+      () => {
+        utteranceRef.current = null;
+        startRecording();
+      },
+      { once: true },
+    );
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
   }
 
   async function startRecording() {
@@ -111,6 +145,8 @@ export function PromptedRecording({
         'stop',
         () => {
           const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+          const durationMs = recordingStartedAtRef.current ? Date.now() - recordingStartedAtRef.current : recordingMs;
+          recordingStartedAtRef.current = null;
           setRecordingUrl((currentUrl) => {
             if (currentUrl) URL.revokeObjectURL(currentUrl);
             return URL.createObjectURL(blob);
@@ -119,12 +155,13 @@ export function PromptedRecording({
           streamRef.current = null;
           mediaRecorderRef.current = null;
           setState('captured');
-          onCaptured?.();
+          onCaptured?.({ blob, durationMs, mimeType: blob.type });
         },
         { once: true },
       );
 
       recorder.start();
+      recordingStartedAtRef.current = Date.now();
       setState('recording');
       onRecording?.();
       stopTimerRef.current = window.setTimeout(() => {
@@ -155,10 +192,16 @@ export function PromptedRecording({
       audioRef.current = null;
     }
 
+    if (utteranceRef.current) {
+      window.speechSynthesis?.cancel();
+      utteranceRef.current = null;
+    }
+
     stopRecorder(mediaRecorderRef.current);
     mediaRecorderRef.current = null;
     stopStream(streamRef.current);
     streamRef.current = null;
+    recordingStartedAtRef.current = null;
   }
 
   return (

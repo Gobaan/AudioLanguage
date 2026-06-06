@@ -36,6 +36,7 @@ export type BackwardBuildPrompt = {
   id: string;
   text: string;
   audioUrl?: string | null;
+  audioText?: string | null;
   mic?: LessonStep['mic'];
 };
 
@@ -123,6 +124,7 @@ export type Lesson = {
 export type LessonListResponse = {
   language: string;
   display_name: string;
+  scene_set?: string;
   lesson_tabs?: Array<{
     id: string;
     label: string;

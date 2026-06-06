@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { AudioButton, BackwardBuild, ChoicePrompt, DialogueReveal, PromptedRecording, SceneFrame } from '../components';
+import {
+  AudioButton,
+  BackwardBuild,
+  ChoicePrompt,
+  DialogueReveal,
+  PromptedRecording,
+  SceneFrame,
+  ScenePlayback,
+} from '../components';
 import type {
   BackwardBuildPrompt,
   ChoiceOption,
-  Chunk,
   DialogueRevealLine,
   Lesson,
   LessonStep,
@@ -17,6 +24,11 @@ type LessonStepRendererProps = {
   selectedChoiceId?: string;
   onPlayAudio?: () => void;
   onSelectChoice?: (stepId: string, choice: ChoiceOption) => void;
+  onCaptureAttempt?: (
+    step: LessonStep,
+    recording: { blob: Blob; durationMs: number; mimeType: string },
+    extra?: Record<string, unknown>,
+  ) => void;
 };
 
 export function LessonStepRenderer({
@@ -26,6 +38,7 @@ export function LessonStepRenderer({
   selectedChoiceId,
   onPlayAudio,
   onSelectChoice,
+  onCaptureAttempt,
 }: LessonStepRendererProps) {
   if (step.component === 'ProductionPrompt') {
     return (
@@ -35,6 +48,7 @@ export function LessonStepRenderer({
         frame={frameForStep(lesson, step)}
         prompt={productionPromptText(step)}
         recordingAudioUrl={step.audio?.url}
+        onCaptureAttempt={onCaptureAttempt}
       />
     );
   }
@@ -47,8 +61,13 @@ export function LessonStepRenderer({
         frame={frameForStep(lesson, step)}
         prompt="What do you say?"
         recordingAudioUrl={step.audio?.url}
+        onCaptureAttempt={onCaptureAttempt}
       />
     );
+  }
+
+  if (step.type === 'scene_setup') {
+    return <ScenePlayback frames={sceneSetupFrames(lesson, step)} autoplay={step.audio?.autoplay} />;
   }
 
   if (step.component === 'SceneFrame') {
@@ -126,7 +145,11 @@ export function LessonStepRenderer({
           showCaption={false}
           placeholderLabel="Lesson scene frame"
         />
-        <PromptedRecording audioUrl={step.audio?.url} prompt="Now you say it." />
+        <PromptedRecording
+          audioUrl={step.audio?.url}
+          prompt="Now you say it."
+          onCaptured={(recording) => onCaptureAttempt?.(step, recording)}
+        />
       </section>
     );
   }
@@ -142,9 +165,13 @@ export function LessonStepRenderer({
         />
         <BackwardBuild
           targetPhrase={backwardBuildTarget(step)}
-          chunks={backwardBuildChunks(step)}
           prompts={backwardBuildPrompts(step)}
-          fallbackMeaning={lesson.target.meaning}
+          onCaptured={(recording, prompt) =>
+            onCaptureAttempt?.(step, recording, {
+              buildPromptId: prompt.id,
+              buildPromptText: prompt.text,
+            })
+          }
         />
       </section>
     );
@@ -159,12 +186,18 @@ function ProductionPracticeStep({
   frame,
   prompt,
   recordingAudioUrl,
+  onCaptureAttempt,
 }: {
   lesson: Lesson;
   step: LessonStep;
   frame?: SceneFrameData;
   prompt: string;
   recordingAudioUrl?: string | null;
+  onCaptureAttempt?: (
+    step: LessonStep,
+    recording: { blob: Blob; durationMs: number; mimeType: string },
+    extra?: Record<string, unknown>,
+  ) => void;
 }) {
   const [phase, setPhase] = useState<'cue' | 'recording' | 'response'>('cue');
   const learnerFrame = learnerFrameForLesson(lesson);
@@ -187,7 +220,10 @@ function ProductionPracticeStep({
             startMode={step.type === 'scene_recall' ? 'auto' : 'manual'}
             startLabel="Record"
             onRecording={() => setPhase('recording')}
-            onCaptured={() => setPhase('response')}
+            onCaptured={(recording) => {
+              setPhase('response');
+              onCaptureAttempt?.(step, recording);
+            }}
           />
         ) : null}
         {phase === 'response' && responseFrame?.audioUrl ? <ResponsePlayback audioUrl={responseFrame.audioUrl} /> : null}
@@ -264,6 +300,14 @@ function StepAudioButton({
   return <AudioButton label="Play" isPlaying={isPlaying} disabled={isPlaying} onPlay={onPlayAudio} />;
 }
 
+function sceneSetupFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
+  if (lesson.frames.length > 0) {
+    return lesson.frames;
+  }
+
+  return Array.isArray(step.props.frames) ? (step.props.frames as SceneFrameData[]) : [];
+}
+
 function choiceQuestion(step: LessonStep): string | undefined {
   return typeof step.props.question === 'string' ? step.props.question : undefined;
 }
@@ -282,6 +326,7 @@ function dialogueRevealLines(lesson: Lesson): DialogueRevealLine[] {
       id: frame.id,
       speaker: frame.speaker,
       text: frame.text,
+      transliteration: frame.transliteration,
       audioUrl: frame.audioUrl,
       isTranslated,
       translation: isTranslated ? lesson.target.meaning : undefined,
@@ -322,10 +367,6 @@ function stopAudio(audio: HTMLAudioElement | null) {
 
 function backwardBuildTarget(step: LessonStep): string | undefined {
   return typeof step.props.targetPhrase === 'string' ? step.props.targetPhrase : undefined;
-}
-
-function backwardBuildChunks(step: LessonStep): Chunk[] {
-  return Array.isArray(step.props.chunks) ? (step.props.chunks as Chunk[]) : [];
 }
 
 function backwardBuildPrompts(step: LessonStep): BackwardBuildPrompt[] {

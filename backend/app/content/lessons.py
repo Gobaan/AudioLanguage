@@ -163,13 +163,13 @@ def lesson_steps(
             step(
                 "broad_meaning_guess",
                 "ChoicePrompt",
-                frame_id=response_frame.get("id") if response_frame else None,
+                frame_id=opener_frame.get("id") if opener_frame else None,
                 frame_mode="single",
-                display_text="What happened?",
+                display_text="What is the best response here?",
                 audio=audio_behavior(opener_audio, autoplay=False, replayable=True),
                 mic=mic_off(),
                 props={
-                    "question": "What happened?",
+                    "question": "What is the best response here?",
                     "difficulty": meaning_choice_difficulty(card),
                     "choices": meaning_choices(target, card),
                 },
@@ -279,24 +279,19 @@ def backward_build_prompts(
 ) -> list[dict[str, Any]]:
     units = backward_build_units(target=target, target_phrase=target_phrase)
     prompts = []
-    for index in range(len(units)):
+    for index in range(len(units) - 1, -1, -1):
         text = " ".join(units[index:])
+        if index == 0:
+            text = target_phrase
         prompts.append(
             {
                 "id": f"{target['id']}-build-{index}",
                 "text": text,
-                "audioUrl": target_audio,
+                "audioUrl": target_audio if index == 0 else None,
+                "audioText": text,
                 "mic": recording_mic(text, ""),
             }
         )
-    prompts.append(
-        {
-            "id": f"{target['id']}-build-full",
-            "text": target_phrase,
-            "audioUrl": target_audio,
-            "mic": recording_mic(target_phrase, ""),
-        }
-    )
     return prompts
 
 
@@ -422,7 +417,14 @@ def clean_choice_label(value: Any) -> str:
 
 
 def meaning_choice_difficulty(card: dict[str, Any]) -> str:
-    return str(card.get("meaning_choice_difficulty") or "easy")
+    explicit_difficulty = card.get("meaning_choice_difficulty")
+    if explicit_difficulty:
+        return str(explicit_difficulty)
+    if card.get("stage") == "same_day_transfer":
+        return "medium"
+    if card.get("stage") == "delayed_review":
+        return "hard"
+    return "easy"
 
 
 def phrase_contrast_choices(target: dict[str, Any]) -> list[dict[str, Any]]:

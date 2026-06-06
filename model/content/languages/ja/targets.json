@@ -227,7 +227,7 @@
     {
       "id": "ja-target-im-sorry",
       "function_id": "apologize_for_mistake",
-      "canonical": "???????",
+      "canonical": "ごめんなさい。",
       "transliteration": "Gomen nasai.",
       "display_meaning": "I'm sorry.",
       "meaning_units": [
@@ -236,15 +236,15 @@
         "repair"
       ],
       "accepted_variants": [
-        "??????",
-        "????"
+        "ごめんなさい",
+        "ごめん"
       ],
       "valid_but_off_target": [
-        "??????"
+        "すみません"
       ],
       "wrong_for_context_examples": [
-        "??????",
-        "???????????"
+        "ありがとう",
+        "こんにちは"
       ],
       "semantic_slots": {
         "required": {

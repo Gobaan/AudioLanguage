@@ -12,28 +12,80 @@
     "lesson_tabs": [
       {
         "id": "hello",
-        "label": "Hello",
+        "label": "Scene 1",
         "card_id": "ja-card-first-hi-dialogue-practice"
       },
       {
         "id": "introduce",
-        "label": "Introduce",
+        "label": "Scene 2",
         "card_id": "ja-card-introduce-self-dialogue-practice"
       },
       {
         "id": "repair",
-        "label": "Repair",
+        "label": "Scene 3",
         "card_id": "ja-card-dont-understand-dialogue-practice"
       },
       {
         "id": "excuse-me",
-        "label": "Excuse Me",
+        "label": "Scene 4",
         "card_id": "ja-card-excuse-me-dialogue-practice"
       },
       {
         "id": "food-order",
-        "label": "Food",
+        "label": "Scene 5",
         "card_id": "ja-card-order-food-dialogue-practice"
+      },
+      {
+        "id": "hello-transfer",
+        "label": "Scene 6",
+        "card_id": "ja-card-greeting-neighbor-transfer-same_day_transfer"
+      },
+      {
+        "id": "introduce-transfer",
+        "label": "Scene 7",
+        "card_id": "ja-card-introduce-class-transfer-same_day_transfer"
+      },
+      {
+        "id": "repair-transfer",
+        "label": "Scene 8",
+        "card_id": "ja-card-repair-ticket-transfer-same_day_transfer"
+      },
+      {
+        "id": "excuse-me-transfer",
+        "label": "Scene 9",
+        "card_id": "ja-card-excuse-me-cafe-transfer-same_day_transfer"
+      },
+      {
+        "id": "food-order-transfer",
+        "label": "Scene 10",
+        "card_id": "ja-card-order-convenience-transfer-same_day_transfer"
+      }
+    ],
+    "delayed_lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Scene 1",
+        "card_id": "ja-card-greeting-entry-review-delayed_review"
+      },
+      {
+        "id": "introduce",
+        "label": "Scene 2",
+        "card_id": "ja-card-introduce-community-review-delayed_review"
+      },
+      {
+        "id": "repair",
+        "label": "Scene 3",
+        "card_id": "ja-card-repair-clinic-review-delayed_review"
+      },
+      {
+        "id": "excuse-me",
+        "label": "Scene 4",
+        "card_id": "ja-card-excuse-me-station-review-delayed_review"
+      },
+      {
+        "id": "food-order",
+        "label": "Scene 5",
+        "card_id": "ja-card-order-bakery-review-delayed_review"
       }
     ],
     "cards": [
@@ -41,7 +93,6 @@
       "ja-card-introduce-self-dialogue-practice",
       "ja-card-dont-understand-dialogue-practice",
       "ja-card-excuse-me-dialogue-practice",
-      "ja-card-im-sorry-dialogue-practice",
       "ja-card-order-food-dialogue-practice",
       "ja-card-greeting-neighbor-transfer-same_day_transfer",
       "ja-card-introduce-class-transfer-same_day_transfer",
@@ -52,9 +103,7 @@
       "ja-card-introduce-community-review-delayed_review",
       "ja-card-repair-clinic-review-delayed_review",
       "ja-card-excuse-me-station-review-delayed_review",
-      "ja-card-order-bakery-review-delayed_review",
-      "ja-card-im-sorry-cafe-transfer-same_day_transfer",
-      "ja-card-im-sorry-classroom-review-delayed_review"
+      "ja-card-order-bakery-review-delayed_review"
     ]
   },
   "practice_cards": [
@@ -1190,7 +1239,7 @@
       "correct_function_id": "apologize_for_mistake",
       "target_id": "ja-target-im-sorry",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "???????",
+      "expected_response": "ごめんなさい。",
       "ai_scene_contract": {
         "language_being_practiced": "Japanese",
         "support_language": "English",
@@ -1211,9 +1260,9 @@
           "politeness": true
         },
         "example_valid_responses": [
-          "??????",
-          "???????",
-          "?????"
+          "ごめん",
+          "ごめんなさい",
+          "すみません"
         ],
         "acceptance_notes": [
           "Accept romanized attempts such as gomen nasai when clear."
@@ -1245,7 +1294,7 @@
       "correct_function_id": "apologize_for_mistake",
       "target_id": "ja-target-im-sorry",
       "prompt": "Use the same phrase in a new scene.",
-      "expected_response": "???????",
+      "expected_response": "ごめんなさい。",
       "ai_scene_contract": {
         "language_being_practiced": "Japanese",
         "support_language": "English",
@@ -1266,9 +1315,9 @@
           "politeness": true
         },
         "example_valid_responses": [
-          "??????",
-          "???????",
-          "?????"
+          "ごめん",
+          "ごめんなさい",
+          "すみません"
         ],
         "acceptance_notes": [
           "Accept romanized attempts such as gomen nasai when clear."
@@ -1296,7 +1345,7 @@
       "correct_function_id": "apologize_for_mistake",
       "target_id": "ja-target-im-sorry",
       "prompt": "Review the phrase in a new scene.",
-      "expected_response": "???????",
+      "expected_response": "ごめんなさい。",
       "ai_scene_contract": {
         "language_being_practiced": "Japanese",
         "support_language": "English",
@@ -1317,9 +1366,9 @@
           "politeness": true
         },
         "example_valid_responses": [
-          "??????",
-          "???????",
-          "?????"
+          "ごめん",
+          "ごめんなさい",
+          "すみません"
         ],
         "acceptance_notes": [
           "Accept romanized attempts such as gomen nasai when clear."

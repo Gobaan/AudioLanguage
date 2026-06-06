@@ -1,22 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { BackwardBuildPrompt, Chunk } from './types';
-import { ChunkBreakdown } from './ChunkBreakdown';
+import type { BackwardBuildPrompt } from './types';
 import { PromptedRecording } from './PromptedRecording';
 
 type BackwardBuildProps = {
   targetPhrase?: string;
-  chunks?: Chunk[];
   prompts?: BackwardBuildPrompt[];
-  fallbackMeaning?: string;
   recordingMs?: number;
+  onCaptured?: (
+    recording: { blob: Blob; durationMs: number; mimeType: string },
+    prompt: BackwardBuildPrompt,
+  ) => void;
 };
 
 export function BackwardBuild({
   targetPhrase = 'Target phrase',
-  chunks = [],
   prompts = [],
-  fallbackMeaning,
   recordingMs,
+  onCaptured,
 }: BackwardBuildProps) {
   const buildPrompts = useMemo(() => prompts.filter((prompt) => prompt.text), [prompts]);
   const [promptIndex, setPromptIndex] = useState(0);
@@ -31,7 +31,6 @@ export function BackwardBuild({
     return (
       <section className="backward-build">
         <h2>{targetPhrase}</h2>
-        <ChunkBreakdown chunks={chunks} fallbackMeaning={fallbackMeaning} />
       </section>
     );
   }
@@ -44,12 +43,13 @@ export function BackwardBuild({
         </span>
         <h2>{currentPrompt.text}</h2>
       </div>
-      <ChunkBreakdown chunks={chunks} fallbackMeaning={fallbackMeaning} />
       <PromptedRecording
         key={currentPrompt.id}
         audioUrl={currentPrompt.audioUrl}
+        audioText={currentPrompt.audioText ?? currentPrompt.text}
         prompt="Now you say it."
         recordingMs={recordingMs}
+        onCaptured={(recording) => onCaptured?.(recording, currentPrompt)}
       />
       <button
         type="button"

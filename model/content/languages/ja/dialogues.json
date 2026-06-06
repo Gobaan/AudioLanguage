@@ -761,7 +761,7 @@
           "index": 0,
           "speaker_role": "classmate",
           "line_type": "world_opener",
-          "text": "???",
+          "text": "あっ。",
           "transliteration": "Ah.",
           "meaning_units": [
             "mistake"
@@ -772,7 +772,7 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-im-sorry",
-          "text": "???????",
+          "text": "ごめんなさい。",
           "transliteration": "Gomen nasai.",
           "meaning_units": [
             "sorry",
@@ -784,7 +784,7 @@
           "index": 2,
           "speaker_role": "classmate",
           "line_type": "world_response",
-          "text": "??????",
+          "text": "大丈夫です。",
           "transliteration": "Daijoubu desu.",
           "meaning_units": [
             "repair"
@@ -807,7 +807,7 @@
           "index": 0,
           "speaker_role": "barista",
           "line_type": "world_opener",
-          "text": "???",
+          "text": "あっ。",
           "transliteration": "Ah.",
           "meaning_units": [
             "mistake"
@@ -818,7 +818,7 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-im-sorry",
-          "text": "???????",
+          "text": "ごめんなさい。",
           "transliteration": "Gomen nasai.",
           "meaning_units": [
             "sorry",
@@ -830,7 +830,7 @@
           "index": 2,
           "speaker_role": "barista",
           "line_type": "world_response",
-          "text": "??????",
+          "text": "大丈夫です。",
           "transliteration": "Daijoubu desu.",
           "meaning_units": [
             "repair"

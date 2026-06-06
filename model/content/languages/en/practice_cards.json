@@ -10,27 +10,27 @@
     "lesson_tabs": [
       {
         "id": "hello",
-        "label": "Hello",
+        "label": "Scene 1",
         "card_id": "en-card-first-hi-dialogue-practice"
       },
       {
         "id": "introduce",
-        "label": "Introduce",
+        "label": "Scene 2",
         "card_id": "en-card-introduce-self-dialogue-practice"
       },
       {
         "id": "repair",
-        "label": "Repair",
+        "label": "Scene 3",
         "card_id": "en-card-dont-understand-dialogue-practice"
       },
       {
         "id": "food-order",
-        "label": "Food",
+        "label": "Scene 4",
         "card_id": "en-card-order-food-dialogue-practice"
       },
       {
         "id": "hospital",
-        "label": "Hospital",
+        "label": "Scene 5",
         "card_id": "en-card-hospital-directions-dialogue-practice"
       }
     ],

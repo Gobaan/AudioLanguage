@@ -23,6 +23,7 @@ from generate_images_from_manifest import generate_language
 
 CONTENT_DIR = PROJECT_DIR / "model" / "content"
 ASSETS_DIR = PROJECT_DIR / "model" / "assets"
+LEGACY_INCOMPLETE_LANGUAGES = {"ta"}
 
 
 class ContentLoaderTests(unittest.TestCase):
@@ -132,14 +133,29 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertEqual(
             [prompt["text"] for prompt in backward_build_prompts(target=target, target_phrase=target["canonical"], target_audio=None)],
             [
-                "Where is the bus stop",
-                "is the bus stop",
-                "the bus stop",
-                "bus stop",
                 "stop",
+                "bus stop",
+                "the bus stop",
+                "is the bus stop",
                 "Where is the bus stop?",
             ],
         )
+
+    def test_backward_build_audio_only_uses_target_audio_for_full_prompt(self):
+        target = {
+            "id": "en-target-test",
+            "canonical": "Where is the bus stop?",
+        }
+
+        prompts = backward_build_prompts(
+            target=target,
+            target_phrase=target["canonical"],
+            target_audio="/audio/generated/en/example/line-1.mp3",
+        )
+
+        self.assertEqual([prompt["audioText"] for prompt in prompts], [prompt["text"] for prompt in prompts])
+        self.assertEqual([prompt["audioUrl"] for prompt in prompts[:-1]], [None, None, None, None])
+        self.assertEqual(prompts[-1]["audioUrl"], "/audio/generated/en/example/line-1.mp3")
 
     def test_japanese_first_session_uses_short_beginner_chunks(self):
         session = load_language_session(
@@ -153,20 +169,19 @@ class StructuredDataGraphTests(unittest.TestCase):
             for card in session["cards"]
         ]
 
-        self.assertEqual(len(session["cards"]), 18)
+        self.assertEqual(len(session["cards"]), 15)
         self.assertEqual(
-            learner_lines[:6],
+            learner_lines[:5],
             [
                 "Konnichiwa!",
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Gomen nasai.",
                 "Sandoicchi kudasai.",
             ],
         )
         self.assertEqual(
-            learner_lines[6:],
+            learner_lines[5:],
             [
                 "Konnichiwa!",
                 "Anna desu.",
@@ -178,8 +193,6 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Wakarimasen.",
                 "Sumimasen.",
                 "Sandoicchi kudasai.",
-                "Gomen nasai.",
-                "Gomen nasai.",
             ],
         )
         self.assertEqual(
@@ -190,7 +203,6 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "guided_scene_production",
                 "guided_scene_production",
                 "guided_scene_production",
-                "guided_scene_production",
                 "same_day_transfer",
                 "same_day_transfer",
                 "same_day_transfer",
@@ -200,21 +212,54 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "delayed_review",
                 "delayed_review",
                 "delayed_review",
-                "delayed_review",
-                "same_day_transfer",
                 "delayed_review",
             ],
         )
         for card in session["cards"]:
             self.assertTrue(card["support"]["show_transliteration_after_failure"])
-            if card["target"]["id"] != "ja-target-im-sorry":
-                self.assertTrue(card["dialogue"]["lines"][1]["audio"])
+            for line in card["dialogue"]["lines"]:
+                self.assertNotIn("???", line["text"])
+                self.assertTrue(line["transliteration"])
+                self.assertTrue(line["audio"])
+                self.assertTrue((ASSETS_DIR / line["audio"].lstrip("/")).exists())
                 self.assertTrue(
-                    all(
-                        str(line["visual"]).startswith(("/visuals/final/", "/visuals/Drafts/"))
-                        for line in card["dialogue"]["lines"]
-                    )
+                    str(line["visual"]).startswith(("/visuals/final/", "/visuals/Drafts/"))
                 )
+                self.assertTrue((ASSETS_DIR / line["visual"].lstrip("/")).exists())
+
+    def test_active_language_sessions_have_complete_dialogue_assets(self):
+        languages = [language["id"] for language in list_languages(CONTENT_DIR)]
+
+        for language in languages:
+            if language in LEGACY_INCOMPLETE_LANGUAGES:
+                continue
+
+            with self.subTest(language=language):
+                session = load_language_session(
+                    data_dir=CONTENT_DIR,
+                    project_dir=PROJECT_DIR,
+                    language=language,
+                )
+                requires_transliteration = session.get("script") not in {None, "English", "Latin"}
+
+                for card in session["cards"]:
+                    with self.subTest(language=language, card=card["id"]):
+                        self.assertTrue(card["dialogue"].get("lines"))
+                        for line in card["dialogue"]["lines"]:
+                            line_label = f"{card['id']} line {line.get('index')}"
+                            text = str(line.get("text", ""))
+                            transliteration = str(line.get("transliteration", ""))
+                            audio = line.get("audio")
+                            visual = line.get("visual")
+
+                            self.assertNotIn("???", text, line_label)
+                            self.assertTrue(text.strip(), line_label)
+                            if requires_transliteration:
+                                self.assertTrue(transliteration.strip(), line_label)
+                            self.assertTrue(audio, line_label)
+                            self.assertTrue((ASSETS_DIR / str(audio).lstrip("/")).exists(), line_label)
+                            self.assertTrue(visual, line_label)
+                            self.assertTrue((ASSETS_DIR / str(visual).lstrip("/")).exists(), line_label)
 
     def test_lists_languages_from_data_graph(self):
         languages = list_languages(CONTENT_DIR)

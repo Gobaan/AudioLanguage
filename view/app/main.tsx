@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { AdminValidationApp } from './AdminValidationApp';
 import { TravellerMvpApp } from './TravellerMvpApp';
 import './styles.css';
 
@@ -11,6 +12,6 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <TravellerMvpApp />
+    {window.location.pathname === '/admin/validation' ? <AdminValidationApp /> : <TravellerMvpApp />}
   </StrictMode>,
 );

@@ -1,5 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchLessons } from '../api/lessons';
+import {
+  fetchSuggestedParticipantName,
+  fetchValidationScorecard,
+  logValidationEvent,
+  startValidationSession,
+  uploadValidationAttempt,
+  validationAttemptAudioUrl,
+  type ValidationScorecard,
+} from '../api/validation';
 import type { ChoiceOption, Lesson, LessonListResponse, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
 
@@ -20,6 +29,8 @@ const LANGUAGE_OPTIONS: LanguageOption[] = [
 
 const DEFAULT_LANGUAGE = 'ja';
 const DEFAULT_LESSON = 'hello';
+const DEFAULT_SCENE_SET = 'mvp';
+const PARTICIPANT_STORAGE_KEY = 'audio-language-participant';
 
 const FALLBACK_LESSON: Lesson = {
   id: 'en-card-first-hi-dialogue-practice',
@@ -196,17 +207,89 @@ const FALLBACK_LESSON: Lesson = {
 };
 
 type LoadState = 'loading' | 'ready' | 'error';
+type AppView = 'lesson' | 'scorecard';
+type ScorecardState = 'idle' | 'loading' | 'ready' | 'error';
 
 export function TravellerMvpApp() {
   const [language, setLanguage] = useState(() => languageFromUrl());
   const [lessonPage, setLessonPage] = useState(() => lessonPageFromUrl());
+  const [sceneSet] = useState(() => sceneSetFromUrl());
   const [lessonTabs, setLessonTabs] = useState<LessonTab[]>([]);
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [stepIndex, setStepIndex] = useState(0);
   const [selectedChoiceByStep, setSelectedChoiceByStep] = useState<Record<string, string>>({});
+  const [validationSessionId, setValidationSessionId] = useState<string | null>(null);
+  const [appView, setAppView] = useState<AppView>('lesson');
+  const [scorecardState, setScorecardState] = useState<ScorecardState>('idle');
+  const [scorecard, setScorecard] = useState<ValidationScorecard | null>(null);
+  const [participantId, setParticipantId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    let isCurrent = true;
+    const urlParticipant = participantFromUrl();
+    if (urlParticipant) {
+      saveParticipantId(urlParticipant);
+      setParticipantId(urlParticipant);
+      return () => {
+        isCurrent = false;
+      };
+    }
+
+    const storedParticipant = localStorage.getItem(PARTICIPANT_STORAGE_KEY);
+    if (storedParticipant) {
+      setParticipantId(storedParticipant);
+      return () => {
+        isCurrent = false;
+      };
+    }
+
+    fetchSuggestedParticipantName()
+      .then((participant) => {
+        if (!isCurrent) return;
+        saveParticipantId(participant.participantId);
+        setParticipantId(participant.participantId);
+      })
+      .catch(() => {
+        if (!isCurrent) return;
+        const fallbackParticipant = fallbackParticipantId();
+        saveParticipantId(fallbackParticipant);
+        setParticipantId(fallbackParticipant);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!participantId) return;
+
+    let isCurrent = true;
+
+    startValidationSession({
+      language,
+      sceneSet,
+      lessonPage,
+      participantId: participantId ?? undefined,
+    })
+      .then((session) => {
+        if (isCurrent) {
+          setValidationSessionId(session.sessionId);
+        }
+      })
+      .catch(() => {
+        if (isCurrent) {
+          setValidationSessionId(null);
+        }
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [language, sceneSet, participantId]);
 
   useEffect(() => {
     let isCurrent = true;
@@ -214,17 +297,17 @@ export function TravellerMvpApp() {
     async function loadLesson() {
       setLoadState('loading');
       try {
-        const payload = await fetchLessons(language, lessonPage);
+        const payload = await fetchLessons(language, lessonPage, sceneSet);
         if (!isCurrent) return;
         applyLessonPayload(payload);
         setLoadState('ready');
       } catch {
         try {
-          const payload = await fetchLessons(language, DEFAULT_LESSON);
+          const payload = await fetchLessons(language, DEFAULT_LESSON, sceneSet);
           if (!isCurrent) return;
           applyLessonPayload(payload);
           setLessonPage(DEFAULT_LESSON);
-          updateUrl(language, DEFAULT_LESSON, true);
+          updateUrl(language, DEFAULT_LESSON, sceneSet, true);
           setLoadState('ready');
         } catch {
           if (!isCurrent) return;
@@ -245,12 +328,15 @@ export function TravellerMvpApp() {
     return () => {
       isCurrent = false;
     };
-  }, [language, lessonPage]);
+  }, [language, lessonPage, sceneSet]);
 
   useEffect(() => {
     setStepIndex(0);
     setSelectedChoiceByStep({});
-  }, [language, lessonPage]);
+    setAppView('lesson');
+    setScorecard(null);
+    setScorecardState('idle');
+  }, [language, lessonPage, sceneSet]);
 
   const currentStep = lesson?.steps[stepIndex];
   const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
@@ -268,11 +354,36 @@ export function TravellerMvpApp() {
     setIsPlaying(false);
   }, [stepIndex]);
 
+  useEffect(() => {
+    if (!validationSessionId || !stepLesson || !step) return;
+
+    logEvent({
+      type: 'page_view',
+      lessonId: stepLesson.id,
+      lessonPage,
+      stepId: step.id,
+      stepIndex,
+      frameId: step.frameId,
+      targetId: stepLesson.target.id,
+    });
+  }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage]);
+
   function playStepAudio() {
     const audioUrl = step?.audio?.url;
     if (!audioUrl) return;
 
     stopAudio(audioRef.current);
+    if (stepLesson && step) {
+      logEvent({
+        type: 'audio_played',
+        lessonId: stepLesson.id,
+        lessonPage,
+        stepId: step.id,
+        stepIndex,
+        frameId: step.frameId,
+        targetId: stepLesson.target.id,
+      });
+    }
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
     setIsPlaying(true);
@@ -306,17 +417,118 @@ export function TravellerMvpApp() {
       ...current,
       [stepId]: choice.id,
     }));
+    if (stepLesson) {
+      logEvent({
+        type: 'choice_selected',
+        lessonId: stepLesson.id,
+        lessonPage,
+        stepId,
+        stepIndex,
+        choiceId: choice.id,
+        isCorrect: choice.isCorrect,
+        targetId: stepLesson.target.id,
+      });
+    }
   }
 
   function selectLanguage(nextLanguage: string) {
     setLanguage(nextLanguage);
     setLessonPage(DEFAULT_LESSON);
-    updateUrl(nextLanguage, DEFAULT_LESSON);
+    updateUrl(nextLanguage, DEFAULT_LESSON, sceneSet);
   }
 
   function selectLessonPage(nextPage: string) {
     setLessonPage(nextPage);
-    updateUrl(language, nextPage);
+    updateUrl(language, nextPage, sceneSet);
+  }
+
+  function goToStep(direction: 'previous' | 'next') {
+    setStepIndex((value) => {
+      const nextValue =
+        direction === 'previous'
+          ? Math.max(0, value - 1)
+          : Math.min((stepLesson?.steps.length ?? 1) - 1, value + 1);
+      if (nextValue !== value && stepLesson && step) {
+        logEvent({
+          type: 'navigation',
+          direction,
+          lessonId: stepLesson.id,
+          lessonPage,
+          stepId: step.id,
+          stepIndex: value,
+          frameId: step.frameId,
+          targetId: stepLesson.target.id,
+        });
+      }
+      return nextValue;
+    });
+  }
+
+  function showScorecard() {
+    if (!validationSessionId) {
+      setScorecardState('error');
+      setAppView('scorecard');
+      return;
+    }
+
+    setAppView('scorecard');
+    setScorecardState('loading');
+    logEvent({
+      type: 'scorecard_viewed',
+      lessonId: stepLesson?.id,
+      lessonPage,
+      stepId: step?.id,
+      stepIndex,
+      targetId: stepLesson?.target.id,
+    });
+    fetchValidationScorecard(validationSessionId, true)
+      .then((nextScorecard) => {
+        setScorecard(nextScorecard);
+        setScorecardState('ready');
+      })
+      .catch(() => {
+        setScorecard(null);
+        setScorecardState('error');
+      });
+  }
+
+  function captureAttempt(
+    attemptStep: LessonStep,
+    recording: { blob: Blob; durationMs: number; mimeType: string },
+    extra: Record<string, unknown> = {},
+  ) {
+    if (!validationSessionId || !stepLesson) return;
+
+    const attemptId = crypto.randomUUID();
+    void uploadValidationAttempt(validationSessionId, recording.blob, {
+      attemptId,
+      participantId,
+      language,
+      sceneSet,
+      lessonId: stepLesson.id,
+      lessonPage,
+      stepId: attemptStep.id,
+      targetId: stepLesson.target.id,
+      expectedText: attemptStep.mic?.expectedText ?? stepLesson.target.text,
+      expectedTransliteration: attemptStep.mic?.expectedTransliteration ?? stepLesson.target.transliteration,
+      targetAudioUrl: learnerTargetAudioUrl(stepLesson),
+      recordingDurationMs: recording.durationMs,
+      byteCount: recording.blob.size,
+      mimeType: recording.mimeType,
+      buildPromptId: typeof extra.buildPromptId === 'string' ? extra.buildPromptId : undefined,
+      buildPromptText: typeof extra.buildPromptText === 'string' ? extra.buildPromptText : undefined,
+    }).catch(() => undefined);
+  }
+
+  function logEvent(event: Parameters<typeof logValidationEvent>[1]) {
+    if (!validationSessionId) return;
+
+    void logValidationEvent(validationSessionId, {
+      participantId: participantId ?? undefined,
+      language,
+      sceneSet,
+      ...event,
+    }).catch(() => undefined);
   }
 
   if (loadState === 'loading') {
@@ -330,8 +542,26 @@ export function TravellerMvpApp() {
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex >= stepLesson.steps.length - 1;
 
+  if (appView === 'scorecard') {
+    return (
+      <ValidationScorecardView
+        sessionId={validationSessionId}
+        state={scorecardState}
+        scorecard={scorecard}
+        onBack={() => setAppView('lesson')}
+        onRefresh={showScorecard}
+      />
+    );
+  }
+
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
+      {isLocalHost() ? (
+        <nav className="local-app-links" aria-label="Local app links">
+          {participantId ? <span>{participantId}</span> : null}
+          <a href="/admin/validation">Admin</a>
+        </nav>
+      ) : null}
       <nav className="language-switcher" aria-label="Language">
         {LANGUAGE_OPTIONS.map((option) => (
           <button
@@ -366,22 +596,129 @@ export function TravellerMvpApp() {
         selectedChoiceId={selectedChoiceByStep[step.id]}
         onPlayAudio={playStepAudio}
         onSelectChoice={selectChoice}
+        onCaptureAttempt={captureAttempt}
       />
       <nav className="step-controls" aria-label="Lesson step controls">
-        <button type="button" onClick={() => setStepIndex((value) => Math.max(0, value - 1))} disabled={isFirstStep}>
+        <button type="button" onClick={() => goToStep('previous')} disabled={isFirstStep}>
           Previous
         </button>
         <button
           type="button"
-          onClick={() => setStepIndex((value) => Math.min(stepLesson.steps.length - 1, value + 1))}
-          disabled={isLastStep}
+          onClick={() => (isLastStep ? showScorecard() : goToStep('next'))}
         >
-          Next
+          {isLastStep ? 'Scorecard' : 'Next'}
         </button>
       </nav>
     </section>
   );
 }
+
+function ValidationScorecardView({
+  sessionId,
+  state,
+  scorecard,
+  onBack,
+  onRefresh,
+}: {
+  sessionId: string | null;
+  state: ScorecardState;
+  scorecard: ValidationScorecard | null;
+  onBack: () => void;
+  onRefresh: () => void;
+}) {
+  return (
+    <section className="validation-scorecard" aria-label="Validation scorecard">
+      <header className="scorecard-header">
+        <div>
+          <span>Local validation</span>
+          <h1>Scorecard</h1>
+        </div>
+        <nav className="scorecard-actions" aria-label="Scorecard controls">
+          <button type="button" onClick={onBack}>
+            Back
+          </button>
+          <button type="button" onClick={onRefresh}>
+            Refresh
+          </button>
+        </nav>
+      </header>
+
+      {state === 'loading' ? <p className="scorecard-status">Loading scorecard.</p> : null}
+      {state === 'error' ? (
+        <p className="scorecard-status">Scorecard is unavailable. Session: {sessionId ?? 'none'}</p>
+      ) : null}
+      {state === 'ready' && scorecard ? <ScorecardDetails scorecard={scorecard} /> : null}
+    </section>
+  );
+}
+
+function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
+  return (
+    <>
+      <dl className="scorecard-summary">
+        <div>
+          <dt>Session</dt>
+          <dd>{scorecard.session.sessionId}</dd>
+        </div>
+        <div>
+          <dt>Events</dt>
+          <dd>{scorecard.eventCount}</dd>
+        </div>
+        <div>
+          <dt>Attempts</dt>
+          <dd>{scorecard.attemptCount}</dd>
+        </div>
+      </dl>
+
+      <section className="scorecard-targets" aria-label="Scorecard targets">
+        {scorecard.targets.length === 0 ? (
+          <p className="scorecard-status">No recordings have been captured yet.</p>
+        ) : (
+          scorecard.targets.map((target) => (
+            <article className="scorecard-target" key={target.targetId}>
+              <header>
+                <div>
+                  <span>{target.targetId}</span>
+                  <h2>{target.expectedTransliteration || target.expectedText || 'Target'}</h2>
+                </div>
+                {target.targetAudioUrl ? <audio controls src={target.targetAudioUrl} aria-label="Target audio" /> : null}
+              </header>
+              <ul>
+                {target.attempts.map((attempt) => (
+                  <li key={attempt.attemptId}>
+                    <div>
+                      <strong>{attempt.stepId}</strong>
+                      <span>{scoreLabel(attempt)}</span>
+                    </div>
+                    <audio controls src={validationAttemptAudioUrl(scorecard.session.sessionId, attempt.attemptId)} />
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))
+        )}
+      </section>
+    </>
+  );
+}
+
+function scoreLabel(attempt: { buildPromptText?: string; lessonPage?: string; aiScore?: unknown }): string {
+  const score = attempt.aiScore as
+    | { status?: string; result?: { communication?: { status?: string; confidence?: number } } }
+    | null
+    | undefined;
+  if (!score) {
+    return attempt.buildPromptText || attempt.lessonPage || 'Needs score';
+  }
+  if (score.status !== 'scored') {
+    return 'AI score unavailable';
+  }
+
+  const communication = score.result?.communication;
+  const confidence = typeof communication?.confidence === 'number' ? ` ${Math.round(communication.confidence * 100)}%` : '';
+  return `${communication?.status || 'scored'}${confidence}`;
+}
+
 function languageFromUrl(): string {
   const language = new URLSearchParams(window.location.search).get('language');
   return LANGUAGE_OPTIONS.some((option) => option.id === language) ? language : DEFAULT_LANGUAGE;
@@ -391,10 +728,35 @@ function lessonPageFromUrl(): string {
   return new URLSearchParams(window.location.search).get('lesson') ?? DEFAULT_LESSON;
 }
 
-function updateUrl(language: string, lesson: string, replace = false) {
+function sceneSetFromUrl(): string {
+  return new URLSearchParams(window.location.search).get('scene_set') ?? DEFAULT_SCENE_SET;
+}
+
+function participantFromUrl(): string | null {
+  return new URLSearchParams(window.location.search).get('participant');
+}
+
+function saveParticipantId(participantId: string) {
+  localStorage.setItem(PARTICIPANT_STORAGE_KEY, participantId);
+}
+
+function fallbackParticipantId(): string {
+  return `Learner-${Math.floor(1000 + Math.random() * 9000)}`;
+}
+
+function isLocalHost(): boolean {
+  return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+}
+
+function updateUrl(language: string, lesson: string, sceneSet: string, replace = false) {
   const url = new URL(window.location.href);
   url.searchParams.set('language', language);
   url.searchParams.set('lesson', lesson);
+  if (sceneSet === DEFAULT_SCENE_SET) {
+    url.searchParams.delete('scene_set');
+  } else {
+    url.searchParams.set('scene_set', sceneSet);
+  }
   if (replace) {
     window.history.replaceState({}, '', url);
   } else {
@@ -409,6 +771,10 @@ function stopAudio(audio: HTMLAudioElement | null) {
   audio.currentTime = 0;
 }
 
+function learnerTargetAudioUrl(lesson: Lesson): string | null {
+  return lesson.frames.find((frame) => frame.lineType === 'learner_target')?.audioUrl ?? null;
+}
+
 function activeMvpLesson(lesson: Lesson): Lesson {
   return {
     ...lesson,
@@ -416,18 +782,9 @@ function activeMvpLesson(lesson: Lesson): Lesson {
       if (step.id === 'translation_reveal') return false;
       if (step.id === 'audio_replay') return false;
       if (step.id === 'production_prompt') return false;
-      if (step.id === 'backward_build') return shouldShowBackwardBuild(lesson.target.text);
       return true;
     }),
   };
-}
-
-function shouldShowBackwardBuild(targetText: string): boolean {
-  return phraseWords(targetText).length >= 3;
-}
-
-function phraseWords(value: string): string[] {
-  return value.match(/[\p{L}\p{N}']+/gu) ?? [];
 }
 
 function withAssetUrls(lesson: Lesson | null): Lesson | null {

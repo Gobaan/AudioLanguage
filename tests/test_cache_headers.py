@@ -1,6 +1,8 @@
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
@@ -10,6 +12,25 @@ BACKEND_DIR = PROJECT_DIR / "backend"
 sys.path.insert(0, str(BACKEND_DIR))
 
 from app.main import app
+from app.conversation.models import CoachResponse, CommunicationJudgement
+from app.validation import ValidationStore
+
+
+class FakeConversationCoach:
+    def evaluate_attempt(self, *, attempt, context):
+        return CoachResponse(
+            transcript="こんにちは",
+            transcript_romanized=context.target_romanized,
+            communication=CommunicationJudgement(
+                status="exact",
+                close_enough=True,
+                confidence=0.98,
+                message="Understood.",
+                next_action="continue",
+            ),
+            speech_available=True,
+            speech_feedback="",
+        )
 
 
 class BrowserCacheHeaderTests(unittest.TestCase):
@@ -38,10 +59,30 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         meaning_step = next(step for step in first_lesson["steps"] if step["type"] == "broad_meaning_guess")
 
         self.assertEqual(payload["language"], "ja")
+        tab_ids = [tab["id"] for tab in payload["lesson_tabs"]]
+        tab_labels = [tab["label"] for tab in payload["lesson_tabs"]]
         self.assertEqual(
-            [tab["id"] for tab in payload["lesson_tabs"]],
-            ["hello", "introduce", "repair", "excuse-me", "food-order"],
+            tab_ids[:5],
+            [
+                "hello",
+                "introduce",
+                "repair",
+                "excuse-me",
+                "food-order",
+            ],
         )
+        self.assertEqual(
+            set(tab_ids[5:]),
+            {
+                "hello-transfer",
+                "introduce-transfer",
+                "repair-transfer",
+                "excuse-me-transfer",
+                "food-order-transfer",
+            },
+        )
+        self.assertEqual(tab_labels[:5], [f"Scene {index}" for index in range(1, 6)])
+        self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 11)})
         self.assertEqual(first_lesson["player_component"], "TravellerLessonPlayer")
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].startswith("/visuals/"))
         self.assertIn("scene_setup", step_types)
@@ -71,6 +112,10 @@ class BrowserCacheHeaderTests(unittest.TestCase):
             [tab["id"] for tab in payload["lesson_tabs"]],
             ["hello", "introduce", "repair", "food-order", "hospital"],
         )
+        self.assertEqual(
+            [tab["label"] for tab in payload["lesson_tabs"]],
+            [f"Scene {index}" for index in range(1, 6)],
+        )
 
     def test_lessons_endpoint_supports_all_mvp_lesson_aliases(self):
         aliases = {
@@ -97,6 +142,11 @@ class BrowserCacheHeaderTests(unittest.TestCase):
             "repair": "ja-card-dont-understand-dialogue-practice",
             "excuse-me": "ja-card-excuse-me-dialogue-practice",
             "food-order": "ja-card-order-food-dialogue-practice",
+            "hello-transfer": "ja-card-greeting-neighbor-transfer-same_day_transfer",
+            "introduce-transfer": "ja-card-introduce-class-transfer-same_day_transfer",
+            "repair-transfer": "ja-card-repair-ticket-transfer-same_day_transfer",
+            "excuse-me-transfer": "ja-card-excuse-me-cafe-transfer-same_day_transfer",
+            "food-order-transfer": "ja-card-order-convenience-transfer-same_day_transfer",
         }
 
         for alias, lesson_id in aliases.items():
@@ -114,9 +164,47 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        step_types = [step["type"] for step in response.json()["lessons"][0]["steps"]]
+        steps = response.json()["lessons"][0]["steps"]
+        step_types = [step["type"] for step in steps]
+        meaning_step = next(step for step in steps if step["type"] == "broad_meaning_guess")
 
         self.assertEqual(step_types, ["scene_setup", "broad_meaning_guess", "scene_recall"])
+        self.assertEqual(meaning_step["frameId"], "line-0")
+        self.assertEqual(meaning_step["props"]["question"], "What is the best response here?")
+        self.assertEqual(meaning_step["props"]["difficulty"], "medium")
+
+    def test_delayed_scene_set_uses_delayed_review_aliases(self):
+        response = TestClient(app).get("/api/languages/ja/lessons?scene_set=delayed&lesson=hello")
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        lesson = payload["lessons"][0]
+        meaning_step = next(step for step in lesson["steps"] if step["type"] == "broad_meaning_guess")
+
+        self.assertEqual(payload["scene_set"], "delayed")
+        self.assertEqual(
+            set(tab["id"] for tab in payload["lesson_tabs"]),
+            {"hello", "introduce", "repair", "excuse-me", "food-order"},
+        )
+        self.assertEqual(
+            set(tab["label"] for tab in payload["lesson_tabs"]),
+            {f"Scene {index}" for index in range(1, 6)},
+        )
+        self.assertEqual(lesson["id"], "ja-card-greeting-entry-review-delayed_review")
+        self.assertEqual(lesson["stage"], "delayed_review")
+        self.assertEqual(meaning_step["props"]["difficulty"], "hard")
+
+    def test_lesson_order_seed_reproduces_randomized_groups(self):
+        client = TestClient(app)
+        first_response = client.get("/api/languages/ja/lessons?scene_set=delayed&order_seed=review-day-1")
+        second_response = client.get("/api/languages/ja/lessons?scene_set=delayed&order_seed=review-day-1")
+
+        self.assertEqual(first_response.status_code, 200)
+        self.assertEqual(second_response.status_code, 200)
+        self.assertEqual(
+            [tab["id"] for tab in first_response.json()["lesson_tabs"]],
+            [tab["id"] for tab in second_response.json()["lesson_tabs"]],
+        )
 
     def test_fallback_choices_do_not_repeat_learner_says_prefix(self):
         response = TestClient(app).get(
@@ -149,6 +237,134 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertIn("easy", first_set["levels"])
         self.assertIn("medium", first_set["levels"])
         self.assertIn("hard", first_set["levels"])
+
+    def test_validation_session_saves_events_and_attempts_locally(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.main.validation_store", store), patch("app.main.conversation_coach", FakeConversationCoach()):
+                client = TestClient(app)
+                session_response = client.post(
+                    "/api/validation/sessions",
+                    json={
+                        "sessionId": "test-session",
+                        "participantId": "local-test",
+                        "language": "ja",
+                        "sceneSet": "mvp",
+                        "lessonPage": "hello",
+                    },
+                )
+                event_response = client.post(
+                    "/api/validation/sessions/test-session/events",
+                    json={
+                        "type": "choice_selected",
+                        "lessonId": "ja-card-first-hi-dialogue-practice",
+                        "stepId": "broad_meaning_guess",
+                        "choiceId": "respond_to_greeting",
+                        "isCorrect": True,
+                    },
+                )
+                attempt_response = client.post(
+                    "/api/validation/sessions/test-session/attempts",
+                    data={
+                        "metadata": (
+                            '{"attemptId":"attempt-1","lessonId":"ja-card-first-hi-dialogue-practice",'
+                            '"stepId":"repeat_with_mic","targetId":"ja-target-respond-hi",'
+                            '"expectedText":"こんにちは！","expectedTransliteration":"Konnichiwa!",'
+                            '"targetAudioUrl":"/audio/generated/ja/first-hi-response/line-1.mp3"}'
+                        )
+                    },
+                    files={"file": ("attempt.webm", b"audio-bytes", "audio/webm")},
+                )
+                duplicate_response = client.post(
+                    "/api/validation/sessions/test-session/attempts",
+                    data={
+                        "metadata": (
+                            '{"attemptId":"attempt-1","lessonId":"ja-card-first-hi-dialogue-practice",'
+                            '"stepId":"repeat_with_mic","targetId":"ja-target-respond-hi"}'
+                        )
+                    },
+                    files={"file": ("attempt.webm", b"duplicate-audio", "audio/webm")},
+                )
+                audio_response = client.get("/api/validation/sessions/test-session/attempts/attempt-1/audio")
+                scorecard_response = client.get("/api/validation/sessions/test-session/scorecard?score=true")
+
+        self.assertEqual(session_response.status_code, 200)
+        self.assertEqual(event_response.status_code, 200)
+        self.assertEqual(attempt_response.status_code, 200)
+        self.assertEqual(duplicate_response.status_code, 200)
+        self.assertEqual(audio_response.status_code, 200)
+        self.assertEqual(audio_response.content, b"audio-bytes")
+        self.assertEqual(attempt_response.json()["recordingPath"], duplicate_response.json()["recordingPath"])
+        scorecard = scorecard_response.json()
+        self.assertEqual(scorecard["eventCount"], 1)
+        self.assertEqual(scorecard["attemptCount"], 1)
+        self.assertEqual(scorecard["targets"][0]["targetId"], "ja-target-respond-hi")
+        self.assertEqual(scorecard["targets"][0]["targetAudioUrl"], "/audio/generated/ja/first-hi-response/line-1.mp3")
+        self.assertEqual(scorecard["targets"][0]["attempts"][0]["aiScore"]["status"], "scored")
+        self.assertEqual(scorecard["targets"][0]["attempts"][0]["aiScore"]["result"]["communication"]["status"], "exact")
+
+    def test_validation_admin_summary_groups_attempts_by_language_and_scene_set(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.main.validation_store", store):
+                client = TestClient(app)
+                client.post(
+                    "/api/validation/sessions",
+                    json={
+                        "sessionId": "day-1",
+                        "participantId": "friend-a",
+                        "language": "ja",
+                        "sceneSet": "mvp",
+                        "lessonPage": "hello",
+                    },
+                )
+                client.post(
+                    "/api/validation/sessions/day-1/attempts",
+                    data={
+                        "metadata": (
+                            '{"attemptId":"attempt-1","language":"ja","sceneSet":"mvp",'
+                            '"lessonPage":"hello","lessonId":"ja-card-first-hi-dialogue-practice",'
+                            '"stepId":"repeat_with_mic","targetId":"ja-target-respond-hi",'
+                            '"expectedText":"こんにちは！","expectedTransliteration":"Konnichiwa!"}'
+                        )
+                    },
+                    files={"file": ("attempt.webm", b"audio-bytes", "audio/webm")},
+                )
+                store.save_score(
+                    "day-1",
+                    "attempt-1",
+                    {
+                        "status": "scored",
+                        "result": {
+                            "communication": {
+                                "status": "exact",
+                                "close_enough": True,
+                                "confidence": 0.96,
+                            }
+                        },
+                    },
+                )
+
+                response = client.get("/api/validation/admin/summary")
+                name_response = client.get("/api/validation/participant-name")
+                delete_response = client.delete("/api/validation/sessions/day-1")
+                deleted_summary_response = client.get("/api/validation/admin/summary")
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["sessionCount"], 1)
+        self.assertEqual(payload["attemptCount"], 1)
+        self.assertEqual(payload["rememberedAttemptCount"], 1)
+        self.assertEqual(payload["sessions"][0]["language"], "ja")
+        self.assertEqual(payload["sessions"][0]["sceneSet"], "mvp")
+        self.assertEqual(payload["targets"][0]["language"], "ja")
+        self.assertEqual(payload["targets"][0]["sceneSet"], "mvp")
+        self.assertEqual(payload["targets"][0]["targetId"], "ja-target-respond-hi")
+        self.assertEqual(name_response.status_code, 200)
+        self.assertNotEqual(name_response.json()["participantId"], "friend-a")
+        self.assertEqual(delete_response.status_code, 200)
+        self.assertEqual(delete_response.json()["status"], "deleted")
+        self.assertEqual(deleted_summary_response.json()["sessionCount"], 0)
 
 
 if __name__ == "__main__":

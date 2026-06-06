@@ -12,6 +12,7 @@ export * from './ProductionPrompt';
 export * from './PromptedRecording';
 export * from './ProgressCard';
 export * from './SceneFrame';
+export * from './ScenePlayback';
 export * from './SimilarPhraseContrast';
 export * from './TranslationReveal';
 export * from './TravellerLessonPlayer';

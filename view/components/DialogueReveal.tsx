@@ -5,6 +5,7 @@ export type DialogueRevealLine = {
   id: string;
   speaker?: string;
   text?: string;
+  transliteration?: string;
   translation?: string;
   audioUrl?: string;
   isTranslated?: boolean;
@@ -64,7 +65,7 @@ export function DialogueReveal({ lines, title = 'Dialogue' }: DialogueRevealProp
         {lines.map((line) => (
           <li key={line.id} className={line.isTranslated ? 'translated' : ''}>
             <span className="dialogue-speaker">{speakerLabel(line)}</span>
-            <span className="dialogue-line-text">{line.text}</span>
+            <span className="dialogue-line-text">{displayLineText(line)}</span>
             {line.isTranslated && line.translation ? (
               <span className="dialogue-translation">
                 <span>{line.translation}</span>
@@ -83,6 +84,10 @@ export function DialogueReveal({ lines, title = 'Dialogue' }: DialogueRevealProp
       </ol>
     </section>
   );
+}
+
+function displayLineText(line: DialogueRevealLine): string | undefined {
+  return line.transliteration || line.text;
 }
 
 function speakerLabel(line: DialogueRevealLine): string {
