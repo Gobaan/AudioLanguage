@@ -9,6 +9,23 @@
     "goal": "Test the guided speaking card template across greeting, self-introduction, and repair phrases.",
     "estimated_minutes": 6,
     "unlock_after": [],
+    "lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Scene 1",
+        "card_id": "ta-card-greeting-listen"
+      },
+      {
+        "id": "introduce",
+        "label": "Scene 2",
+        "card_id": "ta-card-introduce-self-listen"
+      },
+      {
+        "id": "repair",
+        "label": "Scene 3",
+        "card_id": "ta-card-say-slowly-listen"
+      }
+    ],
     "cards": [
       "ta-card-greeting-listen",
       "ta-card-introduce-self-listen",
@@ -20,8 +37,8 @@
       "id": "ta-card-greeting-listen",
       "template_id": "guided-speaking-scene-v1",
       "dialogue_id": "ta-greeting-hello",
-      "mode": "listen",
-      "stage": "first_exposure",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
       "correct_function_id": "greet_and_ask_wellbeing",
       "target_id": "ta-target-hello-how-are-you",
       "prompt": "Watch and listen to the Tamil greeting exchange.",
@@ -33,8 +50,8 @@
       "id": "ta-card-introduce-self-listen",
       "template_id": "guided-speaking-scene-v1",
       "dialogue_id": "ta-introduce-self",
-      "mode": "listen",
-      "stage": "first_exposure",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
       "correct_function_id": "introduce_self",
       "target_id": "ta-target-my-name-is",
       "prompt": "A classmate asks your name. Listen, then say the learner line in Tamil.",
@@ -46,8 +63,8 @@
       "id": "ta-card-say-slowly-listen",
       "template_id": "guided-speaking-scene-v1",
       "dialogue_id": "ta-repair-say-slowly",
-      "mode": "listen",
-      "stage": "first_exposure",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
       "correct_function_id": "ask_for_repetition",
       "target_id": "ta-target-say-it-slowly",
       "prompt": "The staff member speaks too fast. Listen, then ask them to say it slowly in Tamil.",

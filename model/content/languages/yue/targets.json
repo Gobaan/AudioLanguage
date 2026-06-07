@@ -1,0 +1,63 @@
+{
+  "language": "yue",
+  "display_name": "Cantonese",
+  "script": "Latin",
+  "native_review_status": "needs_native_review",
+  "targets": [
+    {
+      "id": "yue-target-respond-hi",
+      "function_id": "respond_to_greeting",
+      "canonical": "Nei hou!",
+      "transliteration": "Nei hou!",
+      "display_meaning": "Respond to hello.",
+      "meaning_units": ["hello", "response"],
+      "accepted_variants": ["Nei hou.", "Halo.", "Hai."],
+      "wrong_for_context_examples": ["Zoi gin.", "M goi.", "Hai bin dou?"],
+      "notes": { "register": "friendly-basic", "native_review_required": true }
+    },
+    {
+      "id": "yue-target-my-name-is",
+      "function_id": "introduce_self",
+      "canonical": "Ngo giu Anna.",
+      "transliteration": "Ngo giu Anna.",
+      "display_meaning": "My name is Anna.",
+      "meaning_units": ["my", "name", "proper_noun"],
+      "accepted_variants": ["Ngo hai Anna.", "Ngo ge meng hai Anna."],
+      "wrong_for_context_examples": ["Nei hou.", "M goi.", "Ngo m ming."],
+      "notes": { "proper_noun": "Anna", "register": "neutral", "native_review_required": true }
+    },
+    {
+      "id": "yue-target-i-dont-understand",
+      "function_id": "say_do_not_understand",
+      "canonical": "M hou ji si, ngo m ming.",
+      "transliteration": "M hou ji si, ngo m ming.",
+      "display_meaning": "Sorry, I don't understand.",
+      "meaning_units": ["sorry", "not", "understand"],
+      "accepted_variants": ["Ngo m ming.", "M goi, ngo m ming."],
+      "wrong_for_context_examples": ["Hai.", "Ngo seung jiu seoi.", "Gei do cin?"],
+      "notes": { "register": "polite-neutral", "native_review_required": true }
+    },
+    {
+      "id": "yue-target-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "canonical": "M goi.",
+      "transliteration": "M goi.",
+      "display_meaning": "Excuse me.",
+      "meaning_units": ["attention_request", "polite_softener"],
+      "accepted_variants": ["M goi.", "M hou ji si."],
+      "wrong_for_context_examples": ["Nei hou.", "Do ze.", "Zoi gin."],
+      "notes": { "register": "polite-basic", "native_review_required": true }
+    },
+    {
+      "id": "yue-target-one-local-food-please",
+      "function_id": "order_local_food",
+      "canonical": "Jat go bo lo baau, m goi.",
+      "transliteration": "Jat go bo lo baau, m goi.",
+      "display_meaning": "One pineapple bun, please.",
+      "meaning_units": ["one", "food_item", "please"],
+      "accepted_variants": ["Bo lo baau, m goi.", "Jat go bo lo baau."],
+      "wrong_for_context_examples": ["Ngo m ming.", "Hai bin dou?", "Ngo giu Anna."],
+      "notes": { "food_slot": "pineapple bun", "register": "polite-neutral", "native_review_required": true }
+    }
+  ]
+}

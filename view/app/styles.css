@@ -31,6 +31,91 @@ body {
   place-items: start center;
 }
 
+#root:has(.language-selection-page) {
+  align-items: start;
+  place-items: start center;
+}
+
+.language-selection-page {
+  display: grid;
+  gap: 18px;
+  width: min(100%, 920px);
+}
+
+.language-selection-page > header {
+  display: grid;
+  gap: 5px;
+}
+
+.language-selection-page > header span {
+  color: #5f665f;
+  font: 800 0.78rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform: uppercase;
+}
+
+.language-selection-page h1 {
+  color: var(--ink);
+  font: 900 1.8rem/1.1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.language-selection-page > p {
+  color: var(--ink);
+  font: 800 1rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.language-card-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.language-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.language-card h2 {
+  color: var(--ink);
+  font: 900 1.15rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.language-card p {
+  color: #5f665f;
+  font: 700 0.92rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.language-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.language-card-actions a {
+  align-items: center;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent-ink);
+  display: inline-flex;
+  font: 800 0.9rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 38px;
+  padding: 0 12px;
+  text-decoration: none;
+}
+
+.language-card-actions a + a {
+  background: var(--surface);
+  color: var(--ink);
+}
+
 .traveller-mvp-app {
   display: grid;
   gap: 14px;
@@ -555,6 +640,11 @@ body {
   width: min(100%, 1180px);
 }
 
+.validation-admin.simple {
+  grid-template-rows: auto minmax(0, 1fr);
+  max-height: calc(100vh - 28px);
+}
+
 .admin-header {
   align-items: center;
   display: flex;
@@ -601,6 +691,17 @@ body {
 .admin-actions a {
   background: var(--surface);
   color: var(--ink);
+}
+
+.admin-actions button.danger {
+  background: #b94332;
+  border-color: #b94332;
+  color: #ffffff;
+}
+
+.admin-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
 }
 
 .admin-summary {
@@ -650,6 +751,241 @@ body {
   color: var(--ink);
   font: 800 1rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   margin: 0;
+}
+
+.admin-user-progress-shell {
+  align-items: start;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 210px minmax(0, 1fr);
+  min-height: 0;
+}
+
+.admin-user-list,
+.admin-progress-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.admin-user-list {
+  display: grid;
+  gap: 6px;
+  max-height: calc(100vh - 92px);
+  overflow: auto;
+}
+
+.admin-user-list h2 {
+  color: var(--ink);
+  font: 900 0.95rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0 0 2px;
+}
+
+.admin-user-list button {
+  background: #f5f2ec;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  gap: 3px;
+  min-height: 52px;
+  padding: 8px;
+  text-align: left;
+}
+
+.admin-user-list button.active {
+  background: #eef6f1;
+  border-color: #267247;
+}
+
+.admin-user-list strong {
+  font: 900 0.95rem/1.15 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.admin-user-list span {
+  color: #5f665f;
+  font: 800 0.8rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.admin-progress-panel {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.admin-progress-panel > header span {
+  color: #5f665f;
+  font: 800 0.76rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform: uppercase;
+}
+
+.admin-progress-panel > header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.admin-progress-panel > header h2 {
+  color: var(--ink);
+  font: 900 1.15rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 1px 0 0;
+}
+
+.admin-delete-user,
+.attempt-actions button {
+  background: #b94332;
+  border: 1px solid #b94332;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font: 800 0.78rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 30px;
+  padding: 0 10px;
+}
+
+.admin-delete-user:disabled,
+.attempt-actions button:disabled,
+.retry-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.admin-progress-grid-wrap {
+  overflow: auto;
+}
+
+.admin-progress-grid {
+  border-collapse: collapse;
+  min-width: 720px;
+  width: 100%;
+}
+
+.admin-progress-grid th,
+.admin-progress-grid td {
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  color: var(--ink);
+  padding: 7px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-progress-grid th {
+  background: #f5f2ec;
+  font: 900 0.84rem/1.25 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-width: 160px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.admin-progress-grid tbody th {
+  left: 0;
+  max-width: 220px;
+  overflow-wrap: anywhere;
+  position: sticky;
+  z-index: 2;
+}
+
+.admin-progress-grid thead th:first-child {
+  left: 0;
+  z-index: 3;
+}
+
+.admin-progress-grid thead span,
+.admin-progress-grid thead em {
+  display: block;
+}
+
+.admin-progress-grid thead em {
+  color: #5f665f;
+  font: 800 0.74rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-style: normal;
+  margin-top: 2px;
+}
+
+.admin-attempt-cells {
+  display: grid;
+  gap: 6px;
+}
+
+.attempt-cell {
+  border: 1px solid;
+  border-radius: 8px;
+  display: grid;
+  gap: 5px;
+  min-width: 170px;
+  padding: 6px;
+}
+
+.attempt-cell header {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.choice-cell {
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.attempt-cell.passed {
+  background: #eef6f1;
+  border-color: #267247;
+}
+
+.choice-cell.passed {
+  background: #eef6f1;
+  border-color: #267247;
+}
+
+.attempt-cell.failed {
+  background: #f9ece9;
+  border-color: #b94332;
+}
+
+.choice-cell.failed {
+  background: #f9ece9;
+  border-color: #b94332;
+}
+
+.attempt-cell span,
+.choice-cell span,
+.attempt-empty {
+  color: var(--ink);
+  font: 900 0.78rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform: uppercase;
+}
+
+.attempt-cell audio {
+  width: 170px;
+}
+
+.attempt-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.attempt-actions .score-button {
+  background: var(--surface);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.retry-toggle {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  font: 900 0.72rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 24px;
+  padding: 0 8px;
 }
 
 .admin-table-wrap {
@@ -826,6 +1162,28 @@ body {
   font: 900 0.82rem/1.25 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.admin-data-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-data-actions button {
+  background: var(--surface);
+  border: 1px solid #b94332;
+  border-radius: 8px;
+  color: #8f2f23;
+  cursor: pointer;
+  font: 800 0.78rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 30px;
+  padding: 0 9px;
+}
+
+.admin-data-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
 .admin-session-list {
   display: grid;
   gap: 8px;
@@ -899,6 +1257,7 @@ body {
   }
 
   .admin-header,
+  .admin-user-progress-shell,
   .admin-session {
     align-items: stretch;
     display: grid;

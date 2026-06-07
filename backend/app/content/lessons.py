@@ -34,6 +34,8 @@ def lesson_from_card(language: str, card: dict[str, Any]) -> dict[str, Any]:
     scene = card["scene"]
     learner_line = find_learner_line(dialogue.get("lines", []))
     frames = frame_data(dialogue.get("lines", []))
+    target_text = learner_line.get("display_text") or learner_line.get("text") or target.get("canonical", "")
+    target_transliteration = learner_line.get("transliteration") or target.get("transliteration", "")
 
     return {
         "id": card["id"],
@@ -44,8 +46,8 @@ def lesson_from_card(language: str, card: dict[str, Any]) -> dict[str, Any]:
         "player_component": player_component_for(card),
         "target": {
             "id": target["id"],
-            "text": learner_line.get("text") or target.get("canonical", ""),
-            "transliteration": learner_line.get("transliteration") or target.get("transliteration", ""),
+            "text": target_transliteration or target_text,
+            "transliteration": target_transliteration,
             "meaning": target.get("display_meaning", ""),
         },
         "frames": frames,
@@ -68,7 +70,9 @@ def lesson_steps(
     learner_frame = frame_for_line_type(frames, "learner_target") or opener_frame
     response_frame = frame_for_line_type(frames, "world_response") or learner_frame
     opener_audio = opener_frame.get("audioUrl") if opener_frame else None
+    opener_audio_text = opener_frame.get("audioText") if opener_frame else None
     target_audio = learner_line.get("audio")
+    target_audio_text = learner_line.get("audio_text") or learner_line.get("transliteration") or learner_line.get("text")
     is_anchor_lesson = card.get("stage") == "guided_scene_production"
 
     steps = [
@@ -78,7 +82,7 @@ def lesson_steps(
             frame_id=opener_frame.get("id") if opener_frame else None,
             frame_mode="single",
             display_text="Listen.",
-            audio=audio_behavior(opener_audio, autoplay=True, replayable=True),
+            audio=audio_behavior(opener_audio, autoplay=True, replayable=True, audio_text=opener_audio_text),
             mic=mic_off(),
             props={
                 "initialFrameId": frames[0]["id"] if frames else None,
@@ -96,7 +100,7 @@ def lesson_steps(
                     frame_id=learner_frame.get("id") if learner_frame else None,
                     frame_mode="single",
                     display_text="Listen to what they say.",
-                    audio=audio_behavior(target_audio, autoplay=True, replayable=True),
+                    audio=audio_behavior(target_audio, autoplay=True, replayable=True, audio_text=target_audio_text),
                     mic=mic_off(),
                     props={
                         "audioUrl": target_audio,
@@ -123,7 +127,13 @@ def lesson_steps(
                     frame_id=learner_frame.get("id") if learner_frame else None,
                     frame_mode="single",
                     display_text="Now say it.",
-                    audio=audio_behavior(target_audio, autoplay=True, replayable=True, play_before_mic=True),
+                    audio=audio_behavior(
+                        target_audio,
+                        autoplay=True,
+                        replayable=True,
+                        play_before_mic=True,
+                        audio_text=target_audio_text,
+                    ),
                     mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
                     props={
                         "expectedText": target_text,
@@ -142,7 +152,7 @@ def lesson_steps(
                     frame_id=learner_frame.get("id") if learner_frame else None,
                     frame_mode="neutral",
                     display_text="Build it from the end.",
-                    audio=audio_behavior(target_audio, autoplay=False, replayable=True),
+                    audio=audio_behavior(target_audio, autoplay=False, replayable=True, audio_text=target_audio_text),
                     mic=recording_mic(target_text, target_transliteration),
                     props={
                         "targetPhrase": target_phrase,
@@ -166,7 +176,7 @@ def lesson_steps(
                 frame_id=opener_frame.get("id") if opener_frame else None,
                 frame_mode="single",
                 display_text="What is the best response here?",
-                audio=audio_behavior(opener_audio, autoplay=False, replayable=True),
+                audio=audio_behavior(opener_audio, autoplay=False, replayable=True, audio_text=opener_audio_text),
                 mic=mic_off(),
                 props={
                     "question": "What is the best response here?",
@@ -180,7 +190,13 @@ def lesson_steps(
                 frame_id=opener_frame.get("id") if opener_frame else None,
                 frame_mode="single",
                 display_text="What would you say?",
-                audio=audio_behavior(opener_audio, autoplay=True, replayable=True, play_before_mic=True),
+                audio=audio_behavior(
+                    opener_audio,
+                    autoplay=True,
+                    replayable=True,
+                    play_before_mic=True,
+                    audio_text=opener_audio_text,
+                ),
                 mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
                 props={
                     "initialFrameId": opener_frame.get("id") if opener_frame else None,
@@ -236,9 +252,11 @@ def audio_behavior(
     autoplay: bool,
     replayable: bool,
     play_before_mic: bool = False,
+    audio_text: str | None = None,
 ) -> dict[str, Any]:
     return {
         "url": url,
+        "audioText": audio_text,
         "autoplay": autoplay,
         "replayable": replayable,
         "playBeforeMic": play_before_mic,
@@ -313,6 +331,8 @@ def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
     frames = []
     for line in lines:
         line_index = line.get("index", len(frames))
+        display_text = line.get("display_text") or line.get("transliteration") or line.get("text", "")
+        audio_text = line.get("audio_text") or line.get("transliteration") or line.get("text", "")
         frames.append(
             {
                 "id": f"line-{line_index}",
@@ -320,9 +340,11 @@ def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "frameNumber": int(line_index) + 1,
                 "imageUrl": line.get("visual"),
                 "audioUrl": line.get("audio"),
+                "audioText": audio_text,
                 "title": line.get("line_type", "scene").replace("_", " ").title(),
                 "speaker": line.get("speaker_role", ""),
-                "text": line.get("text", ""),
+                "text": display_text,
+                "originalText": line.get("text", ""),
                 "transliteration": line.get("transliteration", ""),
                 "lineType": line.get("line_type", ""),
             }

@@ -70,12 +70,18 @@ export type ValidationAdminSession = {
 };
 
 export type ValidationAdminTargetSession = {
+  type?: 'recording' | 'choice';
   sessionId: string;
   participantId?: string;
   lessonPage?: string;
   stepId?: string;
+  eventId?: string;
+  choiceId?: string;
+  choiceCorrect?: boolean;
   attemptId?: string;
   receivedAt?: string;
+  createdAt?: string;
+  scorePassed?: boolean;
   scoreStatus: string;
 };
 
@@ -140,6 +146,7 @@ export type AttemptMetadata = {
 };
 
 export async function startValidationSession(input: {
+  sessionId?: string;
   language: string;
   sceneSet: string;
   lessonPage: string;
@@ -213,6 +220,52 @@ export async function deleteValidationSession(sessionId: string): Promise<void> 
   });
   if (!response.ok) {
     throw new Error(`Failed to delete validation session: ${response.status}`);
+  }
+}
+
+export async function deleteValidationAttempt(sessionId: string, attemptId: string): Promise<void> {
+  const response = await fetch(
+    `/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts/${encodeURIComponent(attemptId)}`,
+    {
+      method: 'DELETE',
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to delete validation attempt: ${response.status}`);
+  }
+}
+
+export async function deleteValidationUser(participantId: string): Promise<void> {
+  const response = await fetch(`/api/validation/users/${encodeURIComponent(participantId)}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to delete validation user: ${response.status}`);
+  }
+}
+
+export async function scoreValidationAttempt(sessionId: string, attemptId: string): Promise<void> {
+  const response = await fetch(
+    `/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts/${encodeURIComponent(attemptId)}/score`,
+    {
+      method: 'POST',
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to score validation attempt: ${response.status}`);
+  }
+}
+
+export async function deleteValidationSessionData(sessionId: string, kinds: string[]): Promise<void> {
+  const params = new URLSearchParams();
+  for (const kind of kinds) {
+    params.append('kind', kind);
+  }
+  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/data?${params}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to delete validation session data: ${response.status}`);
   }
 }
 

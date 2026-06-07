@@ -1,0 +1,76 @@
+{
+  "language": "yue",
+  "display_name": "Cantonese",
+  "dialogues": [
+    {
+      "id": "yue-first-hi-response",
+      "asset_slug": "first-hi-response",
+      "type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "yue-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "friend", "line_type": "world_opener", "text": "Nei hou!", "transliteration": "Nei hou!", "audio_text": "Nei hou!", "meaning_units": ["hello"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "yue-target-respond-hi", "text": "Nei hou!", "transliteration": "Nei hou!", "audio_text": "Nei hou!", "meaning_units": ["hello", "response"] },
+        { "index": 2, "speaker_role": "friend", "line_type": "world_response", "text": "Hou hoi sam gin dou nei.", "transliteration": "Hou hoi sam gin dou nei.", "audio_text": "Hou hoi sam gin dou nei.", "meaning_units": ["positive_response"] }
+      ]
+    },
+    {
+      "id": "yue-introduce-self",
+      "asset_slug": "introduce-self",
+      "type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "yue-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "classmate", "line_type": "world_opener", "text": "Nei giu mat meng?", "transliteration": "Nei giu mat meng?", "audio_text": "Nei giu mat meng?", "meaning_units": ["your", "name", "question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "yue-target-my-name-is", "text": "Ngo giu Anna.", "transliteration": "Ngo giu Anna.", "audio_text": "Ngo giu Anna.", "meaning_units": ["my", "name", "proper_noun"] },
+        { "index": 2, "speaker_role": "classmate", "line_type": "world_response", "text": "Hou hoi sam sik nei, Anna.", "transliteration": "Hou hoi sam sik nei, Anna.", "audio_text": "Hou hoi sam sik nei, Anna.", "meaning_units": ["positive_response", "proper_noun"] }
+      ]
+    },
+    {
+      "id": "yue-repair-dont-understand",
+      "asset_slug": "repair-dont-understand",
+      "type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "yue-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "staff", "line_type": "world_opener", "text": "M goi hai ni dou tin.", "transliteration": "M goi hai ni dou tin.", "audio_text": "M goi hai ni dou tin.", "meaning_units": ["this"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "yue-target-i-dont-understand", "text": "M hou ji si, ngo m ming.", "transliteration": "M hou ji si, ngo m ming.", "audio_text": "M hou ji si, ngo m ming.", "meaning_units": ["sorry", "not", "understand"] },
+        { "index": 2, "speaker_role": "staff", "line_type": "world_response", "text": "M gan yiu. Ngo bong nei.", "transliteration": "M gan yiu. Ngo bong nei.", "audio_text": "M gan yiu. Ngo bong nei.", "meaning_units": ["help"] }
+      ]
+    },
+    {
+      "id": "yue-excuse-me-attention",
+      "asset_slug": "excuse-me-attention",
+      "type": "anchor",
+      "function_id": "get_attention_politely",
+      "target_id": "yue-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "staff", "line_type": "world_opener", "text": "Ha yat wai, m goi.", "transliteration": "Ha yat wai, m goi.", "audio_text": "Ha yat wai, m goi.", "meaning_units": ["attention"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "yue-target-excuse-me-attention", "text": "M goi.", "transliteration": "M goi.", "audio_text": "M goi.", "meaning_units": ["attention_request", "polite_softener"] },
+        { "index": 2, "speaker_role": "staff", "line_type": "world_response", "text": "Hai, nei hou.", "transliteration": "Hai, nei hou.", "audio_text": "Hai, nei hou.", "meaning_units": ["acknowledgement"] }
+      ]
+    },
+    {
+      "id": "yue-order-local-food",
+      "asset_slug": "order-local-food",
+      "type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "yue-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "review_modes": ["listen", "produce_from_visual", "ai_guided_response"],
+      "lines": [
+        { "index": 0, "speaker_role": "server", "line_type": "world_opener", "text": "Nei yiu mat?", "transliteration": "Nei yiu mat?", "audio_text": "Nei yiu mat?", "meaning_units": ["question"] },
+        { "index": 1, "speaker_role": "learner", "line_type": "learner_target", "target_id": "yue-target-one-local-food-please", "text": "Jat go bo lo baau, m goi.", "transliteration": "Jat go bo lo baau, m goi.", "audio_text": "Jat go bo lo baau, m goi.", "meaning_units": ["one", "food_item", "please"] },
+        { "index": 2, "speaker_role": "server", "line_type": "world_response", "text": "Hou aa.", "transliteration": "Hou aa.", "audio_text": "Hou aa.", "meaning_units": ["acknowledgement"] }
+      ]
+    }
+  ]
+}

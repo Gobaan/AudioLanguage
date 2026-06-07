@@ -147,6 +147,7 @@ export function LessonStepRenderer({
         />
         <PromptedRecording
           audioUrl={step.audio?.url}
+          audioText={step.audio?.audioText}
           prompt="Now you say it."
           onCaptured={(recording) => onCaptureAttempt?.(step, recording)}
         />
@@ -216,6 +217,7 @@ function ProductionPracticeStep({
         {phase !== 'response' ? (
           <PromptedRecording
             audioUrl={recordingAudioUrl}
+            audioText={step.audio?.audioText}
             prompt={recordingPromptText(step)}
             startMode={step.type === 'scene_recall' ? 'auto' : 'manual'}
             startLabel="Record"
@@ -227,24 +229,35 @@ function ProductionPracticeStep({
           />
         ) : null}
         {phase === 'response' && responseFrame?.audioUrl ? <ResponsePlayback audioUrl={responseFrame.audioUrl} /> : null}
+        {phase === 'response' && !responseFrame?.audioUrl && responseFrame?.audioText ? (
+          <ResponsePlayback audioText={responseFrame.audioText} />
+        ) : null}
       </section>
     </section>
   );
 }
 
-function ResponsePlayback({ audioUrl }: { audioUrl: string }) {
+function ResponsePlayback({ audioUrl, audioText }: { audioUrl?: string; audioText?: string }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     playResponse();
     return () => {
       stopAudio(audioRef.current);
+      stopSpeech(utteranceRef.current);
     };
-  }, [audioUrl]);
+  }, [audioUrl, audioText]);
 
   function playResponse() {
     stopAudio(audioRef.current);
+    stopSpeech(utteranceRef.current);
+    if (!audioUrl) {
+      speakResponse();
+      return;
+    }
+
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
     setIsPlaying(true);
@@ -273,6 +286,37 @@ function ResponsePlayback({ audioUrl }: { audioUrl: string }) {
     });
   }
 
+  function speakResponse() {
+    const spokenText = audioText?.trim();
+    if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      setIsPlaying(false);
+      utteranceRef.current = null;
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(spokenText);
+    utteranceRef.current = utterance;
+    setIsPlaying(true);
+    utterance.addEventListener(
+      'end',
+      () => {
+        setIsPlaying(false);
+        utteranceRef.current = null;
+      },
+      { once: true },
+    );
+    utterance.addEventListener(
+      'error',
+      () => {
+        setIsPlaying(false);
+        utteranceRef.current = null;
+      },
+      { once: true },
+    );
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
   return (
     <div className="response-playback">
       <AudioButton label="Play response" isPlaying={isPlaying} disabled={isPlaying} onPlay={playResponse} />
@@ -294,6 +338,9 @@ function StepAudioButton({
   onPlayAudio?: () => void;
 }) {
   if (!step.audio?.url) {
+    if (step.audio?.audioText) {
+      return <AudioButton label="Play" isPlaying={isPlaying} disabled={isPlaying} onPlay={onPlayAudio} />;
+    }
     return null;
   }
 
@@ -363,6 +410,12 @@ function stopAudio(audio: HTMLAudioElement | null) {
 
   audio.pause();
   audio.currentTime = 0;
+}
+
+function stopSpeech(utterance: SpeechSynthesisUtterance | null) {
+  if (!utterance) return;
+
+  window.speechSynthesis?.cancel();
 }
 
 function backwardBuildTarget(step: LessonStep): string | undefined {

@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AdminValidationApp } from './AdminValidationApp';
+import { LanguageSelectionApp } from './LanguageSelectionApp';
 import { TravellerMvpApp } from './TravellerMvpApp';
 import './styles.css';
 
@@ -12,6 +13,12 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    {window.location.pathname === '/admin/validation' ? <AdminValidationApp /> : <TravellerMvpApp />}
+    {appForPath(window.location.pathname)}
   </StrictMode>,
 );
+
+function appForPath(pathname: string) {
+  if (pathname === '/admin/validation') return <AdminValidationApp />;
+  if (pathname === '/learn') return <TravellerMvpApp />;
+  return <LanguageSelectionApp />;
+}

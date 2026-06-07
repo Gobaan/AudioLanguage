@@ -24,6 +24,8 @@ type LessonTab = {
 
 const LANGUAGE_OPTIONS: LanguageOption[] = [
   { id: 'ja', label: 'Japanese' },
+  { id: 'yue', label: 'Cantonese' },
+  { id: 'ta', label: 'Tamil' },
   { id: 'en', label: 'English' },
 ];
 
@@ -226,6 +228,7 @@ export function TravellerMvpApp() {
   const [participantId, setParticipantId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     let isCurrent = true;
@@ -270,6 +273,7 @@ export function TravellerMvpApp() {
     let isCurrent = true;
 
     startValidationSession({
+      sessionId: validationSessionIdForToday(participantId, language, sceneSet),
       language,
       sceneSet,
       lessonPage,
@@ -307,7 +311,7 @@ export function TravellerMvpApp() {
           if (!isCurrent) return;
           applyLessonPayload(payload);
           setLessonPage(DEFAULT_LESSON);
-          updateUrl(language, DEFAULT_LESSON, sceneSet, true);
+          updateLessonUrl(language, DEFAULT_LESSON, sceneSet, true);
           setLoadState('ready');
         } catch {
           if (!isCurrent) return;
@@ -345,12 +349,15 @@ export function TravellerMvpApp() {
   useEffect(() => {
     return () => {
       stopAudio(audioRef.current);
+      stopSpeech(utteranceRef.current);
     };
   }, []);
 
   useEffect(() => {
     stopAudio(audioRef.current);
+    stopSpeech(utteranceRef.current);
     audioRef.current = null;
+    utteranceRef.current = null;
     setIsPlaying(false);
   }, [stepIndex]);
 
@@ -370,9 +377,11 @@ export function TravellerMvpApp() {
 
   function playStepAudio() {
     const audioUrl = step?.audio?.url;
-    if (!audioUrl) return;
+    const audioText = step?.audio?.audioText;
+    if (!audioUrl && !audioText) return;
 
     stopAudio(audioRef.current);
+    stopSpeech(utteranceRef.current);
     if (stepLesson && step) {
       logEvent({
         type: 'audio_played',
@@ -384,6 +393,11 @@ export function TravellerMvpApp() {
         targetId: stepLesson.target.id,
       });
     }
+    if (!audioUrl) {
+      speakStepAudio(audioText);
+      return;
+    }
+
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
     setIsPlaying(true);
@@ -412,6 +426,37 @@ export function TravellerMvpApp() {
     });
   }
 
+  function speakStepAudio(audioText: string | null | undefined) {
+    const spokenText = audioText?.trim();
+    if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      setIsPlaying(false);
+      utteranceRef.current = null;
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(spokenText);
+    utteranceRef.current = utterance;
+    setIsPlaying(true);
+    utterance.addEventListener(
+      'end',
+      () => {
+        setIsPlaying(false);
+        utteranceRef.current = null;
+      },
+      { once: true },
+    );
+    utterance.addEventListener(
+      'error',
+      () => {
+        setIsPlaying(false);
+        utteranceRef.current = null;
+      },
+      { once: true },
+    );
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
   function selectChoice(stepId: string, choice: ChoiceOption) {
     setSelectedChoiceByStep((current) => ({
       ...current,
@@ -434,12 +479,12 @@ export function TravellerMvpApp() {
   function selectLanguage(nextLanguage: string) {
     setLanguage(nextLanguage);
     setLessonPage(DEFAULT_LESSON);
-    updateUrl(nextLanguage, DEFAULT_LESSON, sceneSet);
+    updateLessonUrl(nextLanguage, DEFAULT_LESSON, sceneSet);
   }
 
   function selectLessonPage(nextPage: string) {
     setLessonPage(nextPage);
-    updateUrl(language, nextPage, sceneSet);
+    updateLessonUrl(language, nextPage, sceneSet);
   }
 
   function goToStep(direction: 'previous' | 'next') {
@@ -748,8 +793,11 @@ function isLocalHost(): boolean {
   return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
 }
 
-function updateUrl(language: string, lesson: string, sceneSet: string, replace = false) {
+function updateLessonUrl(language: string, lesson: string, sceneSet: string, replace = false) {
   const url = new URL(window.location.href);
+  if (url.pathname !== '/learn') {
+    url.pathname = '/learn';
+  }
   url.searchParams.set('language', language);
   url.searchParams.set('lesson', lesson);
   if (sceneSet === DEFAULT_SCENE_SET) {
@@ -769,6 +817,28 @@ function stopAudio(audio: HTMLAudioElement | null) {
 
   audio.pause();
   audio.currentTime = 0;
+}
+
+function stopSpeech(utterance: SpeechSynthesisUtterance | null) {
+  if (!utterance) return;
+
+  window.speechSynthesis?.cancel();
+}
+
+function validationSessionIdForToday(participantId: string, language: string, sceneSet: string): string {
+  return ['validation', safeId(participantId), safeId(language), safeId(sceneSet), localDateKey()].join('-');
+}
+
+function localDateKey(): string {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function safeId(value: string): string {
+  return value.replace(/[^A-Za-z0-9_.-]+/g, '-');
 }
 
 function learnerTargetAudioUrl(lesson: Lesson): string | null {

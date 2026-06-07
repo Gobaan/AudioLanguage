@@ -229,13 +229,52 @@ class ValidationStore:
                 target["rememberedAttemptCount"] += 1 if is_remembered_score(score) else 0
                 target["sessions"].append(
                     {
+                        "type": "recording",
                         "sessionId": metadata.get("sessionId"),
                         "participantId": participant_id,
                         "lessonPage": attempt.get("lessonPage") or metadata.get("lessonPage"),
                         "stepId": attempt.get("stepId"),
                         "attemptId": attempt.get("attemptId"),
                         "receivedAt": attempt.get("receivedAt"),
+                        "createdAt": metadata.get("createdAt"),
+                        "scorePassed": is_remembered_score(score),
                         "scoreStatus": score_status(score),
+                    }
+                )
+
+            for event in events:
+                if event.get("type") != "choice_selected" or not event.get("targetId"):
+                    continue
+
+                target_id = str(event.get("targetId"))
+                key = (language, scene_set, target_id)
+                target = targets.setdefault(
+                    key,
+                    {
+                        "language": language,
+                        "sceneSet": scene_set,
+                        "targetId": target_id,
+                        "expectedText": None,
+                        "expectedTransliteration": None,
+                        "targetAudioUrl": None,
+                        "attemptCount": 0,
+                        "scoredAttemptCount": 0,
+                        "rememberedAttemptCount": 0,
+                        "sessions": [],
+                    },
+                )
+                target["sessions"].append(
+                    {
+                        "type": "choice",
+                        "sessionId": metadata.get("sessionId"),
+                        "participantId": participant_id,
+                        "lessonPage": event.get("lessonPage") or metadata.get("lessonPage"),
+                        "stepId": event.get("stepId"),
+                        "eventId": event.get("eventId"),
+                        "choiceId": event.get("choiceId"),
+                        "choiceCorrect": event.get("isCorrect"),
+                        "receivedAt": event.get("receivedAt") or event.get("timestamp"),
+                        "createdAt": metadata.get("createdAt"),
                     }
                 )
 
@@ -253,6 +292,70 @@ class ValidationStore:
         shutil.rmtree(session_dir)
         return {"sessionId": safe_id(session_id), "status": "deleted"}
 
+    def delete_attempt(self, session_id: str, attempt_id: str) -> dict[str, str]:
+        session_dir = self.require_session(session_id)
+        attempt_id = safe_id(attempt_id)
+        attempt = self.find_attempt(session_dir, attempt_id)
+        if not attempt:
+            raise FileNotFoundError(attempt_id)
+
+        recording_path = self.root / str(attempt["recordingPath"])
+        recording_path.unlink(missing_ok=True)
+        attempts = [item for item in read_jsonl(session_dir / "attempts.jsonl") if item.get("attemptId") != attempt_id]
+        scores = [item for item in read_jsonl(session_dir / "scores.jsonl") if item.get("attemptId") != attempt_id]
+        write_jsonl(session_dir / "attempts.jsonl", attempts)
+        write_jsonl(session_dir / "scores.jsonl", scores)
+        return {"sessionId": safe_id(session_id), "attemptId": attempt_id, "status": "deleted"}
+
+    def delete_user(self, participant_id: str) -> dict[str, Any]:
+        deleted_sessions = []
+        for session_dir in sorted((self.root / "sessions").glob("*")):
+            metadata_path = session_dir / "metadata.json"
+            if not metadata_path.exists():
+                continue
+
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            attempts = read_jsonl(session_dir / "attempts.jsonl")
+            events = read_jsonl(session_dir / "events.jsonl")
+            if participant_id_from(metadata, attempts, events) != participant_id:
+                continue
+
+            deleted_sessions.append(str(metadata.get("sessionId") or session_dir.name))
+            shutil.rmtree(session_dir)
+
+        return {
+            "participantId": participant_id,
+            "deletedSessionCount": len(deleted_sessions),
+            "deletedSessions": deleted_sessions,
+            "status": "deleted",
+        }
+
+    def delete_session_data(self, session_id: str, kinds: list[str]) -> dict[str, Any]:
+        session_dir = self.require_session(session_id)
+        deleted = []
+        unknown = []
+
+        for kind in kinds:
+            if kind == "recordings":
+                attempts_dir = session_dir / "attempts"
+                if attempts_dir.exists():
+                    shutil.rmtree(attempts_dir)
+                    deleted.append(kind)
+            elif kind == "scores":
+                if delete_file(session_dir / "scores.jsonl"):
+                    deleted.append(kind)
+            elif kind == "events":
+                if delete_file(session_dir / "events.jsonl"):
+                    deleted.append(kind)
+            else:
+                unknown.append(kind)
+
+        return {
+            "sessionId": safe_id(session_id),
+            "deleted": deleted,
+            "unknown": unknown,
+        }
+
     def attempts_needing_score(self, session_id: str) -> list[dict[str, Any]]:
         session_dir = self.require_session(session_id)
         scores = self.scores_by_attempt(session_dir)
@@ -261,6 +364,13 @@ class ValidationStore:
             for attempt in read_jsonl(session_dir / "attempts.jsonl")
             if str(attempt.get("attemptId")) not in scores
         ]
+
+    def attempt_metadata(self, session_id: str, attempt_id: str) -> dict[str, Any]:
+        session_dir = self.require_session(session_id)
+        attempt = self.find_attempt(session_dir, safe_id(attempt_id))
+        if not attempt:
+            raise FileNotFoundError(attempt_id)
+        return attempt
 
     def save_score(self, session_id: str, attempt_id: str, score: dict[str, Any]) -> dict[str, Any]:
         session_dir = self.require_session(session_id)
@@ -338,14 +448,43 @@ def append_jsonl(path: Path, data: dict[str, Any]) -> None:
         file.write("\n")
 
 
+def write_jsonl(path: Path, items: list[dict[str, Any]]) -> None:
+    if not items:
+        path.unlink(missing_ok=True)
+        return
+
+    with path.open("w", encoding="utf-8") as file:
+        for item in items:
+            file.write(json.dumps(item, ensure_ascii=False))
+            file.write("\n")
+
+
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+    items = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            item = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(item, dict):
+            items.append(item)
+    return items
 
 
 def relative_to_root(path: Path, root: Path) -> str:
     return path.relative_to(root).as_posix()
+
+
+def delete_file(path: Path) -> bool:
+    if not path.exists():
+        return False
+    path.unlink()
+    return True
 
 
 def is_remembered_score(score: dict[str, Any] | None) -> bool:

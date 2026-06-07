@@ -23,7 +23,6 @@ from generate_images_from_manifest import generate_language
 
 CONTENT_DIR = PROJECT_DIR / "model" / "content"
 ASSETS_DIR = PROJECT_DIR / "model" / "assets"
-LEGACY_INCOMPLETE_LANGUAGES = {"ta"}
 
 
 class ContentLoaderTests(unittest.TestCase):
@@ -57,7 +56,7 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertEqual(first["target"]["id"], "ta-target-hello-how-are-you")
         self.assertEqual(first["function"]["id"], "greet_and_ask_wellbeing")
         self.assertEqual(first["scene"]["id"], "study-room-friend")
-        self.assertEqual(first["review_mode"]["id"], "listen")
+        self.assertEqual(first["review_mode"]["id"], "ai_guided_response")
         self.assertTrue(first["dialogue"]["lines"][1]["is_learner_target"])
         self.assertNotIn("chunk_audio", first["dialogue"]["lines"][1])
 
@@ -231,9 +230,6 @@ class StructuredDataGraphTests(unittest.TestCase):
         languages = [language["id"] for language in list_languages(CONTENT_DIR)]
 
         for language in languages:
-            if language in LEGACY_INCOMPLETE_LANGUAGES:
-                continue
-
             with self.subTest(language=language):
                 session = load_language_session(
                     data_dir=CONTENT_DIR,
@@ -250,14 +246,16 @@ class StructuredDataGraphTests(unittest.TestCase):
                             text = str(line.get("text", ""))
                             transliteration = str(line.get("transliteration", ""))
                             audio = line.get("audio")
+                            audio_text = line.get("audio_text")
                             visual = line.get("visual")
 
                             self.assertNotIn("???", text, line_label)
                             self.assertTrue(text.strip(), line_label)
                             if requires_transliteration:
                                 self.assertTrue(transliteration.strip(), line_label)
-                            self.assertTrue(audio, line_label)
-                            self.assertTrue((ASSETS_DIR / str(audio).lstrip("/")).exists(), line_label)
+                            self.assertTrue(audio or audio_text, line_label)
+                            if audio:
+                                self.assertTrue((ASSETS_DIR / str(audio).lstrip("/")).exists(), line_label)
                             self.assertTrue(visual, line_label)
                             self.assertTrue((ASSETS_DIR / str(visual).lstrip("/")).exists(), line_label)
 
@@ -265,6 +263,7 @@ class StructuredDataGraphTests(unittest.TestCase):
         languages = list_languages(CONTENT_DIR)
 
         self.assertIn({"id": "ta", "display_name": "Tamil"}, languages)
+        self.assertIn({"id": "yue", "display_name": "Cantonese"}, languages)
 
 
 class VisualGenerationScriptTests(unittest.TestCase):

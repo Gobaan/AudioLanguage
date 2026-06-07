@@ -15,7 +15,9 @@ export type SceneFrameData = {
   title?: string;
   speaker?: string;
   text?: string;
+  originalText?: string;
   transliteration?: string;
+  audioText?: string;
   lineType?: string;
 };
 
@@ -87,6 +89,7 @@ export type LessonStep = {
   displayText?: string;
   audio?: {
     url?: string | null;
+    audioText?: string | null;
     autoplay: boolean;
     replayable: boolean;
     playBeforeMic?: boolean;

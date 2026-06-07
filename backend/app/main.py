@@ -92,6 +92,16 @@ def index():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+@app.get("/languages")
+def language_selection():
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
+@app.get("/learn")
+def learner_app():
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
 @app.get("/admin/validation")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))
@@ -361,6 +371,27 @@ def get_validation_attempt_audio(session_id: str, attempt_id: str):
         raise HTTPException(status_code=404, detail=f"Attempt '{attempt_id}' not found") from error
 
 
+@app.delete("/api/validation/sessions/{session_id}/attempts/{attempt_id}")
+def delete_validation_attempt(session_id: str, attempt_id: str):
+    """Delete one saved learner recording attempt and its score."""
+    try:
+        return validation_store.delete_attempt(session_id, attempt_id)
+    except FileNotFoundError as error:
+        raise HTTPException(status_code=404, detail=f"Attempt '{attempt_id}' not found") from error
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+
+
+@app.post("/api/validation/sessions/{session_id}/attempts/{attempt_id}/score")
+def score_validation_attempt_endpoint(session_id: str, attempt_id: str):
+    """Score one saved learner recording from the admin dashboard."""
+    try:
+        attempt = validation_store.attempt_metadata(session_id, attempt_id)
+        return score_validation_attempt(session_id, attempt)
+    except FileNotFoundError as error:
+        raise HTTPException(status_code=404, detail=f"Attempt '{attempt_id}' not found") from error
+
+
 @app.get("/api/validation/admin/summary")
 def get_validation_admin_summary():
     """Return a local validation rollup across participants, languages, and review days."""
@@ -371,6 +402,12 @@ def get_validation_admin_summary():
 def get_validation_participant_name():
     """Return a human-readable participant id that has not appeared in saved sessions."""
     return validation_store.suggest_participant_name()
+
+
+@app.delete("/api/validation/users/{participant_id}")
+def delete_validation_user(participant_id: str):
+    """Delete all validation sessions for one participant."""
+    return validation_store.delete_user(participant_id)
 
 
 @app.delete("/api/validation/sessions/{session_id}")
@@ -384,40 +421,55 @@ def delete_validation_session(session_id: str):
         raise HTTPException(status_code=400, detail=str(error)) from error
 
 
+@app.delete("/api/validation/sessions/{session_id}/data")
+def delete_validation_session_data(session_id: str, kind: list[str] = Query(...)):
+    """Delete selected validation data files for one session."""
+    try:
+        return validation_store.delete_session_data(session_id, kind)
+    except FileNotFoundError as error:
+        raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found") from error
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+
+
 def score_validation_attempts(session_id: str) -> None:
     """Score unscored local recordings when the scorecard is opened."""
     for attempt in validation_store.attempts_needing_score(session_id):
-        attempt_id = str(attempt.get("attemptId", ""))
-        if not attempt_id:
-            continue
-        try:
-            coach_response = conversation_coach.evaluate_attempt(
-                attempt=LearnerAttempt(audio_path=validation_store.attempt_audio_path(session_id, attempt_id)),
-                context=ConversationContext(
-                    language=str(attempt.get("language", "")),
-                    target_id=str(attempt.get("targetId", "")),
-                    target_text=str(attempt.get("expectedText", "")),
-                    target_romanized=str(attempt.get("expectedTransliteration", "")),
-                    target_audio=str(attempt.get("targetAudioUrl", "")),
-                ),
-            )
-            validation_store.save_score(
-                session_id,
-                attempt_id,
-                {
-                    "status": "scored",
-                    "result": coach_response.to_dict(),
-                },
-            )
-        except Exception as error:
-            validation_store.save_score(
-                session_id,
-                attempt_id,
-                {
-                    "status": "unavailable",
-                    "error": str(error),
-                },
-            )
+        score_validation_attempt(session_id, attempt)
+
+
+def score_validation_attempt(session_id: str, attempt: dict) -> dict:
+    attempt_id = str(attempt.get("attemptId", ""))
+    if not attempt_id:
+        return {"status": "skipped", "error": "Missing attempt id"}
+    try:
+        coach_response = conversation_coach.evaluate_attempt(
+            attempt=LearnerAttempt(audio_path=validation_store.attempt_audio_path(session_id, attempt_id)),
+            context=ConversationContext(
+                language=str(attempt.get("language", "")),
+                target_id=str(attempt.get("targetId", "")),
+                target_text=str(attempt.get("expectedText", "")),
+                target_romanized=str(attempt.get("expectedTransliteration", "")),
+                target_audio=str(attempt.get("targetAudioUrl", "")),
+            ),
+        )
+        return validation_store.save_score(
+            session_id,
+            attempt_id,
+            {
+                "status": "scored",
+                "result": coach_response.to_dict(),
+            },
+        )
+    except Exception as error:
+        return validation_store.save_score(
+            session_id,
+            attempt_id,
+            {
+                "status": "unavailable",
+                "error": str(error),
+            },
+        )
 
 
 @app.post("/api/transcribe")

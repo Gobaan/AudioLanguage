@@ -6,6 +6,7 @@
   "dialogues": [
     {
       "id": "ta-greeting-hello",
+      "asset_slug": "first-hi-response",
       "type": "anchor",
       "function_id": "greet_and_ask_wellbeing",
       "target_id": "ta-target-hello-how-are-you",
@@ -64,6 +65,7 @@
     },
     {
       "id": "ta-introduce-self",
+      "asset_slug": "introduce-self",
       "type": "anchor",
       "function_id": "introduce_self",
       "target_id": "ta-target-my-name-is",
@@ -77,6 +79,7 @@
     },
     {
       "id": "ta-repair-say-slowly",
+      "asset_slug": "repair-dont-understand",
       "type": "anchor",
       "function_id": "ask_for_repetition",
       "target_id": "ta-target-say-it-slowly",

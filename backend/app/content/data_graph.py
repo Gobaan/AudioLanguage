@@ -188,6 +188,7 @@ def hydrate_line(
 
     return {
         **line,
+        "audio_text": line.get("audio_text") or line.get("transliteration") or line.get("text"),
         "audio": public_path(audio_path),
         "visual": public_path(image_path),
         "visual_beat": beat,

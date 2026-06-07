@@ -13,12 +13,15 @@ export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackPr
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const activeFrame = playableFrames[activeIndex] ?? playableFrames[0];
 
   useEffect(() => {
     setActiveIndex(0);
     stopAudio(audioRef.current);
+    stopSpeech(utteranceRef.current);
     audioRef.current = null;
+    utteranceRef.current = null;
     setIsPlaying(false);
   }, [playableFrames]);
 
@@ -28,11 +31,13 @@ export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackPr
 
     return () => {
       stopAudio(audioRef.current);
+      stopSpeech(utteranceRef.current);
     };
   }, [autoplay, playableFrames]);
 
   function playScene() {
     stopAudio(audioRef.current);
+    stopSpeech(utteranceRef.current);
     setIsPlaying(true);
     playFrameAt(0);
   }
@@ -47,7 +52,7 @@ export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackPr
 
     setActiveIndex(index);
     if (!frame.audioUrl) {
-      playFrameAt(index + 1);
+      speakFrameText(frame.audioText || frame.transliteration || frame.text, () => playFrameAt(index + 1));
       return;
     }
 
@@ -78,6 +83,35 @@ export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackPr
     });
   }
 
+  function speakFrameText(text: string | undefined, onDone: () => void) {
+    const spokenText = text?.trim();
+    if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      onDone();
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(spokenText);
+    utteranceRef.current = utterance;
+    utterance.addEventListener(
+      'end',
+      () => {
+        utteranceRef.current = null;
+        onDone();
+      },
+      { once: true },
+    );
+    utterance.addEventListener(
+      'error',
+      () => {
+        utteranceRef.current = null;
+        onDone();
+      },
+      { once: true },
+    );
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
   return (
     <section className="scene-playback" aria-label="Scene playback">
       <SceneFrame frame={activeFrame} isActive showCaption={false} placeholderLabel="Lesson scene frame" />
@@ -91,4 +125,10 @@ function stopAudio(audio: HTMLAudioElement | null) {
 
   audio.pause();
   audio.currentTime = 0;
+}
+
+function stopSpeech(utterance: SpeechSynthesisUtterance | null) {
+  if (!utterance) return;
+
+  window.speechSynthesis?.cancel();
 }
