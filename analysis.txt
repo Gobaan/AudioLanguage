@@ -1,0 +1,6 @@
+For the first 50–150 chunks, translations should be present. After that, gradually fade them:
+
+First 50 chunks: translation appears after every attempt.
+50–150 chunks: translation appears after prediction or on tap.
+150+ chunks: translation becomes optional; use target-language prompts, audio-only review, and AI roleplay more.
+Later: translation is mainly for repair, grammar notes, and confusion.
