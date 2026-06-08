@@ -1,0 +1,7 @@
+# Audio Asset Instructions
+
+Use recorded/generated audio files when available. Browser speech or `audioText` playback is acceptable as an MVP fallback, but it should not replace real target audio when an asset exists.
+
+Audio references in content should identify the exact dialogue line or prompt being played. Backward-build prompts should play the intended chunk, not the full dialogue unless the step explicitly asks for full-dialogue replay.
+
+For non-Latin beginner languages, keep romanized `audioText` or equivalent pronunciation support available for speech synthesis and learner-facing fallback.

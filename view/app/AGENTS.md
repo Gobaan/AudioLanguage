@@ -14,3 +14,11 @@ Preferred boundaries:
 - `view/static`: static shell and built assets served by the backend.
 
 When adding lesson UI, start from the JSON contract and choose the matching component for each step. Add a new component only when none of the existing components owns that responsibility cleanly.
+
+The app should be route/parameter driven. Language, scene set, transfer mode, and delayed-review mode should be selected through URLs or app state that call the backend for a different JSON payload.
+
+Keep the language selection page separate from the lesson runner so share links can point friends to the right language flow. On localhost, expose an admin link for validation review.
+
+Track the participant with a human-readable localStorage key. Do not require login for the MVP.
+
+The lesson runner should preserve backend step order, show page numbers based on rendered steps, and use scorecard/admin data from backend APIs instead of recalculating validation locally.
