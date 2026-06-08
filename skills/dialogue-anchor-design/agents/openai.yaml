@@ -1,4 +1,0 @@
-interface:
-  display_name: "Dialogue Anchor Design"
-  short_description: "Design vivid anchor dialogue scenes"
-  default_prompt: "Use $dialogue-anchor-design to create short vivid anchor scenes for first exposure language learning."

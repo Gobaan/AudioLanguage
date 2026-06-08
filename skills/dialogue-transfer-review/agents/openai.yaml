@@ -1,4 +1,0 @@
-interface:
-  display_name: "Dialogue Transfer Review"
-  short_description: "Design transfer and spaced review scenes"
-  default_prompt: "Use $dialogue-transfer-review to create transfer scenes and spaced review tasks for practiced dialogue chunks."

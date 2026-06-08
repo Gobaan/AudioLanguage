@@ -1,4 +1,0 @@
-interface:
-  display_name: "Dialogue Extension Design"
-  short_description: "Grow anchor scenes without bloat"
-  default_prompt: "Use $dialogue-extension-design to extend anchor dialogues with one new conversational move at a time."

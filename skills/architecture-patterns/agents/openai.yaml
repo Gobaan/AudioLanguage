@@ -1,4 +1,0 @@
-interface:
-  display_name: "Architecture Patterns"
-  short_description: "Design-pattern guidance for architecture"
-  default_prompt: "Use $architecture-patterns to design or review architecture with pattern-aware tradeoffs."

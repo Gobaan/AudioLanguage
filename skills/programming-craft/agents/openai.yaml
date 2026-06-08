@@ -1,4 +1,0 @@
-interface:
-  display_name: "Programming Craft"
-  short_description: "Pragmatic coding rules for maintainable code"
-  default_prompt: "Use $programming-craft to write or review code with pragmatic, maintainable coding style."

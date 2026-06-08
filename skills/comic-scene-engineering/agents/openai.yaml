@@ -1,4 +1,0 @@
-interface:
-  display_name: "Comic Scene Engineering"
-  short_description: "Design comic-panel scenes for language cards"
-  default_prompt: "Use $comic-scene-engineering to design language-learning practice scenes as programmable webcomic panels with clear turn-taking and visual meaning."

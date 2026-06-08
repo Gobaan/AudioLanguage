@@ -1,4 +1,0 @@
-interface:
-  display_name: "Git Check-In"
-  short_description: "Review commits for secrets and risky leaks"
-  default_prompt: "Use $git-checkin to review my changes before committing."

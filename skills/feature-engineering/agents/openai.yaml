@@ -1,4 +1,0 @@
-interface:
-  display_name: "Feature Engineering"
-  short_description: "Design practical, capability-building features"
-  default_prompt: "Use $feature-engineering to turn this rough product idea into a practical feature concept."

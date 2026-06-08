@@ -1,4 +1,0 @@
-interface:
-  display_name: "Brainstorming"
-  short_description: "Generate and organize large-scale product ideas"
-  default_prompt: "Use $brainstorming to explore new product ideas and feature directions."

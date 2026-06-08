@@ -1,4 +1,0 @@
-interface:
-  display_name: "React Code Design"
-  short_description: "React architecture and component design"
-  default_prompt: "Use $react-code-design to design or review React code with maintainable component, state, effect, and data-flow patterns."

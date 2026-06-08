@@ -1,4 +1,0 @@
-interface:
-  display_name: "Python Code Quality"
-  short_description: "Readable, modern, efficient Python style"
-  default_prompt: "Use $python-code-quality to write or review Python code for clarity, idioms, typing, errors, tests, and efficient design."

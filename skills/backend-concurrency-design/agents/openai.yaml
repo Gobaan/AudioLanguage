@@ -1,4 +1,0 @@
-interface:
-  display_name: "Backend Concurrency Design"
-  short_description: "Backend async, atomicity, and reliability"
-  default_prompt: "Use $backend-concurrency-design to design or review backend code for async safety, atomicity, idempotency, retries, and concurrency."

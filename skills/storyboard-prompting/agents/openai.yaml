@@ -1,4 +1,0 @@
-interface:
-  display_name: "Storyboard Prompting"
-  short_description: "Video storyboard prompts for language scenes"
-  default_prompt: "Use $storyboard-prompting to turn dialogue scenes into three-beat AI video prompts with gesture, gaze, and context clues."
