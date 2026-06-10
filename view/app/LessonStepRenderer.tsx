@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AudioButton,
   BackwardBuild,
@@ -8,6 +8,7 @@ import {
   SceneFrame,
   ScenePlayback,
 } from '../components';
+import { useAudioPlayback } from './useAudioPlayback';
 import type {
   BackwardBuildPrompt,
   ChoiceOption,
@@ -238,88 +239,21 @@ function ProductionPracticeStep({
 }
 
 function ResponsePlayback({ audioUrl, audioText }: { audioUrl?: string; audioText?: string }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { isPlaying, playAudioOrSpeak, stop } = useAudioPlayback();
 
   useEffect(() => {
-    playResponse();
-    return () => {
-      stopAudio(audioRef.current);
-      stopSpeech(utteranceRef.current);
-    };
-  }, [audioUrl, audioText]);
-
-  function playResponse() {
-    stopAudio(audioRef.current);
-    stopSpeech(utteranceRef.current);
-    if (!audioUrl) {
-      speakResponse();
-      return;
-    }
-
-    const audio = new Audio(audioUrl);
-    audioRef.current = audio;
-    setIsPlaying(true);
-
-    audio.addEventListener(
-      'ended',
-      () => {
-        setIsPlaying(false);
-        audioRef.current = null;
-      },
-      { once: true },
-    );
-
-    audio.addEventListener(
-      'error',
-      () => {
-        setIsPlaying(false);
-        audioRef.current = null;
-      },
-      { once: true },
-    );
-
-    audio.play().catch(() => {
-      setIsPlaying(false);
-      audioRef.current = null;
-    });
-  }
-
-  function speakResponse() {
-    const spokenText = audioText?.trim();
-    if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
-      setIsPlaying(false);
-      utteranceRef.current = null;
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(spokenText);
-    utteranceRef.current = utterance;
-    setIsPlaying(true);
-    utterance.addEventListener(
-      'end',
-      () => {
-        setIsPlaying(false);
-        utteranceRef.current = null;
-      },
-      { once: true },
-    );
-    utterance.addEventListener(
-      'error',
-      () => {
-        setIsPlaying(false);
-        utteranceRef.current = null;
-      },
-      { once: true },
-    );
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
-  }
+    playAudioOrSpeak(audioUrl, audioText);
+    return stop;
+  }, [audioUrl, audioText, playAudioOrSpeak, stop]);
 
   return (
     <div className="response-playback">
-      <AudioButton label="Play response" isPlaying={isPlaying} disabled={isPlaying} onPlay={playResponse} />
+      <AudioButton
+        label="Play response"
+        isPlaying={isPlaying}
+        disabled={isPlaying}
+        onPlay={() => playAudioOrSpeak(audioUrl, audioText)}
+      />
     </div>
   );
 }
@@ -403,19 +337,6 @@ function responseFrameForLesson(lesson: Lesson): SceneFrameData | undefined {
 
 function learnerFrameForLesson(lesson: Lesson): SceneFrameData | undefined {
   return lesson.frames.find((frame) => frame.lineType === 'learner_target');
-}
-
-function stopAudio(audio: HTMLAudioElement | null) {
-  if (!audio) return;
-
-  audio.pause();
-  audio.currentTime = 0;
-}
-
-function stopSpeech(utterance: SpeechSynthesisUtterance | null) {
-  if (!utterance) return;
-
-  window.speechSynthesis?.cancel();
 }
 
 function backwardBuildTarget(step: LessonStep): string | undefined {

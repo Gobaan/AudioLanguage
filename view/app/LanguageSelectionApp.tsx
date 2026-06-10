@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { fetchLanguages, type LanguageSummary } from '../api/languages';
+import { isLocalHost, participantFromUrl } from './urlParams';
 
 type LoadState = 'loading' | 'ready' | 'error';
 
@@ -88,10 +89,6 @@ function lessonLink(language: string, participant: string | null, sceneSet: 'mvp
   return `/learn?${params.toString()}`;
 }
 
-function participantFromUrl(): string | null {
-  return new URLSearchParams(window.location.search).get('participant');
-}
-
 function languageDescription(language: string): string {
   if (language === 'yue') return 'Cantonese starter scenes for your friend.';
   if (language === 'zh') return 'Mandarin starter scenes for testing the same workflow.';
@@ -105,6 +102,3 @@ function supportsDelayedReview(language: string): boolean {
   return language === 'ja' || language === 'zh';
 }
 
-function isLocalHost(): boolean {
-  return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-}

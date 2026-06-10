@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+
+import { playAudioUrl, stopAudio } from '../app/audioPlayback';
 import { AudioButton } from './AudioButton';
 
 export type DialogueRevealLine = {
@@ -30,31 +32,11 @@ export function DialogueReveal({ lines, title = 'Dialogue' }: DialogueRevealProp
     if (!line.audioUrl) return;
 
     stopAudio(audioRef.current);
-    const audio = new Audio(line.audioUrl);
-    audioRef.current = audio;
     setPlayingLineId(line.id);
-
-    audio.addEventListener(
-      'ended',
-      () => {
+    playAudioUrl(line.audioUrl, audioRef, (playing) => {
+      if (!playing) {
         setPlayingLineId(null);
-        audioRef.current = null;
-      },
-      { once: true },
-    );
-
-    audio.addEventListener(
-      'error',
-      () => {
-        setPlayingLineId(null);
-        audioRef.current = null;
-      },
-      { once: true },
-    );
-
-    audio.play().catch(() => {
-      setPlayingLineId(null);
-      audioRef.current = null;
+      }
     });
   }
 
@@ -98,9 +80,3 @@ function speakerLabel(line: DialogueRevealLine): string {
   return line.speaker || 'Them';
 }
 
-function stopAudio(audio: HTMLAudioElement | null) {
-  if (!audio) return;
-
-  audio.pause();
-  audio.currentTime = 0;
-}

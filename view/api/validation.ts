@@ -1,3 +1,5 @@
+import { requireOk } from './http';
+
 export type ValidationSession = {
   sessionId: string;
 };
@@ -172,7 +174,7 @@ export async function fetchSuggestedParticipantName(): Promise<ValidationPartici
 }
 
 export async function logValidationEvent(sessionId: string, event: ValidationEvent): Promise<void> {
-  await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/events`, {
+  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/events`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -181,6 +183,7 @@ export async function logValidationEvent(sessionId: string, event: ValidationEve
       ...event,
     }),
   });
+  await requireOk(response, 'Failed to log validation event');
 }
 
 export async function uploadValidationAttempt(
@@ -191,10 +194,11 @@ export async function uploadValidationAttempt(
   const formData = new FormData();
   formData.append('metadata', JSON.stringify(metadata));
   formData.append('file', blob, `${metadata.attemptId}.webm`);
-  await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts`, {
+  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts`, {
     method: 'POST',
     body: formData,
   });
+  await requireOk(response, 'Failed to upload validation attempt');
 }
 
 export async function fetchValidationScorecard(sessionId: string, score = false): Promise<ValidationScorecard> {

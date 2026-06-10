@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+
+import { playAudioUrl, speakTextAudio, stopAudio, stopSpeech } from '../app/audioPlayback';
 import { AudioButton } from './AudioButton';
 import { SceneFrame } from './SceneFrame';
 import type { SceneFrameData } from './types';
@@ -56,60 +58,19 @@ export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackPr
       return;
     }
 
-    const audio = new Audio(frame.audioUrl);
-    audioRef.current = audio;
-
-    audio.addEventListener(
-      'ended',
-      () => {
-        audioRef.current = null;
+    playAudioUrl(frame.audioUrl, audioRef, (playing) => {
+      if (!playing) {
         playFrameAt(index + 1);
-      },
-      { once: true },
-    );
-
-    audio.addEventListener(
-      'error',
-      () => {
-        audioRef.current = null;
-        playFrameAt(index + 1);
-      },
-      { once: true },
-    );
-
-    audio.play().catch(() => {
-      setIsPlaying(false);
-      audioRef.current = null;
+      }
     });
   }
 
   function speakFrameText(text: string | undefined, onDone: () => void) {
-    const spokenText = text?.trim();
-    if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
-      onDone();
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(spokenText);
-    utteranceRef.current = utterance;
-    utterance.addEventListener(
-      'end',
-      () => {
-        utteranceRef.current = null;
+    speakTextAudio(text, utteranceRef, (playing) => {
+      if (!playing) {
         onDone();
-      },
-      { once: true },
-    );
-    utterance.addEventListener(
-      'error',
-      () => {
-        utteranceRef.current = null;
-        onDone();
-      },
-      { once: true },
-    );
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+      }
+    });
   }
 
   return (
@@ -118,17 +79,4 @@ export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackPr
       <AudioButton label="Play scene" isPlaying={isPlaying} disabled={isPlaying} onPlay={playScene} />
     </section>
   );
-}
-
-function stopAudio(audio: HTMLAudioElement | null) {
-  if (!audio) return;
-
-  audio.pause();
-  audio.currentTime = 0;
-}
-
-function stopSpeech(utterance: SpeechSynthesisUtterance | null) {
-  if (!utterance) return;
-
-  window.speechSynthesis?.cancel();
 }

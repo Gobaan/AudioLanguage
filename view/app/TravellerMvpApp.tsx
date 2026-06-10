@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { fetchLessons } from '../api/lessons';
 import {
   fetchSuggestedParticipantName,
@@ -11,6 +11,8 @@ import {
 } from '../api/validation';
 import type { ChoiceOption, Lesson, LessonListResponse, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
+import { useAudioPlayback } from './useAudioPlayback';
+import { isLocalHost, participantFromUrl } from './urlParams';
 
 type LanguageOption = {
   id: string;
@@ -226,9 +228,7 @@ export function TravellerMvpApp() {
   const [scorecardState, setScorecardState] = useState<ScorecardState>('idle');
   const [scorecard, setScorecard] = useState<ValidationScorecard | null>(null);
   const [participantId, setParticipantId] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { isPlaying, playAudioOrSpeak, stop: stopPlayback } = useAudioPlayback();
 
   useEffect(() => {
     let isCurrent = true;
@@ -347,19 +347,8 @@ export function TravellerMvpApp() {
   const step = useMemo(() => withStepAssetUrls(currentStep), [currentStep]);
 
   useEffect(() => {
-    return () => {
-      stopAudio(audioRef.current);
-      stopSpeech(utteranceRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    stopAudio(audioRef.current);
-    stopSpeech(utteranceRef.current);
-    audioRef.current = null;
-    utteranceRef.current = null;
-    setIsPlaying(false);
-  }, [stepIndex]);
+    stopPlayback();
+  }, [stepIndex, stopPlayback]);
 
   useEffect(() => {
     if (!validationSessionId || !stepLesson || !step) return;
@@ -380,8 +369,6 @@ export function TravellerMvpApp() {
     const audioText = step?.audio?.audioText;
     if (!audioUrl && !audioText) return;
 
-    stopAudio(audioRef.current);
-    stopSpeech(utteranceRef.current);
     if (stepLesson && step) {
       logEvent({
         type: 'audio_played',
@@ -393,68 +380,8 @@ export function TravellerMvpApp() {
         targetId: stepLesson.target.id,
       });
     }
-    if (!audioUrl) {
-      speakStepAudio(audioText);
-      return;
-    }
 
-    const audio = new Audio(audioUrl);
-    audioRef.current = audio;
-    setIsPlaying(true);
-
-    audio.addEventListener(
-      'ended',
-      () => {
-        setIsPlaying(false);
-        audioRef.current = null;
-      },
-      { once: true },
-    );
-
-    audio.addEventListener(
-      'error',
-      () => {
-        setIsPlaying(false);
-        audioRef.current = null;
-      },
-      { once: true },
-    );
-
-    audio.play().catch(() => {
-      setIsPlaying(false);
-      audioRef.current = null;
-    });
-  }
-
-  function speakStepAudio(audioText: string | null | undefined) {
-    const spokenText = audioText?.trim();
-    if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
-      setIsPlaying(false);
-      utteranceRef.current = null;
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(spokenText);
-    utteranceRef.current = utterance;
-    setIsPlaying(true);
-    utterance.addEventListener(
-      'end',
-      () => {
-        setIsPlaying(false);
-        utteranceRef.current = null;
-      },
-      { once: true },
-    );
-    utterance.addEventListener(
-      'error',
-      () => {
-        setIsPlaying(false);
-        utteranceRef.current = null;
-      },
-      { once: true },
-    );
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    playAudioOrSpeak(audioUrl, audioText, language);
   }
 
   function selectChoice(stepId: string, choice: ChoiceOption) {
@@ -777,20 +704,12 @@ function sceneSetFromUrl(): string {
   return new URLSearchParams(window.location.search).get('scene_set') ?? DEFAULT_SCENE_SET;
 }
 
-function participantFromUrl(): string | null {
-  return new URLSearchParams(window.location.search).get('participant');
-}
-
 function saveParticipantId(participantId: string) {
   localStorage.setItem(PARTICIPANT_STORAGE_KEY, participantId);
 }
 
 function fallbackParticipantId(): string {
   return `Learner-${Math.floor(1000 + Math.random() * 9000)}`;
-}
-
-function isLocalHost(): boolean {
-  return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
 }
 
 function updateLessonUrl(language: string, lesson: string, sceneSet: string, replace = false) {
@@ -810,19 +729,6 @@ function updateLessonUrl(language: string, lesson: string, sceneSet: string, rep
   } else {
     window.history.pushState({}, '', url);
   }
-}
-
-function stopAudio(audio: HTMLAudioElement | null) {
-  if (!audio) return;
-
-  audio.pause();
-  audio.currentTime = 0;
-}
-
-function stopSpeech(utterance: SpeechSynthesisUtterance | null) {
-  if (!utterance) return;
-
-  window.speechSynthesis?.cancel();
 }
 
 function validationSessionIdForToday(participantId: string, language: string, sceneSet: string): string {
