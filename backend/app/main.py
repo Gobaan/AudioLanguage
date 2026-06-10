@@ -13,9 +13,7 @@ from app.conversation.factory import create_conversation_coach
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.content.data_graph import DataGraphError, list_languages, load_distractors, load_language_session
 from app.content.lessons import lessons_from_session
-from app.content.loader import load_content_graph
 from app.speech.language import romanize_for_language
-from app.scenes import scenes
 from app.validation import ValidationStore
 from project_config.paths import repo_paths
 
@@ -25,10 +23,7 @@ PROJECT_DIR = PATHS.root
 STATIC_DIR = PATHS.static_dir
 AUDIO_DIR = PATHS.audio_dir
 VISUALS_DIR = PATHS.visuals_dir
-AUDIO_SOURCES_DIR = PATHS.audio_sources_dir
 DATA_DIR = PATHS.content_dir
-DIALOGUES_PATH = AUDIO_SOURCES_DIR / "dialogues.json"
-PROMPTS_PATH = AUDIO_SOURCES_DIR / "prompts.json"
 VALIDATION_DIR = PATHS.model_dir / "validation"
 
 conversation_coach = create_conversation_coach()
@@ -104,34 +99,6 @@ def learner_app():
 @app.get("/admin/validation")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))
-
-
-@app.get("/api/scenes")
-def list_scenes():
-    """Return all available scenes."""
-    return scenes
-
-
-@app.get("/api/scenes/{scene_id}")
-def get_scene(scene_id: str):
-    """Return a single scene by id."""
-    for scene in scenes:
-        if scene.id == scene_id:
-            return scene
-    raise HTTPException(status_code=404, detail=f"Scene '{scene_id}' not found")
-
-
-@app.get("/api/dialogues")
-def list_dialogues():
-    """Return dialogue card metadata from audio_sources/dialogues.json."""
-    return [dialogue.model_dump() for dialogue in load_content_graph(DIALOGUES_PATH).dialogues]
-
-
-@app.get("/api/prompts")
-def list_prompts():
-    """Return available spoken prompt keys."""
-    with PROMPTS_PATH.open(encoding="utf-8") as file:
-        return json.load(file)
 
 
 @app.get("/api/languages")

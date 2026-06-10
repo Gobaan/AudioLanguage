@@ -11,7 +11,6 @@ SCRIPTS_DIR = PROJECT_DIR / "scripts"
 sys.path.insert(0, str(BACKEND_DIR))
 sys.path.insert(0, str(SCRIPTS_DIR))
 
-from app.content.loader import load_content_graph
 from app.content.data_graph import list_languages, load_language_session
 from app.content.lessons import (
     backward_build_prompts,
@@ -24,22 +23,6 @@ from generate_images_from_manifest import generate_language
 CONTENT_DIR = PROJECT_DIR / "model" / "content"
 ASSETS_DIR = PROJECT_DIR / "model" / "assets"
 
-
-class ContentLoaderTests(unittest.TestCase):
-    def test_loads_dialogues_with_category_and_assets(self):
-        graph = load_content_graph(ASSETS_DIR / "audio_sources" / "dialogues.json")
-
-        first = graph.dialogues[0]
-
-        self.assertEqual(first.id, "ta-greeting-hello")
-        self.assertEqual(first.category, "greeting")
-        self.assertEqual(first.category_label, "Greetings")
-        self.assertEqual(first.type, "anchor")
-        self.assertIn("produce_from_visual", first.review_modes)
-        self.assertEqual(first.lines[0].audio, "/audio/ta-greeting-hello-0.mp3")
-        self.assertEqual(first.lines[0].visual, "/visuals/ta-greeting-hello/frame-0.png")
-        self.assertFalse(first.lines[0].is_learner_target)
-        self.assertTrue(first.lines[1].is_learner_target)
 
 class StructuredDataGraphTests(unittest.TestCase):
     def test_loads_tamil_session_with_hydrated_references(self):
