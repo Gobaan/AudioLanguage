@@ -1,6 +1,8 @@
 export type LanguageSummary = {
   id: string;
   display_name: string;
+  description: string;
+  scene_sets: string[];
 };
 
 export async function fetchLanguages(): Promise<LanguageSummary[]> {

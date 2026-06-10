@@ -1,25 +1,11 @@
 import type { Lesson, LessonStep } from '../components';
 
-export type LanguageOption = {
-  id: string;
-  label: string;
-};
-
-export const LANGUAGE_OPTIONS: LanguageOption[] = [
-  { id: 'ja', label: 'Japanese' },
-  { id: 'yue', label: 'Cantonese' },
-  { id: 'zh', label: 'Mandarin' },
-  { id: 'ta', label: 'Tamil' },
-  { id: 'en', label: 'English' },
-];
-
 export const DEFAULT_LANGUAGE = 'ja';
 export const DEFAULT_LESSON = 'hello';
 export const DEFAULT_SCENE_SET = 'mvp';
 
 export function languageFromUrl(): string {
-  const language = new URLSearchParams(window.location.search).get('language');
-  return LANGUAGE_OPTIONS.some((option) => option.id === language) ? language! : DEFAULT_LANGUAGE;
+  return new URLSearchParams(window.location.search).get('language') ?? DEFAULT_LANGUAGE;
 }
 
 export function lessonPageFromUrl(): string {

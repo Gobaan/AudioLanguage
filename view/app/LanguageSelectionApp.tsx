@@ -52,10 +52,10 @@ export function LanguageSelectionApp() {
         {languages.map((language) => (
           <article className="language-card" key={language.id}>
             <h2>{language.display_name}</h2>
-            <p>{languageDescription(language.id)}</p>
+            <p>{language.description || 'Starter speaking scenes.'}</p>
             <div className="language-card-actions">
               <a href={lessonLink(language.id, participant, 'mvp')}>Original</a>
-              {supportsDelayedReview(language.id) ? (
+              {language.scene_sets.includes('delayed') ? (
                 <a href={lessonLink(language.id, participant, 'delayed')}>Delayed</a>
               ) : null}
             </div>
@@ -88,17 +88,3 @@ function lessonLink(language: string, participant: string | null, sceneSet: 'mvp
   if (participant) params.set('participant', participant);
   return `/learn?${params.toString()}`;
 }
-
-function languageDescription(language: string): string {
-  if (language === 'yue') return 'Cantonese starter scenes for your friend.';
-  if (language === 'zh') return 'Mandarin starter scenes for testing the same workflow.';
-  if (language === 'ta') return 'Tamil starter scenes for you.';
-  if (language === 'ja') return 'Japanese starter and transfer scenes.';
-  if (language === 'en') return 'English reference scenes.';
-  return 'Starter speaking scenes.';
-}
-
-function supportsDelayedReview(language: string): boolean {
-  return language === 'ja' || language === 'zh';
-}
-

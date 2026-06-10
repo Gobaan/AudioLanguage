@@ -11,8 +11,8 @@ class DataGraphError(ValueError):
     """Raised when the structured content graph cannot be loaded."""
 
 
-def list_languages(data_dir: Path) -> list[dict[str, str]]:
-    """Return available language folders with display names when present."""
+def list_languages(data_dir: Path) -> list[dict[str, Any]]:
+    """Return available language folders with learner-facing metadata when present."""
     languages_dir = data_dir / "languages"
     if not languages_dir.exists():
         return []
@@ -21,11 +21,26 @@ def list_languages(data_dir: Path) -> list[dict[str, str]]:
     for language_dir in sorted(path for path in languages_dir.iterdir() if path.is_dir()):
         targets_path = language_dir / "targets.json"
         display_name = language_dir.name
+        description = ""
+        scene_sets = ["mvp"]
         if targets_path.exists():
             targets_data = read_json(targets_path)
             display_name = str(targets_data.get("display_name", display_name))
+            metadata = targets_data.get("metadata", {})
+            if isinstance(metadata, dict):
+                description = str(metadata.get("description", ""))
+                raw_scene_sets = metadata.get("scene_sets", ["mvp"])
+                if isinstance(raw_scene_sets, list) and raw_scene_sets:
+                    scene_sets = [str(scene_set) for scene_set in raw_scene_sets]
 
-        languages.append({"id": language_dir.name, "display_name": display_name})
+        languages.append(
+            {
+                "id": language_dir.name,
+                "display_name": display_name,
+                "description": description,
+                "scene_sets": scene_sets,
+            }
+        )
 
     return languages
 

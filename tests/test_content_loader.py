@@ -250,8 +250,13 @@ class StructuredDataGraphTests(unittest.TestCase):
     def test_lists_languages_from_data_graph(self):
         languages = list_languages(CONTENT_DIR)
 
-        self.assertIn({"id": "ta", "display_name": "Tamil"}, languages)
-        self.assertIn({"id": "yue", "display_name": "Cantonese"}, languages)
+        tamil = next(language for language in languages if language["id"] == "ta")
+        cantonese = next(language for language in languages if language["id"] == "yue")
+
+        self.assertEqual(tamil["display_name"], "Tamil")
+        self.assertEqual(tamil["description"], "Tamil starter scenes for you.")
+        self.assertEqual(cantonese["display_name"], "Cantonese")
+        self.assertEqual(cantonese["description"], "Cantonese starter scenes for your friend.")
 
 
 class VisualGenerationScriptTests(unittest.TestCase):

@@ -1,6 +1,10 @@
 {
   "language": "ja",
   "display_name": "Japanese",
+  "metadata": {
+    "description": "Japanese starter and transfer scenes.",
+    "scene_sets": ["mvp", "delayed"]
+  },
   "script": "Japanese",
   "native_review_status": "needs_native_review",
   "targets": [

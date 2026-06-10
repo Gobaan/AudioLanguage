@@ -1,6 +1,10 @@
 {
   "language": "en",
   "display_name": "English",
+  "metadata": {
+    "description": "English reference scenes.",
+    "scene_sets": ["mvp"]
+  },
   "targets": [
     {
       "id": "en-target-respond-hi",

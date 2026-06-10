@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { fetchLanguages, type LanguageSummary } from '../api/languages';
 import { fetchValidationScorecard, type ValidationScorecard } from '../api/validation';
 import type { ChoiceOption, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
 import {
   DEFAULT_LESSON,
-  LANGUAGE_OPTIONS,
   languageFromUrl,
   lessonPageFromUrl,
   sceneSetFromUrl,
@@ -31,8 +31,26 @@ export function TravellerMvpApp() {
   const [appView, setAppView] = useState<AppView>('lesson');
   const [scorecardState, setScorecardState] = useState<ScorecardState>('idle');
   const [scorecard, setScorecard] = useState<ValidationScorecard | null>(null);
+  const [languageOptions, setLanguageOptions] = useState<LanguageSummary[]>([]);
 
   const participantId = useParticipantId();
+
+  useEffect(() => {
+    let isCurrent = true;
+    fetchLanguages()
+      .then((payload) => {
+        if (!isCurrent) return;
+        setLanguageOptions(payload);
+      })
+      .catch(() => {
+        if (!isCurrent) return;
+        setLanguageOptions([]);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
   const { lessonTabs, lesson, loadState } = useLessonLoader({
     language,
     lessonPage,
@@ -218,14 +236,17 @@ export function TravellerMvpApp() {
         </nav>
       ) : null}
       <nav className="language-switcher" aria-label="Language">
-        {LANGUAGE_OPTIONS.map((option) => (
+        {(languageOptions.length > 0
+          ? languageOptions
+          : [{ id: language, display_name: language, description: '', scene_sets: ['mvp'] }]
+        ).map((option) => (
           <button
             key={option.id}
             type="button"
             className={language === option.id ? 'active' : ''}
             onClick={() => selectLanguage(option.id)}
           >
-            {option.label}
+            {option.display_name}
           </button>
         ))}
       </nav>

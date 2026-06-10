@@ -1,6 +1,10 @@
 {
   "language": "zh",
   "display_name": "Mandarin",
+  "metadata": {
+    "description": "Mandarin starter scenes for testing the same workflow.",
+    "scene_sets": ["mvp", "delayed"]
+  },
   "script": "Chinese",
   "native_review_status": "needs_native_review",
   "targets": [
