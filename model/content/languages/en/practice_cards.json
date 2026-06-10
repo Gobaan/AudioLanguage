@@ -32,6 +32,26 @@
         "id": "hospital",
         "label": "Scene 5",
         "card_id": "en-card-hospital-directions-dialogue-practice"
+      },
+      {
+        "id": "hello-transfer",
+        "label": "Scene 6",
+        "card_id": "en-card-hello-transfer-same_day_transfer"
+      },
+      {
+        "id": "introduce-transfer",
+        "label": "Scene 7",
+        "card_id": "en-card-introduce-transfer-same_day_transfer"
+      },
+      {
+        "id": "repair-transfer",
+        "label": "Scene 8",
+        "card_id": "en-card-repair-transfer-same_day_transfer"
+      },
+      {
+        "id": "food-order-transfer",
+        "label": "Scene 9",
+        "card_id": "en-card-food-order-transfer-same_day_transfer"
       }
     ],
     "cards": [
@@ -39,7 +59,11 @@
       "en-card-introduce-self-dialogue-practice",
       "en-card-dont-understand-dialogue-practice",
       "en-card-order-food-dialogue-practice",
-      "en-card-hospital-directions-dialogue-practice"
+      "en-card-hospital-directions-dialogue-practice",
+      "en-card-hello-transfer-same_day_transfer",
+      "en-card-introduce-transfer-same_day_transfer",
+      "en-card-repair-transfer-same_day_transfer",
+      "en-card-food-order-transfer-same_day_transfer"
     ]
   },
   "practice_cards": [
@@ -586,6 +610,324 @@
       },
       "support": {},
       "success_signal": "learner asks for the hospital location from a street cue"
+    },
+    {
+      "id": "en-card-hello-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "en-greeting-neighbor-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Hi!",
+      "ai_scene_contract": {
+        "language_being_practiced": "English",
+        "support_language": "English",
+        "physical_scene": "A friendly person sees the learner at a casual community event.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Respond to a friendly 'Hi' greeting.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
+        "example_valid_responses": [
+          "Hi.",
+          "Hi?",
+          "Hello.",
+          "Hello?",
+          "Hey.",
+          "Hi, how are you?",
+          "Hello, nice to see you."
+        ],
+        "acceptance_notes": [
+          "Accept greeting words even if transcribed with a question mark.",
+          "Accept 'Hello?' as a direct greeting response to 'Hi'.",
+          "For this first beginner scene, do not require an added wellbeing question."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ignore_greeting",
+            "definition": "The learner says nothing or gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated to greeting the person."
+          },
+          {
+            "id": "end_conversation",
+            "definition": "The learner immediately says goodbye or leaves."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses en-target-respond-hi in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "en-card-introduce-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "en-introduce-class-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "My name is Anna.",
+      "ai_scene_contract": {
+        "language_being_practiced": "English",
+        "support_language": "English",
+        "physical_scene": "A classmate meets the learner in a school hallway and asks their name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Tell the classmate that your name is Anna.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional_slots": {
+          "greeting": true
+        },
+        "example_valid_responses": [
+          "My name is Anna.",
+          "I'm Anna.",
+          "I am Anna."
+        ],
+        "acceptance_notes": [
+          "Accept Ana/Anna spelling variation if the utterance clearly introduces the learner."
+        ],
+        "wrong_intents": [
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name instead of giving their own."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses en-target-my-name-is in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "en-card-repair-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "en-repair-ticket-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Sorry, I don't understand.",
+      "ai_scene_contract": {
+        "language_being_practiced": "English",
+        "support_language": "English",
+        "physical_scene": "A staff member gives the learner a form and instructions at a busy service counter.",
+        "learner_role": "person who does not understand the instruction",
+        "partner_role": "busy but helpful staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
+        "learner_intention": "Politely say that you do not understand.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional_slots": {
+          "apology": true,
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Sorry, I don't understand.",
+          "I don't understand.",
+          "Sorry, I do not understand."
+        ],
+        "acceptance_notes": [],
+        "wrong_intents": [
+          {
+            "id": "ask_slowly",
+            "definition": "The learner asks the partner to speak slowly instead of saying they do not understand."
+          },
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees even though the scene calls for repair."
+          },
+          {
+            "id": "request_item",
+            "definition": "The learner requests an unrelated object or service."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses en-target-i-dont-understand in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "en-card-food-order-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "en-order-convenience-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "One sandwich, please.",
+      "ai_scene_contract": {
+        "language_being_practiced": "English",
+        "support_language": "English",
+        "physical_scene": "A server at a casual food counter asks what the learner wants to order.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Order one sandwich politely.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "quantity": "one",
+          "item": "sandwich"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "One sandwich, please.",
+          "Can I have one sandwich, please?",
+          "A sandwich, please."
+        ],
+        "acceptance_notes": [
+          "Accept an order for a sandwich even if the word one is omitted."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs instead of ordering."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand instead of ordering."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses en-target-one-local-food-please in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
     }
   ]
 }

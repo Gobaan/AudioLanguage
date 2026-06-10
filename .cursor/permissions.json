@@ -1,0 +1,28 @@
+{
+  // Repo-specific additions — merged with ~/.cursor/permissions.json.
+  "terminalAllowlist": [
+    "python",
+    "python3",
+    "pytest",
+    "pip",
+    "uvicorn",
+    "Set-Location",
+    "Select-String",
+    "Join-Path",
+    "Resolve-Path"
+  ],
+  "autoRun": {
+    "allow_instructions": [
+      "In AudioLanguage, python scripts/launch_server.py is the normal way to start the local FastAPI backend.",
+      "In AudioLanguage, pytest at the repo root is routine backend verification after code changes.",
+      "In AudioLanguage, npm run dev and npm run build in view/ are routine frontend dev and build steps.",
+      "In AudioLanguage, python scripts/build_audio_manifest.py, build_visual_prompt_manifest.py, validate_asset_manifests.py, and verify_audio.py are routine content and asset maintenance.",
+      "In AudioLanguage, python -m pip install -r backend/requirements.txt or -r requirements.txt is expected when setting up or refreshing dependencies.",
+      "Read-only inspection of model/ JSON, backend Python, and view/ TypeScript inside this workspace is safe."
+    ],
+    "block_instructions": [
+      "In AudioLanguage, scripts/deploy_linode.ps1 and other remote deploy steps need explicit approval.",
+      "Do not upload learner validation recordings or scorecard data to external services unless the user explicitly asked."
+    ]
+  }
+}

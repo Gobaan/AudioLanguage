@@ -992,6 +992,174 @@
           ]
         }
       ]
+    },
+    {
+      "id": "en-greeting-neighbor-transfer",
+      "asset_slug": "greeting-neighbor-transfer",
+      "type": "transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "neighbor",
+          "line_type": "world_opener",
+          "text": "Hi!",
+          "transliteration": "Hi!",
+          "audio_text": "Hi!",
+          "meaning_units": []
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "text": "Hi!",
+          "transliteration": "Hi!",
+          "audio_text": "Hi!",
+          "meaning_units": [],
+          "target_id": "en-target-respond-hi"
+        },
+        {
+          "index": 2,
+          "speaker_role": "neighbor",
+          "line_type": "world_response",
+          "text": "Good to see you.",
+          "transliteration": "Good to see you.",
+          "audio_text": "Good to see you.",
+          "meaning_units": []
+        }
+      ]
+    },
+    {
+      "id": "en-introduce-class-transfer",
+      "asset_slug": "introduce-class-transfer",
+      "type": "transfer",
+      "function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "class_partner",
+          "line_type": "world_opener",
+          "text": "What's your name?",
+          "transliteration": "What's your name?",
+          "audio_text": "What's your name?",
+          "meaning_units": []
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "text": "My name is Anna.",
+          "transliteration": "My name is Anna.",
+          "audio_text": "My name is Anna.",
+          "meaning_units": [],
+          "target_id": "en-target-my-name-is"
+        },
+        {
+          "index": 2,
+          "speaker_role": "class_partner",
+          "line_type": "world_response",
+          "text": "Nice to meet you, Anna.",
+          "transliteration": "Nice to meet you, Anna.",
+          "audio_text": "Nice to meet you, Anna.",
+          "meaning_units": []
+        }
+      ]
+    },
+    {
+      "id": "en-repair-ticket-transfer",
+      "asset_slug": "repair-ticket-transfer",
+      "type": "transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "station_helper",
+          "line_type": "world_opener",
+          "text": "Press here, please.",
+          "transliteration": "Press here, please.",
+          "audio_text": "Press here, please.",
+          "meaning_units": []
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "text": "Sorry, I don't understand.",
+          "transliteration": "Sorry, I don't understand.",
+          "audio_text": "Sorry, I don't understand.",
+          "meaning_units": [],
+          "target_id": "en-target-i-dont-understand"
+        },
+        {
+          "index": 2,
+          "speaker_role": "station_helper",
+          "line_type": "world_response",
+          "text": "No problem. I'll help.",
+          "transliteration": "No problem. I'll help.",
+          "audio_text": "No problem. I'll help.",
+          "meaning_units": []
+        }
+      ]
+    },
+    {
+      "id": "en-order-convenience-transfer",
+      "asset_slug": "order-convenience-transfer",
+      "type": "transfer",
+      "function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "cashier",
+          "line_type": "world_opener",
+          "text": "What would you like?",
+          "transliteration": "What would you like?",
+          "audio_text": "What would you like?",
+          "meaning_units": []
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "text": "One sandwich, please.",
+          "transliteration": "One sandwich, please.",
+          "audio_text": "One sandwich, please.",
+          "meaning_units": [],
+          "target_id": "en-target-one-local-food-please"
+        },
+        {
+          "index": 2,
+          "speaker_role": "cashier",
+          "line_type": "world_response",
+          "text": "Sure.",
+          "transliteration": "Sure.",
+          "audio_text": "Sure.",
+          "meaning_units": []
+        }
+      ]
     }
   ]
 }

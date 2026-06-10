@@ -3,7 +3,7 @@ import { fetchLanguages, type LanguageSummary } from '../api/languages';
 
 type LoadState = 'loading' | 'ready' | 'error';
 
-const PREFERRED_LANGUAGE_ORDER = ['ja', 'yue', 'ta', 'en'];
+const PREFERRED_LANGUAGE_ORDER = ['ja', 'yue', 'zh', 'ta', 'en'];
 
 export function LanguageSelectionApp() {
   const [languages, setLanguages] = useState<LanguageSummary[]>([]);
@@ -53,9 +53,9 @@ export function LanguageSelectionApp() {
             <h2>{language.display_name}</h2>
             <p>{languageDescription(language.id)}</p>
             <div className="language-card-actions">
-              <a href={lessonLink(language.id, participant)}>Start</a>
+              <a href={lessonLink(language.id, participant, 'mvp')}>Original</a>
               {supportsDelayedReview(language.id) ? (
-                <a href={delayedLink(language.id, participant)}>Delayed review</a>
+                <a href={lessonLink(language.id, participant, 'delayed')}>Delayed</a>
               ) : null}
             </div>
           </article>
@@ -81,14 +81,9 @@ function sortLanguages(languages: LanguageSummary[]): LanguageSummary[] {
   });
 }
 
-function lessonLink(language: string, participant: string | null): string {
+function lessonLink(language: string, participant: string | null, sceneSet: 'mvp' | 'delayed'): string {
   const params = new URLSearchParams({ language, lesson: 'hello' });
-  if (participant) params.set('participant', participant);
-  return `/learn?${params.toString()}`;
-}
-
-function delayedLink(language: string, participant: string | null): string {
-  const params = new URLSearchParams({ language, lesson: 'hello', scene_set: 'delayed' });
+  if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
   if (participant) params.set('participant', participant);
   return `/learn?${params.toString()}`;
 }
@@ -99,6 +94,7 @@ function participantFromUrl(): string | null {
 
 function languageDescription(language: string): string {
   if (language === 'yue') return 'Cantonese starter scenes for your friend.';
+  if (language === 'zh') return 'Mandarin starter scenes for testing the same workflow.';
   if (language === 'ta') return 'Tamil starter scenes for you.';
   if (language === 'ja') return 'Japanese starter and transfer scenes.';
   if (language === 'en') return 'English reference scenes.';
@@ -106,7 +102,7 @@ function languageDescription(language: string): string {
 }
 
 function supportsDelayedReview(language: string): boolean {
-  return language === 'ja';
+  return language === 'ja' || language === 'zh';
 }
 
 function isLocalHost(): boolean {

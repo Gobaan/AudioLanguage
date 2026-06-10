@@ -24,12 +24,30 @@
         "id": "repair",
         "label": "Scene 3",
         "card_id": "ta-card-say-slowly-listen"
+      },
+      {
+        "id": "hello-transfer",
+        "label": "Scene 4",
+        "card_id": "ta-card-hello-transfer-same_day_transfer"
+      },
+      {
+        "id": "introduce-transfer",
+        "label": "Scene 5",
+        "card_id": "ta-card-introduce-transfer-same_day_transfer"
+      },
+      {
+        "id": "repair-transfer",
+        "label": "Scene 6",
+        "card_id": "ta-card-repair-transfer-same_day_transfer"
       }
     ],
     "cards": [
       "ta-card-greeting-listen",
       "ta-card-introduce-self-listen",
-      "ta-card-say-slowly-listen"
+      "ta-card-say-slowly-listen",
+      "ta-card-hello-transfer-same_day_transfer",
+      "ta-card-introduce-transfer-same_day_transfer",
+      "ta-card-repair-transfer-same_day_transfer"
     ]
   },
   "practice_cards": [
@@ -43,7 +61,12 @@
       "target_id": "ta-target-hello-how-are-you",
       "prompt": "Watch and listen to the Tamil greeting exchange.",
       "expected_response": null,
-      "support": { "show_visual": true, "play_model_audio": true, "show_target_text_after_audio": true, "show_transliteration": true },
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner completes first exposure"
     },
     {
@@ -56,7 +79,12 @@
       "target_id": "ta-target-my-name-is",
       "prompt": "A classmate asks your name. Listen, then say the learner line in Tamil.",
       "expected_response": null,
-      "support": { "show_visual": true, "play_model_audio": true, "show_target_text_after_audio": true, "show_transliteration": true },
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner completes first exposure"
     },
     {
@@ -69,7 +97,12 @@
       "target_id": "ta-target-say-it-slowly",
       "prompt": "The staff member speaks too fast. Listen, then ask them to say it slowly in Tamil.",
       "expected_response": null,
-      "support": { "show_visual": true, "play_model_audio": true, "show_target_text_after_audio": true, "show_transliteration": true },
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner completes first exposure"
     },
     {
@@ -82,8 +115,17 @@
       "prompt": "The friend greets you. Say the learner line in Tamil.",
       "expected_response": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "expected_transliteration": "Vanakkam! Eppadi irukkireergal?",
-      "confusable_function_ids": ["use_polite_basics", "introduce_self", "pay_and_close"],
-      "support": { "show_visual": true, "play_model_audio": false, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "use_polite_basics",
+        "introduce_self",
+        "pay_and_close"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner produces a greeting and wellbeing question"
     },
     {
@@ -95,12 +137,39 @@
       "target_id": "ta-target-say-it-slowly",
       "prompt": "The staff member is speaking too fast. Choose what the learner should say.",
       "choices": [
-        { "target_id": "ta-target-say-it-slowly", "text": "மெதுவாக சொல்ல முடியுமா?", "transliteration": "Methuvaga solla mudiyuma?", "is_correct": true, "why": "The problem is speed, so the learner asks for slower speech." },
-        { "target_id": "ta-target-water-please", "text": "தண்ணீர், தயவு செய்து.", "transliteration": "Thanneer, thayavu seithu.", "is_correct": false, "why": "This is a shop request, not a repair phrase." },
-        { "target_id": "ta-target-how-much-is-this", "text": "இது எவ்வளவு?", "transliteration": "Idhu evvalavu?", "is_correct": false, "why": "There is no buying or price question in this moment." }
+        {
+          "target_id": "ta-target-say-it-slowly",
+          "text": "மெதுவாக சொல்ல முடியுமா?",
+          "transliteration": "Methuvaga solla mudiyuma?",
+          "is_correct": true,
+          "why": "The problem is speed, so the learner asks for slower speech."
+        },
+        {
+          "target_id": "ta-target-water-please",
+          "text": "தண்ணீர், தயவு செய்து.",
+          "transliteration": "Thanneer, thayavu seithu.",
+          "is_correct": false,
+          "why": "This is a shop request, not a repair phrase."
+        },
+        {
+          "target_id": "ta-target-how-much-is-this",
+          "text": "இது எவ்வளவு?",
+          "transliteration": "Idhu evvalavu?",
+          "is_correct": false,
+          "why": "There is no buying or price question in this moment."
+        }
       ],
-      "confusable_function_ids": ["say_do_not_understand", "say_speak_little_language", "ask_for_help"],
-      "support": { "show_visual": true, "play_world_audio": true, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "say_do_not_understand",
+        "say_speak_little_language",
+        "ask_for_help"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_world_audio": true,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner distinguishes speech-speed repair from unrelated requests"
     },
     {
@@ -113,8 +182,17 @@
       "prompt": "The staff member is using too much language. Tell them you know only a little Tamil.",
       "expected_response": "எனக்கு கொஞ்சம் தமிழ் தெரியும்.",
       "expected_transliteration": "Enakku konjam Tamil theriyum.",
-      "confusable_function_ids": ["ask_for_repetition", "say_do_not_understand", "ask_for_help"],
-      "support": { "show_visual": true, "play_model_audio": false, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "ask_for_repetition",
+        "say_do_not_understand",
+        "ask_for_help"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner can use a safety phrase instead of freezing"
     },
     {
@@ -126,12 +204,33 @@
       "target_id": "ta-target-please-and-thank-you",
       "prompt": "The shopkeeper is offering the item. What social job does the learner need?",
       "choices": [
-        { "function_id": "use_polite_basics", "label": "Accept politely and thank them", "is_correct": true },
-        { "function_id": "ask_where_place_is", "label": "Ask where something is", "is_correct": false },
-        { "function_id": "apologize", "label": "Apologize for a mistake", "is_correct": false }
+        {
+          "function_id": "use_polite_basics",
+          "label": "Accept politely and thank them",
+          "is_correct": true
+        },
+        {
+          "function_id": "ask_where_place_is",
+          "label": "Ask where something is",
+          "is_correct": false
+        },
+        {
+          "function_id": "apologize",
+          "label": "Apologize for a mistake",
+          "is_correct": false
+        }
       ],
-      "confusable_function_ids": ["request_basic_item", "pay_and_close", "apologize"],
-      "support": { "show_visual": true, "play_world_audio": true, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "request_basic_item",
+        "pay_and_close",
+        "apologize"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_world_audio": true,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner reads politeness as the intention, not just the object"
     },
     {
@@ -144,8 +243,17 @@
       "prompt": "You want the bottle of water. Say the learner line in Tamil.",
       "expected_response": "தண்ணீர், தயவு செய்து.",
       "expected_transliteration": "Thanneer, thayavu seithu.",
-      "confusable_function_ids": ["use_polite_basics", "ask_price", "pay_and_close"],
-      "support": { "show_visual": true, "play_model_audio": false, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "use_polite_basics",
+        "ask_price",
+        "pay_and_close"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner requests a visible object politely"
     },
     {
@@ -158,8 +266,17 @@
       "prompt": "You are lost and need the bus stop. Ask where it is in Tamil.",
       "expected_response": "பேருந்து நிறுத்தம் எங்கே?",
       "expected_transliteration": "Perundhu niruththam enge?",
-      "confusable_function_ids": ["ask_where_hospital_is", "ask_for_help", "request_basic_item"],
-      "support": { "show_visual": true, "play_model_audio": false, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "ask_where_hospital_is",
+        "ask_for_help",
+        "request_basic_item"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner produces a direction question from visual need"
     },
     {
@@ -171,12 +288,39 @@
       "target_id": "ta-target-cough-medicine-please",
       "prompt": "The learner is coughing at the pharmacy. Choose the useful Tamil response.",
       "choices": [
-        { "target_id": "ta-target-cough-medicine-please", "text": "இருமல் மருந்து, தயவு செய்து.", "transliteration": "Irumal marundhu, thayavu seithu.", "is_correct": true, "why": "The visible need is cough medicine." },
-        { "target_id": "ta-target-say-it-slowly", "text": "மெதுவாக சொல்ல முடியுமா?", "transliteration": "Methuvaga solla mudiyuma?", "is_correct": false, "why": "This is useful if the pharmacist spoke too fast, but the visual need is medicine." },
-        { "target_id": "ta-target-how-much-is-this", "text": "இது எவ்வளவு?", "transliteration": "Idhu evvalavu?", "is_correct": false, "why": "Price can come later; first the learner needs to ask for medicine." }
+        {
+          "target_id": "ta-target-cough-medicine-please",
+          "text": "இருமல் மருந்து, தயவு செய்து.",
+          "transliteration": "Irumal marundhu, thayavu seithu.",
+          "is_correct": true,
+          "why": "The visible need is cough medicine."
+        },
+        {
+          "target_id": "ta-target-say-it-slowly",
+          "text": "மெதுவாக சொல்ல முடியுமா?",
+          "transliteration": "Methuvaga solla mudiyuma?",
+          "is_correct": false,
+          "why": "This is useful if the pharmacist spoke too fast, but the visual need is medicine."
+        },
+        {
+          "target_id": "ta-target-how-much-is-this",
+          "text": "இது எவ்வளவு?",
+          "transliteration": "Idhu evvalavu?",
+          "is_correct": false,
+          "why": "Price can come later; first the learner needs to ask for medicine."
+        }
       ],
-      "confusable_function_ids": ["ask_for_repetition", "ask_price", "say_do_not_understand"],
-      "support": { "show_visual": true, "play_world_audio": false, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "ask_for_repetition",
+        "ask_price",
+        "say_do_not_understand"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_world_audio": false,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner maps symptom and setting to the medicine request"
     },
     {
@@ -189,8 +333,17 @@
       "prompt": "You are at the pharmacy and need medicine for a cough.",
       "expected_response": "இருமல் மருந்து, தயவு செய்து.",
       "expected_transliteration": "Irumal marundhu, thayavu seithu.",
-      "confusable_function_ids": ["ask_for_repetition", "ask_price", "use_polite_basics"],
-      "support": { "show_visual": true, "play_model_audio": false, "show_target_text_after_attempt": true, "show_transliteration": true },
+      "confusable_function_ids": [
+        "ask_for_repetition",
+        "ask_price",
+        "use_polite_basics"
+      ],
+      "support": {
+        "show_visual": true,
+        "play_model_audio": false,
+        "show_target_text_after_attempt": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner produces the pharmacy request from visual intention"
     },
     {
@@ -201,10 +354,146 @@
       "correct_function_id": "request_basic_item",
       "target_id": "ta-target-water-please",
       "prompt": "Roleplay a tiny Tamil shop exchange using only known functions.",
-      "allowed_function_ids": ["greet_and_ask_wellbeing", "request_basic_item", "ask_price", "pay_and_close", "use_polite_basics", "ask_for_repetition", "say_do_not_understand"],
+      "allowed_function_ids": [
+        "greet_and_ask_wellbeing",
+        "request_basic_item",
+        "ask_price",
+        "pay_and_close",
+        "use_polite_basics",
+        "ask_for_repetition",
+        "say_do_not_understand"
+      ],
       "roleplay_goal": "Buy a bottle of water and close politely.",
-      "support": { "show_visual": true, "allow_repair_phrases": true, "keep_ai_language_to_known_functions": true, "show_transliteration": true },
+      "support": {
+        "show_visual": true,
+        "allow_repair_phrases": true,
+        "keep_ai_language_to_known_functions": true,
+        "show_transliteration": true
+      },
       "success_signal": "learner completes a short exchange without translation"
+    },
+    {
+      "id": "ta-card-hello-transfer-same_day_transfer",
+      "template_id": "guided-speaking-scene-v1",
+      "dialogue_id": "ta-greeting-neighbor-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "greet_and_ask_wellbeing",
+      "target_id": "ta-target-hello-how-are-you",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": null,
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true,
+        "show_transliteration": true
+      },
+      "success_signal": "learner reuses ta-target-hello-how-are-you in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "ta-card-introduce-transfer-same_day_transfer",
+      "template_id": "guided-speaking-scene-v1",
+      "dialogue_id": "ta-introduce-class-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": null,
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true,
+        "show_transliteration": true
+      },
+      "success_signal": "learner reuses ta-target-my-name-is in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "ta-card-repair-transfer-same_day_transfer",
+      "template_id": "guided-speaking-scene-v1",
+      "dialogue_id": "ta-repair-ticket-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "ask_for_repetition",
+      "target_id": "ta-target-say-it-slowly",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": null,
+      "support": {
+        "show_visual": true,
+        "play_model_audio": true,
+        "show_target_text_after_audio": true,
+        "show_transliteration": true
+      },
+      "success_signal": "learner reuses ta-target-say-it-slowly in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
     }
   ]
 }

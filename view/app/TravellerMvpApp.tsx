@@ -25,6 +25,7 @@ type LessonTab = {
 const LANGUAGE_OPTIONS: LanguageOption[] = [
   { id: 'ja', label: 'Japanese' },
   { id: 'yue', label: 'Cantonese' },
+  { id: 'zh', label: 'Mandarin' },
   { id: 'ta', label: 'Tamil' },
   { id: 'en', label: 'English' },
 ];

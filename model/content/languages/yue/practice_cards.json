@@ -8,18 +8,68 @@
     "estimated_minutes": 10,
     "unlock_after": [],
     "lesson_tabs": [
-      { "id": "hello", "label": "Scene 1", "card_id": "yue-card-first-hi-dialogue-practice" },
-      { "id": "introduce", "label": "Scene 2", "card_id": "yue-card-introduce-self-dialogue-practice" },
-      { "id": "repair", "label": "Scene 3", "card_id": "yue-card-dont-understand-dialogue-practice" },
-      { "id": "excuse-me", "label": "Scene 4", "card_id": "yue-card-excuse-me-dialogue-practice" },
-      { "id": "food-order", "label": "Scene 5", "card_id": "yue-card-order-food-dialogue-practice" }
+      {
+        "id": "hello",
+        "label": "Scene 1",
+        "card_id": "yue-card-first-hi-dialogue-practice"
+      },
+      {
+        "id": "introduce",
+        "label": "Scene 2",
+        "card_id": "yue-card-introduce-self-dialogue-practice"
+      },
+      {
+        "id": "repair",
+        "label": "Scene 3",
+        "card_id": "yue-card-dont-understand-dialogue-practice"
+      },
+      {
+        "id": "excuse-me",
+        "label": "Scene 4",
+        "card_id": "yue-card-excuse-me-dialogue-practice"
+      },
+      {
+        "id": "food-order",
+        "label": "Scene 5",
+        "card_id": "yue-card-order-food-dialogue-practice"
+      },
+      {
+        "id": "hello-transfer",
+        "label": "Scene 6",
+        "card_id": "yue-card-hello-transfer-same_day_transfer"
+      },
+      {
+        "id": "introduce-transfer",
+        "label": "Scene 7",
+        "card_id": "yue-card-introduce-transfer-same_day_transfer"
+      },
+      {
+        "id": "repair-transfer",
+        "label": "Scene 8",
+        "card_id": "yue-card-repair-transfer-same_day_transfer"
+      },
+      {
+        "id": "excuse-me-transfer",
+        "label": "Scene 9",
+        "card_id": "yue-card-excuse-me-transfer-same_day_transfer"
+      },
+      {
+        "id": "food-order-transfer",
+        "label": "Scene 10",
+        "card_id": "yue-card-food-order-transfer-same_day_transfer"
+      }
     ],
     "cards": [
       "yue-card-first-hi-dialogue-practice",
       "yue-card-introduce-self-dialogue-practice",
       "yue-card-dont-understand-dialogue-practice",
       "yue-card-excuse-me-dialogue-practice",
-      "yue-card-order-food-dialogue-practice"
+      "yue-card-order-food-dialogue-practice",
+      "yue-card-hello-transfer-same_day_transfer",
+      "yue-card-introduce-transfer-same_day_transfer",
+      "yue-card-repair-transfer-same_day_transfer",
+      "yue-card-excuse-me-transfer-same_day_transfer",
+      "yue-card-food-order-transfer-same_day_transfer"
     ]
   },
   "practice_cards": [
@@ -40,14 +90,32 @@
         "learner_role": "person being greeted",
         "partner_role": "friendly acquaintance",
         "current_turn": "partner_speaks_first",
-        "target_function": { "id": "respond_to_greeting", "definition": "The learner responds appropriately when someone says hi or hello." },
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
         "learner_intention": "Respond to a friendly greeting in Cantonese.",
-        "required_slots": { "speech_act": "greeting_response" },
-        "example_valid_responses": ["Nei hou", "Nei hou!", "Halo"],
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "example_valid_responses": [
+          "Nei hou",
+          "Nei hou!",
+          "Halo"
+        ],
         "wrong_intents": [
-          { "id": "end_conversation", "definition": "The learner says goodbye." },
-          { "id": "ask_location", "definition": "The learner asks where something is." },
-          { "id": "thank_only", "definition": "The learner only thanks the partner." }
+          {
+            "id": "end_conversation",
+            "definition": "The learner says goodbye."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
         ]
       },
       "support": {}
@@ -69,14 +137,32 @@
         "learner_role": "new student being asked their name",
         "partner_role": "friendly classmate",
         "current_turn": "partner_speaks_first",
-        "target_function": { "id": "introduce_self", "definition": "The learner says their own name in a simple introduction." },
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
         "learner_intention": "Tell the classmate that your name is Anna in Cantonese.",
-        "required_slots": { "speech_act": "self_introduction", "name": "Anna" },
-        "example_valid_responses": ["Ngo giu Anna", "Ngo hai Anna"],
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "example_valid_responses": [
+          "Ngo giu Anna",
+          "Ngo hai Anna"
+        ],
         "wrong_intents": [
-          { "id": "greet_only", "definition": "The learner only says hi without giving a name." },
-          { "id": "ask_name", "definition": "The learner asks for the other person's name." },
-          { "id": "repair", "definition": "The learner says they do not understand." }
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand."
+          }
         ]
       },
       "support": {}
@@ -98,14 +184,32 @@
         "learner_role": "person who does not understand the instruction",
         "partner_role": "busy but helpful staff member",
         "current_turn": "partner_speaks_first",
-        "target_function": { "id": "say_do_not_understand", "definition": "The learner politely signals that they do not understand what was said." },
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
         "learner_intention": "Say that you do not understand in Cantonese.",
-        "required_slots": { "speech_act": "repair", "problem": "not_understand" },
-        "example_valid_responses": ["M hou ji si, ngo m ming", "Ngo m ming"],
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "example_valid_responses": [
+          "M hou ji si, ngo m ming",
+          "Ngo m ming"
+        ],
         "wrong_intents": [
-          { "id": "agree", "definition": "The learner says yes or agrees." },
-          { "id": "request_food", "definition": "The learner orders food." },
-          { "id": "ask_price", "definition": "The learner asks for a price." }
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food."
+          },
+          {
+            "id": "ask_price",
+            "definition": "The learner asks for a price."
+          }
         ]
       },
       "support": {}
@@ -127,14 +231,31 @@
         "learner_role": "person politely getting the staff member's attention",
         "partner_role": "staff member",
         "current_turn": "partner_speaks_first",
-        "target_function": { "id": "get_attention_politely", "definition": "The learner politely gets attention from someone who is busy or not looking." },
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
         "learner_intention": "Say excuse me in Cantonese so the staff member looks up.",
-        "required_slots": { "speech_act": "attention_request" },
-        "example_valid_responses": ["M goi", "M hou ji si"],
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "example_valid_responses": [
+          "M goi",
+          "M hou ji si"
+        ],
         "wrong_intents": [
-          { "id": "thank_only", "definition": "The learner thanks the partner." },
-          { "id": "greet_only", "definition": "The learner only greets the partner." },
-          { "id": "request_food", "definition": "The learner orders food." }
+          {
+            "id": "thank_only",
+            "definition": "The learner thanks the partner."
+          },
+          {
+            "id": "greet_only",
+            "definition": "The learner only greets the partner."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food."
+          }
         ]
       },
       "support": {}
@@ -156,17 +277,389 @@
         "learner_role": "customer ordering one food item",
         "partner_role": "food counter server",
         "current_turn": "partner_speaks_first",
-        "target_function": { "id": "order_local_food", "definition": "The learner orders one visible food item politely." },
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
         "learner_intention": "Ask for one pineapple bun politely in Cantonese.",
-        "required_slots": { "speech_act": "request_order", "item": "pineapple bun" },
-        "example_valid_responses": ["Jat go bo lo baau, m goi", "Bo lo baau, m goi"],
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "pineapple bun"
+        },
+        "example_valid_responses": [
+          "Jat go bo lo baau, m goi",
+          "Bo lo baau, m goi"
+        ],
         "wrong_intents": [
-          { "id": "ask_price", "definition": "The learner asks how much it costs." },
-          { "id": "ask_location", "definition": "The learner asks where something is." },
-          { "id": "repair", "definition": "The learner says they do not understand." }
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand."
+          }
         ]
       },
       "support": {}
+    },
+    {
+      "id": "yue-card-hello-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-greeting-neighbor-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "yue-target-respond-hi",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Nei hou!",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A friendly person sees the learner at a casual community event.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Respond to a friendly greeting in Cantonese.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "example_valid_responses": [
+          "Nei hou",
+          "Nei hou!",
+          "Halo"
+        ],
+        "wrong_intents": [
+          {
+            "id": "end_conversation",
+            "definition": "The learner says goodbye."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses yue-target-respond-hi in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-introduce-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-introduce-class-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "introduce_self",
+      "target_id": "yue-target-my-name-is",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Ngo giu Anna.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A classmate meets the learner in a school hallway and asks their name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Tell the classmate that your name is Anna in Cantonese.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "example_valid_responses": [
+          "Ngo giu Anna",
+          "Ngo hai Anna"
+        ],
+        "wrong_intents": [
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses yue-target-my-name-is in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-repair-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-repair-ticket-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "yue-target-i-dont-understand",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "M hou ji si, ngo m ming.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A staff member gives the learner a form and instructions at a busy service counter.",
+        "learner_role": "person who does not understand the instruction",
+        "partner_role": "busy but helpful staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
+        "learner_intention": "Say that you do not understand in Cantonese.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "example_valid_responses": [
+          "M hou ji si, ngo m ming",
+          "Ngo m ming"
+        ],
+        "wrong_intents": [
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food."
+          },
+          {
+            "id": "ask_price",
+            "definition": "The learner asks for a price."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses yue-target-i-dont-understand in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-excuse-me-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-excuse-me-cafe-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "get_attention_politely",
+      "target_id": "yue-target-excuse-me-attention",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "M goi.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "At a busy counter, the staff calls the next person forward while still looking down.",
+        "learner_role": "person politely getting the staff member's attention",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
+        "learner_intention": "Say excuse me in Cantonese so the staff member looks up.",
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "example_valid_responses": [
+          "M goi",
+          "M hou ji si"
+        ],
+        "wrong_intents": [
+          {
+            "id": "thank_only",
+            "definition": "The learner thanks the partner."
+          },
+          {
+            "id": "greet_only",
+            "definition": "The learner only greets the partner."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses yue-target-excuse-me-attention in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-food-order-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-order-convenience-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "order_local_food",
+      "target_id": "yue-target-one-local-food-please",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Jat go bo lo baau, m goi.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A server at a casual food counter asks what the learner wants to order.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Ask for one pineapple bun politely in Cantonese.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "pineapple bun"
+        },
+        "example_valid_responses": [
+          "Jat go bo lo baau, m goi",
+          "Bo lo baau, m goi"
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses yue-target-one-local-food-please in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
     }
   ]
 }

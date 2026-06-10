@@ -31,7 +31,7 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
     skipped_empty_text: list[dict[str, Any]] = []
 
     for dialogue, line in iter_dialogue_lines(dialogues_payload):
-        text = line.get("text", "").strip()
+        text = (line.get("tts_text") or line.get("text", "")).strip()
         if not text:
             skipped_empty_text.append(
                 {

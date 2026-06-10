@@ -1,13 +1,15 @@
 {
-  "language": "yue",
-  "display_name": "Cantonese",
+  "language": "zh",
+  "display_name": "Mandarin",
+  "script": "Chinese",
+  "native_review_status": "needs_native_review",
   "dialogues": [
     {
-      "id": "yue-first-hi-response",
+      "id": "zh-first-hi-response",
       "asset_slug": "first-hi-response",
       "type": "anchor",
       "function_id": "respond_to_greeting",
-      "target_id": "yue-target-respond-hi",
+      "target_id": "zh-target-respond-hi",
       "scene_id": "study-room-friend",
       "review_modes": [
         "listen",
@@ -19,9 +21,9 @@
           "index": 0,
           "speaker_role": "friend",
           "line_type": "world_opener",
-          "text": "Nei hou!",
-          "transliteration": "Nei hou!",
-          "audio_text": "Nei hou!",
+          "text": "Ni hao!",
+          "transliteration": "Ni hao!",
+          "audio_text": "Ni hao!",
           "tts_text": "你好！",
           "meaning_units": [
             "hello"
@@ -31,10 +33,10 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "target_id": "yue-target-respond-hi",
-          "text": "Nei hou!",
-          "transliteration": "Nei hou!",
-          "audio_text": "Nei hou!",
+          "target_id": "zh-target-respond-hi",
+          "text": "Ni hao!",
+          "transliteration": "Ni hao!",
+          "audio_text": "Ni hao!",
           "tts_text": "你好！",
           "meaning_units": [
             "hello",
@@ -45,10 +47,10 @@
           "index": 2,
           "speaker_role": "friend",
           "line_type": "world_response",
-          "text": "Hou hoi sam gin dou nei.",
-          "transliteration": "Hou hoi sam gin dou nei.",
-          "audio_text": "Hou hoi sam gin dou nei.",
-          "tts_text": "好開心見到你。",
+          "text": "Hen gaoxing jian dao ni.",
+          "transliteration": "Hen gaoxing jian dao ni.",
+          "audio_text": "Hen gaoxing jian dao ni.",
+          "tts_text": "很高兴见到你。",
           "meaning_units": [
             "positive_response"
           ]
@@ -56,11 +58,11 @@
       ]
     },
     {
-      "id": "yue-introduce-self",
+      "id": "zh-introduce-self",
       "asset_slug": "introduce-self",
       "type": "anchor",
       "function_id": "introduce_self",
-      "target_id": "yue-target-my-name-is",
+      "target_id": "zh-target-my-name-is",
       "scene_id": "school-hallway-classmate",
       "review_modes": [
         "listen",
@@ -72,10 +74,10 @@
           "index": 0,
           "speaker_role": "classmate",
           "line_type": "world_opener",
-          "text": "Nei giu mat meng?",
-          "transliteration": "Nei giu mat meng?",
-          "audio_text": "Nei giu mat meng?",
-          "tts_text": "你叫乜名？",
+          "text": "Ni jiao shenme mingzi?",
+          "transliteration": "Ni jiao shenme mingzi?",
+          "audio_text": "Ni jiao shenme mingzi?",
+          "tts_text": "你叫什么名字？",
           "meaning_units": [
             "your",
             "name",
@@ -86,10 +88,10 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "target_id": "yue-target-my-name-is",
-          "text": "Ngo giu Anna.",
-          "transliteration": "Ngo giu Anna.",
-          "audio_text": "Ngo giu Anna.",
+          "target_id": "zh-target-my-name-is",
+          "text": "Wo jiao Anna.",
+          "transliteration": "Wo jiao Anna.",
+          "audio_text": "Wo jiao Anna.",
           "tts_text": "我叫 Anna。",
           "meaning_units": [
             "my",
@@ -101,10 +103,10 @@
           "index": 2,
           "speaker_role": "classmate",
           "line_type": "world_response",
-          "text": "Hou hoi sam sik nei, Anna.",
-          "transliteration": "Hou hoi sam sik nei, Anna.",
-          "audio_text": "Hou hoi sam sik nei, Anna.",
-          "tts_text": "好開心識你，Anna。",
+          "text": "Hen gaoxing renshi ni, Anna.",
+          "transliteration": "Hen gaoxing renshi ni, Anna.",
+          "audio_text": "Hen gaoxing renshi ni, Anna.",
+          "tts_text": "很高兴认识你，Anna。",
           "meaning_units": [
             "positive_response",
             "proper_noun"
@@ -113,11 +115,11 @@
       ]
     },
     {
-      "id": "yue-repair-dont-understand",
+      "id": "zh-repair-dont-understand",
       "asset_slug": "repair-dont-understand",
       "type": "anchor",
       "function_id": "say_do_not_understand",
-      "target_id": "yue-target-i-dont-understand",
+      "target_id": "zh-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "review_modes": [
         "listen",
@@ -129,10 +131,10 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "M goi hai ni dou tin.",
-          "transliteration": "M goi hai ni dou tin.",
-          "audio_text": "M goi hai ni dou tin.",
-          "tts_text": "唔該喺呢度填。",
+          "text": "Qing zai zheli tian.",
+          "transliteration": "Qing zai zheli tian.",
+          "audio_text": "Qing zai zheli tian.",
+          "tts_text": "请在这里填。",
           "meaning_units": [
             "this"
           ]
@@ -141,11 +143,11 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "target_id": "yue-target-i-dont-understand",
-          "text": "M hou ji si, ngo m ming.",
-          "transliteration": "M hou ji si, ngo m ming.",
-          "audio_text": "M hou ji si, ngo m ming.",
-          "tts_text": "唔好意思，我唔明。",
+          "target_id": "zh-target-i-dont-understand",
+          "text": "Bu hao yisi, wo bu dong.",
+          "transliteration": "Bu hao yisi, wo bu dong.",
+          "audio_text": "Bu hao yisi, wo bu dong.",
+          "tts_text": "不好意思，我不懂。",
           "meaning_units": [
             "sorry",
             "not",
@@ -156,10 +158,10 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "M gan yiu. Ngo bong nei.",
-          "transliteration": "M gan yiu. Ngo bong nei.",
-          "audio_text": "M gan yiu. Ngo bong nei.",
-          "tts_text": "唔緊要。我幫你。",
+          "text": "Mei guanxi. Wo bang ni.",
+          "transliteration": "Mei guanxi. Wo bang ni.",
+          "audio_text": "Mei guanxi. Wo bang ni.",
+          "tts_text": "没关系。我帮你。",
           "meaning_units": [
             "help"
           ]
@@ -167,11 +169,11 @@
       ]
     },
     {
-      "id": "yue-excuse-me-attention",
+      "id": "zh-excuse-me-attention",
       "asset_slug": "excuse-me-attention",
       "type": "anchor",
       "function_id": "get_attention_politely",
-      "target_id": "yue-target-excuse-me-attention",
+      "target_id": "zh-target-excuse-me-attention",
       "scene_id": "station-information-desk",
       "review_modes": [
         "listen",
@@ -183,10 +185,10 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "Ha yat wai, m goi.",
-          "transliteration": "Ha yat wai, m goi.",
-          "audio_text": "Ha yat wai, m goi.",
-          "tts_text": "下一位，唔該。",
+          "text": "Xia yi wei, qing.",
+          "transliteration": "Xia yi wei, qing.",
+          "audio_text": "Xia yi wei, qing.",
+          "tts_text": "下一位，请。",
           "meaning_units": [
             "attention"
           ]
@@ -195,11 +197,11 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "target_id": "yue-target-excuse-me-attention",
-          "text": "M goi.",
-          "transliteration": "M goi.",
-          "audio_text": "M goi.",
-          "tts_text": "唔該。",
+          "target_id": "zh-target-excuse-me-attention",
+          "text": "Qing wen.",
+          "transliteration": "Qing wen.",
+          "audio_text": "Qing wen.",
+          "tts_text": "请问。",
           "meaning_units": [
             "attention_request",
             "polite_softener"
@@ -209,10 +211,10 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "Hai, nei hou.",
-          "transliteration": "Hai, nei hou.",
-          "audio_text": "Hai, nei hou.",
-          "tts_text": "係，你好。",
+          "text": "Hao, ni hao.",
+          "transliteration": "Hao, ni hao.",
+          "audio_text": "Hao, ni hao.",
+          "tts_text": "好，你好。",
           "meaning_units": [
             "acknowledgement"
           ]
@@ -220,11 +222,11 @@
       ]
     },
     {
-      "id": "yue-order-local-food",
+      "id": "zh-order-local-food",
       "asset_slug": "order-local-food",
       "type": "anchor",
       "function_id": "order_local_food",
-      "target_id": "yue-target-one-local-food-please",
+      "target_id": "zh-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "review_modes": [
         "listen",
@@ -236,10 +238,10 @@
           "index": 0,
           "speaker_role": "server",
           "line_type": "world_opener",
-          "text": "Nei yiu mat?",
-          "transliteration": "Nei yiu mat?",
-          "audio_text": "Nei yiu mat?",
-          "tts_text": "你要乜？",
+          "text": "Ni yao shenme?",
+          "transliteration": "Ni yao shenme?",
+          "audio_text": "Ni yao shenme?",
+          "tts_text": "你要什么？",
           "meaning_units": [
             "question"
           ]
@@ -248,11 +250,11 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "target_id": "yue-target-one-local-food-please",
-          "text": "Jat go bo lo baau, m goi.",
-          "transliteration": "Jat go bo lo baau, m goi.",
-          "audio_text": "Jat go bo lo baau, m goi.",
-          "tts_text": "一個菠蘿包，唔該。",
+          "target_id": "zh-target-one-local-food-please",
+          "text": "Yi ge baozi, xiexie.",
+          "transliteration": "Yi ge baozi, xiexie.",
+          "audio_text": "Yi ge baozi, xiexie.",
+          "tts_text": "一个包子，谢谢。",
           "meaning_units": [
             "one",
             "food_item",
@@ -263,10 +265,10 @@
           "index": 2,
           "speaker_role": "server",
           "line_type": "world_response",
-          "text": "Hou aa.",
-          "transliteration": "Hou aa.",
-          "audio_text": "Hou aa.",
-          "tts_text": "好呀。",
+          "text": "Hao de.",
+          "transliteration": "Hao de.",
+          "audio_text": "Hao de.",
+          "tts_text": "好的。",
           "meaning_units": [
             "acknowledgement"
           ]
@@ -274,11 +276,11 @@
       ]
     },
     {
-      "id": "yue-greeting-neighbor-transfer",
+      "id": "zh-greeting-neighbor-transfer",
       "asset_slug": "greeting-neighbor-transfer",
       "type": "transfer",
       "function_id": "respond_to_greeting",
-      "target_id": "yue-target-respond-hi",
+      "target_id": "zh-target-respond-hi",
       "scene_id": "neighbor-gate",
       "review_modes": [
         "produce_from_visual",
@@ -289,9 +291,9 @@
           "index": 0,
           "speaker_role": "neighbor",
           "line_type": "world_opener",
-          "text": "Nei hou!",
-          "transliteration": "Nei hou!",
-          "audio_text": "Nei hou!",
+          "text": "Ni hao!",
+          "transliteration": "Ni hao!",
+          "audio_text": "Ni hao!",
           "meaning_units": [],
           "tts_text": "你好！"
         },
@@ -299,31 +301,31 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Nei hou!",
-          "transliteration": "Nei hou!",
-          "audio_text": "Nei hou!",
+          "text": "Ni hao!",
+          "transliteration": "Ni hao!",
+          "audio_text": "Ni hao!",
           "meaning_units": [],
           "tts_text": "你好！",
-          "target_id": "yue-target-respond-hi"
+          "target_id": "zh-target-respond-hi"
         },
         {
           "index": 2,
           "speaker_role": "neighbor",
           "line_type": "world_response",
-          "text": "Hou aa.",
-          "transliteration": "Hou aa.",
-          "audio_text": "Hou aa.",
+          "text": "Hao de.",
+          "transliteration": "Hao de.",
+          "audio_text": "Hao de.",
           "meaning_units": [],
-          "tts_text": "好呀。"
+          "tts_text": "好的。"
         }
       ]
     },
     {
-      "id": "yue-introduce-class-transfer",
+      "id": "zh-introduce-class-transfer",
       "asset_slug": "introduce-class-transfer",
       "type": "transfer",
       "function_id": "introduce_self",
-      "target_id": "yue-target-my-name-is",
+      "target_id": "zh-target-my-name-is",
       "scene_id": "language-class-name-tags",
       "review_modes": [
         "produce_from_visual",
@@ -334,41 +336,41 @@
           "index": 0,
           "speaker_role": "class_partner",
           "line_type": "world_opener",
-          "text": "Nei giu mat meng?",
-          "transliteration": "Nei giu mat meng?",
-          "audio_text": "Nei giu mat meng?",
+          "text": "Ni jiao shenme mingzi?",
+          "transliteration": "Ni jiao shenme mingzi?",
+          "audio_text": "Ni jiao shenme mingzi?",
           "meaning_units": [],
-          "tts_text": "你叫乜名？"
+          "tts_text": "你叫什么名字？"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Ngo giu Anna.",
-          "transliteration": "Ngo giu Anna.",
-          "audio_text": "Ngo giu Anna.",
+          "text": "Wo jiao Anna.",
+          "transliteration": "Wo jiao Anna.",
+          "audio_text": "Wo jiao Anna.",
           "meaning_units": [],
           "tts_text": "我叫 Anna。",
-          "target_id": "yue-target-my-name-is"
+          "target_id": "zh-target-my-name-is"
         },
         {
           "index": 2,
           "speaker_role": "class_partner",
           "line_type": "world_response",
-          "text": "Hou hoi sam sik nei, Anna.",
-          "transliteration": "Hou hoi sam sik nei, Anna.",
-          "audio_text": "Hou hoi sam sik nei, Anna.",
+          "text": "Hen gaoxing renshi ni, Anna.",
+          "transliteration": "Hen gaoxing renshi ni, Anna.",
+          "audio_text": "Hen gaoxing renshi ni, Anna.",
           "meaning_units": [],
-          "tts_text": "好開心識你，Anna。"
+          "tts_text": "很高兴认识你，Anna。"
         }
       ]
     },
     {
-      "id": "yue-repair-ticket-transfer",
+      "id": "zh-repair-ticket-transfer",
       "asset_slug": "repair-ticket-transfer",
       "type": "transfer",
       "function_id": "say_do_not_understand",
-      "target_id": "yue-target-i-dont-understand",
+      "target_id": "zh-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "review_modes": [
         "produce_from_visual",
@@ -379,41 +381,41 @@
           "index": 0,
           "speaker_role": "station_helper",
           "line_type": "world_opener",
-          "text": "M goi aam ni dou.",
-          "transliteration": "M goi aam ni dou.",
-          "audio_text": "M goi aam ni dou.",
+          "text": "Qing an zheli.",
+          "transliteration": "Qing an zheli.",
+          "audio_text": "Qing an zheli.",
           "meaning_units": [],
-          "tts_text": "唔該撳呢度。"
+          "tts_text": "请按这里。"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "M hou ji si, ngo m ming.",
-          "transliteration": "M hou ji si, ngo m ming.",
-          "audio_text": "M hou ji si, ngo m ming.",
+          "text": "Bu hao yisi, wo bu dong.",
+          "transliteration": "Bu hao yisi, wo bu dong.",
+          "audio_text": "Bu hao yisi, wo bu dong.",
           "meaning_units": [],
-          "tts_text": "唔好意思，我唔明。",
-          "target_id": "yue-target-i-dont-understand"
+          "tts_text": "不好意思，我不懂。",
+          "target_id": "zh-target-i-dont-understand"
         },
         {
           "index": 2,
           "speaker_role": "station_helper",
           "line_type": "world_response",
-          "text": "M gan yiu. Ngo bong nei.",
-          "transliteration": "M gan yiu. Ngo bong nei.",
-          "audio_text": "M gan yiu. Ngo bong nei.",
+          "text": "Mei guanxi. Wo bang ni.",
+          "transliteration": "Mei guanxi. Wo bang ni.",
+          "audio_text": "Mei guanxi. Wo bang ni.",
           "meaning_units": [],
-          "tts_text": "唔緊要。我幫你。"
+          "tts_text": "没关系。我帮你。"
         }
       ]
     },
     {
-      "id": "yue-excuse-me-cafe-transfer",
+      "id": "zh-excuse-me-cafe-transfer",
       "asset_slug": "excuse-me-cafe-transfer",
       "type": "transfer",
       "function_id": "get_attention_politely",
-      "target_id": "yue-target-excuse-me-attention",
+      "target_id": "zh-target-excuse-me-attention",
       "scene_id": "cafe-counter-attention",
       "review_modes": [
         "produce_from_visual",
@@ -424,41 +426,41 @@
           "index": 0,
           "speaker_role": "barista",
           "line_type": "world_opener",
-          "text": "Dang jat dang.",
-          "transliteration": "Dang jat dang.",
-          "audio_text": "Dang jat dang.",
+          "text": "Qing deng yixia.",
+          "transliteration": "Qing deng yixia.",
+          "audio_text": "Qing deng yixia.",
           "meaning_units": [],
-          "tts_text": "等一等。"
+          "tts_text": "请等一下。"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "M goi.",
-          "transliteration": "M goi.",
-          "audio_text": "M goi.",
+          "text": "Qing wen.",
+          "transliteration": "Qing wen.",
+          "audio_text": "Qing wen.",
           "meaning_units": [],
-          "tts_text": "唔該。",
-          "target_id": "yue-target-excuse-me-attention"
+          "tts_text": "请问。",
+          "target_id": "zh-target-excuse-me-attention"
         },
         {
           "index": 2,
           "speaker_role": "barista",
           "line_type": "world_response",
-          "text": "Hai, nei hou.",
-          "transliteration": "Hai, nei hou.",
-          "audio_text": "Hai, nei hou.",
+          "text": "Hao, ni hao.",
+          "transliteration": "Hao, ni hao.",
+          "audio_text": "Hao, ni hao.",
           "meaning_units": [],
-          "tts_text": "係，你好。"
+          "tts_text": "好，你好。"
         }
       ]
     },
     {
-      "id": "yue-order-convenience-transfer",
+      "id": "zh-order-convenience-transfer",
       "asset_slug": "order-convenience-transfer",
       "type": "transfer",
       "function_id": "order_local_food",
-      "target_id": "yue-target-one-local-food-please",
+      "target_id": "zh-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "review_modes": [
         "produce_from_visual",
@@ -469,32 +471,32 @@
           "index": 0,
           "speaker_role": "cashier",
           "line_type": "world_opener",
-          "text": "Nei yiu mat?",
-          "transliteration": "Nei yiu mat?",
-          "audio_text": "Nei yiu mat?",
+          "text": "Ni yao shenme?",
+          "transliteration": "Ni yao shenme?",
+          "audio_text": "Ni yao shenme?",
           "meaning_units": [],
-          "tts_text": "你要乜？"
+          "tts_text": "你要什么？"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Jat go bo lo baau, m goi.",
-          "transliteration": "Jat go bo lo baau, m goi.",
-          "audio_text": "Jat go bo lo baau, m goi.",
+          "text": "Yi ge baozi, xiexie.",
+          "transliteration": "Yi ge baozi, xiexie.",
+          "audio_text": "Yi ge baozi, xiexie.",
           "meaning_units": [],
-          "tts_text": "一個菠蘿包，唔該。",
-          "target_id": "yue-target-one-local-food-please"
+          "tts_text": "一个包子，谢谢。",
+          "target_id": "zh-target-one-local-food-please"
         },
         {
           "index": 2,
           "speaker_role": "cashier",
           "line_type": "world_response",
-          "text": "Hou aa.",
-          "transliteration": "Hou aa.",
-          "audio_text": "Hou aa.",
+          "text": "Hao de.",
+          "transliteration": "Hao de.",
+          "audio_text": "Hao de.",
           "meaning_units": [],
-          "tts_text": "好呀。"
+          "tts_text": "好的。"
         }
       ]
     }

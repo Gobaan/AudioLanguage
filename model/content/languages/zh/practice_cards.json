@@ -1,0 +1,958 @@
+{
+  "language": "zh",
+  "display_name": "Mandarin",
+  "script": "Chinese",
+  "native_review_status": "needs_native_review",
+  "mvp_session": {
+    "id": "zh-first-user-session-5-scene-test",
+    "name": "Mandarin starter scene test",
+    "goal": "Practice five beginner Mandarin chunks inside visual dialogue scenes.",
+    "estimated_minutes": 12,
+    "unlock_after": [],
+    "lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Scene 1",
+        "card_id": "zh-card-first-hi-dialogue-practice"
+      },
+      {
+        "id": "introduce",
+        "label": "Scene 2",
+        "card_id": "zh-card-introduce-self-dialogue-practice"
+      },
+      {
+        "id": "repair",
+        "label": "Scene 3",
+        "card_id": "zh-card-dont-understand-dialogue-practice"
+      },
+      {
+        "id": "excuse-me",
+        "label": "Scene 4",
+        "card_id": "zh-card-excuse-me-dialogue-practice"
+      },
+      {
+        "id": "food-order",
+        "label": "Scene 5",
+        "card_id": "zh-card-order-food-dialogue-practice"
+      },
+      {
+        "id": "hello-transfer",
+        "label": "Scene 6",
+        "card_id": "zh-card-hello-transfer-same_day_transfer"
+      },
+      {
+        "id": "introduce-transfer",
+        "label": "Scene 7",
+        "card_id": "zh-card-introduce-transfer-same_day_transfer"
+      },
+      {
+        "id": "repair-transfer",
+        "label": "Scene 8",
+        "card_id": "zh-card-repair-transfer-same_day_transfer"
+      },
+      {
+        "id": "excuse-me-transfer",
+        "label": "Scene 9",
+        "card_id": "zh-card-excuse-me-transfer-same_day_transfer"
+      },
+      {
+        "id": "food-order-transfer",
+        "label": "Scene 10",
+        "card_id": "zh-card-food-order-transfer-same_day_transfer"
+      }
+    ],
+    "delayed_lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Scene 1",
+        "card_id": "zh-card-first-hi-delayed-review"
+      },
+      {
+        "id": "introduce",
+        "label": "Scene 2",
+        "card_id": "zh-card-introduce-self-delayed-review"
+      },
+      {
+        "id": "repair",
+        "label": "Scene 3",
+        "card_id": "zh-card-dont-understand-delayed-review"
+      },
+      {
+        "id": "excuse-me",
+        "label": "Scene 4",
+        "card_id": "zh-card-excuse-me-delayed-review"
+      },
+      {
+        "id": "food-order",
+        "label": "Scene 5",
+        "card_id": "zh-card-order-food-delayed-review"
+      }
+    ],
+    "cards": [
+      "zh-card-first-hi-dialogue-practice",
+      "zh-card-introduce-self-dialogue-practice",
+      "zh-card-dont-understand-dialogue-practice",
+      "zh-card-excuse-me-dialogue-practice",
+      "zh-card-order-food-dialogue-practice",
+      "zh-card-first-hi-delayed-review",
+      "zh-card-introduce-self-delayed-review",
+      "zh-card-dont-understand-delayed-review",
+      "zh-card-excuse-me-delayed-review",
+      "zh-card-order-food-delayed-review",
+      "zh-card-hello-transfer-same_day_transfer",
+      "zh-card-introduce-transfer-same_day_transfer",
+      "zh-card-repair-transfer-same_day_transfer",
+      "zh-card-excuse-me-transfer-same_day_transfer",
+      "zh-card-food-order-transfer-same_day_transfer"
+    ]
+  },
+  "practice_cards": [
+    {
+      "id": "zh-card-first-hi-dialogue-practice",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-first-hi-response",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "zh-target-respond-hi",
+      "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+      "expected_response": "Ni hao!",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A friendly person sees the learner at a casual community event.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Respond to a friendly greeting in Mandarin.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
+        "example_valid_responses": [
+          "Ni hao",
+          "Ni hao!",
+          "Hai"
+        ],
+        "acceptance_notes": [
+          "Accept clear romanized attempts such as ni hao."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ignore_greeting",
+            "definition": "The learner gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated."
+          },
+          {
+            "id": "end_conversation",
+            "definition": "The learner says goodbye."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner supplies the missing greeting response"
+    },
+    {
+      "id": "zh-card-introduce-self-dialogue-practice",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-introduce-self",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
+      "correct_function_id": "introduce_self",
+      "target_id": "zh-target-my-name-is",
+      "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+      "expected_response": "Wo jiao Anna.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A classmate meets the learner in a school hallway and asks their name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Tell the classmate that your name is Anna in Mandarin.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional_slots": {
+          "greeting": true
+        },
+        "example_valid_responses": [
+          "Wo jiao Anna",
+          "Wo shi Anna"
+        ],
+        "acceptance_notes": [
+          "Accept Ana/Anna spelling variation if the utterance clearly introduces the learner."
+        ],
+        "wrong_intents": [
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner introduces themself after being asked their name"
+    },
+    {
+      "id": "zh-card-dont-understand-dialogue-practice",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-repair-dont-understand",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "zh-target-i-dont-understand",
+      "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+      "expected_response": "Bu hao yisi, wo bu dong.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A staff member gives the learner a form and instructions at a busy service counter.",
+        "learner_role": "person who does not understand the instruction",
+        "partner_role": "busy but helpful staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
+        "learner_intention": "Say that you do not understand in Mandarin.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional_slots": {
+          "apology": true,
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Wo bu dong",
+          "Bu hao yisi, wo bu dong",
+          "Duibuqi, wo bu dong"
+        ],
+        "acceptance_notes": [
+          "Accept clear romanized attempts."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_slowly",
+            "definition": "The learner asks the partner to speak slowly instead."
+          },
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees."
+          },
+          {
+            "id": "request_item",
+            "definition": "The learner requests an unrelated object or service."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner uses a repair phrase instead of freezing"
+    },
+    {
+      "id": "zh-card-excuse-me-dialogue-practice",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-excuse-me-attention",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
+      "correct_function_id": "get_attention_politely",
+      "target_id": "zh-target-excuse-me-attention",
+      "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+      "expected_response": "Qing wen.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "At a busy counter, the staff calls the next person forward while still looking down, and the learner politely gets the staff member's attention.",
+        "learner_role": "person politely getting the staff member's attention",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
+        "learner_intention": "Say excuse me in Mandarin so the staff member looks up.",
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Qing wen",
+          "Bu hao yisi"
+        ],
+        "acceptance_notes": [
+          "Accept clear romanized attempts."
+        ],
+        "wrong_intents": [
+          {
+            "id": "thank_only",
+            "definition": "The learner thanks the partner instead."
+          },
+          {
+            "id": "greet_only",
+            "definition": "The learner only greets the partner."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food or asks for an item."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner uses a short polite attention-getter"
+    },
+    {
+      "id": "zh-card-order-food-dialogue-practice",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-order-local-food",
+      "mode": "ai_guided_response",
+      "stage": "guided_scene_production",
+      "correct_function_id": "order_local_food",
+      "target_id": "zh-target-one-local-food-please",
+      "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
+      "expected_response": "Yi ge baozi, xiexie.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A server at a casual food counter asks what the learner wants to order.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Ask for one baozi politely in Mandarin.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "baozi"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Yi ge baozi, xiexie",
+          "Baozi, xiexie",
+          "Yi ge baozi"
+        ],
+        "acceptance_notes": [
+          "Accept an order for a baozi even if the measure word is imperfect."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs instead of ordering."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand instead of ordering."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner orders a simple food item politely"
+    },
+    {
+      "id": "zh-card-first-hi-delayed-review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-first-hi-response",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "zh-target-respond-hi",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "Ni hao!",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A friendly person greets the learner.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Return the greeting in Mandarin.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true
+        },
+        "example_valid_responses": [
+          "Ni hao",
+          "Ni hao!"
+        ],
+        "wrong_intents": []
+      },
+      "support": {},
+      "success_signal": "learner recalls the greeting response"
+    },
+    {
+      "id": "zh-card-introduce-self-delayed-review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-introduce-self",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "introduce_self",
+      "target_id": "zh-target-my-name-is",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "Wo jiao Anna.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A classmate asks the learner's name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Say your name is Anna in Mandarin.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional_slots": {},
+        "example_valid_responses": [
+          "Wo jiao Anna",
+          "Wo shi Anna"
+        ],
+        "wrong_intents": []
+      },
+      "support": {},
+      "success_signal": "learner recalls the self-introduction"
+    },
+    {
+      "id": "zh-card-dont-understand-delayed-review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-repair-dont-understand",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "zh-target-i-dont-understand",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "Bu hao yisi, wo bu dong.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A staff member gives an instruction the learner does not understand.",
+        "learner_role": "person who does not understand",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand."
+        },
+        "learner_intention": "Say that you do not understand in Mandarin.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional_slots": {
+          "apology": true
+        },
+        "example_valid_responses": [
+          "Wo bu dong",
+          "Bu hao yisi, wo bu dong"
+        ],
+        "wrong_intents": []
+      },
+      "support": {},
+      "success_signal": "learner recalls the repair phrase"
+    },
+    {
+      "id": "zh-card-excuse-me-delayed-review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-excuse-me-attention",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "get_attention_politely",
+      "target_id": "zh-target-excuse-me-attention",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "Qing wen.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A busy staff member is not fully looking at the learner.",
+        "learner_role": "person getting attention politely",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
+        "learner_intention": "Politely get the staff member's attention in Mandarin.",
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Qing wen",
+          "Bu hao yisi"
+        ],
+        "wrong_intents": []
+      },
+      "support": {},
+      "success_signal": "learner recalls the attention-getter"
+    },
+    {
+      "id": "zh-card-order-food-delayed-review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-order-local-food",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "order_local_food",
+      "target_id": "zh-target-one-local-food-please",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "Yi ge baozi, xiexie.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A server waits for the learner's order at a food counter.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Order one baozi politely in Mandarin.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "baozi"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Yi ge baozi, xiexie",
+          "Baozi, xiexie"
+        ],
+        "wrong_intents": []
+      },
+      "support": {},
+      "success_signal": "learner recalls the ordering phrase"
+    },
+    {
+      "id": "zh-card-hello-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-greeting-neighbor-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "zh-target-respond-hi",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Ni hao!",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A friendly person sees the learner at a casual community event.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Respond to a friendly greeting in Mandarin.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
+        "example_valid_responses": [
+          "Ni hao",
+          "Ni hao!",
+          "Hai"
+        ],
+        "acceptance_notes": [
+          "Accept clear romanized attempts such as ni hao."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ignore_greeting",
+            "definition": "The learner gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated."
+          },
+          {
+            "id": "end_conversation",
+            "definition": "The learner says goodbye."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses zh-target-respond-hi in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "zh-card-introduce-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-introduce-class-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "introduce_self",
+      "target_id": "zh-target-my-name-is",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Wo jiao Anna.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A classmate meets the learner in a school hallway and asks their name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Tell the classmate that your name is Anna in Mandarin.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional_slots": {
+          "greeting": true
+        },
+        "example_valid_responses": [
+          "Wo jiao Anna",
+          "Wo shi Anna"
+        ],
+        "acceptance_notes": [
+          "Accept Ana/Anna spelling variation if the utterance clearly introduces the learner."
+        ],
+        "wrong_intents": [
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses zh-target-my-name-is in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "zh-card-repair-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-repair-ticket-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "zh-target-i-dont-understand",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Bu hao yisi, wo bu dong.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A staff member gives the learner a form and instructions at a busy service counter.",
+        "learner_role": "person who does not understand the instruction",
+        "partner_role": "busy but helpful staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
+        "learner_intention": "Say that you do not understand in Mandarin.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional_slots": {
+          "apology": true,
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Wo bu dong",
+          "Bu hao yisi, wo bu dong",
+          "Duibuqi, wo bu dong"
+        ],
+        "acceptance_notes": [
+          "Accept clear romanized attempts."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_slowly",
+            "definition": "The learner asks the partner to speak slowly instead."
+          },
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees."
+          },
+          {
+            "id": "request_item",
+            "definition": "The learner requests an unrelated object or service."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses zh-target-i-dont-understand in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "zh-card-excuse-me-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-excuse-me-cafe-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "get_attention_politely",
+      "target_id": "zh-target-excuse-me-attention",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Qing wen.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "At a busy counter, the staff calls the next person forward while still looking down, and the learner politely gets the staff member's attention.",
+        "learner_role": "person politely getting the staff member's attention",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
+        "learner_intention": "Say excuse me in Mandarin so the staff member looks up.",
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Qing wen",
+          "Bu hao yisi"
+        ],
+        "acceptance_notes": [
+          "Accept clear romanized attempts."
+        ],
+        "wrong_intents": [
+          {
+            "id": "thank_only",
+            "definition": "The learner thanks the partner instead."
+          },
+          {
+            "id": "greet_only",
+            "definition": "The learner only greets the partner."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food or asks for an item."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses zh-target-excuse-me-attention in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "zh-card-food-order-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "zh-order-convenience-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "order_local_food",
+      "target_id": "zh-target-one-local-food-please",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "Yi ge baozi, xiexie.",
+      "ai_scene_contract": {
+        "language_being_practiced": "Mandarin",
+        "support_language": "English",
+        "physical_scene": "A server at a casual food counter asks what the learner wants to order.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Ask for one baozi politely in Mandarin.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "baozi"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "Yi ge baozi, xiexie",
+          "Baozi, xiexie",
+          "Yi ge baozi"
+        ],
+        "acceptance_notes": [
+          "Accept an order for a baozi even if the measure word is imperfect."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs instead of ordering."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand instead of ordering."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses zh-target-one-local-food-please in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    }
+  ]
+}

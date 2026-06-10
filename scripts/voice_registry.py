@@ -190,6 +190,70 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
             "pitch": "+0Hz",
         },
     },
+    "yue": {
+        "learner": {
+            "provider_voice": "zh-HK-HiuGaaiNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+        "friend": {
+            "provider_voice": "zh-HK-WanLungNeural",
+            "rate": "+2%",
+            "pitch": "+0Hz",
+        },
+        "classmate": {
+            "provider_voice": "zh-HK-WanLungNeural",
+            "rate": "+4%",
+            "pitch": "+1Hz",
+        },
+        "staff": {
+            "provider_voice": "zh-HK-WanLungNeural",
+            "rate": "+0%",
+            "pitch": "-2Hz",
+        },
+        "server": {
+            "provider_voice": "zh-HK-WanLungNeural",
+            "rate": "+3%",
+            "pitch": "-1Hz",
+        },
+        "default": {
+            "provider_voice": "zh-HK-WanLungNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+    },
+    "zh": {
+        "learner": {
+            "provider_voice": "zh-CN-XiaoxiaoNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+        "friend": {
+            "provider_voice": "zh-CN-YunxiNeural",
+            "rate": "+2%",
+            "pitch": "+0Hz",
+        },
+        "classmate": {
+            "provider_voice": "zh-CN-YunxiNeural",
+            "rate": "+4%",
+            "pitch": "+1Hz",
+        },
+        "staff": {
+            "provider_voice": "zh-CN-YunyangNeural",
+            "rate": "+0%",
+            "pitch": "-2Hz",
+        },
+        "server": {
+            "provider_voice": "zh-CN-YunxiNeural",
+            "rate": "+3%",
+            "pitch": "-1Hz",
+        },
+        "default": {
+            "provider_voice": "zh-CN-YunyangNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+    },
 }
 
 
