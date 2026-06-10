@@ -55,6 +55,15 @@ python3 -m venv .venv
 python -m pip install --upgrade pip
 python -m pip install -r backend/requirements.txt
 
+if command -v npm >/dev/null 2>&1; then
+  cd view
+  npm ci
+  npm run build
+  cd ..
+else
+  echo "npm is not installed; skipping frontend build"
+fi
+
 cat > run_server.sh <<'RUNNER'
 #!/usr/bin/env bash
 set -euo pipefail

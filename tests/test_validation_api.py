@@ -1,11 +1,13 @@
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
 from app.conversation.models import CoachResponse, CommunicationJudgement
+from app.deps import get_conversation_coach
 from app.validation import ValidationStore
 from test_support import app
 
@@ -27,13 +29,20 @@ class FakeConversationCoach:
         )
 
 
+@contextmanager
+def fake_conversation_coach():
+    app.dependency_overrides[get_conversation_coach] = lambda: FakeConversationCoach()
+    try:
+        yield
+    finally:
+        app.dependency_overrides.pop(get_conversation_coach, None)
+
+
 class ValidationApiTests(unittest.TestCase):
     def test_validation_session_saves_events_and_attempts_locally(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.routes.validation.validation_store", store), patch(
-                "app.routes.validation.conversation_coach", FakeConversationCoach()
-            ):
+            with patch("app.routes.validation.validation_store", store), fake_conversation_coach():
                 client = TestClient(app)
                 session_response = client.post(
                     "/api/validation/sessions",
@@ -257,9 +266,7 @@ class ValidationApiTests(unittest.TestCase):
     def test_validation_admin_can_score_one_skipped_attempt(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.routes.validation.validation_store", store), patch(
-                "app.routes.validation.conversation_coach", FakeConversationCoach()
-            ):
+            with patch("app.routes.validation.validation_store", store), fake_conversation_coach():
                 client = TestClient(app)
                 client.post(
                     "/api/validation/sessions",

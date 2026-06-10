@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { AdminValidationApp } from './AdminValidationApp';
+import { AdminValidationApp } from './admin/AdminValidationApp';
 import { LanguageSelectionApp } from './LanguageSelectionApp';
 import { TravellerMvpApp } from './TravellerMvpApp';
 import './styles.css';

@@ -5,8 +5,10 @@ from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
+from app.conversation.coach import ConversationCoach
 from app.conversation.models import ConversationContext, LearnerAttempt
-from app.runtime import conversation_coach, validation_store
+from app.deps import ConversationCoachDep
+from app.runtime import validation_store
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +93,11 @@ async def save_validation_attempt(
 
 
 @router.get("/api/validation/sessions/{session_id}/scorecard")
-def get_validation_scorecard(session_id: str, score: bool = Query(default=False)):
+def get_validation_scorecard(
+    session_id: str,
+    conversation_coach: ConversationCoachDep,
+    score: bool = Query(default=False),
+):
     """Return a local scorecard skeleton for manual or AI review."""
     try:
         if score:
@@ -99,7 +105,7 @@ def get_validation_scorecard(session_id: str, score: bool = Query(default=False)
                 "GET /api/validation/sessions/{session_id}/scorecard?score=true triggers scoring; "
                 "prefer POST /attempts/{attempt_id}/score for explicit scoring."
             )
-            score_validation_attempts(session_id)
+            score_validation_attempts(session_id, conversation_coach)
         return validation_store.scorecard(session_id)
     except FileNotFoundError as error:
         raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found") from error
@@ -126,11 +132,15 @@ def delete_validation_attempt(session_id: str, attempt_id: str):
 
 
 @router.post("/api/validation/sessions/{session_id}/attempts/{attempt_id}/score")
-def score_validation_attempt_endpoint(session_id: str, attempt_id: str):
+def score_validation_attempt_endpoint(
+    session_id: str,
+    attempt_id: str,
+    conversation_coach: ConversationCoachDep,
+):
     """Score one saved learner recording from the admin dashboard."""
     try:
         attempt = validation_store.attempt_metadata(session_id, attempt_id)
-        return score_validation_attempt(session_id, attempt)
+        return score_validation_attempt(session_id, attempt, conversation_coach)
     except FileNotFoundError as error:
         raise HTTPException(status_code=404, detail=f"Attempt '{attempt_id}' not found") from error
 
@@ -175,13 +185,13 @@ def delete_validation_session_data(session_id: str, kind: list[str] = Query(...)
         raise HTTPException(status_code=400, detail=str(error)) from error
 
 
-def score_validation_attempts(session_id: str) -> None:
+def score_validation_attempts(session_id: str, conversation_coach: ConversationCoach) -> None:
     """Score unscored local recordings when the scorecard is opened."""
     for attempt in validation_store.attempts_needing_score(session_id):
-        score_validation_attempt(session_id, attempt)
+        score_validation_attempt(session_id, attempt, conversation_coach)
 
 
-def score_validation_attempt(session_id: str, attempt: dict) -> dict:
+def score_validation_attempt(session_id: str, attempt: dict, conversation_coach: ConversationCoach) -> dict:
     attempt_id = str(attempt.get("attemptId", ""))
     if not attempt_id:
         return {"status": "skipped", "error": "Missing attempt id"}

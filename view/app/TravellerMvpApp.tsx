@@ -14,6 +14,7 @@ import {
   withStepAssetUrls,
 } from './lessonUrls';
 import { ScorecardState, ValidationScorecardView } from './ScorecardView';
+import { stepHandlesOwnAutoplay } from './lessonStepHelpers';
 import { useAudioPlayback } from './useAudioPlayback';
 import { useLessonLoader } from './useLessonLoader';
 import { useParticipantId } from './useParticipantId';
@@ -81,20 +82,6 @@ export function TravellerMvpApp() {
     stopPlayback();
   }, [stepIndex, stopPlayback]);
 
-  useEffect(() => {
-    if (!validationSessionId || !stepLesson || !step) return;
-
-    logEvent({
-      type: 'page_view',
-      lessonId: stepLesson.id,
-      lessonPage,
-      stepId: step.id,
-      stepIndex,
-      frameId: step.frameId,
-      targetId: stepLesson.target.id,
-    });
-  }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage, logEvent]);
-
   function playStepAudio() {
     const audioUrl = step?.audio?.url;
     const audioText = step?.audio?.audioText;
@@ -114,6 +101,25 @@ export function TravellerMvpApp() {
 
     playAudioOrSpeak(audioUrl, audioText, language);
   }
+
+  useEffect(() => {
+    if (!step?.audio?.autoplay || stepHandlesOwnAutoplay(step)) return;
+    playStepAudio();
+  }, [step?.id, step?.audio?.autoplay]);
+
+  useEffect(() => {
+    if (!validationSessionId || !stepLesson || !step) return;
+
+    logEvent({
+      type: 'page_view',
+      lessonId: stepLesson.id,
+      lessonPage,
+      stepId: step.id,
+      stepIndex,
+      frameId: step.frameId,
+      targetId: stepLesson.target.id,
+    });
+  }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage, logEvent]);
 
   function selectChoice(stepId: string, choice: ChoiceOption) {
     setSelectedChoiceByStep((current) => ({

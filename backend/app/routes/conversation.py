@@ -5,7 +5,7 @@ from pathlib import Path
 from fastapi import APIRouter, File, Form, UploadFile
 
 from app.conversation.models import ConversationContext, LearnerAttempt
-from app.runtime import conversation_coach
+from app.deps import ConversationCoachDep
 from app.speech.language import romanize_for_language
 
 router = APIRouter()
@@ -39,6 +39,7 @@ async def transcribe_audio(
 
 @router.post("/api/conversation/attempt")
 async def evaluate_conversation_attempt(
+    conversation_coach: ConversationCoachDep,
     file: UploadFile = File(...),
     expected: str = Form(""),
     expected_alt: str = Form(""),
