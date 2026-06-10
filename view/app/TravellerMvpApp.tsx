@@ -1,338 +1,51 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchLessons } from '../api/lessons';
-import {
-  fetchSuggestedParticipantName,
-  fetchValidationScorecard,
-  logValidationEvent,
-  startValidationSession,
-  uploadValidationAttempt,
-  validationAttemptAudioUrl,
-  type ValidationScorecard,
-} from '../api/validation';
-import type { ChoiceOption, Lesson, LessonListResponse, LessonStep } from '../components';
+
+import { fetchValidationScorecard, type ValidationScorecard } from '../api/validation';
+import type { ChoiceOption, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
+import {
+  DEFAULT_LESSON,
+  LANGUAGE_OPTIONS,
+  languageFromUrl,
+  lessonPageFromUrl,
+  sceneSetFromUrl,
+  updateLessonUrl,
+  withAssetUrls,
+  withStepAssetUrls,
+} from './lessonUrls';
+import { ScorecardState, ValidationScorecardView } from './ScorecardView';
 import { useAudioPlayback } from './useAudioPlayback';
-import { isLocalHost, participantFromUrl } from './urlParams';
+import { useLessonLoader } from './useLessonLoader';
+import { useParticipantId } from './useParticipantId';
+import { useValidationSession } from './useValidationSession';
+import { isLocalHost } from './urlParams';
 
-type LanguageOption = {
-  id: string;
-  label: string;
-};
-
-type LessonTab = {
-  id: string;
-  label: string;
-};
-
-const LANGUAGE_OPTIONS: LanguageOption[] = [
-  { id: 'ja', label: 'Japanese' },
-  { id: 'yue', label: 'Cantonese' },
-  { id: 'zh', label: 'Mandarin' },
-  { id: 'ta', label: 'Tamil' },
-  { id: 'en', label: 'English' },
-];
-
-const DEFAULT_LANGUAGE = 'ja';
-const DEFAULT_LESSON = 'hello';
-const DEFAULT_SCENE_SET = 'mvp';
-const PARTICIPANT_STORAGE_KEY = 'audio-language-participant';
-
-const FALLBACK_LESSON: Lesson = {
-  id: 'en-card-first-hi-dialogue-practice',
-  language: 'en',
-  title: 'First hello dialogue',
-  mode: 'ai_guided_response',
-  stage: 'guided_scene_production',
-  target: {
-    id: 'en-target-respond-hi',
-    text: 'Hi!',
-    transliteration: '',
-    meaning: 'Respond to Hi.',
-  },
-  frames: [
-    {
-      id: 'line-0',
-      lineIndex: 0,
-      frameNumber: 1,
-      imageUrl: '/visuals/final/first-hi-response/frame-1.png',
-      audioUrl: '/audio/generated/en/en-first-hi-response/line-0.mp3',
-      title: 'World Opener',
-      speaker: 'friend',
-      text: 'Hi!',
-      transliteration: '',
-      lineType: 'world_opener',
-    },
-    {
-      id: 'line-1',
-      lineIndex: 1,
-      frameNumber: 2,
-      imageUrl: '/visuals/final/first-hi-response/frame-2.png',
-      audioUrl: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-      title: 'Learner Target',
-      speaker: 'learner',
-      text: 'Hi!',
-      transliteration: '',
-      lineType: 'learner_target',
-    },
-    {
-      id: 'line-2',
-      lineIndex: 2,
-      frameNumber: 3,
-      imageUrl: '/visuals/final/first-hi-response/frame-3.png',
-      audioUrl: '/audio/generated/en/en-first-hi-response/line-2.mp3',
-      title: 'World Response',
-      speaker: 'friend',
-      text: 'Nice to see you.',
-      transliteration: '',
-      lineType: 'world_response',
-    },
-  ],
-  steps: [
-    {
-      id: 'scene_setup',
-      type: 'scene_setup',
-      component: 'SceneFrame',
-      frameId: 'line-0',
-      frameMode: 'single',
-      displayText: 'Listen.',
-      audio: {
-        url: '/audio/generated/en/en-first-hi-response/line-0.mp3',
-        autoplay: true,
-        replayable: true,
-        playBeforeMic: false,
-      },
-      mic: {
-        enabled: false,
-        record: false,
-        scoring: 'none',
-      },
-      props: {
-        initialFrameId: 'line-0',
-        frames: [],
-      },
-    },
-    {
-      id: 'target_audio',
-      type: 'target_audio',
-      component: 'AudioButton',
-      frameId: 'line-1',
-      frameMode: 'single',
-      displayText: 'Listen to what they say.',
-      audio: {
-        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        autoplay: true,
-        replayable: true,
-        playBeforeMic: false,
-      },
-      mic: {
-        enabled: false,
-        record: false,
-        scoring: 'none',
-      },
-      props: {
-        audioUrl: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        text: {
-          playLabel: 'Play',
-          playingLabel: 'Playing',
-        },
-      },
-    },
-    {
-      id: 'broad_meaning_guess',
-      type: 'broad_meaning_guess',
-      component: 'ChoicePrompt',
-      frameId: 'line-2',
-      frameMode: 'single',
-      displayText: 'What happened?',
-      audio: {
-        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        autoplay: false,
-        replayable: true,
-        playBeforeMic: false,
-      },
-      mic: {
-        enabled: false,
-        record: false,
-        scoring: 'none',
-      },
-      props: {
-        question: 'What happened?',
-        choices: [
-          {
-            id: 'respond_to_greeting',
-            label: 'They greeted the person back.',
-            isCorrect: true,
-          },
-          {
-            id: 'say_goodbye',
-            label: 'They said goodbye.',
-            isCorrect: false,
-          },
-          {
-            id: 'ask_location',
-            label: 'They asked where something is.',
-            isCorrect: false,
-          },
-          {
-            id: 'apologize',
-            label: 'They apologized.',
-            isCorrect: false,
-          },
-        ],
-      },
-    },
-    {
-      id: 'repeat_with_mic',
-      type: 'repeat_with_mic',
-      component: 'MicPrompt',
-      frameId: 'line-1',
-      frameMode: 'single',
-      displayText: 'Now you say it.',
-      audio: {
-        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        autoplay: true,
-        replayable: true,
-        playBeforeMic: true,
-      },
-      mic: {
-        enabled: true,
-        record: true,
-        startsAfterAudio: true,
-        scoring: 'deferred',
-        continueOnRecord: true,
-        blockingFeedback: false,
-      },
-      props: {
-        expectedText: 'Hi!',
-        expectedTransliteration: '',
-      },
-    },
-  ],
-};
-
-type LoadState = 'loading' | 'ready' | 'error';
 type AppView = 'lesson' | 'scorecard';
-type ScorecardState = 'idle' | 'loading' | 'ready' | 'error';
 
 export function TravellerMvpApp() {
   const [language, setLanguage] = useState(() => languageFromUrl());
   const [lessonPage, setLessonPage] = useState(() => lessonPageFromUrl());
   const [sceneSet] = useState(() => sceneSetFromUrl());
-  const [lessonTabs, setLessonTabs] = useState<LessonTab[]>([]);
-  const [lesson, setLesson] = useState<Lesson | null>(null);
-  const [loadState, setLoadState] = useState<LoadState>('loading');
   const [stepIndex, setStepIndex] = useState(0);
   const [selectedChoiceByStep, setSelectedChoiceByStep] = useState<Record<string, string>>({});
-  const [validationSessionId, setValidationSessionId] = useState<string | null>(null);
   const [appView, setAppView] = useState<AppView>('lesson');
   const [scorecardState, setScorecardState] = useState<ScorecardState>('idle');
   const [scorecard, setScorecard] = useState<ValidationScorecard | null>(null);
-  const [participantId, setParticipantId] = useState<string | null>(null);
+
+  const participantId = useParticipantId();
+  const { lessonTabs, lesson, loadState } = useLessonLoader({
+    language,
+    lessonPage,
+    sceneSet,
+    onLessonPageChange: setLessonPage,
+  });
+  const { sessionId: validationSessionId, logEvent, captureAttempt } = useValidationSession({
+    participantId,
+    language,
+    sceneSet,
+    lessonPage,
+  });
   const { isPlaying, playAudioOrSpeak, stop: stopPlayback } = useAudioPlayback();
-
-  useEffect(() => {
-    let isCurrent = true;
-    const urlParticipant = participantFromUrl();
-    if (urlParticipant) {
-      saveParticipantId(urlParticipant);
-      setParticipantId(urlParticipant);
-      return () => {
-        isCurrent = false;
-      };
-    }
-
-    const storedParticipant = localStorage.getItem(PARTICIPANT_STORAGE_KEY);
-    if (storedParticipant) {
-      setParticipantId(storedParticipant);
-      return () => {
-        isCurrent = false;
-      };
-    }
-
-    fetchSuggestedParticipantName()
-      .then((participant) => {
-        if (!isCurrent) return;
-        saveParticipantId(participant.participantId);
-        setParticipantId(participant.participantId);
-      })
-      .catch(() => {
-        if (!isCurrent) return;
-        const fallbackParticipant = fallbackParticipantId();
-        saveParticipantId(fallbackParticipant);
-        setParticipantId(fallbackParticipant);
-      });
-
-    return () => {
-      isCurrent = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!participantId) return;
-
-    let isCurrent = true;
-
-    startValidationSession({
-      sessionId: validationSessionIdForToday(participantId, language, sceneSet),
-      language,
-      sceneSet,
-      lessonPage,
-      participantId: participantId ?? undefined,
-    })
-      .then((session) => {
-        if (isCurrent) {
-          setValidationSessionId(session.sessionId);
-        }
-      })
-      .catch(() => {
-        if (isCurrent) {
-          setValidationSessionId(null);
-        }
-      });
-
-    return () => {
-      isCurrent = false;
-    };
-  }, [language, sceneSet, participantId]);
-
-  useEffect(() => {
-    let isCurrent = true;
-
-    async function loadLesson() {
-      setLoadState('loading');
-      try {
-        const payload = await fetchLessons(language, lessonPage, sceneSet);
-        if (!isCurrent) return;
-        applyLessonPayload(payload);
-        setLoadState('ready');
-      } catch {
-        try {
-          const payload = await fetchLessons(language, DEFAULT_LESSON, sceneSet);
-          if (!isCurrent) return;
-          applyLessonPayload(payload);
-          setLessonPage(DEFAULT_LESSON);
-          updateLessonUrl(language, DEFAULT_LESSON, sceneSet, true);
-          setLoadState('ready');
-        } catch {
-          if (!isCurrent) return;
-          setLessonTabs([]);
-          setLesson(activeMvpLesson(FALLBACK_LESSON));
-          setLoadState('ready');
-        }
-      }
-    }
-
-    function applyLessonPayload(payload: LessonListResponse) {
-      setLessonTabs(payload.lesson_tabs ?? []);
-      setLesson(activeMvpLesson(payload.lessons[0] ?? FALLBACK_LESSON));
-    }
-
-    loadLesson();
-
-    return () => {
-      isCurrent = false;
-    };
-  }, [language, lessonPage, sceneSet]);
 
   useEffect(() => {
     setStepIndex(0);
@@ -362,7 +75,7 @@ export function TravellerMvpApp() {
       frameId: step.frameId,
       targetId: stepLesson.target.id,
     });
-  }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage]);
+  }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage, logEvent]);
 
   function playStepAudio() {
     const audioUrl = step?.audio?.url;
@@ -464,43 +177,13 @@ export function TravellerMvpApp() {
       });
   }
 
-  function captureAttempt(
+  function handleCaptureAttempt(
     attemptStep: LessonStep,
     recording: { blob: Blob; durationMs: number; mimeType: string },
     extra: Record<string, unknown> = {},
   ) {
-    if (!validationSessionId || !stepLesson) return;
-
-    const attemptId = crypto.randomUUID();
-    void uploadValidationAttempt(validationSessionId, recording.blob, {
-      attemptId,
-      participantId,
-      language,
-      sceneSet,
-      lessonId: stepLesson.id,
-      lessonPage,
-      stepId: attemptStep.id,
-      targetId: stepLesson.target.id,
-      expectedText: attemptStep.mic?.expectedText ?? stepLesson.target.text,
-      expectedTransliteration: attemptStep.mic?.expectedTransliteration ?? stepLesson.target.transliteration,
-      targetAudioUrl: learnerTargetAudioUrl(stepLesson),
-      recordingDurationMs: recording.durationMs,
-      byteCount: recording.blob.size,
-      mimeType: recording.mimeType,
-      buildPromptId: typeof extra.buildPromptId === 'string' ? extra.buildPromptId : undefined,
-      buildPromptText: typeof extra.buildPromptText === 'string' ? extra.buildPromptText : undefined,
-    }).catch(() => undefined);
-  }
-
-  function logEvent(event: Parameters<typeof logValidationEvent>[1]) {
-    if (!validationSessionId) return;
-
-    void logValidationEvent(validationSessionId, {
-      participantId: participantId ?? undefined,
-      language,
-      sceneSet,
-      ...event,
-    }).catch(() => undefined);
+    if (!stepLesson) return;
+    captureAttempt(stepLesson, attemptStep, recording, extra);
   }
 
   if (loadState === 'loading') {
@@ -568,232 +251,16 @@ export function TravellerMvpApp() {
         selectedChoiceId={selectedChoiceByStep[step.id]}
         onPlayAudio={playStepAudio}
         onSelectChoice={selectChoice}
-        onCaptureAttempt={captureAttempt}
+        onCaptureAttempt={handleCaptureAttempt}
       />
       <nav className="step-controls" aria-label="Lesson step controls">
         <button type="button" onClick={() => goToStep('previous')} disabled={isFirstStep}>
           Previous
         </button>
-        <button
-          type="button"
-          onClick={() => (isLastStep ? showScorecard() : goToStep('next'))}
-        >
+        <button type="button" onClick={() => (isLastStep ? showScorecard() : goToStep('next'))}>
           {isLastStep ? 'Scorecard' : 'Next'}
         </button>
       </nav>
     </section>
   );
-}
-
-function ValidationScorecardView({
-  sessionId,
-  state,
-  scorecard,
-  onBack,
-  onRefresh,
-}: {
-  sessionId: string | null;
-  state: ScorecardState;
-  scorecard: ValidationScorecard | null;
-  onBack: () => void;
-  onRefresh: () => void;
-}) {
-  return (
-    <section className="validation-scorecard" aria-label="Validation scorecard">
-      <header className="scorecard-header">
-        <div>
-          <span>Local validation</span>
-          <h1>Scorecard</h1>
-        </div>
-        <nav className="scorecard-actions" aria-label="Scorecard controls">
-          <button type="button" onClick={onBack}>
-            Back
-          </button>
-          <button type="button" onClick={onRefresh}>
-            Refresh
-          </button>
-        </nav>
-      </header>
-
-      {state === 'loading' ? <p className="scorecard-status">Loading scorecard.</p> : null}
-      {state === 'error' ? (
-        <p className="scorecard-status">Scorecard is unavailable. Session: {sessionId ?? 'none'}</p>
-      ) : null}
-      {state === 'ready' && scorecard ? <ScorecardDetails scorecard={scorecard} /> : null}
-    </section>
-  );
-}
-
-function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
-  return (
-    <>
-      <dl className="scorecard-summary">
-        <div>
-          <dt>Session</dt>
-          <dd>{scorecard.session.sessionId}</dd>
-        </div>
-        <div>
-          <dt>Events</dt>
-          <dd>{scorecard.eventCount}</dd>
-        </div>
-        <div>
-          <dt>Attempts</dt>
-          <dd>{scorecard.attemptCount}</dd>
-        </div>
-      </dl>
-
-      <section className="scorecard-targets" aria-label="Scorecard targets">
-        {scorecard.targets.length === 0 ? (
-          <p className="scorecard-status">No recordings have been captured yet.</p>
-        ) : (
-          scorecard.targets.map((target) => (
-            <article className="scorecard-target" key={target.targetId}>
-              <header>
-                <div>
-                  <span>{target.targetId}</span>
-                  <h2>{target.expectedTransliteration || target.expectedText || 'Target'}</h2>
-                </div>
-                {target.targetAudioUrl ? <audio controls src={target.targetAudioUrl} aria-label="Target audio" /> : null}
-              </header>
-              <ul>
-                {target.attempts.map((attempt) => (
-                  <li key={attempt.attemptId}>
-                    <div>
-                      <strong>{attempt.stepId}</strong>
-                      <span>{scoreLabel(attempt)}</span>
-                    </div>
-                    <audio controls src={validationAttemptAudioUrl(scorecard.session.sessionId, attempt.attemptId)} />
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))
-        )}
-      </section>
-    </>
-  );
-}
-
-function scoreLabel(attempt: { buildPromptText?: string; lessonPage?: string; aiScore?: unknown }): string {
-  const score = attempt.aiScore as
-    | { status?: string; result?: { communication?: { status?: string; confidence?: number } } }
-    | null
-    | undefined;
-  if (!score) {
-    return attempt.buildPromptText || attempt.lessonPage || 'Needs score';
-  }
-  if (score.status !== 'scored') {
-    return 'AI score unavailable';
-  }
-
-  const communication = score.result?.communication;
-  const confidence = typeof communication?.confidence === 'number' ? ` ${Math.round(communication.confidence * 100)}%` : '';
-  return `${communication?.status || 'scored'}${confidence}`;
-}
-
-function languageFromUrl(): string {
-  const language = new URLSearchParams(window.location.search).get('language');
-  return LANGUAGE_OPTIONS.some((option) => option.id === language) ? language : DEFAULT_LANGUAGE;
-}
-
-function lessonPageFromUrl(): string {
-  return new URLSearchParams(window.location.search).get('lesson') ?? DEFAULT_LESSON;
-}
-
-function sceneSetFromUrl(): string {
-  return new URLSearchParams(window.location.search).get('scene_set') ?? DEFAULT_SCENE_SET;
-}
-
-function saveParticipantId(participantId: string) {
-  localStorage.setItem(PARTICIPANT_STORAGE_KEY, participantId);
-}
-
-function fallbackParticipantId(): string {
-  return `Learner-${Math.floor(1000 + Math.random() * 9000)}`;
-}
-
-function updateLessonUrl(language: string, lesson: string, sceneSet: string, replace = false) {
-  const url = new URL(window.location.href);
-  if (url.pathname !== '/learn') {
-    url.pathname = '/learn';
-  }
-  url.searchParams.set('language', language);
-  url.searchParams.set('lesson', lesson);
-  if (sceneSet === DEFAULT_SCENE_SET) {
-    url.searchParams.delete('scene_set');
-  } else {
-    url.searchParams.set('scene_set', sceneSet);
-  }
-  if (replace) {
-    window.history.replaceState({}, '', url);
-  } else {
-    window.history.pushState({}, '', url);
-  }
-}
-
-function validationSessionIdForToday(participantId: string, language: string, sceneSet: string): string {
-  return ['validation', safeId(participantId), safeId(language), safeId(sceneSet), localDateKey()].join('-');
-}
-
-function localDateKey(): string {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-function safeId(value: string): string {
-  return value.replace(/[^A-Za-z0-9_.-]+/g, '-');
-}
-
-function learnerTargetAudioUrl(lesson: Lesson): string | null {
-  return lesson.frames.find((frame) => frame.lineType === 'learner_target')?.audioUrl ?? null;
-}
-
-function activeMvpLesson(lesson: Lesson): Lesson {
-  return {
-    ...lesson,
-    steps: lesson.steps.filter((step) => {
-      if (step.id === 'translation_reveal') return false;
-      if (step.id === 'audio_replay') return false;
-      if (step.id === 'production_prompt') return false;
-      return true;
-    }),
-  };
-}
-
-function withAssetUrls(lesson: Lesson | null): Lesson | null {
-  if (!lesson) return null;
-
-  return {
-    ...lesson,
-    frames: lesson.frames.map((frame) => ({
-      ...frame,
-      imageUrl: frame.imageUrl ? assetUrl(frame.imageUrl) : frame.imageUrl,
-      audioUrl: frame.audioUrl ? assetUrl(frame.audioUrl) : frame.audioUrl,
-    })),
-  };
-}
-
-function withStepAssetUrls(step: LessonStep | undefined): LessonStep | undefined {
-  if (!step) return undefined;
-
-  return {
-    ...step,
-    audio: step.audio
-      ? {
-          ...step.audio,
-          url: step.audio.url ? assetUrl(step.audio.url) : step.audio.url,
-        }
-      : step.audio,
-  };
-}
-
-function assetUrl(url: string): string {
-  if (window.location.protocol !== 'file:' || !url.startsWith('/')) {
-    return url;
-  }
-
-  return `../../model/assets${url}`;
 }
