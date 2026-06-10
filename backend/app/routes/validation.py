@@ -1,4 +1,5 @@
 import json
+import logging
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse
@@ -6,6 +7,8 @@ from pydantic import BaseModel, Field
 
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.runtime import conversation_coach, validation_store
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -92,6 +95,10 @@ def get_validation_scorecard(session_id: str, score: bool = Query(default=False)
     """Return a local scorecard skeleton for manual or AI review."""
     try:
         if score:
+            logger.warning(
+                "GET /api/validation/sessions/{session_id}/scorecard?score=true triggers scoring; "
+                "prefer POST /attempts/{attempt_id}/score for explicit scoring."
+            )
             score_validation_attempts(session_id)
         return validation_store.scorecard(session_id)
     except FileNotFoundError as error:
@@ -198,6 +205,11 @@ def score_validation_attempt(session_id: str, attempt: dict) -> dict:
             },
         )
     except Exception as error:
+        logger.exception(
+            "Validation scoring unavailable for session %s attempt %s",
+            session_id,
+            attempt_id,
+        )
         return validation_store.save_score(
             session_id,
             attempt_id,

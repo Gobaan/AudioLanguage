@@ -276,6 +276,9 @@ def load_audio_assets(language_dir: Path) -> dict[tuple[str, int], str]:
 
 
 def load_distractors(data_dir: Path, language_dir: Path) -> dict[str, dict[str, Any]]:
+    if not language_dir.exists():
+        raise DataGraphError(f"Language '{language_dir.name}' not found")
+
     distractors = load_curriculum_distractors(data_dir)
     distractor_path = language_dir / "distractor.json"
     if not distractor_path.exists():

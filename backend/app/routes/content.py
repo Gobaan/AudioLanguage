@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException, Query
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, Path, Query
 
 from app.content.data_graph import DataGraphError, list_languages, load_distractors, load_language_session
 from app.content.lesson_tabs import (
@@ -13,6 +15,8 @@ from app.runtime import DATA_DIR, PROJECT_DIR
 
 router = APIRouter()
 
+LanguagePath = Annotated[str, Path(pattern=r"^[a-z]{2,3}(-[a-z]+)?$")]
+
 
 @router.get("/api/languages")
 def get_languages():
@@ -21,7 +25,7 @@ def get_languages():
 
 
 @router.get("/api/languages/{language}/session")
-def get_language_session(language: str):
+def get_language_session(language: LanguagePath):
     """Return a hydrated MVP practice session for one language."""
     try:
         return load_language_session(
@@ -35,7 +39,7 @@ def get_language_session(language: str):
 
 @router.get("/api/languages/{language}/lessons")
 def get_language_lessons(
-    language: str,
+    language: LanguagePath,
     lesson: str | None = Query(default=None),
     scene_set: str = Query(default="mvp"),
     order_seed: str | None = Query(default=None),
@@ -71,13 +75,13 @@ def get_language_lessons(
 
 
 @router.get("/api/languages/{language}/distractors")
-def get_language_distractors(language: str):
+def get_language_distractors(language: LanguagePath):
     """Return broad-meaning distractor sets available to one language."""
-    language_dir = DATA_DIR / "languages" / language
-    if not language_dir.exists():
-        raise HTTPException(status_code=404, detail=f"Language '{language}' not found")
+    try:
+        distractors = list(load_distractors(DATA_DIR, DATA_DIR / "languages" / language).values())
+    except DataGraphError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
 
-    distractors = list(load_distractors(DATA_DIR, language_dir).values())
     return {
         "language": language,
         "dialogue_distractors": distractors,

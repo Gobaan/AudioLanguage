@@ -2,11 +2,14 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import json
+import logging
 from pathlib import Path
 import re
 import shutil
 import uuid
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 SAFE_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
@@ -464,12 +467,13 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
         return []
 
     items = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
         if not line.strip():
             continue
         try:
             item = json.loads(line)
         except json.JSONDecodeError:
+            logger.warning("Skipping malformed JSONL line %s in %s", line_number, path)
             continue
         if isinstance(item, dict):
             items.append(item)
