@@ -269,7 +269,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
     def test_validation_session_saves_events_and_attempts_locally(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.main.validation_store", store), patch("app.main.conversation_coach", FakeConversationCoach()):
+            with patch("app.routes.validation.validation_store", store), patch("app.routes.validation.conversation_coach", FakeConversationCoach()):
                 client = TestClient(app)
                 session_response = client.post(
                     "/api/validation/sessions",
@@ -339,7 +339,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
     def test_validation_admin_summary_groups_attempts_by_language_and_scene_set(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.main.validation_store", store):
+            with patch("app.routes.validation.validation_store", store):
                 client = TestClient(app)
                 client.post(
                     "/api/validation/sessions",
@@ -403,7 +403,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
     def test_validation_admin_can_delete_selected_session_data(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.main.validation_store", store):
+            with patch("app.routes.validation.validation_store", store):
                 client = TestClient(app)
                 client.post(
                     "/api/validation/sessions",
@@ -452,7 +452,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
     def test_validation_admin_can_delete_one_attempt_or_entire_user(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.main.validation_store", store):
+            with patch("app.routes.validation.validation_store", store):
                 client = TestClient(app)
                 for session_id, participant_id in [("bob-day-1", "Bob"), ("maya-day-1", "Maya")]:
                     client.post(
@@ -493,7 +493,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
     def test_validation_admin_can_score_one_skipped_attempt(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.main.validation_store", store), patch("app.main.conversation_coach", FakeConversationCoach()):
+            with patch("app.routes.validation.validation_store", store), patch("app.routes.validation.conversation_coach", FakeConversationCoach()):
                 client = TestClient(app)
                 client.post(
                     "/api/validation/sessions",
@@ -527,7 +527,7 @@ class BrowserCacheHeaderTests(unittest.TestCase):
     def test_validation_scorecard_ignores_malformed_jsonl_event_lines(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
-            with patch("app.main.validation_store", store):
+            with patch("app.routes.validation.validation_store", store):
                 client = TestClient(app)
                 client.post(
                     "/api/validation/sessions",
