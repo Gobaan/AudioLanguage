@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from content_assets import list_language_dirs, read_json
+from content_assets import DEFAULT_DATA_DIR, list_language_dirs, read_json
 from project_config.paths import repo_file_for_relative_path
 
 
@@ -43,7 +43,7 @@ def export_language(data_dir: Path, project_dir: Path, language: str, prompt_kin
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="model/content", type=Path)
+    parser.add_argument("--data-dir", default=DEFAULT_DATA_DIR, type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to export. Repeatable.")
     parser.add_argument("--prompt-kind", choices=["localized", "shared"], default="localized")

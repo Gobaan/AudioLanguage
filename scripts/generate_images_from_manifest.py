@@ -8,7 +8,7 @@ import re
 from contextlib import ExitStack
 from pathlib import Path
 
-from content_assets import list_language_dirs, read_json, write_json
+from content_assets import DEFAULT_DATA_DIR, list_language_dirs, read_json, write_json
 from project_config.paths import repo_file_for_relative_path
 from load_secrets import load_secrets
 
@@ -212,7 +212,7 @@ def generate_language(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="model/content", type=Path)
+    parser.add_argument("--data-dir", default=DEFAULT_DATA_DIR, type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to generate. Repeatable.")
     parser.add_argument("--dialogue-id", action="append", help="Only generate this dialogue id. Repeatable.")

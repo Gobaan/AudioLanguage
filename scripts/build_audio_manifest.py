@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from content_assets import (
+    DEFAULT_DATA_DIR,
     iter_dialogue_lines,
     list_language_dirs,
     load_language_data,
@@ -82,7 +83,7 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="model/content", type=Path)
+    parser.add_argument("--data-dir", default=DEFAULT_DATA_DIR, type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to build. Repeatable.")
     return parser.parse_args()

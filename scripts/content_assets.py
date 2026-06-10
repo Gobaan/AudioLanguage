@@ -13,6 +13,8 @@ if str(PROJECT_DIR) not in sys.path:
 
 from project_config.paths import repo_file_for_relative_path
 
+DEFAULT_DATA_DIR = "model/content"
+
 
 def read_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as file:

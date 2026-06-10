@@ -6,14 +6,19 @@ missing transfer dialogues/cards/tabs and leaves existing entries unchanged.
 
 from __future__ import annotations
 
-import json
+import sys
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+if str(PROJECT_DIR) not in sys.path:
+    sys.path.insert(0, str(PROJECT_DIR))
 
-ROOT = Path(__file__).resolve().parents[1]
-LANG_DIR = ROOT / "model" / "content" / "languages"
+from content_assets import read_json, write_json
+from project_config.paths import repo_paths
+
+LANG_DIR = repo_paths().content_dir / "languages"
 
 
 TRANSFER_SCENES: dict[str, dict[str, Any]] = {
@@ -197,17 +202,6 @@ TRANSFER_SCENES: dict[str, dict[str, Any]] = {
         },
     },
 }
-
-
-def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def write_json(path: Path, payload: dict[str, Any]) -> None:
-    path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
 
 
 def build_line(index: int, role: str, line_type: str, target_id: str | None, text_spec: Any) -> dict[str, Any]:

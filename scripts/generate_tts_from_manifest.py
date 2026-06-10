@@ -6,7 +6,7 @@ import argparse
 import asyncio
 from pathlib import Path
 
-from content_assets import list_language_dirs, path_exists, read_json
+from content_assets import DEFAULT_DATA_DIR, list_language_dirs, path_exists, read_json
 from project_config.paths import repo_file_for_relative_path
 from voice_registry import voice_profile_for
 
@@ -67,7 +67,7 @@ async def generate_language(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="model/content", type=Path)
+    parser.add_argument("--data-dir", default=DEFAULT_DATA_DIR, type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to generate. Repeatable.")
     parser.add_argument("--dialogue-id", action="append", help="Only generate audio for this dialogue id. Repeatable.")

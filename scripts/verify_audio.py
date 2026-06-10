@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
 
@@ -11,10 +10,8 @@ def add_repo_root_to_syspath() -> None:
 
 add_repo_root_to_syspath()
 
+from content_assets import read_json  # noqa: E402
 from project_config.paths import repo_paths  # noqa: E402
-
-def load_dialogues(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def expected_mp3_names(dialogues: dict) -> list[str]:
@@ -57,7 +54,7 @@ def main() -> int:
     adir = repo_paths().audio_dir
     adir.mkdir(parents=True, exist_ok=True)
 
-    dialogues = load_dialogues(dpath)
+    dialogues = read_json(dpath)
     expected = expected_mp3_names(dialogues)
     missing = missing_files(expected, adir)
 

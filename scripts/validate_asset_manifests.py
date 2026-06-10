@@ -7,7 +7,14 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from content_assets import iter_dialogue_lines, list_language_dirs, load_language_data, path_exists, read_json
+from content_assets import (
+    DEFAULT_DATA_DIR,
+    iter_dialogue_lines,
+    list_language_dirs,
+    load_language_data,
+    path_exists,
+    read_json,
+)
 
 
 def line_key(dialogue_id: str, line_index: int) -> tuple[str, int]:
@@ -84,7 +91,7 @@ def validate_language(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", default="model/content", type=Path)
+    parser.add_argument("--data-dir", default=DEFAULT_DATA_DIR, type=Path)
     parser.add_argument("--project-dir", default=".", type=Path)
     parser.add_argument("--language", action="append", help="Language code to validate. Repeatable.")
     parser.add_argument("--require-generated", action="store_true")
