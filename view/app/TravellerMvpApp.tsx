@@ -41,7 +41,6 @@ const FALLBACK_LESSON: Lesson = {
   title: 'First hello dialogue',
   mode: 'ai_guided_response',
   stage: 'guided_scene_production',
-  player_component: 'TravellerLessonPlayer',
   target: {
     id: 'en-target-respond-hi',
     text: 'Hi!',

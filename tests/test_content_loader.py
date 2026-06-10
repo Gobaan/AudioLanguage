@@ -81,19 +81,24 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertTrue(first["support"]["replay_until_learner_turn"])
         self.assertFalse(first["support"]["show_examples_before_attempt"])
 
-    def test_english_mvp_session_has_five_guided_scenarios_with_audio(self):
+    def test_english_mvp_session_has_guided_scenarios_with_audio(self):
         session = load_language_session(
             data_dir=CONTENT_DIR,
             project_dir=PROJECT_DIR,
             language="en",
         )
 
-        self.assertEqual(len(session["cards"]), 5)
-        for card in session["cards"]:
+        guided_cards = [card for card in session["cards"] if card.get("stage") == "guided_scene_production"]
+        transfer_cards = [card for card in session["cards"] if card.get("stage") == "same_day_transfer"]
+
+        self.assertEqual(len(guided_cards), 5)
+        self.assertEqual(len(transfer_cards), 4)
+        for card in guided_cards + transfer_cards:
             self.assertEqual(card["template_id"], "guided-dialogue-replay-v1")
             self.assertEqual(card["mode"], "ai_guided_response")
             self.assertTrue(card["ai_scene_contract"]["target_function"]["definition"])
             self.assertTrue(card["ai_scene_contract"]["required_slots"])
+        for card in guided_cards:
             self.assertTrue(all(line.get("audio") for line in card["dialogue"]["lines"]))
 
     def test_short_targets_skip_backward_build(self):

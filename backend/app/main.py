@@ -15,7 +15,6 @@ from app.content.data_graph import DataGraphError, list_languages, load_distract
 from app.content.lessons import lessons_from_session
 from app.content.loader import load_content_graph
 from app.speech.language import romanize_for_language
-from app.speech.similarity import normalize_for_match, text_similarity
 from app.scenes import scenes
 from app.validation import ValidationStore
 from project_config.paths import repo_paths

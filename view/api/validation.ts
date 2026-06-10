@@ -214,15 +214,6 @@ export async function fetchValidationAdminSummary(): Promise<ValidationAdminSumm
   return response.json() as Promise<ValidationAdminSummary>;
 }
 
-export async function deleteValidationSession(sessionId: string): Promise<void> {
-  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) {
-    throw new Error(`Failed to delete validation session: ${response.status}`);
-  }
-}
-
 export async function deleteValidationAttempt(sessionId: string, attemptId: string): Promise<void> {
   const response = await fetch(
     `/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts/${encodeURIComponent(attemptId)}`,
@@ -253,19 +244,6 @@ export async function scoreValidationAttempt(sessionId: string, attemptId: strin
   );
   if (!response.ok) {
     throw new Error(`Failed to score validation attempt: ${response.status}`);
-  }
-}
-
-export async function deleteValidationSessionData(sessionId: string, kinds: string[]): Promise<void> {
-  const params = new URLSearchParams();
-  for (const kind of kinds) {
-    params.append('kind', kind);
-  }
-  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/data?${params}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) {
-    throw new Error(`Failed to delete validation session data: ${response.status}`);
   }
 }
 

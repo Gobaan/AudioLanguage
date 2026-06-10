@@ -127,14 +127,23 @@ class BrowserCacheHeaderTests(unittest.TestCase):
         self.assertEqual(lessons[0]["id"], "en-card-hospital-directions-dialogue-practice")
         self.assertEqual(lessons[0]["target"]["text"], "Where is the hospital?")
         self.assertIn("backward_build", step_types)
+        tab_ids = [tab["id"] for tab in payload["lesson_tabs"]]
+        tab_labels = [tab["label"] for tab in payload["lesson_tabs"]]
         self.assertEqual(
-            [tab["id"] for tab in payload["lesson_tabs"]],
+            tab_ids[:5],
             ["hello", "introduce", "repair", "food-order", "hospital"],
         )
         self.assertEqual(
-            [tab["label"] for tab in payload["lesson_tabs"]],
-            [f"Scene {index}" for index in range(1, 6)],
+            set(tab_ids[5:]),
+            {
+                "hello-transfer",
+                "introduce-transfer",
+                "repair-transfer",
+                "food-order-transfer",
+            },
         )
+        self.assertEqual(tab_labels[:5], [f"Scene {index}" for index in range(1, 6)])
+        self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 10)})
 
     def test_lessons_endpoint_supports_all_mvp_lesson_aliases(self):
         aliases = {

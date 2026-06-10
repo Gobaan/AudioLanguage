@@ -448,20 +448,6 @@ def meaning_choice_difficulty(card: dict[str, Any]) -> str:
         return "hard"
     return "easy"
 
-
-def phrase_contrast_choices(target: dict[str, Any]) -> list[dict[str, Any]]:
-    choices = [
-        {
-            "id": f"{target['id']}-target",
-            "label": target.get("transliteration") or target.get("canonical", target["id"]),
-            "isCorrect": True,
-        }
-    ]
-    for index, phrase in enumerate(target.get("valid_but_off_target", [])[:2]):
-        choices.append({"id": f"{target['id']}-contrast-{index}", "label": phrase, "isCorrect": False})
-    return choices
-
-
 def chunks_for_target(target: dict[str, Any]) -> list[dict[str, Any]]:
     return [
         {

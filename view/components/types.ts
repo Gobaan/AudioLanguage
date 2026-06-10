@@ -52,16 +52,6 @@ export type AudioButtonText = {
   playingLabel: string;
 };
 
-export type MicPromptText = {
-  prompt: string;
-  listeningLabel: string;
-  startLabel: string;
-};
-
-export type TranslationRevealText = {
-  revealLabel: string;
-};
-
 export type LessonStepType =
   | 'scene_setup'
   | 'target_audio'
@@ -113,7 +103,6 @@ export type Lesson = {
   title: string;
   mode?: string;
   stage?: string;
-  player_component: string;
   target: {
     id: string;
     text: string;
