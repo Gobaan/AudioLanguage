@@ -12,11 +12,8 @@ sys.path.insert(0, str(BACKEND_DIR))
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from app.content.data_graph import list_languages, load_language_session
-from app.content.lessons import (
-    backward_build_prompts,
-    lessons_from_session,
-    should_include_backward_build,
-)
+from app.content.lesson_steps import backward_build_prompts, should_include_backward_build
+from app.content.lessons import lessons_from_session
 from content_assets import read_json, write_json
 from generate_images_from_manifest import generate_language
 
