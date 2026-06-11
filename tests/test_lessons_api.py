@@ -71,7 +71,6 @@ class LessonsApiTests(unittest.TestCase):
         )
         self.assertEqual(tab_labels[:5], [f"Scene {index}" for index in range(1, 6)])
         self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 11)})
-        self.assertEqual(first_lesson["player_component"], "TravellerLessonPlayer")
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].startswith("/visuals/"))
         self.assertIn("scene_setup", step_types)
         self.assertIn("target_audio", step_types)

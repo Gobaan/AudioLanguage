@@ -43,7 +43,6 @@ def lesson_from_card(language: str, card: dict[str, Any]) -> dict[str, Any]:
         "title": lesson_title(card, target, scene),
         "mode": card.get("mode"),
         "stage": card.get("stage"),
-        "player_component": player_component_for(card),
         "target": {
             "id": target["id"],
             "text": target_transliteration or target_text,
@@ -367,12 +366,6 @@ def lesson_title(card: dict[str, Any], target: dict[str, Any], scene: dict[str, 
     if meaning and environment:
         return f"{meaning} - {environment}"
     return str(meaning or card["id"])
-
-
-def player_component_for(card: dict[str, Any]) -> str:
-    if card.get("stage") == "delayed_review":
-        return "TVLessonPlayer"
-    return "TravellerLessonPlayer"
 
 
 def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[str, Any]]:
