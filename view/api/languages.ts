@@ -3,6 +3,7 @@ export type LanguageSummary = {
   display_name: string;
   description: string;
   scene_sets: string[];
+  sort_order?: number;
 };
 
 export async function fetchLanguages(): Promise<LanguageSummary[]> {

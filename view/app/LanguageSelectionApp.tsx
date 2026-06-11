@@ -4,8 +4,6 @@ import { isLocalHost, participantFromUrl } from './urlParams';
 
 type LoadState = 'loading' | 'ready' | 'error';
 
-const PREFERRED_LANGUAGE_ORDER = ['ja', 'yue', 'zh', 'ta', 'en'];
-
 export function LanguageSelectionApp() {
   const [languages, setLanguages] = useState<LanguageSummary[]>([]);
   const [loadState, setLoadState] = useState<LoadState>('loading');
@@ -16,7 +14,7 @@ export function LanguageSelectionApp() {
     fetchLanguages()
       .then((payload) => {
         if (!isCurrent) return;
-        setLanguages(sortLanguages(payload));
+        setLanguages(payload);
         setLoadState('ready');
       })
       .catch(() => {
@@ -69,17 +67,6 @@ export function LanguageSelectionApp() {
       ) : null}
     </section>
   );
-}
-
-function sortLanguages(languages: LanguageSummary[]): LanguageSummary[] {
-  return [...languages].sort((left, right) => {
-    const leftIndex = PREFERRED_LANGUAGE_ORDER.indexOf(left.id);
-    const rightIndex = PREFERRED_LANGUAGE_ORDER.indexOf(right.id);
-    if (leftIndex === -1 && rightIndex === -1) return left.display_name.localeCompare(right.display_name);
-    if (leftIndex === -1) return 1;
-    if (rightIndex === -1) return -1;
-    return leftIndex - rightIndex;
-  });
 }
 
 function lessonLink(language: string, participant: string | null, sceneSet: 'mvp' | 'delayed'): string {

@@ -3,7 +3,8 @@
   "display_name": "Cantonese",
   "metadata": {
     "description": "Cantonese starter scenes for your friend.",
-    "scene_sets": ["mvp"]
+    "scene_sets": ["mvp"],
+    "sort_order": 2
   },
   "script": "Latin",
   "native_review_status": "needs_native_review",

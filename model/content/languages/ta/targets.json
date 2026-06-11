@@ -3,7 +3,8 @@
   "display_name": "Tamil",
   "metadata": {
     "description": "Tamil starter scenes for you.",
-    "scene_sets": ["mvp"]
+    "scene_sets": ["mvp"],
+    "sort_order": 4
   },
   "script": "Tamil",
   "native_review_status": "needs_native_review",

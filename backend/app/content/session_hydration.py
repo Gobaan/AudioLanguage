@@ -20,6 +20,7 @@ def list_languages(data_dir: Path) -> list[dict[str, Any]]:
         display_name = language_dir.name
         description = ""
         scene_sets = ["mvp"]
+        sort_order = 999
         if targets_path.exists():
             targets_data = read_json(targets_path)
             display_name = str(targets_data.get("display_name", display_name))
@@ -29,6 +30,9 @@ def list_languages(data_dir: Path) -> list[dict[str, Any]]:
                 raw_scene_sets = metadata.get("scene_sets", ["mvp"])
                 if isinstance(raw_scene_sets, list) and raw_scene_sets:
                     scene_sets = [str(scene_set) for scene_set in raw_scene_sets]
+                raw_sort_order = metadata.get("sort_order")
+                if isinstance(raw_sort_order, int):
+                    sort_order = raw_sort_order
 
         languages.append(
             {
@@ -36,9 +40,11 @@ def list_languages(data_dir: Path) -> list[dict[str, Any]]:
                 "display_name": display_name,
                 "description": description,
                 "scene_sets": scene_sets,
+                "sort_order": sort_order,
             }
         )
 
+    languages.sort(key=lambda item: (item.get("sort_order", 999), item["id"]))
     return languages
 
 

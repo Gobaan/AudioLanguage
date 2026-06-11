@@ -3,7 +3,8 @@
   "display_name": "English",
   "metadata": {
     "description": "English reference scenes.",
-    "scene_sets": ["mvp"]
+    "scene_sets": ["mvp"],
+    "sort_order": 5
   },
   "targets": [
     {

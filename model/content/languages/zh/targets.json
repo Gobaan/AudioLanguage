@@ -3,7 +3,8 @@
   "display_name": "Mandarin",
   "metadata": {
     "description": "Mandarin starter scenes for testing the same workflow.",
-    "scene_sets": ["mvp", "delayed"]
+    "scene_sets": ["mvp", "delayed"],
+    "sort_order": 3
   },
   "script": "Chinese",
   "native_review_status": "needs_native_review",
