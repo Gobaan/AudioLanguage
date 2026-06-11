@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { fetchLanguages, type LanguageSummary } from '../api/languages';
-import { fetchValidationScorecard, type ValidationScorecard } from '../api/validation';
 import type { ChoiceOption, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
+import { LessonNavBars } from './LessonNavBars';
 import {
   DEFAULT_LESSON,
   languageFromUrl,
@@ -13,15 +12,15 @@ import {
   withAssetUrls,
   withStepAssetUrls,
 } from './lessonUrls';
-import { ScorecardState, ValidationScorecardView } from './ScorecardView';
+import { ValidationScorecardView } from './ScorecardView';
 import { stepHandlesOwnAutoplay } from './lessonStepHelpers';
 import { useAudioPlayback } from './useAudioPlayback';
+import { useLanguageOptions } from './useLanguageOptions';
 import { useLessonLoader } from './useLessonLoader';
 import { useParticipantId } from './useParticipantId';
+import { useScorecard } from './useScorecard';
 import { useValidationSession } from './useValidationSession';
 import { isLocalHost } from './urlParams';
-
-type AppView = 'lesson' | 'scorecard';
 
 export function TravellerMvpApp() {
   const [language, setLanguage] = useState(() => languageFromUrl());
@@ -29,29 +28,9 @@ export function TravellerMvpApp() {
   const [sceneSet] = useState(() => sceneSetFromUrl());
   const [stepIndex, setStepIndex] = useState(0);
   const [selectedChoiceByStep, setSelectedChoiceByStep] = useState<Record<string, string>>({});
-  const [appView, setAppView] = useState<AppView>('lesson');
-  const [scorecardState, setScorecardState] = useState<ScorecardState>('idle');
-  const [scorecard, setScorecard] = useState<ValidationScorecard | null>(null);
-  const [languageOptions, setLanguageOptions] = useState<LanguageSummary[]>([]);
 
   const participantId = useParticipantId();
-
-  useEffect(() => {
-    let isCurrent = true;
-    fetchLanguages()
-      .then((payload) => {
-        if (!isCurrent) return;
-        setLanguageOptions(payload);
-      })
-      .catch(() => {
-        if (!isCurrent) return;
-        setLanguageOptions([]);
-      });
-
-    return () => {
-      isCurrent = false;
-    };
-  }, []);
+  const languageOptions = useLanguageOptions();
   const { lessonTabs, lesson, loadState } = useLessonLoader({
     language,
     lessonPage,
@@ -66,17 +45,25 @@ export function TravellerMvpApp() {
   });
   const { isPlaying, playAudioOrSpeak, stop: stopPlayback } = useAudioPlayback();
 
-  useEffect(() => {
-    setStepIndex(0);
-    setSelectedChoiceByStep({});
-    setAppView('lesson');
-    setScorecard(null);
-    setScorecardState('idle');
-  }, [language, lessonPage, sceneSet]);
-
   const currentStep = lesson?.steps[stepIndex];
   const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
   const step = useMemo(() => withStepAssetUrls(currentStep), [currentStep]);
+
+  const { appView, scorecardState, scorecard, showScorecard, backToLesson, resetScorecard } = useScorecard({
+    validationSessionId,
+    logEvent,
+    lessonPage,
+    stepIndex,
+    lessonId: stepLesson?.id,
+    stepId: step?.id,
+    targetId: stepLesson?.target.id,
+  });
+
+  useEffect(() => {
+    setStepIndex(0);
+    setSelectedChoiceByStep({});
+    resetScorecard();
+  }, [language, lessonPage, sceneSet, resetScorecard]);
 
   useEffect(() => {
     stopPlayback();
@@ -173,34 +160,6 @@ export function TravellerMvpApp() {
     });
   }
 
-  function showScorecard() {
-    if (!validationSessionId) {
-      setScorecardState('error');
-      setAppView('scorecard');
-      return;
-    }
-
-    setAppView('scorecard');
-    setScorecardState('loading');
-    logEvent({
-      type: 'scorecard_viewed',
-      lessonId: stepLesson?.id,
-      lessonPage,
-      stepId: step?.id,
-      stepIndex,
-      targetId: stepLesson?.target.id,
-    });
-    fetchValidationScorecard(validationSessionId, true)
-      .then((nextScorecard) => {
-        setScorecard(nextScorecard);
-        setScorecardState('ready');
-      })
-      .catch(() => {
-        setScorecard(null);
-        setScorecardState('error');
-      });
-  }
-
   function handleCaptureAttempt(
     attemptStep: LessonStep,
     recording: { blob: Blob; durationMs: number; mimeType: string },
@@ -227,7 +186,7 @@ export function TravellerMvpApp() {
         sessionId={validationSessionId}
         state={scorecardState}
         scorecard={scorecard}
-        onBack={() => setAppView('lesson')}
+        onBack={backToLesson}
         onRefresh={showScorecard}
       />
     );
@@ -241,33 +200,14 @@ export function TravellerMvpApp() {
           <a href="/admin/validation">Admin</a>
         </nav>
       ) : null}
-      <nav className="language-switcher" aria-label="Language">
-        {(languageOptions.length > 0
-          ? languageOptions
-          : [{ id: language, display_name: language, description: '', scene_sets: ['mvp'] }]
-        ).map((option) => (
-          <button
-            key={option.id}
-            type="button"
-            className={language === option.id ? 'active' : ''}
-            onClick={() => selectLanguage(option.id)}
-          >
-            {option.display_name}
-          </button>
-        ))}
-      </nav>
-      <nav className="lesson-switcher" aria-label="Lesson test pages">
-        {lessonTabs.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            className={lessonPage === tab.id ? 'active' : ''}
-            onClick={() => selectLessonPage(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </nav>
+      <LessonNavBars
+        languageOptions={languageOptions}
+        language={language}
+        lessonTabs={lessonTabs}
+        lessonPage={lessonPage}
+        onSelectLanguage={selectLanguage}
+        onSelectLessonPage={selectLessonPage}
+      />
       <div className="page-number" aria-label={`Page ${stepIndex + 1} of ${stepLesson.steps.length}`}>
         Page {stepIndex + 1} / {stepLesson.steps.length}
       </div>
