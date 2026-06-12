@@ -296,15 +296,17 @@ def backward_build_units(*, target: dict[str, Any], target_phrase: str) -> list[
     return re.findall(r"[\w']+", target_phrase, flags=re.UNICODE)
 
 
+DEFAULT_AUDIO_LABELS = {"playLabel": "Play audio", "playingLabel": "Playing"}
+DEFAULT_MIC_LABELS = {
+    "prompt": "Try saying it",
+    "listeningLabel": "Listening...",
+    "startLabel": "Start",
+}
+
+
 def localized_audio_text(card: dict[str, Any]) -> dict[str, str]:
-    support_language = card.get("ai_scene_contract", {}).get("support_language", "English")
-    if support_language == "Japanese":
-        return {"playLabel": "音声を再生", "playingLabel": "再生中"}
-    return {"playLabel": "Play audio", "playingLabel": "Playing"}
+    return card.get("ui_labels", {}).get("audio", DEFAULT_AUDIO_LABELS)
 
 
 def localized_mic_text(card: dict[str, Any]) -> dict[str, str]:
-    support_language = card.get("ai_scene_contract", {}).get("support_language", "English")
-    if support_language == "Japanese":
-        return {"prompt": "言ってみましょう", "listeningLabel": "聞いています...", "startLabel": "はじめる"}
-    return {"prompt": "Try saying it", "listeningLabel": "Listening...", "startLabel": "Start"}
+    return card.get("ui_labels", {}).get("mic", DEFAULT_MIC_LABELS)

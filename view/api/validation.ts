@@ -1,151 +1,26 @@
 import { requireOk } from './http';
+import type {
+  AttemptMetadata,
+  ValidationAdminSummary,
+  ValidationEvent,
+  ValidationParticipant,
+  ValidationScorecard,
+  ValidationSession,
+} from './validationTypes';
 
-export type ValidationSession = {
-  sessionId: string;
-};
-
-export type ValidationParticipant = {
-  participantId: string;
-};
-
-export type ScorecardAttempt = {
-  attemptId: string;
-  lessonId?: string;
-  lessonPage?: string;
-  stepId?: string;
-  targetId?: string;
-  expectedText?: string;
-  expectedTransliteration?: string;
-  recordingPath?: string;
-  recordingDurationMs?: number;
-  byteCount?: number;
-  mimeType?: string;
-  buildPromptText?: string;
-  receivedAt?: string;
-  aiScore?: {
-    status?: string;
-    result?: {
-      transcript_romanized?: string;
-      communication?: {
-        status?: string;
-        close_enough?: boolean;
-        confidence?: number;
-      };
-    };
-    error?: string;
-  } | null;
-};
-
-export type ScorecardTarget = {
-  targetId: string;
-  expectedText?: string;
-  expectedTransliteration?: string;
-  targetAudioUrl?: string;
-  reviewStatus: string;
-  attempts: ScorecardAttempt[];
-};
-
-export type ValidationScorecard = {
-  session: {
-    sessionId: string;
-    participantId?: string;
-    language?: string;
-    sceneSet?: string;
-    createdAt?: string;
-  };
-  eventCount: number;
-  attemptCount: number;
-  targets: ScorecardTarget[];
-};
-
-export type ValidationAdminSession = {
-  sessionId: string;
-  participantId?: string;
-  language: string;
-  sceneSet: string;
-  lessonPage?: string;
-  createdAt?: string;
-  eventCount: number;
-  attemptCount: number;
-  scoredAttemptCount: number;
-  rememberedAttemptCount: number;
-};
-
-export type ValidationAdminTargetSession = {
-  type?: 'recording' | 'choice';
-  sessionId: string;
-  participantId?: string;
-  lessonPage?: string;
-  stepId?: string;
-  eventId?: string;
-  choiceId?: string;
-  choiceCorrect?: boolean;
-  attemptId?: string;
-  receivedAt?: string;
-  createdAt?: string;
-  scorePassed?: boolean;
-  scoreStatus: string;
-};
-
-export type ValidationAdminTarget = {
-  language: string;
-  sceneSet: string;
-  targetId: string;
-  expectedText?: string;
-  expectedTransliteration?: string;
-  targetAudioUrl?: string | null;
-  attemptCount: number;
-  scoredAttemptCount: number;
-  rememberedAttemptCount: number;
-  sessions: ValidationAdminTargetSession[];
-};
-
-export type ValidationAdminSummary = {
-  sessionCount: number;
-  attemptCount: number;
-  scoredAttemptCount: number;
-  rememberedAttemptCount: number;
-  sessions: ValidationAdminSession[];
-  targets: ValidationAdminTarget[];
-};
-
-export type ValidationEvent = {
-  type: string;
-  eventId?: string;
-  participantId?: string;
-  language?: string;
-  sceneSet?: string;
-  lessonId?: string;
-  lessonPage?: string;
-  stepId?: string;
-  stepIndex?: number;
-  frameId?: string | null;
-  choiceId?: string;
-  isCorrect?: boolean;
-  direction?: string;
-  targetId?: string;
-  timestamp?: string;
-  metadata?: Record<string, unknown>;
-};
-
-export type AttemptMetadata = {
-  attemptId: string;
-  participantId?: string;
-  language: string;
-  sceneSet: string;
-  lessonId: string;
-  lessonPage: string;
-  stepId: string;
-  targetId: string;
-  expectedText: string;
-  expectedTransliteration: string;
-  targetAudioUrl?: string | null;
-  recordingDurationMs?: number;
-  byteCount?: number;
-  mimeType?: string;
-  buildPromptId?: string;
-  buildPromptText?: string;
-};
+export type {
+  AttemptMetadata,
+  ScorecardAttempt,
+  ScorecardTarget,
+  ValidationAdminSession,
+  ValidationAdminSummary,
+  ValidationAdminTarget,
+  ValidationAdminTargetSession,
+  ValidationEvent,
+  ValidationParticipant,
+  ValidationScorecard,
+  ValidationSession,
+} from './validationTypes';
 
 export async function startValidationSession(input: {
   sessionId?: string;
@@ -201,13 +76,32 @@ export async function uploadValidationAttempt(
   await requireOk(response, 'Failed to upload validation attempt');
 }
 
-export async function fetchValidationScorecard(sessionId: string, score = false): Promise<ValidationScorecard> {
-  const query = score ? '?score=true' : '';
-  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/scorecard${query}`);
+export async function fetchValidationScorecard(sessionId: string): Promise<ValidationScorecard> {
+  const response = await fetch(`/api/validation/sessions/${encodeURIComponent(sessionId)}/scorecard`);
   if (!response.ok) {
     throw new Error(`Failed to load validation scorecard: ${response.status}`);
   }
   return response.json() as Promise<ValidationScorecard>;
+}
+
+export async function fetchScoredValidationScorecard(sessionId: string): Promise<ValidationScorecard> {
+  const initial = await fetchValidationScorecard(sessionId);
+  const attemptIds = [
+    ...new Set(
+      initial.targets.flatMap((target) =>
+        target.attempts
+          .filter((attempt) => !attempt.aiScore || attempt.aiScore.status !== 'scored')
+          .map((attempt) => attempt.attemptId),
+      ),
+    ),
+  ];
+
+  if (attemptIds.length === 0) {
+    return initial;
+  }
+
+  await Promise.all(attemptIds.map((attemptId) => scoreValidationAttempt(sessionId, attemptId)));
+  return fetchValidationScorecard(sessionId);
 }
 
 export async function fetchValidationAdminSummary(): Promise<ValidationAdminSummary> {

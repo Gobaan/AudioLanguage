@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { playAudioOrSpeakThen, stopAudio, stopSpeech } from '../app/audioPlayback';
+
 type RecordingState = 'ready' | 'prompting' | 'recording' | 'captured' | 'blocked';
 
 type PromptedRecordingProps = {
@@ -57,68 +59,8 @@ export function PromptedRecording({
 
   function startPromptFlow() {
     cleanupActiveFlow();
-
-    if (!audioUrl) {
-      speakPromptThenRecord();
-      return;
-    }
-
     setState('prompting');
-    const audio = new Audio(audioUrl);
-    audioRef.current = audio;
-
-    audio.addEventListener(
-      'ended',
-      () => {
-        audioRef.current = null;
-        startRecording();
-      },
-      { once: true },
-    );
-
-    audio.addEventListener(
-      'error',
-      () => {
-        audioRef.current = null;
-        startRecording();
-      },
-      { once: true },
-    );
-
-    audio.play().catch(() => {
-      audioRef.current = null;
-      speakPromptThenRecord();
-    });
-  }
-
-  function speakPromptThenRecord() {
-    const text = audioText?.trim();
-    if (!text || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
-      startRecording();
-      return;
-    }
-
-    setState('prompting');
-    const utterance = new SpeechSynthesisUtterance(text);
-    utteranceRef.current = utterance;
-    utterance.addEventListener(
-      'end',
-      () => {
-        utteranceRef.current = null;
-        startRecording();
-      },
-      { once: true },
-    );
-    utterance.addEventListener(
-      'error',
-      () => {
-        utteranceRef.current = null;
-        startRecording();
-      },
-      { once: true },
-    );
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    playAudioOrSpeakThen(audioUrl, audioText, audioRef, utteranceRef, startRecording);
   }
 
   async function startRecording() {
@@ -186,16 +128,10 @@ export function PromptedRecording({
       stopTimerRef.current = null;
     }
 
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current = null;
-    }
-
-    if (utteranceRef.current) {
-      window.speechSynthesis?.cancel();
-      utteranceRef.current = null;
-    }
+    stopAudio(audioRef.current);
+    audioRef.current = null;
+    stopSpeech(utteranceRef.current);
+    utteranceRef.current = null;
 
     stopRecorder(mediaRecorderRef.current);
     mediaRecorderRef.current = null;

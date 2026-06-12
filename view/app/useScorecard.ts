@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { fetchValidationScorecard, type ValidationEvent, type ValidationScorecard } from '../api/validation';
+import { fetchScoredValidationScorecard, type ValidationEvent, type ValidationScorecard } from '../api/validation';
 import { ScorecardState } from './ScorecardView';
 
 export type AppView = 'lesson' | 'scorecard';
@@ -51,7 +51,7 @@ export function useScorecard({
       stepIndex,
       targetId,
     });
-    fetchValidationScorecard(validationSessionId, true)
+    fetchScoredValidationScorecard(validationSessionId)
       .then((nextScorecard) => {
         setScorecard(nextScorecard);
         setScorecardState('ready');

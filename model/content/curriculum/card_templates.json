@@ -1,5 +1,29 @@
 {
   "default_template_id": "guided-dialogue-replay-v1",
+  "support_ui_labels": {
+    "English": {
+      "audio": {
+        "playLabel": "Play audio",
+        "playingLabel": "Playing"
+      },
+      "mic": {
+        "prompt": "Try saying it",
+        "listeningLabel": "Listening...",
+        "startLabel": "Start"
+      }
+    },
+    "Japanese": {
+      "audio": {
+        "playLabel": "音声を再生",
+        "playingLabel": "再生中"
+      },
+      "mic": {
+        "prompt": "言ってみましょう",
+        "listeningLabel": "聞いています...",
+        "startLabel": "はじめる"
+      }
+    }
+  },
   "card_templates": [
     {
       "id": "guided-dialogue-replay-v1",
@@ -46,6 +70,17 @@
         "show_target_text_after_attempt": true,
         "show_examples_before_attempt": false,
         "show_transliteration_after_failure": true
+      },
+      "default_ui_labels": {
+        "audio": {
+          "playLabel": "Play audio",
+          "playingLabel": "Playing"
+        },
+        "mic": {
+          "prompt": "Try saying it",
+          "listeningLabel": "Listening...",
+          "startLabel": "Start"
+        }
       },
       "required_card_fields": [
         "id",

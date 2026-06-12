@@ -82,3 +82,49 @@ export function speakTextAudio(
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }
+
+export function playAudioOrSpeakThen(
+  url: string | null | undefined,
+  text: string | null | undefined,
+  audioRef: { current: HTMLAudioElement | null },
+  utteranceRef: { current: SpeechSynthesisUtterance | null },
+  onComplete: () => void,
+  language?: string,
+) {
+  stopAudio(audioRef.current);
+  stopSpeech(utteranceRef.current);
+
+  if (url) {
+    const audio = new Audio(url);
+    audioRef.current = audio;
+    const complete = () => {
+      audioRef.current = null;
+      onComplete();
+    };
+    audio.addEventListener('ended', complete, { once: true });
+    audio.addEventListener('error', complete, { once: true });
+    audio.play().catch(complete);
+    return;
+  }
+
+  const spokenText = text?.trim();
+  if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+    utteranceRef.current = null;
+    onComplete();
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(spokenText);
+  if (language) {
+    utterance.lang = language;
+  }
+  utteranceRef.current = utterance;
+  const complete = () => {
+    utteranceRef.current = null;
+    onComplete();
+  };
+  utterance.addEventListener('end', complete, { once: true });
+  utterance.addEventListener('error', complete, { once: true });
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}

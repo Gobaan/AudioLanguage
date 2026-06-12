@@ -62,7 +62,9 @@ def load_language_session(
     functions = index_by_id(read_json(data_dir / "curriculum" / "functions.json"), "functions")
     scenes = index_by_id(read_json(data_dir / "curriculum" / "scenes.json"), "scenes")
     review_modes = index_by_id(read_json(data_dir / "curriculum" / "review_modes.json"), "review_modes")
-    card_templates = index_by_id(read_json(data_dir / "curriculum" / "card_templates.json"), "card_templates")
+    card_templates_data = read_json(data_dir / "curriculum" / "card_templates.json")
+    card_templates = index_by_id(card_templates_data, "card_templates")
+    support_ui_labels = card_templates_data.get("support_ui_labels", {})
     targets_data = read_json(language_dir / "targets.json")
     dialogues_data = read_json(language_dir / "dialogues.json")
     practice_data = read_json(language_dir / "practice_cards.json")
@@ -93,6 +95,7 @@ def load_language_session(
                 distractors=distractors,
                 audio_assets=audio_assets,
                 project_dir=project_dir,
+                support_ui_labels=support_ui_labels,
             )
         )
 
@@ -119,6 +122,7 @@ def hydrate_practice_card(
     distractors: dict[str, dict[str, Any]],
     audio_assets: dict[tuple[str, int], str],
     project_dir: Path,
+    support_ui_labels: dict[str, Any],
 ) -> dict[str, Any]:
     dialogue = required(dialogues, card.get("dialogue_id"), "dialogue")
     target = required(targets, card.get("target_id"), "target")
@@ -159,7 +163,36 @@ def hydrate_practice_card(
             **card.get("support", {}),
         }
 
+    hydrated_card["ui_labels"] = ui_labels_for_card(
+        card=card,
+        template=template,
+        support_ui_labels=support_ui_labels,
+    )
+
     return hydrated_card
+
+
+def ui_labels_for_card(
+    *,
+    card: dict[str, Any],
+    template: dict[str, Any] | None,
+    support_ui_labels: dict[str, Any],
+) -> dict[str, dict[str, str]]:
+    support_language = str(card.get("ai_scene_contract", {}).get("support_language", "English"))
+    sources = [
+        support_ui_labels.get(support_language, {}),
+        template.get("default_ui_labels", {}) if template else {},
+        card.get("ai_scene_contract", {}).get("ui_labels", {}),
+    ]
+    merged: dict[str, dict[str, str]] = {}
+    for source in sources:
+        if not isinstance(source, dict):
+            continue
+        for key in ("audio", "mic"):
+            labels = source.get(key)
+            if isinstance(labels, dict):
+                merged[key] = {**merged.get(key, {}), **{str(label): str(value) for label, value in labels.items()}}
+    return merged
 
 
 def hydrate_line(
