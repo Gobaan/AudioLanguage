@@ -1,6 +1,6 @@
 import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import { LessonAppLinks } from './LessonAppLinks';
 import { LessonStepRenderer } from './LessonStepRenderer';
-import { LocalDevLinks } from './LocalDevLinks';
 import { stepBlocksNextUntilChoice, stepHandlesOwnNext } from './lessonStepHelpers';
 
 type TravellerLessonShellProps = {
@@ -20,6 +20,7 @@ type TravellerLessonShellProps = {
     recording: { blob: Blob; durationMs: number; mimeType: string },
     extra?: Record<string, unknown>,
   ) => void;
+  onOpenScorecard: () => void;
   onNext: () => void;
 };
 
@@ -36,6 +37,7 @@ export function TravellerLessonShell({
   onLogAudioPlayed,
   onSelectChoice,
   onCaptureAttempt,
+  onOpenScorecard,
   onNext,
 }: TravellerLessonShellProps) {
   const nextLabel = isLastStep ? (hasNextLesson ? 'Next' : 'Scorecard') : 'Next';
@@ -44,7 +46,7 @@ export function TravellerLessonShell({
 
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
-      <LocalDevLinks participantId={participantId} />
+      <LessonAppLinks participantId={participantId} onOpenScorecard={onOpenScorecard} />
       <LessonStepRenderer
         lesson={stepLesson}
         step={step}

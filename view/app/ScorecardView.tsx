@@ -1,8 +1,10 @@
 import { validationAttemptAudioUrl, type ScorecardAttempt, type ValidationScorecard } from '../api/validation';
+import { assetUrl } from './lessonUrls';
 
 export type ScorecardState = 'idle' | 'loading' | 'ready' | 'error';
 
 const ACCURACY_PASS_THRESHOLD = 0.8;
+const HAN_PATTERN = /[\u3400-\u9FFF]/;
 
 type ValidationScorecardViewProps = {
   sessionId: string | null;
@@ -38,7 +40,7 @@ export function ValidationScorecardView({
 
       {state === 'loading' ? <p className="scorecard-status">Loading scorecard.</p> : null}
       {state === 'error' ? (
-        <p className="scorecard-status">Scorecard is unavailable. Session: {sessionId ?? 'none'}</p>
+        <p className="scorecard-status">Scorecard is unavailable.</p>
       ) : null}
       {state === 'ready' && scorecard ? <ScorecardDetails scorecard={scorecard} /> : null}
     </section>
@@ -48,43 +50,32 @@ export function ValidationScorecardView({
 function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
   return (
     <>
-      <dl className="scorecard-summary">
-        <div>
-          <dt>Session</dt>
-          <dd>{scorecard.session.sessionId}</dd>
-        </div>
-        <div>
-          <dt>Events</dt>
-          <dd>{scorecard.eventCount}</dd>
-        </div>
-        <div>
-          <dt>Attempts</dt>
-          <dd>{scorecard.attemptCount}</dd>
-        </div>
-      </dl>
-
       <section className="scorecard-targets" aria-label="Scorecard targets">
         {scorecard.targets.length === 0 ? (
           <p className="scorecard-status">No recordings have been captured yet.</p>
         ) : (
           scorecard.targets.map((target) => (
             <article className="scorecard-target" key={target.targetId}>
-              <header>
-                <div>
-                  <span>{target.targetId}</span>
-                  <h2>{target.expectedTransliteration || target.expectedText || 'Target'}</h2>
-                </div>
-                {target.targetAudioUrl ? <audio controls src={target.targetAudioUrl} aria-label="Target audio" /> : null}
+              <header className="scorecard-target-intro">
+                <span>Learner line</span>
+                {target.targetAudioUrl ? (
+                  <audio
+                    className="scorecard-learner-audio"
+                    controls
+                    src={assetUrl(target.targetAudioUrl)}
+                    aria-label="Learner line"
+                  />
+                ) : (
+                  <p className="scorecard-status">Learner line audio unavailable.</p>
+                )}
               </header>
               <ul>
                 {target.attempts.map((attempt) => (
-                  <li key={attempt.attemptId} className={attemptAccuracyClass(attempt)}>
-                    <div>
-                      <strong>{attempt.stepId}</strong>
-                      <span>{scoreLabel(attempt)}</span>
-                    </div>
-                    <audio controls src={validationAttemptAudioUrl(scorecard.session.sessionId, attempt.attemptId)} />
-                  </li>
+                  <ScorecardAttemptRow
+                    key={attempt.attemptId}
+                    attempt={attempt}
+                    sessionId={scorecard.session.sessionId}
+                  />
                 ))}
               </ul>
             </article>
@@ -95,10 +86,73 @@ function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
   );
 }
 
+function ScorecardAttemptRow({
+  attempt,
+  sessionId,
+}: {
+  attempt: ScorecardAttempt;
+  sessionId: string;
+}) {
+  const saidLine = attemptSaidLine(attempt);
+
+  return (
+    <li className={attemptAccuracyClass(attempt)}>
+      <div className="scorecard-attempt-copy">
+        <div className="scorecard-attempt-heading">
+          <strong>{attemptStepLabel(attempt)}</strong>
+          <span>{scoreLabel(attempt)}</span>
+        </div>
+        <dl className="scorecard-attempt-phrases">
+          <div>
+            <dt>You said</dt>
+            <dd>{saidLine ?? (attempt.aiScore ? '—' : 'Not scored yet')}</dd>
+          </div>
+        </dl>
+      </div>
+      <div className="scorecard-attempt-audio">
+        <span className="scorecard-audio-label">Your recording</span>
+        <audio controls src={validationAttemptAudioUrl(sessionId, attempt.attemptId)} />
+      </div>
+    </li>
+  );
+}
+
+function attemptStepLabel(attempt: ScorecardAttempt): string {
+  if (attempt.stepId === 'backward_build') {
+    return 'Production';
+  }
+  if (attempt.stepId === 'scene_recall') {
+    return 'Scene recall';
+  }
+  if (attempt.stepId === 'production_prompt') {
+    return 'Production';
+  }
+
+  return attempt.stepId?.replace(/_/g, ' ') || 'Recording';
+}
+
+function attemptSaidLine(attempt: ScorecardAttempt): string | null {
+  const romanized = attempt.aiScore?.result?.transcript_romanized?.trim();
+  if (!romanized) {
+    return null;
+  }
+
+  return learnerFacingRomanized(romanized);
+}
+
+function learnerFacingRomanized(value: string): string {
+  if (!HAN_PATTERN.test(value)) {
+    return value;
+  }
+
+  const latin = value.match(/[A-Za-z]+(?:'[A-Za-z]+)?/g)?.join(' ').trim();
+  return latin || value;
+}
+
 function scoreLabel(attempt: ScorecardAttempt): string {
   const score = attempt.aiScore;
   if (!score) {
-    return attempt.buildPromptText || attempt.lessonPage || 'Needs score';
+    return 'Needs score';
   }
   if (score.status !== 'scored') {
     return 'AI score unavailable';

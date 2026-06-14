@@ -126,6 +126,15 @@ export function backwardBuildPrompts(step: LessonStep): BackwardBuildPrompt[] {
   return Array.isArray(step.props.prompts) ? (step.props.prompts as BackwardBuildPrompt[]) : [];
 }
 
+export function isFinalBackwardBuildPrompt(step: LessonStep, prompt: BackwardBuildPrompt): boolean {
+  const prompts = backwardBuildPrompts(step).filter((entry) => entry.text);
+  if (prompts.length === 0) {
+    return false;
+  }
+
+  return prompts[prompts.length - 1]?.id === prompt.id;
+}
+
 export function introFramesThroughLineType(lesson: Lesson, step: LessonStep): SceneFrameData[] {
   const stopAt =
     typeof step.props.playIntroThroughLineType === 'string' ? step.props.playIntroThroughLineType : null;

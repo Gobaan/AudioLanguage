@@ -15,6 +15,7 @@ import {
   backwardBuildTarget,
   dialogueRevealLines,
   frameForStep,
+  isFinalBackwardBuildPrompt,
   sceneSetupFrames,
   sceneSetupStopAtLineType,
 } from './lessonStepHelpers';
@@ -148,18 +149,13 @@ const STEP_RENDERERS: StepRenderer[] = [
         <BackwardBuild
           targetPhrase={backwardBuildTarget(context.step)}
           prompts={backwardBuildPrompts(context.step)}
-          chunks={
-            Array.isArray(context.step.props.chunks)
-              ? (context.step.props.chunks as import('../components').Chunk[])
-              : []
-          }
-          onCaptured={(recording, prompt) =>
-            context.onCaptureAttempt?.(context.step, recording, {
-              buildPromptId: prompt.id,
-              buildPromptText: prompt.text,
-              buildPromptAudioUrl: prompt.audioUrl ?? undefined,
-            })
-          }
+          onCaptured={(recording, prompt) => {
+            if (!isFinalBackwardBuildPrompt(context.step, prompt)) {
+              return;
+            }
+
+            context.onCaptureAttempt?.(context.step, recording);
+          }}
           onStepComplete={context.onStepComplete}
         />
       </section>

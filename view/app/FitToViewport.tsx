@@ -8,14 +8,19 @@ type FitLayout = {
 type FitToViewportProps = {
   children: ReactNode;
   className?: string;
+  scrollable?: boolean;
 };
 
-export function FitToViewport({ children, className }: FitToViewportProps) {
+export function FitToViewport({ children, className, scrollable = false }: FitToViewportProps) {
   const shellRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<FitLayout>({ scale: 1, scaledHeight: 0 });
 
   useLayoutEffect(() => {
+    if (scrollable) {
+      return undefined;
+    }
+
     const shell = shellRef.current;
     const content = contentRef.current;
     if (!shell || !content) return;
@@ -49,10 +54,26 @@ export function FitToViewport({ children, className }: FitToViewportProps) {
       observer.disconnect();
       window.removeEventListener('resize', updateLayout);
     };
-  }, []);
+  }, [scrollable]);
+
+  const shellClassName = [
+    'fit-viewport-shell',
+    scrollable ? 'fit-viewport-shell--scroll' : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  if (scrollable) {
+    return (
+      <div ref={shellRef} className={shellClassName}>
+        <div className="fit-viewport-content">{children}</div>
+      </div>
+    );
+  }
 
   return (
-    <div ref={shellRef} className={className ? `fit-viewport-shell ${className}` : 'fit-viewport-shell'}>
+    <div ref={shellRef} className={shellClassName}>
       <div className="fit-viewport-frame" style={{ height: layout.scaledHeight || undefined }}>
         <div
           ref={contentRef}

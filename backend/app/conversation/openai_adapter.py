@@ -11,7 +11,7 @@ from app.conversation.models import (
     LearnerAttempt,
     SpeechInterpretation,
 )
-from app.speech.language import has_unexpected_script, romanize_for_language
+from app.speech.display import learner_facing_transcript as romanized_learner_transcript
 from app.speech.similarity import normalize_for_match, text_similarity
 
 
@@ -43,7 +43,12 @@ class OpenAISpeechInterpreter:
             )
 
         transcript = str(getattr(transcription, "text", "") or "").strip()
-        romanized = learner_facing_transcript(transcript, context)
+        romanized = romanized_learner_transcript(
+            transcript,
+            language=context.language or "",
+            target_romanized=context.target_romanized or context.target_text,
+            language_label=language_display_name(context.language),
+        )
         expected = context.target_romanized or context.target_text
         score = text_similarity(normalize_for_match(romanized), normalize_for_match(expected))
         return SpeechInterpretation(
@@ -113,6 +118,13 @@ def build_transcription_prompt(context: ConversationContext) -> str:
     ]
     expected_hint = "; ".join(expected_values) or "the learner's short response"
     language_name = language_display_name(context.language)
+    if context.language in {"zh", "yue"}:
+        return (
+            f"The learner is practicing {language_name} using beginner romanization. "
+            f"They are attempting this short guided-scene response: {expected_hint}. "
+            "Return Latin letters only, using pinyin-style romanization with spaces between syllables. "
+            "Do not use Chinese characters."
+        )
     return (
         f"The learner is practicing {language_name}. "
         f"They are attempting this short guided-scene response: {expected_hint}. "
@@ -122,17 +134,20 @@ def build_transcription_prompt(context: ConversationContext) -> str:
 
 
 def learner_facing_transcript(transcript: str, context: ConversationContext) -> str:
-    if not transcript:
-        return ""
-    if has_unexpected_script(transcript, context.language):
-        return f"unclear {language_display_name(context.language)} attempt"
-    return romanize_for_language(transcript, context.language)
+    return romanized_learner_transcript(
+        transcript,
+        language=context.language or "",
+        target_romanized=context.target_romanized or context.target_text,
+        language_label=language_display_name(context.language),
+    )
 
 
 def language_display_name(language: str) -> str:
     return {
         "en": "English",
         "ja": "Japanese",
+        "zh": "Mandarin Chinese",
+        "yue": "Cantonese",
         "ta": "Tamil",
     }.get(language, language or "target language")
 

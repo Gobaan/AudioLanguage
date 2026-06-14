@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { fetchScoredValidationScorecard, type ValidationEvent, type ValidationScorecard } from '../api/validation';
+import { updateLessonUrl, viewFromUrl } from './lessonUrls';
 import { ScorecardState } from './ScorecardView';
 
 export type AppView = 'lesson' | 'scorecard';
@@ -8,24 +9,30 @@ export type AppView = 'lesson' | 'scorecard';
 type UseScorecardOptions = {
   validationSessionId: string | null;
   logEvent: (event: ValidationEvent) => void;
+  language: string;
   lessonPage: string;
-  stepIndex: number;
+  sceneSet: string;
   lessonId?: string;
   stepId?: string;
+  stepIndex: number;
   targetId?: string;
 };
 
 export function useScorecard({
   validationSessionId,
   logEvent,
+  language,
   lessonPage,
-  stepIndex,
+  sceneSet,
   lessonId,
   stepId,
+  stepIndex,
   targetId,
 }: UseScorecardOptions) {
-  const [appView, setAppView] = useState<AppView>('lesson');
-  const [scorecardState, setScorecardState] = useState<ScorecardState>('idle');
+  const [appView, setAppView] = useState<AppView>(() => (viewFromUrl() === 'scorecard' ? 'scorecard' : 'lesson'));
+  const [scorecardState, setScorecardState] = useState<ScorecardState>(() =>
+    viewFromUrl() === 'scorecard' ? 'loading' : 'idle',
+  );
   const [scorecard, setScorecard] = useState<ValidationScorecard | null>(null);
 
   const resetScorecard = useCallback(() => {
@@ -43,6 +50,7 @@ export function useScorecard({
 
     setAppView('scorecard');
     setScorecardState('loading');
+    updateLessonUrl(language, lessonPage, sceneSet, true, 'scorecard');
     logEvent({
       type: 'scorecard_viewed',
       lessonId,
@@ -60,11 +68,12 @@ export function useScorecard({
         setScorecard(null);
         setScorecardState('error');
       });
-  }, [validationSessionId, logEvent, lessonId, lessonPage, stepId, stepIndex, targetId]);
+  }, [validationSessionId, logEvent, language, lessonPage, sceneSet, lessonId, stepId, stepIndex, targetId]);
 
   const backToLesson = useCallback(() => {
     setAppView('lesson');
-  }, []);
+    updateLessonUrl(language, lessonPage, sceneSet, true, null);
+  }, [language, lessonPage, sceneSet]);
 
   return {
     appView,

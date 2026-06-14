@@ -11,7 +11,7 @@ export function useTravellerRoute() {
     (nextLanguage: string) => {
       setLanguage(nextLanguage);
       setLessonPage(DEFAULT_LESSON);
-      updateLessonUrl(nextLanguage, DEFAULT_LESSON, sceneSet);
+      updateLessonUrl(nextLanguage, DEFAULT_LESSON, sceneSet, false, null);
     },
     [sceneSet],
   );
@@ -19,7 +19,7 @@ export function useTravellerRoute() {
   const selectLessonPage = useCallback(
     (nextPage: string) => {
       setLessonPage(nextPage);
-      updateLessonUrl(language, nextPage, sceneSet);
+      updateLessonUrl(language, nextPage, sceneSet, false, null);
     },
     [language, sceneSet],
   );

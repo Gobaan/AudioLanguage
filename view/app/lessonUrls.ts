@@ -16,7 +16,17 @@ export function sceneSetFromUrl(): string {
   return new URLSearchParams(window.location.search).get('scene_set') ?? DEFAULT_SCENE_SET;
 }
 
-export function updateLessonUrl(language: string, lesson: string, sceneSet: string, replace = false) {
+export function viewFromUrl(): string | null {
+  return new URLSearchParams(window.location.search).get('view');
+}
+
+export function updateLessonUrl(
+  language: string,
+  lesson: string,
+  sceneSet: string,
+  replace = false,
+  view?: 'scorecard' | null,
+) {
   const url = new URL(window.location.href);
   if (url.pathname !== '/learn') {
     url.pathname = '/learn';
@@ -27,6 +37,11 @@ export function updateLessonUrl(language: string, lesson: string, sceneSet: stri
     url.searchParams.delete('scene_set');
   } else {
     url.searchParams.set('scene_set', sceneSet);
+  }
+  if (view === 'scorecard') {
+    url.searchParams.set('view', 'scorecard');
+  } else if (view === null) {
+    url.searchParams.delete('view');
   }
   if (replace) {
     window.history.replaceState({}, '', url);
@@ -94,7 +109,7 @@ export function withStepAssetUrls(step: LessonStep | undefined): LessonStep | un
   };
 }
 
-function assetUrl(url: string): string {
+export function assetUrl(url: string): string {
   if (window.location.protocol !== 'file:' || !url.startsWith('/')) {
     return url;
   }

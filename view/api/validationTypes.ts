@@ -19,6 +19,8 @@ export type ScorecardAttempt = {
   byteCount?: number;
   mimeType?: string;
   buildPromptText?: string;
+  buildPromptId?: string;
+  targetAudioUrl?: string;
   receivedAt?: string;
   aiScore?: {
     status?: string;
@@ -38,6 +40,7 @@ export type ScorecardTarget = {
   targetId: string;
   expectedText?: string;
   expectedTransliteration?: string;
+  learnerLine?: string;
   targetAudioUrl?: string;
   reviewStatus: string;
   attempts: ScorecardAttempt[];

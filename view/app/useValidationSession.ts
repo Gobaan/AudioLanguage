@@ -95,8 +95,6 @@ export function useValidationSession({
 
       const attemptId = crypto.randomUUID();
       const expectedPhrase = attemptExpectedPhrase(lesson, attemptStep, extra);
-      const buildPromptAudioUrl =
-        typeof extra.buildPromptAudioUrl === 'string' ? extra.buildPromptAudioUrl : undefined;
       void uploadValidationAttempt(sessionId, recording.blob, {
         attemptId,
         participantId,
@@ -108,7 +106,7 @@ export function useValidationSession({
         targetId: lesson.target.id,
         expectedText: expectedPhrase.expectedText,
         expectedTransliteration: expectedPhrase.expectedTransliteration,
-        targetAudioUrl: buildPromptAudioUrl ?? learnerTargetAudioUrl(lesson),
+        targetAudioUrl: learnerTargetAudioUrl(lesson),
         recordingDurationMs: recording.durationMs,
         byteCount: recording.blob.size,
         mimeType: recording.mimeType,

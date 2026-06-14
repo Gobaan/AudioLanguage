@@ -6,6 +6,7 @@ from pathlib import Path
 BACKEND_DIR = Path(__file__).resolve().parents[1] / "backend"
 sys.path.insert(0, str(BACKEND_DIR))
 
+from app.speech.display import learner_facing_transcript, learner_romanized_only
 from app.speech.language import japanese_to_romaji, tamil_to_latin
 from app.speech.transcription import unavailable_transcription
 
@@ -27,6 +28,24 @@ class JapaneseRomanizationTests(unittest.TestCase):
         self.assertEqual(
             japanese_to_romaji(feedback),
             "For a greeting response, say konnichiwa or doumo.",
+        )
+
+
+class SpeechDisplayTests(unittest.TestCase):
+    def test_learner_romanized_only_strips_han_when_latin_present(self):
+        self.assertEqual(
+            learner_romanized_only("Yi ge xiexie", language="zh", target_romanized="Yi ge, xiexie."),
+            "Yi ge xiexie",
+        )
+
+    def test_learner_facing_transcript_uses_target_romanization_for_han_only(self):
+        self.assertEqual(
+            learner_facing_transcript(
+                "我不懂。",
+                language="zh",
+                target_romanized="Wo bu dong.",
+            ),
+            "Wo bu dong.",
         )
 
 

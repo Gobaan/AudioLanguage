@@ -174,6 +174,14 @@ class OpenAIPromptAdapterTests(unittest.TestCase):
 
         self.assertEqual(display, "unclear Japanese attempt")
 
+    def test_learner_facing_transcript_prefers_romanized_chinese(self):
+        display = learner_facing_transcript(
+            "\u6211\u4e0d\u61c2\u3002",
+            ConversationContext(language="zh", target_romanized="Wo bu dong."),
+        )
+
+        self.assertEqual(display, "Wo bu dong.")
+
 
 if __name__ == "__main__":
     unittest.main()

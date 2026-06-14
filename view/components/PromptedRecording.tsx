@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { useAudioPlayback } from '../app/useAudioPlayback';
 import { playAudioOrSpeakThen, stopAudio, stopSpeech } from '../app/audioPlayback';
+import { AudioButton } from './AudioButton';
 
 type RecordingState = 'ready' | 'prompting' | 'recording' | 'captured' | 'submitted' | 'blocked';
 
@@ -20,6 +22,7 @@ type PromptedRecordingProps = {
   startLabel?: string;
   nextLabel?: string;
   reRecordLabel?: string;
+  modelReplayLabel?: string;
   autoConfirmCapture?: boolean;
   onListenComplete?: () => void;
   onRecording?: () => void;
@@ -37,6 +40,7 @@ export function PromptedRecording({
   startLabel = 'Record',
   nextLabel = 'Next',
   reRecordLabel = 'Re-record',
+  modelReplayLabel = 'Listen again',
   autoConfirmCapture = false,
   onListenComplete,
   onRecording,
@@ -53,6 +57,8 @@ export function PromptedRecording({
   const recordingUrlRef = useRef<string | null>(null);
   const stopTimerRef = useRef<number | null>(null);
   const recordingStartedAtRef = useRef<number | null>(null);
+  const modelPlayback = useAudioPlayback();
+  const canReplayModel = Boolean(modelReplayLabel && (audioUrl || audioText?.trim()));
 
   useEffect(() => {
     setState('ready');
@@ -145,7 +151,12 @@ export function PromptedRecording({
     }
   }
 
+  function replayModelAudio() {
+    modelPlayback.playAudioOrSpeak(audioUrl, audioText);
+  }
+
   function cleanup() {
+    modelPlayback.stop();
     cleanupActiveFlow();
     if (recordingUrlRef.current) {
       URL.revokeObjectURL(recordingUrlRef.current);
@@ -180,6 +191,7 @@ export function PromptedRecording({
   }
 
   function reRecord() {
+    modelPlayback.stop();
     if (recordingUrlRef.current) {
       URL.revokeObjectURL(recordingUrlRef.current);
       recordingUrlRef.current = null;
@@ -200,6 +212,15 @@ export function PromptedRecording({
       ) : null}
       {recordingUrl ? (
         <audio className="recording-playback" controls src={recordingUrl} />
+      ) : null}
+      {state === 'captured' && canReplayModel ? (
+        <AudioButton
+          label={modelReplayLabel}
+          isPlaying={modelPlayback.isPlaying}
+          disabled={modelPlayback.isPlaying}
+          onPlay={replayModelAudio}
+          text={{ playLabel: modelReplayLabel, playingLabel: 'Playing…' }}
+        />
       ) : null}
       {state === 'captured' && pendingCapture ? (
         <div className="recording-review-actions">

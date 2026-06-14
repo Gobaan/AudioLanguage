@@ -175,12 +175,11 @@ export function ProductionPracticeStep({
         {phase === 'record' ? <p>{prompt}</p> : null}
         {phase === 'record' ? (
           <PromptedRecording
-            audioUrl={usesPromptAudio ? recordingAudioUrl : null}
-            audioText={usesPromptAudio ? step.audio?.audioText : null}
+            audioUrl={recordingAudioUrl ?? step.audio?.url}
+            audioText={step.audio?.audioText}
             prompt={recordingPromptText(step)}
             startMode={usesPromptAudio ? 'auto' : 'manual'}
             startLabel="Record"
-            autoConfirmCapture={usesPostAttemptFeedback}
             onCaptured={handleCaptured}
           />
         ) : null}

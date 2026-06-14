@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 
 from app.speech.audio_io import convert_to_wav
-from app.speech.language import romanize_for_language
+from app.speech.display import learner_facing_transcript
 from app.speech.similarity import normalize_for_match, text_similarity
 
 
@@ -31,7 +31,11 @@ def transcribe_speech(
             vad_filter=False,
         )
         transcript = " ".join(segment.text.strip() for segment in segments).strip()
-        romanized = romanize_for_language(transcript, language)
+        romanized = learner_facing_transcript(
+            transcript,
+            language=language or "",
+            target_romanized=expected_romanized,
+        )
         score = text_similarity(
             normalize_for_match(romanized),
             normalize_for_match(expected_romanized),

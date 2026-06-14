@@ -127,9 +127,14 @@ class ValidationStore:
         append_jsonl(session_dir / "attempts.jsonl", stored_attempt)
         return stored_attempt
 
-    def scorecard(self, session_id: str) -> dict[str, Any]:
+    def scorecard(self, session_id: str, *, data_dir: Path | None = None, project_dir: Path | None = None) -> dict[str, Any]:
         session_dir = self.require_session(session_id)
-        return build_scorecard(session_dir, self.scores_by_attempt)
+        return build_scorecard(
+            session_dir,
+            self.scores_by_attempt,
+            data_dir=data_dir,
+            project_dir=project_dir,
+        )
 
     def admin_summary(self) -> dict[str, Any]:
         return build_admin_summary(self.root, self.scores_by_attempt)

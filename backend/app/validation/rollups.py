@@ -5,13 +5,69 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from app.content.learner_audio import learner_dialogue_audio_url
 from app.validation.jsonl_io import read_jsonl
 from app.validation.scoring import is_remembered_score, participant_id_from, score_status
+
+
+def filter_scorecard_attempts(attempts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep only the final backward-build recording per lesson; drop practice chunks."""
+    kept: list[dict[str, Any]] = []
+    backward_by_lesson: dict[str, dict[str, Any]] = {}
+
+    for attempt in attempts:
+        if attempt.get("stepId") != "backward_build":
+            kept.append(attempt)
+            continue
+
+        lesson_id = str(attempt.get("lessonId") or attempt.get("attemptId") or "unknown")
+        current = backward_by_lesson.get(lesson_id)
+        if current is None or str(attempt.get("receivedAt") or "") >= str(current.get("receivedAt") or ""):
+            backward_by_lesson[lesson_id] = attempt
+
+    kept.extend(backward_by_lesson.values())
+    return kept
+
+
+def learner_line_for_attempts(attempts: list[dict[str, Any]]) -> str:
+    candidates: list[str] = []
+    for attempt in attempts:
+        for key in ("expectedTransliteration", "expectedText"):
+            value = str(attempt.get(key) or "").strip()
+            if value:
+                candidates.append(value)
+    if not candidates:
+        return ""
+    return max(candidates, key=len)
+
+
+def learner_audio_for_attempts(attempts: list[dict[str, Any]]) -> str | None:
+    candidates: list[tuple[int, int, str]] = []
+    for attempt in attempts:
+        audio_url = attempt.get("targetAudioUrl")
+        if not isinstance(audio_url, str) or not audio_url.strip():
+            continue
+        line = str(attempt.get("expectedTransliteration") or attempt.get("expectedText") or "").strip()
+        is_backward_build = "/backward-build/" in audio_url
+        candidates.append((0 if is_backward_build else 1, len(line), audio_url.strip()))
+
+    if not candidates:
+        return None
+
+    candidates.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    return candidates[0][2]
+
+
+def is_backward_build_audio_url(url: str | None) -> bool:
+    return isinstance(url, str) and "/backward-build/" in url
 
 
 def build_scorecard(
     session_dir: Path,
     scores_by_attempt: Callable[[Path], dict[str, dict[str, Any]]],
+    *,
+    data_dir: Path | None = None,
+    project_dir: Path | None = None,
 ) -> dict[str, Any]:
     metadata = json.loads((session_dir / "metadata.json").read_text(encoding="utf-8"))
     attempts = read_jsonl(session_dir / "attempts.jsonl")
@@ -38,10 +94,38 @@ def build_scorecard(
         )
         target["attempts"].append(attempt)
 
+    for target in targets.values():
+        target["attempts"] = filter_scorecard_attempts(target["attempts"])
+        learner_line = learner_line_for_attempts(target["attempts"])
+        if learner_line:
+            target["learnerLine"] = learner_line
+            target["expectedTransliteration"] = learner_line
+        learner_audio = learner_audio_for_attempts(target["attempts"])
+        if learner_audio and is_backward_build_audio_url(learner_audio) and data_dir and project_dir:
+            language = str(metadata.get("language") or target["attempts"][0].get("language") or "")
+            resolved = learner_dialogue_audio_url(
+                language=language,
+                target_id=str(target["targetId"]),
+                data_dir=data_dir,
+                project_dir=project_dir,
+            )
+            if resolved:
+                learner_audio = resolved
+        elif not learner_audio and data_dir and project_dir and target["attempts"]:
+            language = str(metadata.get("language") or target["attempts"][0].get("language") or "")
+            learner_audio = learner_dialogue_audio_url(
+                language=language,
+                target_id=str(target["targetId"]),
+                data_dir=data_dir,
+                project_dir=project_dir,
+            )
+        if learner_audio:
+            target["targetAudioUrl"] = learner_audio
+
     return {
         "session": metadata,
         "eventCount": len(events),
-        "attemptCount": len(attempts),
+        "attemptCount": sum(len(target["attempts"]) for target in targets.values()),
         "targets": list(targets.values()),
     }
 

@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from app.conversation.coach import ConversationCoach
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.deps import ConversationCoachDep
-from app.runtime import validation_store
+from app.runtime import DATA_DIR, PROJECT_DIR, validation_store
 from app.validation.scoring import attempt_expected_phrase
 
 logger = logging.getLogger(__name__)
@@ -107,7 +107,7 @@ def get_validation_scorecard(
                 "prefer POST /attempts/{attempt_id}/score for explicit scoring."
             )
             score_validation_attempts(session_id, conversation_coach)
-        return validation_store.scorecard(session_id)
+        return validation_store.scorecard(session_id, data_dir=DATA_DIR, project_dir=PROJECT_DIR)
     except FileNotFoundError as error:
         raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found") from error
 

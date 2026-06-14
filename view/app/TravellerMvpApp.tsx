@@ -8,6 +8,7 @@ import { useLessonLoader } from './useLessonLoader';
 import { useParticipantId } from './useParticipantId';
 import { useScorecard } from './useScorecard';
 import { useTravellerRoute } from './useTravellerRoute';
+import { viewFromUrl } from './lessonUrls';
 import { useValidationSession } from './useValidationSession';
 
 export function TravellerMvpApp() {
@@ -51,7 +52,9 @@ export function TravellerMvpApp() {
   const { appView, scorecardState, scorecard, showScorecard, backToLesson, resetScorecard } = useScorecard({
     validationSessionId,
     logEvent,
+    language,
     lessonPage,
+    sceneSet,
     stepIndex,
     lessonId: stepLesson?.id,
     stepId: step?.id,
@@ -60,7 +63,15 @@ export function TravellerMvpApp() {
 
   useEffect(() => {
     resetScorecard();
-  }, [language, lessonPage, sceneSet, resetScorecard]);
+  }, [language, sceneSet, resetScorecard]);
+
+  useEffect(() => {
+    if (viewFromUrl() !== 'scorecard' || !validationSessionId) {
+      return;
+    }
+
+    showScorecard();
+  }, [language, sceneSet, validationSessionId, showScorecard]);
 
   const nextLessonTab = useMemo(() => {
     const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
@@ -80,17 +91,9 @@ export function TravellerMvpApp() {
     showScorecard();
   }, [isLastStep, goToStep, nextLessonTab, selectLessonPage, showScorecard]);
 
-  if (loadState === 'loading') {
-    return <div className="frame-placeholder" aria-label="Loading first MVP step" />;
-  }
-
-  if (loadState === 'error' || !stepLesson || !step) {
-    return <div className="frame-placeholder" aria-label="MVP step unavailable" />;
-  }
-
   if (appView === 'scorecard') {
     return (
-      <FitToViewport>
+      <FitToViewport scrollable>
         <ValidationScorecardView
           sessionId={validationSessionId}
           state={scorecardState}
@@ -100,6 +103,14 @@ export function TravellerMvpApp() {
         />
       </FitToViewport>
     );
+  }
+
+  if (loadState === 'loading') {
+    return <div className="frame-placeholder" aria-label="Loading first MVP step" />;
+  }
+
+  if (loadState === 'error' || !stepLesson || !step) {
+    return <div className="frame-placeholder" aria-label="MVP step unavailable" />;
   }
 
   return (
@@ -117,6 +128,7 @@ export function TravellerMvpApp() {
         onLogAudioPlayed={logStepAudioPlayed}
         onSelectChoice={selectChoice}
         onCaptureAttempt={handleCaptureAttempt}
+        onOpenScorecard={showScorecard}
         onNext={handleNext}
       />
     </FitToViewport>
