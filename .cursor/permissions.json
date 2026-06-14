@@ -1,6 +1,9 @@
 {
   // Repo-specific additions — merged with ~/.cursor/permissions.json.
   "terminalAllowlist": [
+    "cd",
+    "git diff",
+    "git log",
     "python -m pytest",
     "python",
     "python3",
