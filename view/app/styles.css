@@ -188,6 +188,16 @@ body {
   cursor: pointer;
 }
 
+.local-app-links .app-link-button.danger {
+  background: #9f2f2f;
+  border-color: #9f2f2f;
+}
+
+.local-app-links .app-link-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .page-number {
   background: rgba(32, 36, 33, 0.84);
   border-radius: 999px;
@@ -431,7 +441,18 @@ body {
 }
 
 .prompted-recording.recording {
-  border-color: #b94332;
+  border-color: #267247;
+}
+
+body:has(.prompted-recording.recording)::before {
+  animation: recording-page-border 0.8s steps(2, end) infinite;
+  border: 12px solid #2d8f5a;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.78);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
 }
 
 .prompted-recording.captured {
@@ -457,6 +478,24 @@ body {
 
 .recording-playback {
   width: 100%;
+}
+
+@keyframes recording-page-border {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:has(.prompted-recording.recording)::before {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .production-practice {

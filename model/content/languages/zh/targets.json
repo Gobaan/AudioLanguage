@@ -129,51 +129,47 @@
     {
       "id": "zh-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "一个，谢谢。",
-      "transliteration": "Yi ge, xiexie.",
-      "display_meaning": "One, please.",
+      "canonical": "这个。",
+      "transliteration": "Zhe ge.",
+      "display_meaning": "This one.",
       "meaning_units": [
-        "one",
-        "please"
+        "this_one"
       ],
       "meaning_unit_labels": {
-        "one": "One",
-        "please": "Please"
+        "this_one": "This one"
       },
       "accepted_variants": [
-        "Yi ge xiexie.",
-        "一个谢谢。"
+        "这个。",
+        "这个",
+        "Zhe ge.",
+        "Zhe ge"
       ],
       "wrong_for_context_examples": [
-        "Wo bu dong.",
-        "Zai nali?",
-        "Wo jiao Anna."
+        "我不懂。",
+        "我叫Anna。"
       ],
       "notes": {
         "food_slot": "baozi",
         "register": "polite-neutral",
         "native_review_required": true,
-        "spoken_target": "one + please; food item is scene-visible only"
+        "spoken_target": "this one; sandwich is scene-visible only"
       },
       "backward_build_spoken_prompts": [
-        "谢谢。",
-        "一个，",
-        "一个，谢谢。"
+        "个。",
+        "这个。"
       ],
       "valid_but_off_target": [
-        "谢谢。",
-        "一个。"
-      ],
-      "backward_build_focus_units": [
-        "please",
-        "one",
-        "full"
+        "这个，谢谢。"
       ],
       "backward_build_units": [
-        "xiexie",
-        "Yi ge",
-        "xiexie"
-      ]
+        "Zhe",
+        "ge"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "this_one": "This one"
+        }
+      }
     }
   ]
 }

@@ -329,7 +329,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 0,
-      "line_text": "What would you like?",
+      "line_text": "This one.",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -346,7 +346,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-local-food-1",
@@ -355,7 +356,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 1,
-      "line_text": "One, please.",
+      "line_text": "This one.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -373,7 +374,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-local-food-2",
@@ -382,7 +384,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 2,
-      "line_text": "Okay.",
+      "line_text": "This one.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -399,7 +401,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-greeting-neighbor-transfer-0",
@@ -408,7 +411,7 @@
       "target_id": "en-target-respond-hi",
       "scene_id": "neighbor-gate",
       "line_index": 0,
-      "line_text": "Hi!",
+      "line_text": "Hey there!",
       "timing_role": "cue",
       "meaning_units": [
         "hello"
@@ -1052,7 +1055,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 0,
-      "line_text": "What would you like?",
+      "line_text": "Which one would you like?",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -1069,7 +1072,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-convenience-transfer-1",
@@ -1078,7 +1082,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 1,
-      "line_text": "One, please.",
+      "line_text": "This one.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -1096,7 +1100,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-convenience-transfer-2",
@@ -1105,7 +1110,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 2,
-      "line_text": "Sure.",
+      "line_text": "This one.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -1122,7 +1127,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-bakery-review-0",
@@ -1131,7 +1137,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 0,
-      "line_text": "What would you like?",
+      "line_text": "This one.",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -1148,7 +1154,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-bakery-review-1",
@@ -1157,7 +1164,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 1,
-      "line_text": "One, please.",
+      "line_text": "This one.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -1175,7 +1182,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "en-vb-order-bakery-review-2",
@@ -1184,7 +1192,7 @@
       "target_id": "en-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 2,
-      "line_text": "Okay.",
+      "line_text": "This one.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -1201,7 +1209,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     }
   ],
   "generation_backlog": [

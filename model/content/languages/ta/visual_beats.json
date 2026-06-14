@@ -27,7 +27,8 @@
           "visual_cue": "friend enters, smiles, waves, and starts the greeting"
         }
       ],
-      "proper_noun_labels": []
+      "proper_noun_labels": [],
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-first-hi-response-1",
@@ -36,7 +37,7 @@
       "target_id": "ta-target-respond-hi",
       "scene_id": "study-room-friend",
       "line_index": 1,
-      "line_text": "Vanakkam! Nalama?",
+      "line_text": "Vanakkam!",
       "timing_role": "learner_turn",
       "meaning_units": [
         "hello",
@@ -53,7 +54,8 @@
           "visual_cue": "learner looks up, smiles, and waves back"
         }
       ],
-      "proper_noun_labels": []
+      "proper_noun_labels": [],
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-first-hi-response-2",
@@ -62,7 +64,7 @@
       "target_id": "ta-target-respond-hi",
       "scene_id": "study-room-friend",
       "line_index": 2,
-      "line_text": "Nalam, nandri.",
+      "line_text": "Vanakkam!",
       "timing_role": "resolution",
       "meaning_units": [
         "positive_response"
@@ -78,7 +80,8 @@
           "visual_cue": "friend smiles warmly, showing the greeting worked"
         }
       ],
-      "proper_noun_labels": []
+      "proper_noun_labels": [],
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-introduce-self-0",
@@ -171,7 +174,7 @@
       "target_id": "ta-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 0,
-      "line_text": "இந்த படிவத்தை நிரப்புங்கள்.",
+      "line_text": "Puriyala.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -188,7 +191,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-dont-understand-1",
@@ -197,7 +201,7 @@
       "target_id": "ta-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 1,
-      "line_text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
+      "line_text": "Puriyala.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -215,7 +219,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-dont-understand-2",
@@ -224,7 +229,7 @@
       "target_id": "ta-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 2,
-      "line_text": "பரவாயில்லை. நான் உதவுகிறேன்.",
+      "line_text": "Puriyala.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -241,7 +246,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-excuse-me-attention-0",
@@ -331,7 +337,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 0,
-      "line_text": "என்ன வேண்டும்?",
+      "line_text": "Idhu.",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -348,7 +354,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-local-food-1",
@@ -357,7 +364,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 1,
-      "line_text": "ஒரு தோசை, தயவு செய்து.",
+      "line_text": "Idhu.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -375,7 +382,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-local-food-2",
@@ -384,7 +392,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 2,
-      "line_text": "சரி.",
+      "line_text": "Idhu.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -401,16 +409,17 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-greeting-neighbor-transfer-0",
       "dialogue_id": "ta-greeting-neighbor-transfer",
       "function_id": "greet_and_ask_wellbeing",
-      "target_id": "ta-target-hello-how-are-you",
+      "target_id": "ta-target-respond-hi",
       "scene_id": "neighbor-gate",
       "line_index": 0,
-      "line_text": "Vanakkam!",
+      "line_text": "Kaalai vanakkam!",
       "timing_role": "cue",
       "meaning_units": [
         "hello"
@@ -427,16 +436,17 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-greeting-neighbor-transfer-1",
       "dialogue_id": "ta-greeting-neighbor-transfer",
       "function_id": "greet_and_ask_wellbeing",
-      "target_id": "ta-target-hello-how-are-you",
+      "target_id": "ta-target-respond-hi",
       "scene_id": "neighbor-gate",
       "line_index": 1,
-      "line_text": "Vanakkam! Nalama?",
+      "line_text": "Vanakkam!",
       "timing_role": "learner_turn",
       "meaning_units": [
         "hello",
@@ -454,16 +464,17 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-greeting-neighbor-transfer-2",
       "dialogue_id": "ta-greeting-neighbor-transfer",
       "function_id": "greet_and_ask_wellbeing",
-      "target_id": "ta-target-hello-how-are-you",
+      "target_id": "ta-target-respond-hi",
       "scene_id": "neighbor-gate",
       "line_index": 2,
-      "line_text": "Nalam, nandri.",
+      "line_text": "Vanakkam!",
       "timing_role": "resolution",
       "meaning_units": [
         "positive_response"
@@ -480,7 +491,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-greeting-entry-review-0",
@@ -506,7 +518,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-greeting-entry-review-1",
@@ -515,7 +528,7 @@
       "target_id": "ta-target-respond-hi",
       "scene_id": "apartment-entry-neighbor",
       "line_index": 1,
-      "line_text": "Vanakkam! Nalama?",
+      "line_text": "Vanakkam!",
       "timing_role": "learner_turn",
       "meaning_units": [
         "hello",
@@ -533,7 +546,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-greeting-entry-review-2",
@@ -542,7 +556,7 @@
       "target_id": "ta-target-respond-hi",
       "scene_id": "apartment-entry-neighbor",
       "line_index": 2,
-      "line_text": "Nalam, nandri.",
+      "line_text": "Vanakkam!",
       "timing_role": "resolution",
       "meaning_units": [
         "positive_response"
@@ -559,7 +573,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "Hello."
     },
     {
       "id": "ta-vb-introduce-class-transfer-0",
@@ -568,7 +583,7 @@
       "target_id": "ta-target-my-name-is",
       "scene_id": "language-class-name-tags",
       "line_index": 0,
-      "line_text": "Ungal peyar enna?",
+      "line_text": "Ungal peyar?",
       "timing_role": "cue",
       "meaning_units": [
         "your",
@@ -733,10 +748,10 @@
       "id": "ta-vb-repair-ticket-transfer-0",
       "dialogue_id": "ta-repair-ticket-transfer",
       "function_id": "ask_for_repetition",
-      "target_id": "ta-target-say-it-slowly",
+      "target_id": "ta-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 0,
-      "line_text": "Inge azhuthunga.",
+      "line_text": "Puriyala.",
       "timing_role": "cue",
       "meaning_units": [
         "this",
@@ -754,16 +769,17 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-ticket-transfer-1",
       "dialogue_id": "ta-repair-ticket-transfer",
       "function_id": "ask_for_repetition",
-      "target_id": "ta-target-say-it-slowly",
+      "target_id": "ta-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 1,
-      "line_text": "Mannikkavum, enakku puriyala.",
+      "line_text": "Puriyala.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -781,16 +797,17 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-ticket-transfer-2",
       "dialogue_id": "ta-repair-ticket-transfer",
       "function_id": "ask_for_repetition",
-      "target_id": "ta-target-say-it-slowly",
+      "target_id": "ta-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 2,
-      "line_text": "Parava illai. Naan udhavi panren.",
+      "line_text": "Puriyala.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -807,7 +824,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-clinic-review-0",
@@ -816,7 +834,7 @@
       "target_id": "ta-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 0,
-      "line_text": "இந்த படிவத்தை நிரப்புங்கள்.",
+      "line_text": "Puriyala.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -833,7 +851,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-clinic-review-1",
@@ -842,7 +861,7 @@
       "target_id": "ta-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 1,
-      "line_text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
+      "line_text": "Puriyala.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -860,7 +879,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-repair-clinic-review-2",
@@ -869,7 +889,7 @@
       "target_id": "ta-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 2,
-      "line_text": "பரவாயில்லை. நான் உதவுகிறேன்.",
+      "line_text": "Puriyala.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -886,7 +906,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "I don't understand."
     },
     {
       "id": "ta-vb-excuse-me-cafe-transfer-0",
@@ -1054,7 +1075,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 0,
-      "line_text": "என்ன வேண்டும்?",
+      "line_text": "Edhu venum?",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -1071,7 +1092,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-convenience-transfer-1",
@@ -1080,7 +1102,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 1,
-      "line_text": "ஒரு சாண்ட்விச், தயவுசெய்து.",
+      "line_text": "Idhu.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -1098,7 +1120,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-convenience-transfer-2",
@@ -1107,7 +1130,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 2,
-      "line_text": "சரி.",
+      "line_text": "Idhu.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -1124,7 +1147,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-bakery-review-0",
@@ -1133,7 +1157,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 0,
-      "line_text": "என்ன வேண்டும்?",
+      "line_text": "Idhu.",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -1150,7 +1174,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-bakery-review-1",
@@ -1159,7 +1184,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 1,
-      "line_text": "ஒரு தோசை, தயவு செய்து.",
+      "line_text": "Idhu.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -1177,7 +1202,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "ta-vb-order-bakery-review-2",
@@ -1186,7 +1212,7 @@
       "target_id": "ta-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 2,
-      "line_text": "சரி.",
+      "line_text": "Idhu.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -1203,7 +1229,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     }
   ],
   "generation_backlog": [

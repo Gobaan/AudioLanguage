@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { fetchLanguages, type LanguageSummary } from '../api/languages';
+import { clearLocalValidationSessions } from '../api/validation';
 import { isLocalHost, participantFromUrl } from './urlParams';
+import { PARTICIPANT_STORAGE_KEY } from './useParticipantId';
 
 type LoadState = 'loading' | 'ready' | 'error';
+type ClearState = 'idle' | 'clearing' | 'cleared' | 'error';
 
 export function LanguageSelectionApp() {
   const [languages, setLanguages] = useState<LanguageSummary[]>([]);
   const [loadState, setLoadState] = useState<LoadState>('loading');
+  const [clearState, setClearState] = useState<ClearState>('idle');
   const participant = useMemo(() => participantFromUrl(), []);
 
   useEffect(() => {
@@ -63,10 +67,31 @@ export function LanguageSelectionApp() {
       {isLocalHost() ? (
         <nav className="local-app-links" aria-label="Local app links">
           <a href="/admin/validation">Admin</a>
+          <button type="button" className="app-link-button danger" disabled={clearState === 'clearing'} onClick={clearAllLocalFiles}>
+            {clearState === 'clearing' ? 'Clearing...' : 'Clear all files'}
+          </button>
+          {clearState === 'cleared' ? <span>Cleared</span> : null}
+          {clearState === 'error' ? <span>Clear failed</span> : null}
         </nav>
       ) : null}
     </section>
   );
+
+  async function clearAllLocalFiles() {
+    const confirmed = window.confirm('Delete all local validation recordings, scores, events, and sessions?');
+    if (!confirmed) {
+      return;
+    }
+
+    setClearState('clearing');
+    try {
+      await clearLocalValidationSessions();
+      localStorage.removeItem(PARTICIPANT_STORAGE_KEY);
+      setClearState('cleared');
+    } catch {
+      setClearState('error');
+    }
+  }
 }
 
 function lessonLink(language: string, participant: string | null, sceneSet: 'mvp' | 'delayed'): string {

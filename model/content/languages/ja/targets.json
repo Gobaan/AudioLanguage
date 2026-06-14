@@ -161,29 +161,27 @@
     {
       "id": "ja-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "一つください。",
-      "transliteration": "Hitotsu kudasai.",
-      "display_meaning": "One, please.",
+      "canonical": "これ。",
+      "transliteration": "Kore.",
+      "display_meaning": "This one.",
       "meaning_units": [
-        "one",
-        "please"
+        "this_one"
       ],
       "meaning_unit_labels": {
-        "one": "One",
-        "please": "Please"
+        "this_one": "This one"
       },
       "accepted_variants": [
-        "ひとつください。",
-        "一つお願いします。",
-        "Hitotsu onegaishimasu."
+        "これ。",
+        "これ",
+        "Kore.",
+        "Kore"
       ],
       "valid_but_off_target": [
-        "ください。",
-        "一つ。"
+        "これください。"
       ],
       "wrong_for_context_examples": [
-        "病院はどこですか？",
-        "わかりません。"
+        "わかりません。",
+        "アンナです。"
       ],
       "semantic_slots": {
         "required": {
@@ -198,23 +196,19 @@
         "food_slot": "sandwich",
         "register": "polite-neutral",
         "native_review_required": true,
-        "spoken_target": "one + please; food item is scene-visible only"
+        "spoken_target": "this one; sandwich is scene-visible only"
       },
       "backward_build_spoken_prompts": [
-        "ください。",
-        "一つ、",
-        "一つください。"
-      ],
-      "backward_build_focus_units": [
-        "please",
-        "one",
-        "full"
+        "これ。"
       ],
       "backward_build_units": [
-        "kudasai",
-        "Hitotsu",
-        "kudasai"
-      ]
+        "Kore"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "this_one": "This one"
+        }
+      }
     },
     {
       "id": "ja-target-where-is-hospital",

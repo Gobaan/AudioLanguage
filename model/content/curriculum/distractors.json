@@ -212,50 +212,50 @@
       "function_id": "order_local_food",
       "step_type": "broad_meaning_guess",
       "correct": {
-        "id": "order_one_please",
-        "label": "One, please."
+        "id": "choose_this_one",
+        "label": "Choosing this sandwich."
       },
       "levels": {
         "easy": [
           {
-            "id": "please_only",
-            "label": "Please only."
-          },
-          {
-            "id": "one_only",
-            "label": "One only."
-          },
-          {
             "id": "ask_price",
             "label": "Asking how much it costs."
-          }
-        ],
-        "medium": [
+          },
           {
             "id": "thank_server",
             "label": "Thanking the server."
           },
           {
+            "id": "say_dont_understand",
+            "label": "Saying they do not understand."
+          }
+        ],
+        "medium": [
+          {
             "id": "ask_for_water",
             "label": "Asking for water."
           },
           {
-            "id": "name_food_item",
-            "label": "Naming the food item only."
+            "id": "ask_menu_question",
+            "label": "Asking a question about the menu."
+          },
+          {
+            "id": "call_waiter",
+            "label": "Getting the server's attention."
           }
         ],
         "hard": [
           {
-            "id": "ask_menu_question",
-            "label": "Asking a question about the menu."
+            "id": "ask_for_help_ordering",
+            "label": "Asking for help choosing."
           },
           {
             "id": "pay_for_food",
             "label": "Paying for the food."
           },
           {
-            "id": "ask_for_help_ordering",
-            "label": "Asking for help ordering."
+            "id": "confirm_takeout",
+            "label": "Confirming the order is to go."
           }
         ]
       }

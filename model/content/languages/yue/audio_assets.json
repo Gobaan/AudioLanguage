@@ -368,8 +368,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个，唔该。",
-      "transliteration": "Jat go, m goi.",
+      "text": "呢個。",
+      "transliteration": "Ni go.",
       "audio_path": "audio/generated/yue/yue-order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -420,8 +420,8 @@
         "provider": "edge_tts",
         "speaker_role": "neighbor"
       },
-      "text": "你好！",
-      "transliteration": "Nei hou!",
+      "text": "早晨！",
+      "transliteration": "Jo san!",
       "audio_path": "audio/generated/yue/greeting-neighbor-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": false
@@ -498,8 +498,8 @@
         "provider": "edge_tts",
         "speaker_role": "class_partner"
       },
-      "text": "你叫乜名？",
-      "transliteration": "Nei giu mat meng?",
+      "text": "你嘅名呢？",
+      "transliteration": "Nei ge meng ne?",
       "audio_path": "audio/generated/yue/introduce-class-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": false
@@ -732,8 +732,8 @@
         "provider": "edge_tts",
         "speaker_role": "cashier"
       },
-      "text": "你要乜？",
-      "transliteration": "Nei yiu mat?",
+      "text": "你要邊件？",
+      "transliteration": "Nei yiu bin gin?",
       "audio_path": "audio/generated/yue/order-convenience-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": false
@@ -758,8 +758,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个，唔该。",
-      "transliteration": "Jat go, m goi.",
+      "text": "呢個。",
+      "transliteration": "Ni go.",
       "audio_path": "audio/generated/yue/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -1148,8 +1148,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个，唔该。",
-      "transliteration": "Jat go, m goi.",
+      "text": "呢個。",
+      "transliteration": "Ni go.",
       "audio_path": "audio/generated/yue/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false

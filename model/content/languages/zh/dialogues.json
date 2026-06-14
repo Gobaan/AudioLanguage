@@ -250,13 +250,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "zh-target-one-local-food-please",
-          "text": "一个，谢谢。",
-          "transliteration": "Yi ge, xiexie.",
-          "audio_text": "Yi ge, xiexie.",
-          "tts_text": "一个，谢谢。",
+          "text": "这个。",
+          "transliteration": "Zhe ge.",
+          "audio_text": "Zhe ge.",
+          "tts_text": "这个。",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ]
         },
         {
@@ -289,11 +288,11 @@
           "index": 0,
           "speaker_role": "neighbor",
           "line_type": "world_opener",
-          "text": "Ni hao!",
-          "transliteration": "Ni hao!",
-          "audio_text": "Ni hao!",
+          "text": "Zao!",
+          "transliteration": "Zao!",
+          "audio_text": "Zao!",
           "meaning_units": [],
-          "tts_text": "你好！"
+          "tts_text": "早！"
         },
         {
           "index": 1,
@@ -334,11 +333,11 @@
           "index": 0,
           "speaker_role": "class_partner",
           "line_type": "world_opener",
-          "text": "Ni jiao shenme mingzi?",
-          "transliteration": "Ni jiao shenme mingzi?",
-          "audio_text": "Ni jiao shenme mingzi?",
+          "text": "Ni de mingzi ne?",
+          "transliteration": "Ni de mingzi ne?",
+          "audio_text": "Ni de mingzi ne?",
           "meaning_units": [],
-          "tts_text": "你叫什么名字？"
+          "tts_text": "你的名字呢？"
         },
         {
           "index": 1,
@@ -472,24 +471,23 @@
           "index": 0,
           "speaker_role": "cashier",
           "line_type": "world_opener",
-          "text": "Ni yao shenme?",
-          "transliteration": "Ni yao shenme?",
-          "audio_text": "Ni yao shenme?",
+          "text": "Ni yao na ge?",
+          "transliteration": "Ni yao na ge?",
+          "audio_text": "Ni yao na ge?",
           "meaning_units": [],
-          "tts_text": "你要什么？"
+          "tts_text": "你要哪个？"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "一个，谢谢。",
-          "transliteration": "Yi ge, xiexie.",
-          "audio_text": "Yi ge, xiexie.",
+          "text": "这个。",
+          "transliteration": "Zhe ge.",
+          "audio_text": "Zhe ge.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "tts_text": "一个，谢谢。",
+          "tts_text": "这个。",
           "target_id": "zh-target-one-local-food-please"
         },
         {
@@ -745,13 +743,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "zh-target-one-local-food-please",
-          "text": "一个，谢谢。",
-          "transliteration": "Yi ge, xiexie.",
-          "audio_text": "Yi ge, xiexie.",
-          "tts_text": "一个，谢谢。",
+          "text": "这个。",
+          "transliteration": "Zhe ge.",
+          "audio_text": "Zhe ge.",
+          "tts_text": "这个。",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ]
         },
         {

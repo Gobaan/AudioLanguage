@@ -176,6 +176,7 @@ class LessonsApiTests(unittest.TestCase):
 
         self.assertEqual(step_types, ["scene_setup", "broad_meaning_guess", "scene_recall"])
         self.assertEqual(setup_step["props"]["stopAtLineType"], "world_opener")
+        self.assertTrue(setup_step["audio"]["autoplay"])
         self.assertEqual(meaning_step["frameId"], "line-0")
         self.assertEqual(meaning_step["props"]["question"], "What is the best response here?")
         self.assertEqual(meaning_step["props"]["difficulty"], "medium")
@@ -185,6 +186,10 @@ class LessonsApiTests(unittest.TestCase):
         self.assertFalse(recall_step["audio"]["autoplay"])
         self.assertFalse(recall_step["audio"]["playBeforeMic"])
         self.assertIsNone(recall_step["audio"]["url"])
+        self.assertTrue(recall_step["mic"]["enabled"])
+        self.assertTrue(recall_step["mic"]["record"])
+        self.assertFalse(recall_step["mic"]["startsAfterAudio"])
+        self.assertTrue(recall_step["mic"]["continueOnRecord"])
         self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
         self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])
         self.assertFalse(recall_step["props"]["showDialogueRevealAfterAttempt"])
@@ -201,12 +206,18 @@ class LessonsApiTests(unittest.TestCase):
         recall_step = next(step for step in steps if step["type"] == "scene_recall")
 
         self.assertEqual(setup_step["props"]["stopAtLineType"], "world_opener")
+        self.assertFalse(setup_step["audio"]["autoplay"])
+        self.assertTrue(setup_step["audio"]["replayable"])
         self.assertEqual(recall_step["frameId"], "line-0")
         self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
         self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
         self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])
         self.assertFalse(recall_step["props"]["showDialogueRevealAfterAttempt"])
         self.assertFalse(recall_step["audio"]["playBeforeMic"])
+        self.assertTrue(recall_step["mic"]["enabled"])
+        self.assertTrue(recall_step["mic"]["record"])
+        self.assertFalse(recall_step["mic"]["startsAfterAudio"])
+        self.assertTrue(recall_step["mic"]["continueOnRecord"])
         playback_flow = recall_step["props"]["playbackFlow"]
         record_index = next(
             index for index, item in enumerate(playback_flow) if item["type"] == "record_attempt"
@@ -267,7 +278,7 @@ class LessonsApiTests(unittest.TestCase):
             any(choice["label"].startswith("The learner says") for choice in meaning_step["props"]["choices"])
         )
 
-    def test_food_order_anchor_meaning_guess_highlights_one_and_please(self):
+    def test_food_order_anchor_meaning_guess_highlights_this_one(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=food-order")
 
         self.assertEqual(response.status_code, 200)
@@ -277,16 +288,17 @@ class LessonsApiTests(unittest.TestCase):
         choice_labels = [choice["label"] for choice in meaning_step["props"]["choices"]]
 
         self.assertEqual(meaning_step["props"]["question"], "What did they say?")
-        self.assertIn("One, please.", choice_labels)
-        self.assertIn("Please only.", choice_labels)
-        self.assertIn("One only.", choice_labels)
+        self.assertIn("Choosing this sandwich.", choice_labels)
+        self.assertIn("Asking how much it costs.", choice_labels)
+        self.assertIn("Thanking the server.", choice_labels)
+        self.assertIn("Saying they do not understand.", choice_labels)
         self.assertEqual(
             [prompt.get("focusLabel") for prompt in backward_build["props"]["prompts"]],
-            ["Please", "One", "One + please"],
+            [None],
         )
         self.assertEqual(
             [chunk["text"] for chunk in backward_build["props"]["chunks"]],
-            ["One", "Please"],
+            ["This one"],
         )
 
     def test_lessons_endpoint_rejects_unknown_preview_lesson(self):

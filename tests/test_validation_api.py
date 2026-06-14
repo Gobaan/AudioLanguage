@@ -272,6 +272,34 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(after_user_delete_response.json()["sessionCount"], 1)
         self.assertEqual(after_user_delete_response.json()["attemptCount"], 0)
 
+    def test_local_clear_deletes_all_validation_sessions(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.routes.validation.validation_store", store):
+                client = TestClient(app)
+                for session_id in ["day-1", "day-2"]:
+                    client.post(
+                        "/api/validation/sessions",
+                        json={
+                            "sessionId": session_id,
+                            "participantId": "Bob",
+                            "language": "ja",
+                            "sceneSet": "mvp",
+                        },
+                    )
+
+                blocked_response = client.delete(
+                    "/api/validation/local/sessions",
+                    headers={"host": "example.com"},
+                )
+                clear_response = client.delete("/api/validation/local/sessions")
+                summary_response = client.get("/api/validation/admin/summary")
+
+        self.assertEqual(blocked_response.status_code, 403)
+        self.assertEqual(clear_response.status_code, 200)
+        self.assertEqual(clear_response.json()["deletedSessionCount"], 2)
+        self.assertEqual(summary_response.json()["sessionCount"], 0)
+
     def test_validation_admin_can_score_one_skipped_attempt(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))

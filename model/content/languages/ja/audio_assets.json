@@ -368,8 +368,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一つください。",
-      "transliteration": "Hitotsu kudasai.",
+      "text": "これ。",
+      "transliteration": "Kore.",
       "audio_path": "audio/generated/ja/order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -498,8 +498,8 @@
         "provider": "edge_tts",
         "speaker_role": "neighbor"
       },
-      "text": "こんにちは！",
-      "transliteration": "Konnichiwa!",
+      "text": "どうも！",
+      "transliteration": "Doumo!",
       "audio_path": "audio/generated/ja/greeting-neighbor-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
@@ -654,8 +654,8 @@
         "provider": "edge_tts",
         "speaker_role": "class_partner"
       },
-      "text": "お名前は？",
-      "transliteration": "Onamae wa?",
+      "text": "お名前をお願いします。",
+      "transliteration": "Onamae o onegaishimasu.",
       "audio_path": "audio/generated/ja/introduce-class-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1122,8 +1122,8 @@
         "provider": "edge_tts",
         "speaker_role": "cashier"
       },
-      "text": "ご注文は？",
-      "transliteration": "Gochuumon wa?",
+      "text": "どちらにしますか？",
+      "transliteration": "Dochira ni shimasu ka?",
       "audio_path": "audio/generated/ja/order-convenience-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1148,8 +1148,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一つください。",
-      "transliteration": "Hitotsu kudasai.",
+      "text": "これ。",
+      "transliteration": "Kore.",
       "audio_path": "audio/generated/ja/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1226,8 +1226,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一つください。",
-      "transliteration": "Hitotsu kudasai.",
+      "text": "これ。",
+      "transliteration": "Kore.",
       "audio_path": "audio/generated/ja/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true

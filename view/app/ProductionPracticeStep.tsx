@@ -11,7 +11,7 @@ import {
   postAttemptFeedbackFrames,
   productionPromptText,
   recordingPromptText,
-  recordingUsesPromptAudio,
+  recordingStartsAutomatically,
   responseFrameForLesson,
   stepHidesLearnerScriptBeforeAttempt,
   stepShowsDialogueRevealAfterAttempt,
@@ -57,7 +57,7 @@ export function ProductionPracticeStep({
   const usesPostAttemptFeedback = stepUsesPostAttemptFeedback(step);
   const hidesLearnerScriptBeforeAttempt = stepHidesLearnerScriptBeforeAttempt(lesson, step);
   const showDialogueRevealAfterAttempt = stepShowsDialogueRevealAfterAttempt(step);
-  const usesPromptAudio = recordingUsesPromptAudio(step);
+  const startsRecordingAutomatically = recordingStartsAutomatically(step);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
@@ -178,7 +178,7 @@ export function ProductionPracticeStep({
             audioUrl={recordingAudioUrl ?? step.audio?.url}
             audioText={step.audio?.audioText}
             prompt={recordingPromptText(step)}
-            startMode={usesPromptAudio ? 'auto' : 'manual'}
+            startMode={startsRecordingAutomatically ? 'auto' : 'manual'}
             startLabel="Record"
             onCaptured={handleCaptured}
           />

@@ -129,51 +129,47 @@
     {
       "id": "yue-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "一个，唔该。",
-      "transliteration": "Jat go, m goi.",
-      "display_meaning": "One, please.",
+      "canonical": "呢個。",
+      "transliteration": "Ni go.",
+      "display_meaning": "This one.",
       "meaning_units": [
-        "one",
-        "please"
+        "this_one"
       ],
       "meaning_unit_labels": {
-        "one": "One",
-        "please": "Please"
+        "this_one": "This one"
       },
       "accepted_variants": [
-        "Jat go m goi.",
-        "一个唔该。"
+        "呢個。",
+        "呢個",
+        "Ni go.",
+        "Ni go"
       ],
       "wrong_for_context_examples": [
-        "Ngo m ming.",
-        "Hai bin dou?",
-        "Ngo giu Anna."
+        "我唔明。",
+        "我叫Anna。"
       ],
       "notes": {
         "food_slot": "pineapple bun",
         "register": "polite-neutral",
         "native_review_required": true,
-        "spoken_target": "one + please; food item is scene-visible only"
+        "spoken_target": "this one; sandwich is scene-visible only"
       },
       "backward_build_spoken_prompts": [
-        "唔该。",
-        "一个，",
-        "一个，唔该。"
+        "個。",
+        "呢個。"
       ],
       "valid_but_off_target": [
-        "M goi.",
-        "一个。"
-      ],
-      "backward_build_focus_units": [
-        "please",
-        "one",
-        "full"
+        "呢個，唔該。"
       ],
       "backward_build_units": [
-        "m goi",
-        "Jat go",
-        "m goi"
-      ]
+        "Ni",
+        "go"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "this_one": "This one"
+        }
+      }
     }
   ]
 }

@@ -248,6 +248,14 @@ export function recordingUsesPromptAudio(step: LessonStep): boolean {
   return step.audio?.playBeforeMic === true && Boolean(step.audio?.url || step.audio?.audioText);
 }
 
+export function recordingStartsAutomatically(step: LessonStep): boolean {
+  if (recordingUsesPromptAudio(step)) {
+    return true;
+  }
+
+  return step.type === 'scene_recall' && step.mic?.enabled === true && step.props.recordBeforeModelLine === true;
+}
+
 export function stepRevealsChoicesAfterAudio(step: LessonStep): boolean {
   if (step.props.revealChoicesAfterAudio === true) {
     return true;

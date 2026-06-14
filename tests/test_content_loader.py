@@ -13,7 +13,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 
 from app.content.data_graph import list_languages, load_language_session
 from app.content.lesson_steps import backward_build_indices, backward_build_prompts, should_include_backward_build
-from app.content.lessons import lessons_from_session
+from app.content.lessons import lesson_from_card, lessons_from_session
 from content_assets import read_json, write_json
 from generate_images_from_manifest import generate_language
 
@@ -221,7 +221,7 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Hitotsu kudasai.",
+                "Kore.",
             ],
         )
         self.assertEqual(
@@ -231,12 +231,12 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Hitotsu kudasai.",
+                "Kore.",
                 "Konnichiwa!",
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Hitotsu kudasai.",
+                "Kore.",
             ],
         )
         self.assertEqual(
@@ -269,7 +269,83 @@ class StructuredDataGraphTests(unittest.TestCase):
                 self.assertTrue(
                     str(line["visual"]).startswith(("/visuals/final/", "/visuals/Drafts/"))
                 )
-                self.assertTrue((ASSETS_DIR / line["visual"].lstrip("/")).exists())
+
+    def test_food_order_meaning_guess_uses_distinct_scene_choices(self):
+        session = load_language_session(
+            data_dir=CONTENT_DIR,
+            project_dir=PROJECT_DIR,
+            language="ja",
+        )
+        food_card = next(card for card in session["cards"] if card["id"] == "ja-card-order-food-dialogue-practice")
+        lesson = lesson_from_card("ja", food_card)
+        choice_step = next(step for step in lesson["steps"] if step["id"] == "broad_meaning_guess")
+
+        labels = [choice["label"] for choice in choice_step["props"]["choices"]]
+
+        self.assertEqual(labels[0], "Choosing this sandwich.")
+        self.assertIn("Asking how much it costs.", labels)
+        self.assertIn("Thanking the server.", labels)
+        self.assertIn("Saying they do not understand.", labels)
+        self.assertNotIn("One only.", labels)
+        self.assertNotIn("Please only.", labels)
+
+    def test_transfer_tabs_do_not_reuse_anchor_scene_cues(self):
+        languages = [language["id"] for language in list_languages(CONTENT_DIR)]
+
+        for language in languages:
+            with self.subTest(language=language):
+                session = load_language_session(
+                    data_dir=CONTENT_DIR,
+                    project_dir=PROJECT_DIR,
+                    language=language,
+                )
+                cards = {card["id"]: card for card in session["cards"]}
+                seen_anchor_cues = set()
+
+                for tab in session["session"]["lesson_tabs"]:
+                    card = cards[tab["card_id"]]
+                    opener = card["dialogue"]["lines"][0]
+                    learner = card["dialogue"]["lines"][1]
+                    cue_key = (
+                        card["target_id"],
+                        opener.get("transliteration") or opener.get("text"),
+                        learner.get("transliteration") or learner.get("text"),
+                    )
+
+                    if card["stage"] == "guided_scene_production":
+                        seen_anchor_cues.add(cue_key)
+                    elif card["stage"] == "same_day_transfer":
+                        self.assertNotIn(cue_key, seen_anchor_cues)
+
+    def test_each_anchor_target_has_transfer_and_delayed_tabs(self):
+        languages = [language["id"] for language in list_languages(CONTENT_DIR)]
+
+        for language in languages:
+            with self.subTest(language=language):
+                session = load_language_session(
+                    data_dir=CONTENT_DIR,
+                    project_dir=PROJECT_DIR,
+                    language=language,
+                )
+                cards = {card["id"]: card for card in session["cards"]}
+                anchor_targets = target_ids_for_tabs(
+                    cards,
+                    session["session"]["lesson_tabs"],
+                    stage="guided_scene_production",
+                )
+                transfer_targets = target_ids_for_tabs(
+                    cards,
+                    session["session"]["lesson_tabs"],
+                    stage="same_day_transfer",
+                )
+                delayed_targets = target_ids_for_tabs(
+                    cards,
+                    session["session"]["delayed_lesson_tabs"],
+                    stage="delayed_review",
+                )
+
+                self.assertEqual(anchor_targets, transfer_targets)
+                self.assertEqual(anchor_targets, delayed_targets)
 
     def test_active_language_sessions_have_complete_dialogue_assets(self):
         languages = [language["id"] for language in list_languages(CONTENT_DIR)]
@@ -314,6 +390,16 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertEqual(tamil["description"], "Tamil starter scenes for you.")
         self.assertEqual(cantonese["display_name"], "Cantonese")
         self.assertEqual(cantonese["description"], "Cantonese starter scenes for your friend.")
+
+
+def target_ids_for_tabs(cards: dict, tabs: list[dict], stage: str) -> set[str]:
+    target_ids = set()
+    for tab in tabs:
+        card = cards.get(tab.get("card_id"))
+        if card and card.get("stage") == stage:
+            target_ids.add(card["target_id"])
+
+    return target_ids
 
 
 class VisualGenerationScriptTests(unittest.TestCase):

@@ -547,34 +547,34 @@
       "correct_function_id": "order_local_food",
       "target_id": "en-target-one-local-food-please",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "One, please.",
+      "expected_response": "This one.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
         "physical_scene": "A server at a casual food counter asks what the learner wants to order.",
-        "learner_role": "customer ordering one food item",
+        "learner_role": "customer choosing a visible sandwich",
         "partner_role": "food counter server",
         "current_turn": "partner_speaks_first",
         "target_function": {
           "id": "order_local_food",
-          "definition": "The learner orders one visible food item politely."
+          "definition": "The learner chooses a visible food item."
         },
-        "learner_intention": "Point to one visible item and order politely in English.",
+        "learner_intention": "Point to the visible sandwich/item and say this one.",
         "required_slots": {
-          "speech_act": "request_order",
+          "speech_act": "choose_visible_item",
           "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "One, please.",
-          "One please.",
-          "Can I have one, please?"
+          "This one.",
+          "This one",
+          "This, please.",
+          "This one, please."
         ],
         "acceptance_notes": [
-          "Accept one + please even if the learner omits the comma or uses a short variant.",
-          "Accept please-only when the learner is clearly pointing at one visible item."
+          "Accept the target phrase for choosing the visible sandwich/item in the scene."
         ],
         "wrong_intents": [
           {
@@ -592,7 +592,8 @@
         ]
       },
       "support": {},
-      "success_signal": "learner orders a simple food item politely"
+      "success_signal": "learner chooses the visible sandwich/item",
+      "expected_transliteration": "This one."
     },
     {
       "id": "en-card-hospital-directions-dialogue-practice",
@@ -896,35 +897,34 @@
       "correct_function_id": "order_local_food",
       "target_id": "en-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "One, please.",
+      "expected_response": "This one.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
         "physical_scene": "A server at a casual food counter asks what the learner wants to order.",
-        "learner_role": "customer ordering one food item",
+        "learner_role": "customer choosing a visible sandwich",
         "partner_role": "food counter server",
         "current_turn": "partner_speaks_first",
         "target_function": {
           "id": "order_local_food",
-          "definition": "The learner orders one visible food item politely."
+          "definition": "The learner chooses a visible food item."
         },
-        "learner_intention": "Order one visible item politely.",
+        "learner_intention": "Point to the visible sandwich/item and say this one.",
         "required_slots": {
-          "speech_act": "request_order",
-          "quantity": "one",
+          "speech_act": "choose_visible_item",
           "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "One, please.",
-          "One please.",
-          "Can I have one, please?"
+          "This one.",
+          "This one",
+          "This, please.",
+          "This one, please."
         ],
         "acceptance_notes": [
-          "Accept one + please even if the learner omits the comma or uses a short variant.",
-          "Accept please-only when the learner is clearly pointing at one visible item."
+          "Accept the target phrase for choosing the visible sandwich/item in the scene."
         ],
         "wrong_intents": [
           {
@@ -965,7 +965,8 @@
           "state": "social_response",
           "optional": true
         }
-      ]
+      ],
+      "expected_transliteration": "This one."
     },
     {
       "id": "en-card-excuse-me-dialogue-practice",
@@ -1345,34 +1346,34 @@
       "correct_function_id": "order_local_food",
       "target_id": "en-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "One, please.",
+      "expected_response": "This one.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
         "physical_scene": "A convenience-store cashier waits while the learner holds or points to a wrapped sandwich.",
-        "learner_role": "customer ordering one food item",
+        "learner_role": "customer choosing a visible sandwich",
         "partner_role": "food counter server",
         "current_turn": "partner_speaks_first",
         "target_function": {
           "id": "order_local_food",
-          "definition": "The learner orders one visible food item politely."
+          "definition": "The learner chooses a visible food item."
         },
-        "learner_intention": "Point to one visible item and order politely in English.",
+        "learner_intention": "Point to the visible sandwich/item and say this one.",
         "required_slots": {
-          "speech_act": "request_order",
+          "speech_act": "choose_visible_item",
           "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "One, please.",
-          "One please.",
-          "Can I have one, please?"
+          "This one.",
+          "This one",
+          "This, please.",
+          "This one, please."
         ],
         "acceptance_notes": [
-          "Accept one + please even if the learner omits the comma or uses a short variant.",
-          "Accept please-only when the learner is clearly pointing at one visible item."
+          "Accept the target phrase for choosing the visible sandwich/item in the scene."
         ],
         "wrong_intents": [
           {
@@ -1390,7 +1391,7 @@
         ]
       },
       "support": {},
-      "success_signal": "learner reuses ja-target-one-local-food-please in a same day transfer scene",
+      "success_signal": "learner reuses en-target-one-local-food-please in a same day transfer scene",
       "playback_flow": [
         {
           "type": "play_line",
@@ -1413,7 +1414,8 @@
           "state": "social_response",
           "optional": true
         }
-      ]
+      ],
+      "expected_transliteration": "This one."
     },
     {
       "id": "en-card-greeting-entry-review-delayed_review",
@@ -1739,34 +1741,34 @@
       "correct_function_id": "order_local_food",
       "target_id": "en-target-one-local-food-please",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "One, please.",
+      "expected_response": "This one.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
         "physical_scene": "A bakery worker gestures toward a sandwich display case and waits for the learner to order.",
-        "learner_role": "customer ordering one food item",
+        "learner_role": "customer choosing a visible sandwich",
         "partner_role": "food counter server",
         "current_turn": "partner_speaks_first",
         "target_function": {
           "id": "order_local_food",
-          "definition": "The learner orders one visible food item politely."
+          "definition": "The learner chooses a visible food item."
         },
-        "learner_intention": "Order one visible item politely in English from memory.",
+        "learner_intention": "Point to the visible sandwich/item and say this one.",
         "required_slots": {
-          "speech_act": "request_order",
+          "speech_act": "choose_visible_item",
           "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "One, please.",
-          "One please.",
-          "Can I have one, please?"
+          "This one.",
+          "This one",
+          "This, please.",
+          "This one, please."
         ],
         "acceptance_notes": [
-          "Accept one + please even if the learner omits the comma or uses a short variant.",
-          "Accept please-only when the learner is clearly pointing at one visible item."
+          "Accept the target phrase for choosing the visible sandwich/item in the scene."
         ],
         "wrong_intents": [
           {
@@ -1784,7 +1786,7 @@
         ]
       },
       "support": {},
-      "success_signal": "learner reuses ja-target-one-local-food-please in a delayed review scene",
+      "success_signal": "learner reuses en-target-one-local-food-please in a delayed review scene",
       "playback_flow": [
         {
           "type": "play_line",
@@ -1807,7 +1809,8 @@
           "state": "social_response",
           "optional": true
         }
-      ]
+      ],
+      "expected_transliteration": "This one."
     }
   ]
 }

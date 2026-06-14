@@ -1694,8 +1694,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "One, please.",
-      "transliteration": "One, please.",
+      "text": "This one.",
+      "transliteration": "This one.",
       "audio_path": "audio/generated/en/en-order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -1746,8 +1746,8 @@
         "provider": "edge_tts",
         "speaker_role": "neighbor"
       },
-      "text": "Hi!",
-      "transliteration": "Hi!",
+      "text": "Hey there!",
+      "transliteration": "Hey there!",
       "audio_path": "audio/generated/en/greeting-neighbor-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2058,8 +2058,8 @@
         "provider": "edge_tts",
         "speaker_role": "cashier"
       },
-      "text": "What would you like?",
-      "transliteration": "What would you like?",
+      "text": "Which one would you like?",
+      "transliteration": "Which one would you like?",
       "audio_path": "audio/generated/en/order-convenience-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2084,8 +2084,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "One, please.",
-      "transliteration": "One, please.",
+      "text": "This one.",
+      "transliteration": "This one.",
       "audio_path": "audio/generated/en/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2474,8 +2474,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "One, please.",
-      "transliteration": "One, please.",
+      "text": "This one.",
+      "transliteration": "This one.",
       "audio_path": "audio/generated/en/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false

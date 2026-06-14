@@ -224,14 +224,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-one-local-food-please",
-          "text": "一つください。",
-          "transliteration": "Hitotsu kudasai.",
+          "text": "これ。",
+          "transliteration": "Kore.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "audio_text": "Hitotsu kudasai.",
-          "tts_text": "一つください。"
+          "audio_text": "Kore.",
+          "tts_text": "これ。"
         },
         {
           "index": 2,
@@ -310,8 +309,8 @@
           "index": 0,
           "speaker_role": "neighbor",
           "line_type": "world_opener",
-          "text": "こんにちは！",
-          "transliteration": "Konnichiwa!",
+          "text": "どうも！",
+          "transliteration": "Doumo!",
           "meaning_units": [
             "hello"
           ]
@@ -402,8 +401,8 @@
           "index": 0,
           "speaker_role": "class_partner",
           "line_type": "world_opener",
-          "text": "お名前は？",
-          "transliteration": "Onamae wa?",
+          "text": "お名前をお願いします。",
+          "transliteration": "Onamae o onegaishimasu.",
           "meaning_units": [
             "your",
             "name",
@@ -686,8 +685,8 @@
           "index": 0,
           "speaker_role": "cashier",
           "line_type": "world_opener",
-          "text": "ご注文は？",
-          "transliteration": "Gochuumon wa?",
+          "text": "どちらにしますか？",
+          "transliteration": "Dochira ni shimasu ka?",
           "meaning_units": [
             "question"
           ]
@@ -697,14 +696,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-one-local-food-please",
-          "text": "一つください。",
-          "transliteration": "Hitotsu kudasai.",
+          "text": "これ。",
+          "transliteration": "Kore.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "audio_text": "Hitotsu kudasai.",
-          "tts_text": "一つください。"
+          "audio_text": "Kore.",
+          "tts_text": "これ。"
         },
         {
           "index": 2,
@@ -745,14 +743,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-one-local-food-please",
-          "text": "一つください。",
-          "transliteration": "Hitotsu kudasai.",
+          "text": "これ。",
+          "transliteration": "Kore.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "audio_text": "Hitotsu kudasai.",
-          "tts_text": "一つください。"
+          "audio_text": "Kore.",
+          "tts_text": "これ。"
         },
         {
           "index": 2,

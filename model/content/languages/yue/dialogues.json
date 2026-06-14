@@ -248,13 +248,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "yue-target-one-local-food-please",
-          "text": "一个，唔该。",
-          "transliteration": "Jat go, m goi.",
-          "audio_text": "Jat go, m goi.",
-          "tts_text": "一个，唔该。",
+          "text": "呢個。",
+          "transliteration": "Ni go.",
+          "audio_text": "Ni go.",
+          "tts_text": "呢個。",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ]
         },
         {
@@ -287,11 +286,11 @@
           "index": 0,
           "speaker_role": "neighbor",
           "line_type": "world_opener",
-          "text": "Nei hou!",
-          "transliteration": "Nei hou!",
-          "audio_text": "Nei hou!",
+          "text": "Jo san!",
+          "transliteration": "Jo san!",
+          "audio_text": "Jo san!",
           "meaning_units": [],
-          "tts_text": "你好！"
+          "tts_text": "早晨！"
         },
         {
           "index": 1,
@@ -332,11 +331,11 @@
           "index": 0,
           "speaker_role": "class_partner",
           "line_type": "world_opener",
-          "text": "Nei giu mat meng?",
-          "transliteration": "Nei giu mat meng?",
-          "audio_text": "Nei giu mat meng?",
+          "text": "Nei ge meng ne?",
+          "transliteration": "Nei ge meng ne?",
+          "audio_text": "Nei ge meng ne?",
           "meaning_units": [],
-          "tts_text": "你叫乜名？"
+          "tts_text": "你嘅名呢？"
         },
         {
           "index": 1,
@@ -470,24 +469,23 @@
           "index": 0,
           "speaker_role": "cashier",
           "line_type": "world_opener",
-          "text": "Nei yiu mat?",
-          "transliteration": "Nei yiu mat?",
-          "audio_text": "Nei yiu mat?",
+          "text": "Nei yiu bin gin?",
+          "transliteration": "Nei yiu bin gin?",
+          "audio_text": "Nei yiu bin gin?",
           "meaning_units": [],
-          "tts_text": "你要乜？"
+          "tts_text": "你要邊件？"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "一个，唔该。",
-          "transliteration": "Jat go, m goi.",
-          "audio_text": "Jat go, m goi.",
+          "text": "呢個。",
+          "transliteration": "Ni go.",
+          "audio_text": "Ni go.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "tts_text": "一个，唔该。",
+          "tts_text": "呢個。",
           "target_id": "yue-target-one-local-food-please"
         },
         {
@@ -743,13 +741,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "yue-target-one-local-food-please",
-          "text": "一个，唔该。",
-          "transliteration": "Jat go, m goi.",
-          "audio_text": "Jat go, m goi.",
-          "tts_text": "一个，唔该。",
+          "text": "呢個。",
+          "transliteration": "Ni go.",
+          "audio_text": "Ni go.",
+          "tts_text": "呢個。",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ]
         },
         {

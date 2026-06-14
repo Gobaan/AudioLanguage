@@ -368,8 +368,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个，谢谢。",
-      "transliteration": "Yi ge, xiexie.",
+      "text": "这个。",
+      "transliteration": "Zhe ge.",
       "audio_path": "audio/generated/zh/zh-order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -420,8 +420,8 @@
         "provider": "edge_tts",
         "speaker_role": "neighbor"
       },
-      "text": "你好！",
-      "transliteration": "Ni hao!",
+      "text": "早！",
+      "transliteration": "Zao!",
       "audio_path": "audio/generated/zh/greeting-neighbor-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
@@ -498,8 +498,8 @@
         "provider": "edge_tts",
         "speaker_role": "class_partner"
       },
-      "text": "你叫什么名字？",
-      "transliteration": "Ni jiao shenme mingzi?",
+      "text": "你的名字呢？",
+      "transliteration": "Ni de mingzi ne?",
       "audio_path": "audio/generated/zh/introduce-class-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
@@ -732,8 +732,8 @@
         "provider": "edge_tts",
         "speaker_role": "cashier"
       },
-      "text": "你要什么？",
-      "transliteration": "Ni yao shenme?",
+      "text": "你要哪个？",
+      "transliteration": "Ni yao na ge?",
       "audio_path": "audio/generated/zh/order-convenience-transfer/line-0.mp3",
       "status": "generated",
       "native_review_required": true
@@ -758,8 +758,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个，谢谢。",
-      "transliteration": "Yi ge, xiexie.",
+      "text": "这个。",
+      "transliteration": "Zhe ge.",
       "audio_path": "audio/generated/zh/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1148,8 +1148,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个，谢谢。",
-      "transliteration": "Yi ge, xiexie.",
+      "text": "这个。",
+      "transliteration": "Zhe ge.",
       "audio_path": "audio/generated/zh/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true

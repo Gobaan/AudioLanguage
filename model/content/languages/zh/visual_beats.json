@@ -331,7 +331,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 0,
-      "line_text": "Ni yao shenme?",
+      "line_text": "Zhe ge.",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -348,7 +348,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-local-food-1",
@@ -357,7 +358,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 1,
-      "line_text": "Yi ge, xiexie.",
+      "line_text": "Zhe ge.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -375,7 +376,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-local-food-2",
@@ -384,7 +386,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 2,
-      "line_text": "Hao de.",
+      "line_text": "Zhe ge.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -401,7 +403,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-greeting-neighbor-transfer-0",
@@ -410,7 +413,7 @@
       "target_id": "zh-target-respond-hi",
       "scene_id": "neighbor-gate",
       "line_index": 0,
-      "line_text": "Ni hao!",
+      "line_text": "Zao!",
       "timing_role": "cue",
       "meaning_units": [
         "hello"
@@ -568,7 +571,7 @@
       "target_id": "zh-target-my-name-is",
       "scene_id": "language-class-name-tags",
       "line_index": 0,
-      "line_text": "Ni jiao shenme mingzi?",
+      "line_text": "Ni de mingzi ne?",
       "timing_role": "cue",
       "meaning_units": [
         "your",
@@ -1054,7 +1057,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 0,
-      "line_text": "Ni yao shenme?",
+      "line_text": "Ni yao na ge?",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -1071,7 +1074,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-convenience-transfer-1",
@@ -1080,7 +1084,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 1,
-      "line_text": "Yi ge, xiexie.",
+      "line_text": "Zhe ge.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -1098,7 +1102,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-convenience-transfer-2",
@@ -1107,7 +1112,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 2,
-      "line_text": "Hao de.",
+      "line_text": "Zhe ge.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -1124,7 +1129,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-bakery-review-0",
@@ -1133,7 +1139,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 0,
-      "line_text": "Ni yao shenme?",
+      "line_text": "Zhe ge.",
       "timing_role": "cue",
       "meaning_units": [
         "question"
@@ -1150,7 +1156,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-bakery-review-1",
@@ -1159,7 +1166,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 1,
-      "line_text": "Yi ge, xiexie.",
+      "line_text": "Zhe ge.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "one",
@@ -1177,7 +1184,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     },
     {
       "id": "zh-vb-order-bakery-review-2",
@@ -1186,7 +1194,7 @@
       "target_id": "zh-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 2,
-      "line_text": "Hao de.",
+      "line_text": "Zhe ge.",
       "timing_role": "resolution",
       "meaning_units": [
         "acknowledgement"
@@ -1203,7 +1211,8 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
     }
   ]
 }

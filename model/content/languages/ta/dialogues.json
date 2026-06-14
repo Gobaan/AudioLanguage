@@ -40,13 +40,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-hello-how-are-you",
-          "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
-          "transliteration": "Vanakkam! Eppadi irukkireergal?",
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
           "meaning_units": [
-            "hello",
-            "you",
-            "question"
-          ]
+            "hello"
+          ],
+          "audio_text": "Vanakkam!",
+          "tts_text": "வணக்கம்!"
         },
         {
           "index": 2,
@@ -89,13 +89,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-hello-how-are-you",
-          "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
-          "transliteration": "Vanakkam! Eppadi irukkireergal?",
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
           "meaning_units": [
-            "hello",
-            "you",
-            "question"
-          ]
+            "hello"
+          ],
+          "audio_text": "Vanakkam!",
+          "tts_text": "வணக்கம்!"
         },
         {
           "index": 2,
@@ -138,13 +138,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-hello-how-are-you",
-          "text": "ஹாய், எப்படி இருக்கிறீர்கள்?",
-          "transliteration": "Hi, eppadi irukkireergal?",
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
           "meaning_units": [
-            "hello",
-            "you",
-            "question"
-          ]
+            "hello"
+          ],
+          "audio_text": "Vanakkam!",
+          "tts_text": "வணக்கம்!"
         },
         {
           "index": 2,
@@ -192,14 +192,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "நன்றாக இருக்கிறேன், நன்றி. நீங்கள்?",
-          "transliteration": "Nandraaga irukkiren, nandri. Neengal?",
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
           "meaning_units": [
-            "fine",
-            "thank_you",
-            "and_you",
-            "question"
-          ]
+            "hello"
+          ],
+          "audio_text": "Vanakkam!",
+          "tts_text": "வணக்கம்!",
+          "target_id": "ta-target-hello-how-are-you"
         },
         {
           "index": 2,
@@ -888,12 +888,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Vanakkam! Nalama?",
-          "transliteration": "Vanakkam! Nalama?",
-          "audio_text": "Vanakkam! Nalama?",
-          "meaning_units": [],
-          "tts_text": "வணக்கம்! நலமா?",
-          "target_id": "ta-target-hello-how-are-you"
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
+          "audio_text": "Vanakkam!",
+          "meaning_units": [
+            "hello"
+          ],
+          "tts_text": "வணக்கம்!",
+          "target_id": "ta-target-respond-hi"
         },
         {
           "index": 2,
@@ -988,13 +990,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-i-dont-understand",
-          "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
-          "transliteration": "Mannikkavum, enakku puriyavillai.",
+          "text": "புரியல.",
+          "transliteration": "Puriyala.",
           "meaning_units": [
-            "sorry",
-            "not",
-            "understand"
-          ]
+            "not_understand"
+          ],
+          "audio_text": "Puriyala.",
+          "tts_text": "புரியல."
         },
         {
           "index": 2,
@@ -1085,14 +1087,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-one-local-food-please",
-          "text": "ஒரு, தயவு செய்து.",
-          "transliteration": "Oru, thayavu seithu.",
+          "text": "இது.",
+          "transliteration": "Idhu.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "audio_text": "Oru, thayavu seithu.",
-          "tts_text": "ஒரு, தயவு செய்து."
+          "audio_text": "Idhu.",
+          "tts_text": "இது."
         },
         {
           "index": 2,
@@ -1111,7 +1112,7 @@
       "asset_slug": "greeting-neighbor-transfer",
       "type": "transfer",
       "function_id": "greet_and_ask_wellbeing",
-      "target_id": "ta-target-hello-how-are-you",
+      "target_id": "ta-target-respond-hi",
       "scene_id": "neighbor-gate",
       "review_modes": [
         "produce_from_visual",
@@ -1122,22 +1123,24 @@
           "index": 0,
           "speaker_role": "neighbor",
           "line_type": "world_opener",
-          "text": "Vanakkam!",
-          "transliteration": "Vanakkam!",
-          "audio_text": "Vanakkam!",
+          "text": "Kaalai vanakkam!",
+          "transliteration": "Kaalai vanakkam!",
+          "audio_text": "Kaalai vanakkam!",
           "meaning_units": [],
-          "tts_text": "வணக்கம்!"
+          "tts_text": "காலை வணக்கம்!"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Vanakkam! Nalama?",
-          "transliteration": "Vanakkam! Nalama?",
-          "audio_text": "Vanakkam! Nalama?",
-          "meaning_units": [],
-          "tts_text": "வணக்கம்! நலமா?",
-          "target_id": "ta-target-hello-how-are-you"
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
+          "audio_text": "Vanakkam!",
+          "meaning_units": [
+            "hello"
+          ],
+          "tts_text": "வணக்கம்!",
+          "target_id": "ta-target-respond-hi"
         },
         {
           "index": 2,
@@ -1167,11 +1170,11 @@
           "index": 0,
           "speaker_role": "class_partner",
           "line_type": "world_opener",
-          "text": "Ungal peyar enna?",
-          "transliteration": "Ungal peyar enna?",
-          "audio_text": "Ungal peyar enna?",
+          "text": "Ungal peyar?",
+          "transliteration": "Ungal peyar?",
+          "audio_text": "Ungal peyar?",
           "meaning_units": [],
-          "tts_text": "உங்கள் பெயர் என்ன?"
+          "tts_text": "உங்கள் பெயர்?"
         },
         {
           "index": 1,
@@ -1201,7 +1204,7 @@
       "asset_slug": "repair-ticket-transfer",
       "type": "transfer",
       "function_id": "ask_for_repetition",
-      "target_id": "ta-target-say-it-slowly",
+      "target_id": "ta-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "review_modes": [
         "produce_from_visual",
@@ -1222,12 +1225,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Mannikkavum, enakku puriyala.",
-          "transliteration": "Mannikkavum, enakku puriyala.",
-          "audio_text": "Mannikkavum, enakku puriyala.",
-          "meaning_units": [],
-          "tts_text": "மன்னிக்கவும், எனக்கு புரியல.",
-          "target_id": "ta-target-say-it-slowly"
+          "text": "புரியல.",
+          "transliteration": "Puriyala.",
+          "audio_text": "Puriyala.",
+          "meaning_units": [
+            "not_understand"
+          ],
+          "tts_text": "புரியல.",
+          "target_id": "ta-target-i-dont-understand"
         },
         {
           "index": 2,
@@ -1303,25 +1308,26 @@
           "index": 0,
           "speaker_role": "cashier",
           "line_type": "world_opener",
-          "text": "என்ன வேண்டும்?",
-          "transliteration": "Enna vendum?",
+          "text": "எது வேண்டும்?",
+          "transliteration": "Edhu venum?",
           "meaning_units": [
             "question"
-          ]
+          ],
+          "audio_text": "Edhu venum?",
+          "tts_text": "எது வேண்டும்?"
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-one-local-food-please",
-          "text": "ஒரு, தயவு செய்து.",
-          "transliteration": "Oru, thayavu seithu.",
+          "text": "இது.",
+          "transliteration": "Idhu.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "audio_text": "Oru, thayavu seithu.",
-          "tts_text": "ஒரு, தயவு செய்து."
+          "audio_text": "Idhu.",
+          "tts_text": "இது."
         },
         {
           "index": 2,
@@ -1361,12 +1367,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Vanakkam! Nalama?",
-          "transliteration": "Vanakkam! Nalama?",
-          "audio_text": "Vanakkam! Nalama?",
-          "meaning_units": [],
-          "tts_text": "வணக்கம்! நலமா?",
-          "target_id": "ta-target-hello-how-are-you"
+          "text": "வணக்கம்!",
+          "transliteration": "Vanakkam!",
+          "audio_text": "Vanakkam!",
+          "meaning_units": [
+            "hello"
+          ],
+          "tts_text": "வணக்கம்!",
+          "target_id": "ta-target-respond-hi"
         },
         {
           "index": 2,
@@ -1456,13 +1464,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-i-dont-understand",
-          "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
-          "transliteration": "Mannikkavum, enakku puriyavillai.",
+          "text": "புரியல.",
+          "transliteration": "Puriyala.",
           "meaning_units": [
-            "sorry",
-            "not",
-            "understand"
-          ]
+            "not_understand"
+          ],
+          "audio_text": "Puriyala.",
+          "tts_text": "புரியல."
         },
         {
           "index": 2,
@@ -1549,14 +1557,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-one-local-food-please",
-          "text": "ஒரு, தயவு செய்து.",
-          "transliteration": "Oru, thayavu seithu.",
+          "text": "இது.",
+          "transliteration": "Idhu.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "audio_text": "Oru, thayavu seithu.",
-          "tts_text": "ஒரு, தயவு செய்து."
+          "audio_text": "Idhu.",
+          "tts_text": "இது."
         },
         {
           "index": 2,

@@ -133,6 +133,15 @@ export async function deleteValidationUser(participantId: string): Promise<void>
   }
 }
 
+export async function clearLocalValidationSessions(): Promise<void> {
+  const response = await fetch('/api/validation/local/sessions', {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to clear local validation sessions: ${response.status}`);
+  }
+}
+
 export async function scoreValidationAttempt(sessionId: string, attemptId: string): Promise<void> {
   const response = await fetch(
     `/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts/${encodeURIComponent(attemptId)}/score`,

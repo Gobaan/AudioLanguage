@@ -144,6 +144,16 @@ class ValidationStore:
         shutil.rmtree(session_dir)
         return {"sessionId": safe_id(session_id), "status": "deleted"}
 
+    def delete_all_sessions(self) -> dict[str, Any]:
+        sessions_dir = self.root / "sessions"
+        deleted_count = 0
+        if sessions_dir.exists():
+            deleted_count = sum(1 for session_dir in sessions_dir.iterdir() if session_dir.is_dir())
+            shutil.rmtree(sessions_dir)
+
+        sessions_dir.mkdir(parents=True, exist_ok=True)
+        return {"deletedSessionCount": deleted_count, "status": "deleted"}
+
     def delete_attempt(self, session_id: str, attempt_id: str) -> dict[str, str]:
         session_dir = self.require_session(session_id)
         attempt_id = safe_id(attempt_id)

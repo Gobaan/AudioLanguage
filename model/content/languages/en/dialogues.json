@@ -1026,14 +1026,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-one-local-food-please",
-          "text": "One, please.",
+          "text": "This one.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "transliteration": "One, please.",
-          "audio_text": "One, please.",
-          "tts_text": "One, please."
+          "transliteration": "This one.",
+          "audio_text": "This one.",
+          "tts_text": "This one."
         },
         {
           "index": 2,
@@ -1062,9 +1061,9 @@
           "index": 0,
           "speaker_role": "neighbor",
           "line_type": "world_opener",
-          "text": "Hi!",
-          "transliteration": "Hi!",
-          "audio_text": "Hi!",
+          "text": "Hey there!",
+          "transliteration": "Hey there!",
+          "audio_text": "Hey there!",
           "meaning_units": []
         },
         {
@@ -1239,24 +1238,23 @@
           "index": 0,
           "speaker_role": "cashier",
           "line_type": "world_opener",
-          "text": "What would you like?",
-          "transliteration": "What would you like?",
-          "audio_text": "What would you like?",
+          "text": "Which one would you like?",
+          "transliteration": "Which one would you like?",
+          "audio_text": "Which one would you like?",
           "meaning_units": []
         },
         {
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "One, please.",
-          "transliteration": "One, please.",
-          "audio_text": "One, please.",
+          "text": "This one.",
+          "transliteration": "This one.",
+          "audio_text": "This one.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
           "target_id": "en-target-one-local-food-please",
-          "tts_text": "One, please."
+          "tts_text": "This one."
         },
         {
           "index": 2,
@@ -1475,14 +1473,13 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-one-local-food-please",
-          "text": "One, please.",
+          "text": "This one.",
           "meaning_units": [
-            "one",
-            "please"
+            "this_one"
           ],
-          "transliteration": "One, please.",
-          "audio_text": "One, please.",
-          "tts_text": "One, please."
+          "transliteration": "This one.",
+          "audio_text": "This one.",
+          "tts_text": "This one."
         },
         {
           "index": 2,

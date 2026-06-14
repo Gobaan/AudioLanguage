@@ -133,6 +133,7 @@ def transfer_review_steps(
 
     record_before_model = _record_before_model_line(playback_flow)
     include_world_response = _includes_world_response_feedback(playback_flow)
+    should_autoplay_opener = card.get("stage") != "delayed_review"
 
     return [
         step(
@@ -141,7 +142,12 @@ def transfer_review_steps(
             frame_id=opener_frame.get("id") if opener_frame else None,
             frame_mode="single",
             display_text="Listen.",
-            audio=audio_behavior(opener_audio, autoplay=True, replayable=True, audio_text=opener_audio_text),
+            audio=audio_behavior(
+                opener_audio,
+                autoplay=should_autoplay_opener,
+                replayable=True,
+                audio_text=opener_audio_text,
+            ),
             mic=mic_off(),
             props={
                 "initialFrameId": opener_frame.get("id") if opener_frame else None,

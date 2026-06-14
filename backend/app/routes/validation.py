@@ -1,7 +1,7 @@
 import json
 import logging
 
-from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
@@ -164,6 +164,15 @@ def delete_validation_user(participant_id: str):
     return validation_store.delete_user(participant_id)
 
 
+@router.delete("/api/validation/local/sessions")
+def delete_all_local_validation_sessions(request: Request):
+    """Delete every local validation session for fresh localhost testing."""
+    if not is_local_request(request):
+        raise HTTPException(status_code=403, detail="Local validation data can only be cleared from localhost")
+
+    return validation_store.delete_all_sessions()
+
+
 @router.delete("/api/validation/sessions/{session_id}")
 def delete_validation_session(session_id: str):
     """Delete one validation session and its saved recordings."""
@@ -184,6 +193,11 @@ def delete_validation_session_data(session_id: str, kind: list[str] = Query(...)
         raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found") from error
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
+
+
+def is_local_request(request: Request) -> bool:
+    hostname = (request.url.hostname or "").lower()
+    return hostname in {"localhost", "127.0.0.1", "::1", "testserver"}
 
 
 def score_validation_attempts(session_id: str, conversation_coach: ConversationCoach) -> None:

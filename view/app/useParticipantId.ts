@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchSuggestedParticipantName } from '../api/validation';
 import { participantFromUrl } from './urlParams';
 
-const PARTICIPANT_STORAGE_KEY = 'audio-language-participant';
+export const PARTICIPANT_STORAGE_KEY = 'audio-language-participant';
 
 function saveParticipantId(participantId: string) {
   localStorage.setItem(PARTICIPANT_STORAGE_KEY, participantId);

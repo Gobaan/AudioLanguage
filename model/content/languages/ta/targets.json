@@ -15,28 +15,37 @@
     {
       "id": "ta-target-hello-how-are-you",
       "function_id": "greet_and_ask_wellbeing",
-      "canonical": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
-      "transliteration": "Vanakkam! Eppadi irukkireergal?",
-      "display_meaning": "Hello! How are you?",
+      "canonical": "வணக்கம்!",
+      "transliteration": "Vanakkam!",
+      "display_meaning": "Hello.",
       "meaning_units": [
-        "hello",
-        "you",
-        "question"
+        "hello"
       ],
       "accepted_variants": [
-        "வணக்கம், எப்படி இருக்கிறீர்கள்?",
-        "ஹாய், எப்படி இருக்கிறீர்கள்?"
+        "வணக்கம்.",
+        "Vanakkam.",
+        "Vanakkam!"
       ],
-      "valid_but_off_target": [
-        "எப்படி இருக்கிறீர்கள்?"
-      ],
+      "valid_but_off_target": [],
       "wrong_for_context_examples": [
-        "போய்வருகிறேன்.",
-        "நன்றி."
+        "மன்னிக்கவும்.",
+        "இது."
       ],
       "notes": {
         "register": "polite-neutral",
-        "native_review_required": true
+        "native_review_required": true,
+        "spoken_target": "hello"
+      },
+      "backward_build_units": [
+        "Vanakkam"
+      ],
+      "backward_build_spoken_prompts": [
+        "வணக்கம்!"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "hello": "Hello"
+        }
       }
     },
     {
@@ -98,28 +107,39 @@
     {
       "id": "ta-target-i-dont-understand",
       "function_id": "say_do_not_understand",
-      "canonical": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
-      "transliteration": "Mannikkavum, enakku puriyavillai.",
-      "display_meaning": "Sorry, I don't understand.",
+      "canonical": "புரியல.",
+      "transliteration": "Puriyala.",
+      "display_meaning": "I don't understand.",
       "meaning_units": [
-        "sorry",
-        "not",
-        "understand"
+        "not_understand"
       ],
       "accepted_variants": [
-        "எனக்கு புரியவில்லை.",
-        "மன்னிக்கவும், புரியவில்லை."
+        "புரியல.",
+        "Puriyala.",
+        "Enakku puriyala."
       ],
       "valid_but_off_target": [
-        "மெதுவாக சொல்ல முடியுமா?"
+        "மன்னிக்கவும், எனக்கு புரியவில்லை."
       ],
       "wrong_for_context_examples": [
-        "ஆம், தயவு செய்து.",
-        "எனக்கு தண்ணீர் வேண்டும்."
+        "வணக்கம்.",
+        "இது."
       ],
       "notes": {
         "register": "polite-neutral",
-        "native_review_required": true
+        "native_review_required": true,
+        "spoken_target": "I do not understand"
+      },
+      "backward_build_units": [
+        "Puriyala"
+      ],
+      "backward_build_spoken_prompts": [
+        "புரியல."
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "not_understand": "I don't understand"
+        }
       }
     },
     {
@@ -340,50 +360,45 @@
     {
       "id": "ta-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "ஒரு, தயவு செய்து.",
-      "transliteration": "Oru, thayavu seithu.",
-      "display_meaning": "One, please.",
+      "canonical": "இது.",
+      "transliteration": "Idhu.",
+      "display_meaning": "This one.",
       "meaning_units": [
-        "one",
-        "please"
+        "this_one"
       ],
       "meaning_unit_labels": {
-        "one": "One",
-        "please": "Please"
+        "this_one": "This one"
       },
       "accepted_variants": [
-        "Oru thayavu seithu.",
-        "ஒரு தயவு செய்து."
+        "இது.",
+        "இது",
+        "Idhu.",
+        "Idhu"
       ],
       "valid_but_off_target": [
-        "Thayavu seithu.",
-        "Oru."
+        "இது, தயவு செய்து."
       ],
       "wrong_for_context_examples": [
-        "மருத்துவமனை எங்கே?",
-        "எனக்கு கொஞ்சம் தமிழ் தெரியும்."
+        "எனக்கு புரியவில்லை.",
+        "என் பெயர் அன்னா."
       ],
       "notes": {
         "food_slot": "dosai",
         "register": "polite-neutral",
         "native_review_required": true,
-        "spoken_target": "one + please; food item is scene-visible only"
+        "spoken_target": "this one; sandwich is scene-visible only"
       },
       "backward_build_spoken_prompts": [
-        "thayavu seithu.",
-        "Oru,",
-        "Oru, thayavu seithu."
-      ],
-      "backward_build_focus_units": [
-        "please",
-        "one",
-        "full"
+        "இது."
       ],
       "backward_build_units": [
-        "thayavu seithu",
-        "Oru",
-        "thayavu seithu"
-      ]
+        "Idhu"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "this_one": "This one"
+        }
+      }
     },
     {
       "id": "ta-target-where-is-hospital",
@@ -525,24 +540,37 @@
     {
       "id": "ta-target-respond-hi",
       "function_id": "respond_to_greeting",
-      "canonical": "Vanakkam!",
+      "canonical": "வணக்கம்!",
       "transliteration": "Vanakkam!",
-      "display_meaning": "Respond to hello.",
+      "display_meaning": "Hello.",
       "meaning_units": [
-        "hello",
-        "response"
+        "hello"
       ],
       "accepted_variants": [
+        "வணக்கம்.",
         "Vanakkam.",
         "Vanakkam!"
       ],
       "wrong_for_context_examples": [
-        "Nandri.",
-        "En peyar Anna."
+        "மன்னிக்கவும்.",
+        "இது."
       ],
       "notes": {
         "register": "friendly-basic",
-        "native_review_required": true
+        "native_review_required": true,
+        "spoken_target": "hello"
+      },
+      "valid_but_off_target": [],
+      "backward_build_units": [
+        "Vanakkam"
+      ],
+      "backward_build_spoken_prompts": [
+        "வணக்கம்!"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "hello": "Hello"
+        }
       }
     },
     {

@@ -359,50 +359,48 @@
     {
       "id": "en-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "One, please.",
-      "display_meaning": "One, please.",
+      "canonical": "This one.",
+      "display_meaning": "This one.",
       "meaning_units": [
-        "one",
-        "please"
+        "this_one"
       ],
       "meaning_unit_labels": {
-        "one": "One",
-        "please": "Please"
+        "this_one": "This one"
       },
       "accepted_variants": [
-        "One please.",
-        "Can I have one, please?"
+        "This one.",
+        "This one",
+        "This, please.",
+        "This one, please."
       ],
       "valid_but_off_target": [
-        "Please.",
-        "I want one."
+        "This, please.",
+        "This one, please."
       ],
       "wrong_for_context_examples": [
-        "Where is the hospital?",
-        "I speak a little English."
+        "I don't understand.",
+        "My name is Anna."
       ],
       "notes": {
         "food_slot": "sandwich",
         "register": "polite-neutral",
         "localization_note": "Food item should be culturally localized per language and region.",
-        "spoken_target": "one + please; food item is scene-visible only"
+        "spoken_target": "this one; sandwich is scene-visible only"
       },
-      "transliteration": "One, please.",
+      "transliteration": "This one.",
       "backward_build_spoken_prompts": [
-        "please.",
-        "One,",
-        "One, please."
-      ],
-      "backward_build_focus_units": [
-        "please",
-        "one",
-        "full"
+        "one.",
+        "This one."
       ],
       "backward_build_units": [
-        "please",
-        "One",
-        "please"
-      ]
+        "This",
+        "one"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "this_one": "This one"
+        }
+      }
     },
     {
       "id": "en-target-where-is-hospital",
@@ -549,7 +547,7 @@
       ],
       "wrong_for_context_examples": [
         "Hi!",
-        "One, please."
+        "This one."
       ],
       "semantic_slots": {
         "required": {
