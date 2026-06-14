@@ -49,26 +49,32 @@ def lesson_steps(
     if is_anchor_lesson:
         steps = [
             step(
+                "scene_setup",
+                "SceneFrame",
+                frame_id=opener_frame.get("id") if opener_frame else None,
+                frame_mode="single",
+                display_text="Listen.",
+                audio=audio_behavior(opener_audio, autoplay=True, replayable=True, audio_text=opener_audio_text),
+                mic=mic_off(),
+                props={
+                    "initialFrameId": frames[0]["id"] if frames else None,
+                    "frames": frames,
+                },
+            ),
+            step(
                 "broad_meaning_guess",
                 "ChoicePrompt",
-                frame_id=learner_frame.get("id") if learner_frame else None,
+                frame_id=response_frame.get("id") if response_frame else None,
                 frame_mode="single",
                 display_text="What happened?",
-                audio=audio_behavior(
-                    target_audio,
-                    autoplay=True,
-                    replayable=True,
-                    audio_text=target_audio_text,
-                ),
+                audio=audio_behavior(target_audio, autoplay=False, replayable=True, audio_text=target_audio_text),
                 mic=mic_off(),
                 props={
                     "question": "What happened?",
                     "difficulty": meaning_choice_difficulty(card),
                     "choices": meaning_choices(target, card),
-                    "revealChoicesAfterAudio": True,
-                    "playIntroThroughLineType": "learner_target",
                 },
-            )
+            ),
         ]
 
         steps.append(

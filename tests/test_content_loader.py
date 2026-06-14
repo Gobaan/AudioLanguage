@@ -194,6 +194,7 @@ class StructuredDataGraphTests(unittest.TestCase):
         self.assertEqual(
             step_ids,
             [
+                "scene_setup",
                 "broad_meaning_guess",
                 "backward_build",
             ],
