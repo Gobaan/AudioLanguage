@@ -9,6 +9,7 @@ import {
   dialogueRevealLines,
   frameForStep,
   introFramesThroughLineType,
+  stepHidesLearnerScriptBeforeAttempt,
   stepRevealsChoicesAfterAudio,
   stepRevealsDialogueAfterChoice,
 } from './lessonStepHelpers';
@@ -40,6 +41,7 @@ export function MeaningGuessStep({
   const choices = choiceOptions(step);
   const selectedChoice = choices.find((choice) => choice.id === selectedChoiceId);
   const showDialogueReveal = stepRevealsDialogueAfterChoice(step, selectedChoice);
+  const hideLearnerLineInReveal = stepHidesLearnerScriptBeforeAttempt(lesson, step);
   const [choicesVisible, setChoicesVisible] = useState(!revealAfterAudio);
   const [isIntroPlaying, setIsIntroPlaying] = useState(false);
   const [activeFrame, setActiveFrame] = useState<SceneFrameData | undefined>(() =>
@@ -189,7 +191,9 @@ export function MeaningGuessStep({
             onSelectChoice={(choice) => onSelectChoice?.(step.id, choice)}
           />
         ) : null}
-        {showDialogueReveal ? <DialogueReveal lines={dialogueRevealLines(lesson)} /> : null}
+        {showDialogueReveal ? (
+          <DialogueReveal lines={dialogueRevealLines(lesson, { hideLearnerLine: hideLearnerLineInReveal })} />
+        ) : null}
       </div>
       {replayVisible ? (
         <AudioButton

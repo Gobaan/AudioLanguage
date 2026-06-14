@@ -181,7 +181,7 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(meaning_step["props"]["difficulty"], "medium")
         self.assertFalse(meaning_step["props"]["revealDialogueAfterChoice"])
         self.assertTrue(meaning_step["props"]["revealDialogueOnIncorrectOnly"])
-        self.assertEqual(recall_step["frameId"], "line-1")
+        self.assertEqual(recall_step["frameId"], "line-0")
         self.assertFalse(recall_step["audio"]["autoplay"])
         self.assertFalse(recall_step["audio"]["playBeforeMic"])
         self.assertIsNone(recall_step["audio"]["url"])
@@ -201,7 +201,7 @@ class LessonsApiTests(unittest.TestCase):
         recall_step = next(step for step in steps if step["type"] == "scene_recall")
 
         self.assertEqual(setup_step["props"]["stopAtLineType"], "world_opener")
-        self.assertEqual(recall_step["frameId"], "line-1")
+        self.assertEqual(recall_step["frameId"], "line-0")
         self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
         self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
         self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])

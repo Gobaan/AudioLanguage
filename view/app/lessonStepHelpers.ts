@@ -59,22 +59,27 @@ export function choiceOptions(step: LessonStep): ChoiceOption[] {
   return Array.isArray(step.props.choices) ? (step.props.choices as ChoiceOption[]).slice(0, 4) : [];
 }
 
-export function dialogueRevealLines(lesson: Lesson): DialogueRevealLine[] {
+export function dialogueRevealLines(
+  lesson: Lesson,
+  options: { hideLearnerLine?: boolean } = {},
+): DialogueRevealLine[] {
   const learnerFrame = lesson.frames.find((frame) => frame.lineType === 'learner_target') ?? lesson.frames[1];
 
-  return lesson.frames.map((frame) => {
-    const isTranslated = frame.id === learnerFrame?.id;
+  return lesson.frames
+    .filter((frame) => !(options.hideLearnerLine && frame.lineType === 'learner_target'))
+    .map((frame) => {
+      const isTranslated = frame.id === learnerFrame?.id;
 
-    return {
-      id: frame.id,
-      speaker: frame.speaker,
-      text: frame.text,
-      transliteration: frame.transliteration,
-      audioUrl: frame.audioUrl,
-      isTranslated,
-      translation: isTranslated ? lesson.target.meaning : undefined,
-    };
-  });
+      return {
+        id: frame.id,
+        speaker: frame.speaker,
+        text: frame.text,
+        transliteration: frame.transliteration,
+        audioUrl: frame.audioUrl,
+        isTranslated,
+        translation: isTranslated ? lesson.target.meaning : undefined,
+      };
+    });
 }
 
 export function productionPromptText(step: LessonStep): string {
@@ -99,6 +104,18 @@ export function responseFrameForLesson(lesson: Lesson): SceneFrameData | undefin
 
 export function learnerFrameForLesson(lesson: Lesson): SceneFrameData | undefined {
   return lesson.frames.find((frame) => frame.lineType === 'learner_target');
+}
+
+export function openerFrameForLesson(lesson: Lesson): SceneFrameData | undefined {
+  return lesson.frames.find((frame) => frame.lineType === 'world_opener');
+}
+
+export function stepHidesLearnerScriptBeforeAttempt(lesson: Lesson, step: LessonStep): boolean {
+  if (step.props.recordBeforeModelLine === true) {
+    return true;
+  }
+
+  return lesson.stage === 'same_day_transfer' || lesson.stage === 'delayed_review';
 }
 
 export function backwardBuildTarget(step: LessonStep): string | undefined {

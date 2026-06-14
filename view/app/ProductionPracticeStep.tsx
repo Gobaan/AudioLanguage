@@ -7,11 +7,13 @@ import {
   dialogueRevealLines,
   frameForStep,
   learnerFrameForLesson,
+  openerFrameForLesson,
   postAttemptFeedbackFrames,
   productionPromptText,
   recordingPromptText,
   recordingUsesPromptAudio,
   responseFrameForLesson,
+  stepHidesLearnerScriptBeforeAttempt,
   stepShowsDialogueRevealAfterAttempt,
   stepUsesPostAttemptFeedback,
 } from './lessonStepHelpers';
@@ -49,21 +51,29 @@ export function ProductionPracticeStep({
   const [phase, setPhase] = useState<PracticePhase>('record');
   const [feedbackIndex, setFeedbackIndex] = useState(0);
   const learnerFrame = learnerFrameForLesson(lesson);
+  const openerFrame = openerFrameForLesson(lesson);
   const responseFrame = responseFrameForLesson(lesson);
   const feedbackFrames = useMemo(() => postAttemptFeedbackFrames(lesson, step), [lesson, step]);
   const usesPostAttemptFeedback = stepUsesPostAttemptFeedback(step);
+  const hidesLearnerScriptBeforeAttempt = stepHidesLearnerScriptBeforeAttempt(lesson, step);
   const showDialogueRevealAfterAttempt = stepShowsDialogueRevealAfterAttempt(step);
   const usesPromptAudio = recordingUsesPromptAudio(step);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const activeFeedbackFrame = feedbackFrames[feedbackIndex];
+  const recordFrame =
+    hidesLearnerScriptBeforeAttempt
+      ? openerFrame ?? frameForStep(lesson, step)
+      : learnerFrame ?? frame ?? frameForStep(lesson, step);
   const displayFrame =
-    phase === 'feedback'
-      ? activeFeedbackFrame ?? learnerFrame ?? frame
-      : phase === 'done'
-        ? responseFrame ?? feedbackFrames[feedbackFrames.length - 1] ?? learnerFrame ?? frame
-        : learnerFrame ?? frame ?? frameForStep(lesson, step);
+    phase === 'record'
+      ? recordFrame
+      : phase === 'feedback'
+        ? activeFeedbackFrame ?? learnerFrame ?? frame
+        : phase === 'done'
+          ? responseFrame ?? feedbackFrames[feedbackFrames.length - 1] ?? learnerFrame ?? frame
+          : learnerFrame ?? frame ?? frameForStep(lesson, step);
 
   const stopPlayback = useCallback(() => {
     stopAudio(audioRef.current);

@@ -163,7 +163,7 @@ def transfer_review_steps(
         step(
             "scene_recall",
             "ProductionPrompt",
-            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_id=opener_frame.get("id") if opener_frame else None,
             frame_mode="single",
             display_text="What would you say?",
             audio=audio_behavior(None, autoplay=False, replayable=False, play_before_mic=False),
