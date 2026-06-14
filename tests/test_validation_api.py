@@ -292,10 +292,18 @@ class ValidationApiTests(unittest.TestCase):
                     "/api/validation/local/sessions",
                     headers={"host": "example.com"},
                 )
-                clear_response = client.delete("/api/validation/local/sessions")
+                blocked_origin_response = client.delete(
+                    "/api/validation/local/sessions",
+                    headers={"origin": "https://example.com"},
+                )
+                clear_response = client.delete(
+                    "/api/validation/local/sessions",
+                    headers={"origin": "http://testserver"},
+                )
                 summary_response = client.get("/api/validation/admin/summary")
 
         self.assertEqual(blocked_response.status_code, 403)
+        self.assertEqual(blocked_origin_response.status_code, 403)
         self.assertEqual(clear_response.status_code, 200)
         self.assertEqual(clear_response.json()["deletedSessionCount"], 2)
         self.assertEqual(summary_response.json()["sessionCount"], 0)

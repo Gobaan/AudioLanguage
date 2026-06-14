@@ -1,5 +1,6 @@
 import json
 import logging
+from urllib.parse import urlparse
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import FileResponse
@@ -14,6 +15,8 @@ from app.validation.scoring import attempt_expected_phrase
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+
+LOCAL_HOSTNAMES = {"localhost", "127.0.0.1", "::1", "testserver", "testclient"}
 
 
 class ValidationSessionRequest(BaseModel):
@@ -196,8 +199,25 @@ def delete_validation_session_data(session_id: str, kind: list[str] = Query(...)
 
 
 def is_local_request(request: Request) -> bool:
-    hostname = (request.url.hostname or "").lower()
-    return hostname in {"localhost", "127.0.0.1", "::1", "testserver"}
+    client_host = request.client.host.lower() if request.client else ""
+    request_host = (request.url.hostname or "").lower()
+    return (
+        is_local_hostname(client_host)
+        and is_local_hostname(request_host)
+        and is_local_header(request.headers.get("origin"))
+        and is_local_header(request.headers.get("referer"))
+    )
+
+
+def is_local_header(value: str | None) -> bool:
+    if not value:
+        return True
+
+    return is_local_hostname((urlparse(value).hostname or "").lower())
+
+
+def is_local_hostname(value: str) -> bool:
+    return value in LOCAL_HOSTNAMES
 
 
 def score_validation_attempts(session_id: str, conversation_coach: ConversationCoach) -> None:
