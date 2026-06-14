@@ -16,6 +16,7 @@ import {
   dialogueRevealLines,
   frameForStep,
   sceneSetupFrames,
+  sceneSetupStopAtLineType,
 } from './lessonStepHelpers';
 import { StepAudioButton } from './StepAudioButton';
 
@@ -34,6 +35,7 @@ export type LessonStepRenderContext = {
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;
+  nextLabel?: string;
 };
 
 type StepRenderer = (context: LessonStepRenderContext) => ReactNode;
@@ -63,8 +65,10 @@ const STEP_RENDERERS: StepRenderer[] = [
     if (context.step.component !== 'ProductionPrompt') return null;
     return (
       <ProductionPracticeStep
-        {...productionPracticeProps(context.lesson, context.step)}
+        {...productionPracticeProps(context.lesson, context.step, context.language)}
         onCaptureAttempt={context.onCaptureAttempt}
+        onStepComplete={context.onStepComplete}
+        nextLabel={context.nextLabel}
       />
     );
   },
@@ -72,8 +76,10 @@ const STEP_RENDERERS: StepRenderer[] = [
     if (context.step.type !== 'scene_recall' || !context.step.mic?.enabled) return null;
     return (
       <ProductionPracticeStep
-        {...productionPracticeProps(context.lesson, context.step, 'What do you say?')}
+        {...productionPracticeProps(context.lesson, context.step, context.language)}
         onCaptureAttempt={context.onCaptureAttempt}
+        onStepComplete={context.onStepComplete}
+        nextLabel={context.nextLabel}
       />
     );
   },
@@ -83,6 +89,7 @@ const STEP_RENDERERS: StepRenderer[] = [
       <ScenePlayback
         frames={sceneSetupFrames(context.lesson, context.step)}
         autoplay={context.step.audio?.autoplay}
+        stopAtLineType={sceneSetupStopAtLineType(context.lesson, context.step)}
       />
     );
   },

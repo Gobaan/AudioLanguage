@@ -17,6 +17,7 @@ type LessonStepRendererProps = {
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;
+  nextLabel?: string;
 };
 
 export function LessonStepRenderer(props: LessonStepRendererProps) {

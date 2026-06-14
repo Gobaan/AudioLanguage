@@ -8,10 +8,23 @@ import type { SceneFrameData } from './types';
 type ScenePlaybackProps = {
   frames?: SceneFrameData[];
   autoplay?: boolean;
+  stopAtLineType?: string;
 };
 
-export function ScenePlayback({ frames = [], autoplay = false }: ScenePlaybackProps) {
-  const playableFrames = useMemo(() => frames.filter((frame) => frame.imageUrl || frame.audioUrl), [frames]);
+export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }: ScenePlaybackProps) {
+  const playableFrames = useMemo(() => {
+    const withMedia = frames.filter((frame) => frame.imageUrl || frame.audioUrl || frame.audioText);
+    if (!stopAtLineType) {
+      return withMedia.filter((frame) => frame.imageUrl || frame.audioUrl);
+    }
+
+    const stopIndex = withMedia.findIndex((frame) => frame.lineType === stopAtLineType);
+    if (stopIndex < 0) {
+      return withMedia.filter((frame) => frame.imageUrl || frame.audioUrl);
+    }
+
+    return withMedia.slice(0, stopIndex + 1).filter((frame) => frame.imageUrl || frame.audioUrl);
+  }, [frames, stopAtLineType]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);

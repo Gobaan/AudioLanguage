@@ -11,12 +11,44 @@ export function frameForStep(lesson: Lesson, step: LessonStep): SceneFrameData |
   return lesson.frames.find((frame) => frame.id === step.frameId) ?? lesson.frames[0];
 }
 
-export function sceneSetupFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
-  if (lesson.frames.length > 0) {
-    return lesson.frames;
+export function sceneSetupStopAtLineType(lesson: Lesson, step: LessonStep): string | undefined {
+  if (typeof step.props.stopAtLineType === 'string' && step.props.stopAtLineType) {
+    return step.props.stopAtLineType;
   }
 
-  return Array.isArray(step.props.frames) ? (step.props.frames as SceneFrameData[]) : [];
+  if (lesson.stage === 'same_day_transfer' || lesson.stage === 'delayed_review') {
+    return 'world_opener';
+  }
+
+  return undefined;
+}
+
+export function sceneSetupFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
+  const frames =
+    lesson.frames.length > 0
+      ? lesson.frames
+      : Array.isArray(step.props.frames)
+        ? (step.props.frames as SceneFrameData[])
+        : [];
+
+  return framesThroughLineType(frames, sceneSetupStopAtLineType(lesson, step));
+}
+
+export function framesThroughLineType(
+  frames: SceneFrameData[],
+  stopAtLineType: unknown,
+): SceneFrameData[] {
+  if (typeof stopAtLineType !== 'string' || !stopAtLineType) {
+    return frames;
+  }
+
+  const playableFrames = frames.filter((frame) => frame.imageUrl || frame.audioUrl || frame.audioText);
+  const stopIndex = playableFrames.findIndex((frame) => frame.lineType === stopAtLineType);
+  if (stopIndex < 0) {
+    return playableFrames;
+  }
+
+  return playableFrames.slice(0, stopIndex + 1);
 }
 
 export function choiceQuestion(step: LessonStep): string | undefined {
@@ -99,6 +131,95 @@ export function stepBlocksNextUntilChoice(step: LessonStep, selectedChoiceId?: s
   }
 
   return !selectedChoiceId;
+}
+
+export function stepRevealsDialogueAfterChoice(step: LessonStep, selectedChoice?: ChoiceOption): boolean {
+  if (!selectedChoice) {
+    return false;
+  }
+
+  if (step.props.revealDialogueOnIncorrectOnly === true) {
+    return !selectedChoice.isCorrect;
+  }
+
+  if (step.props.revealDialogueAfterChoice === false) {
+    return false;
+  }
+
+  return true;
+}
+
+type PlaybackFlowItem = {
+  type?: string;
+  line_type?: string;
+};
+
+export function postAttemptFeedbackFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
+  const playbackFlow = Array.isArray(step.props.playbackFlow)
+    ? (step.props.playbackFlow as PlaybackFlowItem[])
+    : null;
+
+  if (playbackFlow) {
+    const recordIndex = playbackFlow.findIndex((item) => item.type === 'record_attempt');
+    if (recordIndex >= 0) {
+      const frames: SceneFrameData[] = [];
+      for (const item of playbackFlow.slice(recordIndex + 1)) {
+        if (item.type !== 'play_line' || !item.line_type) {
+          continue;
+        }
+        const frame = lesson.frames.find((candidate) => candidate.lineType === item.line_type);
+        if (frame) {
+          frames.push(frame);
+        }
+      }
+      if (frames.length > 0) {
+        return frames;
+      }
+    }
+  }
+
+  const frames: SceneFrameData[] = [];
+  if (stepPlaysModelLineAfterAttempt(step)) {
+    const learnerFrame = learnerFrameForLesson(lesson);
+    if (learnerFrame) {
+      frames.push(learnerFrame);
+    }
+  }
+  if (stepPlaysWorldResponseAfterAttempt(step)) {
+    const responseFrame = responseFrameForLesson(lesson);
+    if (responseFrame) {
+      frames.push(responseFrame);
+    }
+  }
+  return frames;
+}
+
+export function stepPlaysModelLineAfterAttempt(step: LessonStep): boolean {
+  return step.props.playModelLineAfterAttempt === true;
+}
+
+export function stepPlaysWorldResponseAfterAttempt(step: LessonStep): boolean {
+  return step.props.playWorldResponseAfterAttempt === true;
+}
+
+export function stepShowsDialogueRevealAfterAttempt(step: LessonStep): boolean {
+  return step.props.showDialogueRevealAfterAttempt === true;
+}
+
+export function stepUsesPostAttemptFeedback(step: LessonStep): boolean {
+  return stepPlaysModelLineAfterAttempt(step);
+}
+
+export function stepHandlesOwnNext(step: LessonStep): boolean {
+  if (step.component === 'BackwardBuild') {
+    return true;
+  }
+
+  return step.type === 'scene_recall' && stepUsesPostAttemptFeedback(step);
+}
+
+export function recordingUsesPromptAudio(step: LessonStep): boolean {
+  return step.audio?.playBeforeMic === true && Boolean(step.audio?.url || step.audio?.audioText);
 }
 
 export function stepRevealsChoicesAfterAudio(step: LessonStep): boolean {

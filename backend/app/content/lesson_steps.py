@@ -94,7 +94,41 @@ def lesson_steps(
 
         return steps
 
-    steps = [
+    return transfer_review_steps(
+        card=card,
+        target=target,
+        frames=frames,
+        opener_frame=opener_frame,
+        learner_frame=learner_frame,
+        response_frame=response_frame,
+        opener_audio=opener_audio,
+        opener_audio_text=opener_audio_text,
+        target_text=target_text,
+        target_transliteration=target_transliteration,
+    )
+
+
+def transfer_review_steps(
+    *,
+    card: dict[str, Any],
+    target: dict[str, Any],
+    frames: list[dict[str, Any]],
+    opener_frame: dict[str, Any] | None,
+    learner_frame: dict[str, Any] | None,
+    response_frame: dict[str, Any] | None,
+    opener_audio: str | None,
+    opener_audio_text: str | None,
+    target_text: str,
+    target_transliteration: str,
+) -> list[dict[str, Any]]:
+    playback_flow = card.get("playback_flow")
+    if not isinstance(playback_flow, list) or not playback_flow:
+        raise ValueError(f"Practice card '{card.get('id')}' is missing playback_flow for transfer/review.")
+
+    record_before_model = _record_before_model_line(playback_flow)
+    include_world_response = _includes_world_response_feedback(playback_flow)
+
+    return [
         step(
             "scene_setup",
             "SceneFrame",
@@ -104,51 +138,73 @@ def lesson_steps(
             audio=audio_behavior(opener_audio, autoplay=True, replayable=True, audio_text=opener_audio_text),
             mic=mic_off(),
             props={
-                "initialFrameId": frames[0]["id"] if frames else None,
+                "initialFrameId": opener_frame.get("id") if opener_frame else None,
                 "frames": frames,
+                "stopAtLineType": "world_opener",
+                "playbackFlow": playback_flow,
             },
-        )
+        ),
+        step(
+            "broad_meaning_guess",
+            "ChoicePrompt",
+            frame_id=opener_frame.get("id") if opener_frame else None,
+            frame_mode="single",
+            display_text="What is the best response here?",
+            audio=audio_behavior(opener_audio, autoplay=False, replayable=True, audio_text=opener_audio_text),
+            mic=mic_off(),
+            props={
+                "question": "What is the best response here?",
+                "difficulty": meaning_choice_difficulty(card),
+                "choices": meaning_choices(target, card),
+                "revealDialogueAfterChoice": False,
+                "revealDialogueOnIncorrectOnly": True,
+            },
+        ),
+        step(
+            "scene_recall",
+            "ProductionPrompt",
+            frame_id=learner_frame.get("id") if learner_frame else None,
+            frame_mode="single",
+            display_text="What would you say?",
+            audio=audio_behavior(None, autoplay=False, replayable=False, play_before_mic=False),
+            mic=recording_mic(target_text, target_transliteration, starts_after_audio=False),
+            props={
+                "playbackFlow": playback_flow,
+                "recordBeforeModelLine": record_before_model,
+                "playModelLineAfterAttempt": True,
+                "playWorldResponseAfterAttempt": include_world_response,
+                "showDialogueRevealAfterAttempt": True,
+            },
+        ),
     ]
 
-    steps.extend(
-        [
-            step(
-                "broad_meaning_guess",
-                "ChoicePrompt",
-                frame_id=opener_frame.get("id") if opener_frame else None,
-                frame_mode="single",
-                display_text="What is the best response here?",
-                audio=audio_behavior(opener_audio, autoplay=False, replayable=True, audio_text=opener_audio_text),
-                mic=mic_off(),
-                props={
-                    "question": "What is the best response here?",
-                    "difficulty": meaning_choice_difficulty(card),
-                    "choices": meaning_choices(target, card),
-                },
-            ),
-            step(
-                "scene_recall",
-                "SceneFrame",
-                frame_id=opener_frame.get("id") if opener_frame else None,
-                frame_mode="single",
-                display_text="What would you say?",
-                audio=audio_behavior(
-                    opener_audio,
-                    autoplay=True,
-                    replayable=True,
-                    play_before_mic=True,
-                    audio_text=opener_audio_text,
-                ),
-                mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
-                props={
-                    "initialFrameId": opener_frame.get("id") if opener_frame else None,
-                    "frames": frames,
-                },
-            ),
-        ]
-    )
 
-    return steps
+def _record_before_model_line(playback_flow: list[dict[str, Any]]) -> bool:
+    record_index = next(
+        (index for index, item in enumerate(playback_flow) if item.get("type") == "record_attempt"),
+        -1,
+    )
+    if record_index < 0:
+        return True
+
+    for item in playback_flow[:record_index]:
+        if item.get("type") == "play_line" and item.get("line_type") == "learner_target":
+            return False
+    return True
+
+
+def _includes_world_response_feedback(playback_flow: list[dict[str, Any]]) -> bool:
+    record_index = next(
+        (index for index, item in enumerate(playback_flow) if item.get("type") == "record_attempt"),
+        -1,
+    )
+    if record_index < 0:
+        return False
+
+    for item in playback_flow[record_index + 1 :]:
+        if item.get("type") == "play_line" and item.get("line_type") == "world_response":
+            return True
+    return False
 
 
 def step(

@@ -170,12 +170,52 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         steps = response.json()["lessons"][0]["steps"]
         step_types = [step["type"] for step in steps]
+        setup_step = next(step for step in steps if step["type"] == "scene_setup")
         meaning_step = next(step for step in steps if step["type"] == "broad_meaning_guess")
+        recall_step = next(step for step in steps if step["type"] == "scene_recall")
 
         self.assertEqual(step_types, ["scene_setup", "broad_meaning_guess", "scene_recall"])
+        self.assertEqual(setup_step["props"]["stopAtLineType"], "world_opener")
         self.assertEqual(meaning_step["frameId"], "line-0")
         self.assertEqual(meaning_step["props"]["question"], "What is the best response here?")
         self.assertEqual(meaning_step["props"]["difficulty"], "medium")
+        self.assertFalse(meaning_step["props"]["revealDialogueAfterChoice"])
+        self.assertTrue(meaning_step["props"]["revealDialogueOnIncorrectOnly"])
+        self.assertEqual(recall_step["frameId"], "line-1")
+        self.assertFalse(recall_step["audio"]["autoplay"])
+        self.assertFalse(recall_step["audio"]["playBeforeMic"])
+        self.assertIsNone(recall_step["audio"]["url"])
+        self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
+        self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])
+        self.assertTrue(recall_step["props"]["showDialogueRevealAfterAttempt"])
+        self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
+
+    def test_delayed_review_lesson_tests_before_model_line(self):
+        response = TestClient(app).get(
+            "/api/languages/ja/lessons?scene_set=delayed&lesson=hello"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        steps = response.json()["lessons"][0]["steps"]
+        setup_step = next(step for step in steps if step["type"] == "scene_setup")
+        recall_step = next(step for step in steps if step["type"] == "scene_recall")
+
+        self.assertEqual(setup_step["props"]["stopAtLineType"], "world_opener")
+        self.assertEqual(recall_step["frameId"], "line-1")
+        self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
+        self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
+        self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])
+        self.assertFalse(recall_step["audio"]["playBeforeMic"])
+        playback_flow = recall_step["props"]["playbackFlow"]
+        record_index = next(
+            index for index, item in enumerate(playback_flow) if item["type"] == "record_attempt"
+        )
+        post_record_lines = [
+            item["line_type"]
+            for item in playback_flow[record_index + 1 :]
+            if item["type"] == "play_line"
+        ]
+        self.assertEqual(post_record_lines, ["learner_target", "world_response"])
 
     def test_delayed_scene_set_uses_delayed_review_aliases(self):
         response = TestClient(app).get("/api/languages/ja/lessons?scene_set=delayed&lesson=hello")

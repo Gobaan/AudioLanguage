@@ -667,6 +667,16 @@ body {
   padding: 10px;
 }
 
+.scorecard-target li.passed {
+  background: #eef6f1;
+  border-color: #267247;
+}
+
+.scorecard-target li.failed {
+  background: #f9ece9;
+  border-color: #b94332;
+}
+
 .scorecard-target li div {
   display: grid;
   gap: 3px;

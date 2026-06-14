@@ -1,6 +1,8 @@
-import { validationAttemptAudioUrl, type ValidationScorecard } from '../api/validation';
+import { validationAttemptAudioUrl, type ScorecardAttempt, type ValidationScorecard } from '../api/validation';
 
 export type ScorecardState = 'idle' | 'loading' | 'ready' | 'error';
+
+const ACCURACY_PASS_THRESHOLD = 0.8;
 
 type ValidationScorecardViewProps = {
   sessionId: string | null;
@@ -76,7 +78,7 @@ function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
               </header>
               <ul>
                 {target.attempts.map((attempt) => (
-                  <li key={attempt.attemptId}>
+                  <li key={attempt.attemptId} className={attemptAccuracyClass(attempt)}>
                     <div>
                       <strong>{attempt.stepId}</strong>
                       <span>{scoreLabel(attempt)}</span>
@@ -93,11 +95,8 @@ function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
   );
 }
 
-function scoreLabel(attempt: { buildPromptText?: string; lessonPage?: string; aiScore?: unknown }): string {
-  const score = attempt.aiScore as
-    | { status?: string; result?: { communication?: { status?: string; confidence?: number } } }
-    | null
-    | undefined;
+function scoreLabel(attempt: ScorecardAttempt): string {
+  const score = attempt.aiScore;
   if (!score) {
     return attempt.buildPromptText || attempt.lessonPage || 'Needs score';
   }
@@ -108,4 +107,23 @@ function scoreLabel(attempt: { buildPromptText?: string; lessonPage?: string; ai
   const communication = score.result?.communication;
   const confidence = typeof communication?.confidence === 'number' ? ` ${Math.round(communication.confidence * 100)}%` : '';
   return `${communication?.status || 'scored'}${confidence}`;
+}
+
+function attemptAccuracyClass(attempt: ScorecardAttempt): 'passed' | 'failed' {
+  const confidence = attemptAccuracy(attempt);
+  if (confidence === null) {
+    return 'failed';
+  }
+
+  return confidence > ACCURACY_PASS_THRESHOLD ? 'passed' : 'failed';
+}
+
+function attemptAccuracy(attempt: ScorecardAttempt): number | null {
+  const score = attempt.aiScore;
+  if (!score || score.status !== 'scored') {
+    return null;
+  }
+
+  const confidence = score.result?.communication?.confidence;
+  return typeof confidence === 'number' ? confidence : null;
 }

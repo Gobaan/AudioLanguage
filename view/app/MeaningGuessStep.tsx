@@ -10,6 +10,7 @@ import {
   frameForStep,
   introFramesThroughLineType,
   stepRevealsChoicesAfterAudio,
+  stepRevealsDialogueAfterChoice,
 } from './lessonStepHelpers';
 
 type MeaningGuessStepProps = {
@@ -36,6 +37,9 @@ export function MeaningGuessStep({
   const revealAfterAudio = stepRevealsChoicesAfterAudio(step);
   const introFrames = useMemo(() => introFramesThroughLineType(lesson, step), [lesson, step]);
   const useIntroPlayback = introFrames.length > 0;
+  const choices = choiceOptions(step);
+  const selectedChoice = choices.find((choice) => choice.id === selectedChoiceId);
+  const showDialogueReveal = stepRevealsDialogueAfterChoice(step, selectedChoice);
   const [choicesVisible, setChoicesVisible] = useState(!revealAfterAudio);
   const [isIntroPlaying, setIsIntroPlaying] = useState(false);
   const [activeFrame, setActiveFrame] = useState<SceneFrameData | undefined>(() =>
@@ -171,7 +175,7 @@ export function MeaningGuessStep({
         showCaption={false}
         placeholderLabel="Lesson scene frame"
       />
-      <div className={selectedChoiceId ? 'choice-with-reveal revealed' : 'choice-with-reveal'}>
+      <div className={showDialogueReveal ? 'choice-with-reveal revealed' : 'choice-with-reveal'}>
         {revealAfterAudio && !choicesVisible ? (
           <p className="meaning-guess-listening" aria-live="polite">
             Listen.
@@ -180,12 +184,12 @@ export function MeaningGuessStep({
         {choicesVisible ? (
           <ChoicePrompt
             question={choiceQuestion(step)}
-            choices={choiceOptions(step)}
+            choices={choices}
             selectedChoiceId={selectedChoiceId}
             onSelectChoice={(choice) => onSelectChoice?.(step.id, choice)}
           />
         ) : null}
-        {selectedChoiceId ? <DialogueReveal lines={dialogueRevealLines(lesson)} /> : null}
+        {showDialogueReveal ? <DialogueReveal lines={dialogueRevealLines(lesson)} /> : null}
       </div>
       {replayVisible ? (
         <AudioButton

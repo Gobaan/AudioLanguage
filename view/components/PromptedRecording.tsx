@@ -20,6 +20,7 @@ type PromptedRecordingProps = {
   startLabel?: string;
   nextLabel?: string;
   reRecordLabel?: string;
+  autoConfirmCapture?: boolean;
   onListenComplete?: () => void;
   onRecording?: () => void;
   onCaptured?: (recording: CapturedRecording) => void;
@@ -36,6 +37,7 @@ export function PromptedRecording({
   startLabel = 'Record',
   nextLabel = 'Next',
   reRecordLabel = 'Re-record',
+  autoConfirmCapture = false,
   onListenComplete,
   onRecording,
   onCaptured,
@@ -117,6 +119,11 @@ export function PromptedRecording({
           mediaRecorderRef.current = null;
           const capture = { blob, durationMs, mimeType: blob.type };
           if (onCaptured) {
+            if (autoConfirmCapture) {
+              onCaptured(capture);
+              setState('submitted');
+              return;
+            }
             setPendingCapture(capture);
             setState('captured');
             return;

@@ -1,7 +1,7 @@
 import type { ChoiceOption, Lesson, LessonStep } from '../components';
 import { LessonStepRenderer } from './LessonStepRenderer';
 import { LocalDevLinks } from './LocalDevLinks';
-import { stepBlocksNextUntilChoice } from './lessonStepHelpers';
+import { stepBlocksNextUntilChoice, stepHandlesOwnNext } from './lessonStepHelpers';
 
 type TravellerLessonShellProps = {
   participantId: string | null;
@@ -39,7 +39,7 @@ export function TravellerLessonShell({
   onNext,
 }: TravellerLessonShellProps) {
   const nextLabel = isLastStep ? (hasNextLesson ? 'Next' : 'Scorecard') : 'Next';
-  const stepHandlesNext = step.component !== 'BackwardBuild';
+  const stepHandlesNext = !stepHandlesOwnNext(step);
   const nextBlocked = stepBlocksNextUntilChoice(step, selectedChoiceByStep[step.id]);
 
   return (
@@ -56,6 +56,7 @@ export function TravellerLessonShell({
         onSelectChoice={onSelectChoice}
         onCaptureAttempt={onCaptureAttempt}
         onStepComplete={onNext}
+        nextLabel={nextLabel}
       />
       {stepHandlesNext && !nextBlocked ? (
         <nav className="step-controls" aria-label="Lesson step controls">
