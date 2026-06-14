@@ -884,12 +884,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-my-name-is",
-          "text": "My name is Anna.",
+          "text": "I'm Anna.",
           "meaning_units": [
-            "my",
             "name",
             "proper_noun"
-          ]
+          ],
+          "transliteration": "I'm Anna.",
+          "audio_text": "I'm Anna.",
+          "tts_text": "I'm Anna."
         },
         {
           "index": 2,
@@ -931,12 +933,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-i-dont-understand",
-          "text": "Sorry, I don't understand.",
+          "text": "I don't understand.",
           "meaning_units": [
-            "sorry",
             "not",
             "understand"
-          ]
+          ],
+          "transliteration": "I don't understand.",
+          "audio_text": "I don't understand.",
+          "tts_text": "I don't understand."
         },
         {
           "index": 2,
@@ -1109,11 +1113,15 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "My name is Anna.",
-          "transliteration": "My name is Anna.",
-          "audio_text": "My name is Anna.",
-          "meaning_units": [],
-          "target_id": "en-target-my-name-is"
+          "text": "I'm Anna.",
+          "transliteration": "I'm Anna.",
+          "audio_text": "I'm Anna.",
+          "meaning_units": [
+            "name",
+            "proper_noun"
+          ],
+          "target_id": "en-target-my-name-is",
+          "tts_text": "I'm Anna."
         },
         {
           "index": 2,
@@ -1151,11 +1159,15 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Sorry, I don't understand.",
-          "transliteration": "Sorry, I don't understand.",
-          "audio_text": "Sorry, I don't understand.",
-          "meaning_units": [],
-          "target_id": "en-target-i-dont-understand"
+          "text": "I don't understand.",
+          "transliteration": "I don't understand.",
+          "audio_text": "I don't understand.",
+          "meaning_units": [
+            "not",
+            "understand"
+          ],
+          "target_id": "en-target-i-dont-understand",
+          "tts_text": "I don't understand."
         },
         {
           "index": 2,
@@ -1328,12 +1340,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-my-name-is",
-          "text": "My name is Anna.",
+          "text": "I'm Anna.",
           "meaning_units": [
-            "my",
             "name",
             "proper_noun"
-          ]
+          ],
+          "transliteration": "I'm Anna.",
+          "audio_text": "I'm Anna.",
+          "tts_text": "I'm Anna."
         },
         {
           "index": 2,
@@ -1372,12 +1386,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-i-dont-understand",
-          "text": "Sorry, I don't understand.",
+          "text": "I don't understand.",
           "meaning_units": [
-            "sorry",
             "not",
             "understand"
-          ]
+          ],
+          "transliteration": "I don't understand.",
+          "audio_text": "I don't understand.",
+          "tts_text": "I don't understand."
         },
         {
           "index": 2,

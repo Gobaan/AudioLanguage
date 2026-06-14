@@ -71,16 +71,15 @@
     {
       "id": "zh-target-i-dont-understand",
       "function_id": "say_do_not_understand",
-      "canonical": "Bu hao yisi, wo bu dong.",
-      "transliteration": "Bu hao yisi, wo bu dong.",
-      "display_meaning": "Sorry, I don't understand.",
+      "canonical": "我不懂。",
+      "transliteration": "Wo bu dong.",
+      "display_meaning": "I don't understand.",
       "meaning_units": [
-        "sorry",
         "not",
         "understand"
       ],
       "accepted_variants": [
-        "Wo bu dong.",
+        "Bu hao yisi, wo bu dong.",
         "Duibuqi, wo bu dong."
       ],
       "wrong_for_context_examples": [
@@ -95,10 +94,12 @@
       "backward_build_spoken_prompts": [
         "懂。",
         "不懂。",
-        "我不懂。",
-        "意思我不懂。",
-        "不好意思我不懂。",
-        "不好意思，我不懂。"
+        "我不懂。"
+      ],
+      "backward_build_units": [
+        "Wo",
+        "bu",
+        "dong"
       ]
     },
     {

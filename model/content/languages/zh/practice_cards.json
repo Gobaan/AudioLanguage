@@ -229,7 +229,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "zh-target-i-dont-understand",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "わかりません。",
+      "expected_response": "我不懂。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -468,7 +468,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "zh-target-i-dont-understand",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "Bu hao yisi, wo bu dong.",
+      "expected_response": "我不懂。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -741,7 +741,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "zh-target-i-dont-understand",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "Bu hao yisi, wo bu dong.",
+      "expected_response": "我不懂。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -1134,7 +1134,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "zh-target-i-dont-understand",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "わかりません。",
+      "expected_response": "我不懂。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -1528,7 +1528,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "zh-target-i-dont-understand",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "わかりません。",
+      "expected_response": "我不懂。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",

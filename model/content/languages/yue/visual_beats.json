@@ -168,7 +168,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 0,
-      "line_text": "M goi hai ni dou tin.",
+      "line_text": "Ngo m ming.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -194,7 +194,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 1,
-      "line_text": "M hou ji si, ngo m ming.",
+      "line_text": "Ngo m ming.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -221,7 +221,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 2,
-      "line_text": "M gan yiu. Ngo bong nei.",
+      "line_text": "Ngo m ming.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -733,7 +733,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 0,
-      "line_text": "M goi aam ni dou.",
+      "line_text": "Ngo m ming.",
       "timing_role": "cue",
       "meaning_units": [
         "this",
@@ -760,7 +760,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 1,
-      "line_text": "M hou ji si, ngo m ming.",
+      "line_text": "Ngo m ming.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -787,7 +787,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 2,
-      "line_text": "M gan yiu. Ngo bong nei.",
+      "line_text": "Ngo m ming.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -813,7 +813,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 0,
-      "line_text": "M goi hai ni dou tin.",
+      "line_text": "Ngo m ming.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -839,7 +839,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 1,
-      "line_text": "M hou ji si, ngo m ming.",
+      "line_text": "Ngo m ming.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -866,7 +866,7 @@
       "target_id": "yue-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 2,
-      "line_text": "M gan yiu. Ngo bong nei.",
+      "line_text": "Ngo m ming.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"

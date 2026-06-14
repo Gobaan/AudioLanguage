@@ -85,7 +85,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "school-hallway-classmate",
       "line_index": 0,
-      "line_text": "What is your name?",
+      "line_text": "I'm Anna.",
       "timing_role": "cue",
       "meaning_units": [
         "your",
@@ -113,7 +113,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "school-hallway-classmate",
       "line_index": 1,
-      "line_text": "My name is Anna.",
+      "line_text": "I'm Anna.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "my",
@@ -143,7 +143,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "school-hallway-classmate",
       "line_index": 2,
-      "line_text": "Nice to meet you, Anna.",
+      "line_text": "I'm Anna.",
       "timing_role": "resolution",
       "meaning_units": [
         "positive_response"
@@ -169,7 +169,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 0,
-      "line_text": "Please fill out this form.",
+      "line_text": "I don't understand.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -195,7 +195,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 1,
-      "line_text": "Sorry, I don't understand.",
+      "line_text": "I don't understand.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -222,7 +222,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 2,
-      "line_text": "That's okay. I can help.",
+      "line_text": "I don't understand.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -566,7 +566,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "language-class-name-tags",
       "line_index": 0,
-      "line_text": "What's your name?",
+      "line_text": "I'm Anna.",
       "timing_role": "cue",
       "meaning_units": [
         "your",
@@ -594,7 +594,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "language-class-name-tags",
       "line_index": 1,
-      "line_text": "My name is Anna.",
+      "line_text": "I'm Anna.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "my",
@@ -624,7 +624,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "language-class-name-tags",
       "line_index": 2,
-      "line_text": "Nice to meet you, Anna.",
+      "line_text": "I'm Anna.",
       "timing_role": "resolution",
       "meaning_units": [
         "positive_response"
@@ -650,7 +650,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "community-table-introduction",
       "line_index": 0,
-      "line_text": "What is your name?",
+      "line_text": "I'm Anna.",
       "timing_role": "cue",
       "meaning_units": [
         "your",
@@ -678,7 +678,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "community-table-introduction",
       "line_index": 1,
-      "line_text": "My name is Anna.",
+      "line_text": "I'm Anna.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "my",
@@ -708,7 +708,7 @@
       "target_id": "en-target-my-name-is",
       "scene_id": "community-table-introduction",
       "line_index": 2,
-      "line_text": "Nice to meet you, Anna.",
+      "line_text": "I'm Anna.",
       "timing_role": "resolution",
       "meaning_units": [
         "positive_response"
@@ -734,7 +734,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 0,
-      "line_text": "Press here, please.",
+      "line_text": "I don't understand.",
       "timing_role": "cue",
       "meaning_units": [
         "this",
@@ -761,7 +761,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 1,
-      "line_text": "Sorry, I don't understand.",
+      "line_text": "I don't understand.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -788,7 +788,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 2,
-      "line_text": "No problem. I'll help.",
+      "line_text": "I don't understand.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -814,7 +814,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 0,
-      "line_text": "Please fill out this form.",
+      "line_text": "I don't understand.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -840,7 +840,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 1,
-      "line_text": "Sorry, I don't understand.",
+      "line_text": "I don't understand.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -867,7 +867,7 @@
       "target_id": "en-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 2,
-      "line_text": "That's okay. I can help.",
+      "line_text": "I don't understand.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"

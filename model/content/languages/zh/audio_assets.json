@@ -212,8 +212,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "不好意思，我不懂。",
-      "transliteration": "Bu hao yisi, wo bu dong.",
+      "text": "我不懂。",
+      "transliteration": "Wo bu dong.",
       "audio_path": "audio/generated/zh/zh-repair-dont-understand/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -602,8 +602,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "不好意思，我不懂。",
-      "transliteration": "Bu hao yisi, wo bu dong.",
+      "text": "我不懂。",
+      "transliteration": "Wo bu dong.",
       "audio_path": "audio/generated/zh/repair-ticket-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -992,8 +992,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "不好意思，我不懂。",
-      "transliteration": "Bu hao yisi, wo bu dong.",
+      "text": "我不懂。",
+      "transliteration": "Wo bu dong.",
       "audio_path": "audio/generated/zh/repair-clinic-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true

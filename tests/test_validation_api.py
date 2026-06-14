@@ -331,8 +331,8 @@ class ValidationApiTests(unittest.TestCase):
     def test_attempt_expected_phrase_prefers_backward_build_prompt_text(self):
         expected_text, expected_transliteration = attempt_expected_phrase(
             {
-                "expectedText": "My name is Anna.",
-                "expectedTransliteration": "My name is Anna.",
+                "expectedText": "I'm Anna.",
+                "expectedTransliteration": "I'm Anna.",
                 "buildPromptText": "Anna.",
             }
         )
@@ -363,8 +363,8 @@ class ValidationApiTests(unittest.TestCase):
                             "metadata": (
                                 '{"attemptId":"build-attempt-1","language":"en","sceneSet":"mvp",'
                                 '"lessonId":"en-card-introduce-self-dialogue-practice","stepId":"backward_build",'
-                                '"targetId":"en-target-my-name-is","expectedText":"My name is Anna.",'
-                                '"expectedTransliteration":"My name is Anna.",'
+                                '"targetId":"en-target-my-name-is","expectedText":"I\'m Anna.",'
+                                '"expectedTransliteration":"I\'m Anna.",'
                                 '"buildPromptText":"Anna.",'
                                 '"targetAudioUrl":"/audio/generated/en/backward-build/en-target-my-name-is/build-3.mp3"}'
                             )

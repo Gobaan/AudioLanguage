@@ -199,7 +199,7 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "backward_build",
             ],
         )
-        self.assertEqual(backward_build["props"]["prompts"][-1]["text"], "My name is Anna.")
+        self.assertEqual(backward_build["props"]["prompts"][-1]["text"], "I'm Anna.")
 
     def test_japanese_first_session_uses_short_beginner_chunks(self):
         session = load_language_session(

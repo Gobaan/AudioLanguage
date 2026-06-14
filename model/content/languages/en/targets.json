@@ -81,15 +81,14 @@
     {
       "id": "en-target-my-name-is",
       "function_id": "introduce_self",
-      "canonical": "My name is Anna.",
+      "canonical": "I'm Anna.",
       "display_meaning": "My name is Anna.",
       "meaning_units": [
-        "my",
         "name",
         "proper_noun"
       ],
       "accepted_variants": [
-        "I'm Anna.",
+        "My name is Anna.",
         "My name is Ana."
       ],
       "valid_but_off_target": [
@@ -102,7 +101,8 @@
       "notes": {
         "proper_noun": "Anna",
         "register": "neutral"
-      }
+      },
+      "transliteration": "I'm Anna."
     },
     {
       "id": "en-target-say-it-slowly",
@@ -134,15 +134,14 @@
     {
       "id": "en-target-i-dont-understand",
       "function_id": "say_do_not_understand",
-      "canonical": "Sorry, I don't understand.",
-      "display_meaning": "Sorry, I don't understand.",
+      "canonical": "I don't understand.",
+      "display_meaning": "I don't understand.",
       "meaning_units": [
-        "sorry",
         "not",
         "understand"
       ],
       "accepted_variants": [
-        "I don't understand.",
+        "Sorry, I don't understand.",
         "Sorry, I do not understand."
       ],
       "valid_but_off_target": [
@@ -154,7 +153,8 @@
       ],
       "notes": {
         "register": "polite-neutral"
-      }
+      },
+      "transliteration": "I don't understand."
     },
     {
       "id": "en-target-can-you-help-me",

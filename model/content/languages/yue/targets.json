@@ -71,17 +71,16 @@
     {
       "id": "yue-target-i-dont-understand",
       "function_id": "say_do_not_understand",
-      "canonical": "M hou ji si, ngo m ming.",
-      "transliteration": "M hou ji si, ngo m ming.",
-      "display_meaning": "Sorry, I don't understand.",
+      "canonical": "我唔明。",
+      "transliteration": "Ngo m ming.",
+      "display_meaning": "I don't understand.",
       "meaning_units": [
-        "sorry",
         "not",
         "understand"
       ],
       "accepted_variants": [
-        "Ngo m ming.",
-        "M goi, ngo m ming."
+        "M goi, ngo m ming.",
+        "M hou ji si, ngo m ming."
       ],
       "wrong_for_context_examples": [
         "Hai.",
@@ -95,11 +94,12 @@
       "backward_build_spoken_prompts": [
         "明。",
         "唔明。",
-        "我唔明。",
-        "思，我唔明。",
-        "記思，我唔明。",
-        "好意思，我唔明。",
-        "唔好意思，我唔明。"
+        "我唔明。"
+      ],
+      "backward_build_units": [
+        "Ngo",
+        "m",
+        "ming"
       ]
     },
     {

@@ -1460,8 +1460,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "My name is Anna.",
-      "transliteration": "",
+      "text": "I'm Anna.",
+      "transliteration": "I'm Anna.",
       "audio_path": "audio/generated/en/en-introduce-self/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -1538,8 +1538,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "Sorry, I don't understand.",
-      "transliteration": "",
+      "text": "I don't understand.",
+      "transliteration": "I don't understand.",
       "audio_path": "audio/generated/en/en-repair-dont-understand/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -1850,8 +1850,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "My name is Anna.",
-      "transliteration": "My name is Anna.",
+      "text": "I'm Anna.",
+      "transliteration": "I'm Anna.",
       "audio_path": "audio/generated/en/introduce-class-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -1928,8 +1928,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "Sorry, I don't understand.",
-      "transliteration": "Sorry, I don't understand.",
+      "text": "I don't understand.",
+      "transliteration": "I don't understand.",
       "audio_path": "audio/generated/en/repair-ticket-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2240,8 +2240,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "My name is Anna.",
-      "transliteration": "",
+      "text": "I'm Anna.",
+      "transliteration": "I'm Anna.",
       "audio_path": "audio/generated/en/introduce-community-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2318,8 +2318,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "Sorry, I don't understand.",
-      "transliteration": "",
+      "text": "I don't understand.",
+      "transliteration": "I don't understand.",
       "audio_path": "audio/generated/en/repair-clinic-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false

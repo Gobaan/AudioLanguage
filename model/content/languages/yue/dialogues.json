@@ -142,12 +142,11 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "yue-target-i-dont-understand",
-          "text": "M hou ji si, ngo m ming.",
-          "transliteration": "M hou ji si, ngo m ming.",
-          "audio_text": "M hou ji si, ngo m ming.",
-          "tts_text": "唔好意思，我唔明。",
+          "text": "我唔明。",
+          "transliteration": "Ngo m ming.",
+          "audio_text": "Ngo m ming.",
+          "tts_text": "我唔明。",
           "meaning_units": [
-            "sorry",
             "not",
             "understand"
           ]
@@ -388,11 +387,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "M hou ji si, ngo m ming.",
-          "transliteration": "M hou ji si, ngo m ming.",
-          "audio_text": "M hou ji si, ngo m ming.",
-          "meaning_units": [],
-          "tts_text": "唔好意思，我唔明。",
+          "text": "我唔明。",
+          "transliteration": "Ngo m ming.",
+          "audio_text": "Ngo m ming.",
+          "meaning_units": [
+            "not",
+            "understand"
+          ],
+          "tts_text": "我唔明。",
           "target_id": "yue-target-i-dont-understand"
         },
         {
@@ -637,12 +639,11 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "yue-target-i-dont-understand",
-          "text": "M hou ji si, ngo m ming.",
-          "transliteration": "M hou ji si, ngo m ming.",
-          "audio_text": "M hou ji si, ngo m ming.",
-          "tts_text": "唔好意思，我唔明。",
+          "text": "我唔明。",
+          "transliteration": "Ngo m ming.",
+          "audio_text": "Ngo m ming.",
+          "tts_text": "我唔明。",
           "meaning_units": [
-            "sorry",
             "not",
             "understand"
           ]

@@ -171,7 +171,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 0,
-      "line_text": "Qing zai zheli tian.",
+      "line_text": "Wo bu dong.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -197,7 +197,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 1,
-      "line_text": "Bu hao yisi, wo bu dong.",
+      "line_text": "Wo bu dong.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -224,7 +224,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "busy-service-counter",
       "line_index": 2,
-      "line_text": "Mei guanxi. Wo bang ni.",
+      "line_text": "Wo bu dong.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -736,7 +736,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 0,
-      "line_text": "Qing an zheli.",
+      "line_text": "Wo bu dong.",
       "timing_role": "cue",
       "meaning_units": [
         "this",
@@ -763,7 +763,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 1,
-      "line_text": "Bu hao yisi, wo bu dong.",
+      "line_text": "Wo bu dong.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -790,7 +790,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "ticket-machine-help",
       "line_index": 2,
-      "line_text": "Mei guanxi. Wo bang ni.",
+      "line_text": "Wo bu dong.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"
@@ -816,7 +816,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 0,
-      "line_text": "Qing zai zheli tian.",
+      "line_text": "Wo bu dong.",
       "timing_role": "cue",
       "meaning_units": [
         "this"
@@ -842,7 +842,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 1,
-      "line_text": "Bu hao yisi, wo bu dong.",
+      "line_text": "Wo bu dong.",
       "timing_role": "learner_turn",
       "meaning_units": [
         "not",
@@ -869,7 +869,7 @@
       "target_id": "zh-target-i-dont-understand",
       "scene_id": "clinic-form-counter",
       "line_index": 2,
-      "line_text": "Mei guanxi. Wo bang ni.",
+      "line_text": "Wo bu dong.",
       "timing_role": "resolution",
       "meaning_units": [
         "help"

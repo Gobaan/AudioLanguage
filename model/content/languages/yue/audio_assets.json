@@ -212,8 +212,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "唔好意思，我唔明。",
-      "transliteration": "M hou ji si, ngo m ming.",
+      "text": "我唔明。",
+      "transliteration": "Ngo m ming.",
       "audio_path": "audio/generated/yue/yue-repair-dont-understand/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -602,8 +602,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "唔好意思，我唔明。",
-      "transliteration": "M hou ji si, ngo m ming.",
+      "text": "我唔明。",
+      "transliteration": "Ngo m ming.",
       "audio_path": "audio/generated/yue/repair-ticket-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -992,8 +992,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "唔好意思，我唔明。",
-      "transliteration": "M hou ji si, ngo m ming.",
+      "text": "我唔明。",
+      "transliteration": "Ngo m ming.",
       "audio_path": "audio/generated/yue/repair-clinic-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false

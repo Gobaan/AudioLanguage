@@ -435,7 +435,7 @@
       "correct_function_id": "introduce_self",
       "target_id": "en-target-my-name-is",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "アンナです。",
+      "expected_response": "I'm Anna.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -491,7 +491,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "en-target-i-dont-understand",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "わかりません。",
+      "expected_response": "I don't understand.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -741,7 +741,7 @@
       "correct_function_id": "introduce_self",
       "target_id": "en-target-my-name-is",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "My name is Anna.",
+      "expected_response": "I'm Anna.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -819,7 +819,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "en-target-i-dont-understand",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "Sorry, I don't understand.",
+      "expected_response": "I don't understand.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -1110,7 +1110,7 @@
       "correct_function_id": "introduce_self",
       "target_id": "en-target-my-name-is",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "アンナです。",
+      "expected_response": "I'm Anna.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -1189,7 +1189,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "en-target-i-dont-understand",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "わかりません。",
+      "expected_response": "I don't understand.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -1504,7 +1504,7 @@
       "correct_function_id": "introduce_self",
       "target_id": "en-target-my-name-is",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "アンナです。",
+      "expected_response": "I'm Anna.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",
@@ -1583,7 +1583,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "en-target-i-dont-understand",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "わかりません。",
+      "expected_response": "I don't understand.",
       "ai_scene_contract": {
         "language_being_practiced": "English",
         "support_language": "English",

@@ -144,12 +144,11 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "zh-target-i-dont-understand",
-          "text": "Bu hao yisi, wo bu dong.",
-          "transliteration": "Bu hao yisi, wo bu dong.",
-          "audio_text": "Bu hao yisi, wo bu dong.",
-          "tts_text": "不好意思，我不懂。",
+          "text": "我不懂。",
+          "transliteration": "Wo bu dong.",
+          "audio_text": "Wo bu dong.",
+          "tts_text": "我不懂。",
           "meaning_units": [
-            "sorry",
             "not",
             "understand"
           ]
@@ -390,11 +389,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Bu hao yisi, wo bu dong.",
-          "transliteration": "Bu hao yisi, wo bu dong.",
-          "audio_text": "Bu hao yisi, wo bu dong.",
-          "meaning_units": [],
-          "tts_text": "不好意思，我不懂。",
+          "text": "我不懂。",
+          "transliteration": "Wo bu dong.",
+          "audio_text": "Wo bu dong.",
+          "meaning_units": [
+            "not",
+            "understand"
+          ],
+          "tts_text": "我不懂。",
           "target_id": "zh-target-i-dont-understand"
         },
         {
@@ -639,12 +641,11 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "zh-target-i-dont-understand",
-          "text": "Bu hao yisi, wo bu dong.",
-          "transliteration": "Bu hao yisi, wo bu dong.",
-          "audio_text": "Bu hao yisi, wo bu dong.",
-          "tts_text": "不好意思，我不懂。",
+          "text": "我不懂。",
+          "transliteration": "Wo bu dong.",
+          "audio_text": "Wo bu dong.",
+          "tts_text": "我不懂。",
           "meaning_units": [
-            "sorry",
             "not",
             "understand"
           ]
