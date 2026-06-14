@@ -249,13 +249,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "yue-target-one-local-food-please",
-          "text": "Jat go bo lo baau, m goi.",
-          "transliteration": "Jat go bo lo baau, m goi.",
-          "audio_text": "Jat go bo lo baau, m goi.",
-          "tts_text": "一個菠蘿包，唔該。",
+          "text": "一个，唔该。",
+          "transliteration": "Jat go, m goi.",
+          "audio_text": "Jat go, m goi.",
+          "tts_text": "一个，唔该。",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
           ]
         },
@@ -479,11 +478,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Jat go bo lo baau, m goi.",
-          "transliteration": "Jat go bo lo baau, m goi.",
-          "audio_text": "Jat go bo lo baau, m goi.",
-          "meaning_units": [],
-          "tts_text": "一個菠蘿包，唔該。",
+          "text": "一个，唔该。",
+          "transliteration": "Jat go, m goi.",
+          "audio_text": "Jat go, m goi.",
+          "meaning_units": [
+            "one",
+            "please"
+          ],
+          "tts_text": "一个，唔该。",
           "target_id": "yue-target-one-local-food-please"
         },
         {
@@ -740,13 +742,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "yue-target-one-local-food-please",
-          "text": "Jat go bo lo baau, m goi.",
-          "transliteration": "Jat go bo lo baau, m goi.",
-          "audio_text": "Jat go bo lo baau, m goi.",
-          "tts_text": "一個菠蘿包，唔該。",
+          "text": "一个，唔该。",
+          "transliteration": "Jat go, m goi.",
+          "audio_text": "Jat go, m goi.",
+          "tts_text": "一个，唔该。",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
           ]
         },

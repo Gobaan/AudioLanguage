@@ -212,36 +212,36 @@
       "function_id": "order_local_food",
       "step_type": "broad_meaning_guess",
       "correct": {
-        "id": "order_food",
-        "label": "Ordering one food item."
+        "id": "order_one_please",
+        "label": "One, please."
       },
       "levels": {
         "easy": [
           {
-            "id": "ask_hospital",
-            "label": "Asking where the hospital is."
+            "id": "please_only",
+            "label": "Please only."
           },
           {
-            "id": "introduce_self",
-            "label": "Giving their name."
+            "id": "one_only",
+            "label": "One only."
           },
           {
-            "id": "say_dont_understand",
-            "label": "Saying they do not understand."
+            "id": "ask_price",
+            "label": "Asking how much it costs."
           }
         ],
         "medium": [
           {
-            "id": "ask_price",
-            "label": "Asking how much it costs."
+            "id": "thank_server",
+            "label": "Thanking the server."
           },
           {
             "id": "ask_for_water",
             "label": "Asking for water."
           },
           {
-            "id": "thank_server",
-            "label": "Thanking the server."
+            "id": "name_food_item",
+            "label": "Naming the food item only."
           }
         ],
         "hard": [

@@ -360,7 +360,7 @@
       "line_text": "ஒரு தோசை, தயவு செய்து.",
       "timing_role": "learner_turn",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
       "asset_paths": {
@@ -370,8 +370,8 @@
       },
       "gesture_mapping": [
         {
-          "meaning_unit": "food_item,please",
-          "visual_cue": "learner points to a sandwich and asks politely"
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
         }
       ],
       "proper_noun_labels": [],
@@ -1083,7 +1083,7 @@
       "line_text": "ஒரு சாண்ட்விச், தயவுசெய்து.",
       "timing_role": "learner_turn",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
       "asset_paths": {
@@ -1093,8 +1093,8 @@
       },
       "gesture_mapping": [
         {
-          "meaning_unit": "food_item,please",
-          "visual_cue": "convenience-store-sandwich learner_target visual cue for transfer practice"
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
         }
       ],
       "proper_noun_labels": [],
@@ -1162,7 +1162,7 @@
       "line_text": "ஒரு தோசை, தயவு செய்து.",
       "timing_role": "learner_turn",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
       "asset_paths": {
@@ -1172,8 +1172,8 @@
       },
       "gesture_mapping": [
         {
-          "meaning_unit": "food_item,please",
-          "visual_cue": "bakery-counter-sandwich learner_target visual cue for delayed_review practice"
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
         }
       ],
       "proper_noun_labels": [],

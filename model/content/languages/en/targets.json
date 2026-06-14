@@ -359,20 +359,23 @@
     {
       "id": "en-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "One sandwich, please.",
-      "display_meaning": "One local food item, please.",
+      "canonical": "One, please.",
+      "display_meaning": "One, please.",
       "meaning_units": [
         "one",
-        "food_item",
         "please"
       ],
+      "meaning_unit_labels": {
+        "one": "One",
+        "please": "Please"
+      },
       "accepted_variants": [
-        "Can I have one sandwich, please?",
-        "One sandwich, please."
+        "One please.",
+        "Can I have one, please?"
       ],
       "valid_but_off_target": [
-        "I want a sandwich.",
-        "A sandwich, please."
+        "Please.",
+        "I want one."
       ],
       "wrong_for_context_examples": [
         "Where is the hospital?",
@@ -381,8 +384,25 @@
       "notes": {
         "food_slot": "sandwich",
         "register": "polite-neutral",
-        "localization_note": "Food item should be culturally localized per language and region."
-      }
+        "localization_note": "Food item should be culturally localized per language and region.",
+        "spoken_target": "one + please; food item is scene-visible only"
+      },
+      "transliteration": "One, please.",
+      "backward_build_spoken_prompts": [
+        "please.",
+        "One,",
+        "One, please."
+      ],
+      "backward_build_focus_units": [
+        "please",
+        "one",
+        "full"
+      ],
+      "backward_build_units": [
+        "please",
+        "One",
+        "please"
+      ]
     },
     {
       "id": "en-target-where-is-hospital",
@@ -529,7 +549,7 @@
       ],
       "wrong_for_context_examples": [
         "Hi!",
-        "One sandwich, please."
+        "One, please."
       ],
       "semantic_slots": {
         "required": {

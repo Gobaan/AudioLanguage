@@ -1694,8 +1694,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "One sandwich, please.",
-      "transliteration": "",
+      "text": "One, please.",
+      "transliteration": "One, please.",
       "audio_path": "audio/generated/en/en-order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2084,8 +2084,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "One sandwich, please.",
-      "transliteration": "One sandwich, please.",
+      "text": "One, please.",
+      "transliteration": "One, please.",
       "audio_path": "audio/generated/en/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -2474,8 +2474,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "One sandwich, please.",
-      "transliteration": "",
+      "text": "One, please.",
+      "transliteration": "One, please.",
       "audio_path": "audio/generated/en/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false

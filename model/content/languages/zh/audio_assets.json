@@ -368,8 +368,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个包子，谢谢。",
-      "transliteration": "Yi ge baozi, xiexie.",
+      "text": "一个，谢谢。",
+      "transliteration": "Yi ge, xiexie.",
       "audio_path": "audio/generated/zh/zh-order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -758,8 +758,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个包子，谢谢。",
-      "transliteration": "Yi ge baozi, xiexie.",
+      "text": "一个，谢谢。",
+      "transliteration": "Yi ge, xiexie.",
       "audio_path": "audio/generated/zh/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1148,8 +1148,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一个包子，谢谢。",
-      "transliteration": "Yi ge baozi, xiexie.",
+      "text": "一个，谢谢。",
+      "transliteration": "Yi ge, xiexie.",
       "audio_path": "audio/generated/zh/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true

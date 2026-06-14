@@ -267,6 +267,28 @@ class LessonsApiTests(unittest.TestCase):
             any(choice["label"].startswith("The learner says") for choice in meaning_step["props"]["choices"])
         )
 
+    def test_food_order_anchor_meaning_guess_highlights_one_and_please(self):
+        response = TestClient(app).get("/api/languages/en/lessons?lesson=food-order")
+
+        self.assertEqual(response.status_code, 200)
+        lesson = response.json()["lessons"][0]
+        meaning_step = next(step for step in lesson["steps"] if step["type"] == "broad_meaning_guess")
+        backward_build = next(step for step in lesson["steps"] if step["type"] == "backward_build")
+        choice_labels = [choice["label"] for choice in meaning_step["props"]["choices"]]
+
+        self.assertEqual(meaning_step["props"]["question"], "What did they say?")
+        self.assertIn("One, please.", choice_labels)
+        self.assertIn("Please only.", choice_labels)
+        self.assertIn("One only.", choice_labels)
+        self.assertEqual(
+            [prompt.get("focusLabel") for prompt in backward_build["props"]["prompts"]],
+            ["Please", "One", "One + please"],
+        )
+        self.assertEqual(
+            [chunk["text"] for chunk in backward_build["props"]["chunks"]],
+            ["One", "Please"],
+        )
+
     def test_lessons_endpoint_rejects_unknown_preview_lesson(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=missing")
 

@@ -368,8 +368,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一個菠蘿包，唔該。",
-      "transliteration": "Jat go bo lo baau, m goi.",
+      "text": "一个，唔该。",
+      "transliteration": "Jat go, m goi.",
       "audio_path": "audio/generated/yue/yue-order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -758,8 +758,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一個菠蘿包，唔該。",
-      "transliteration": "Jat go bo lo baau, m goi.",
+      "text": "一个，唔该。",
+      "transliteration": "Jat go, m goi.",
       "audio_path": "audio/generated/yue/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": false
@@ -1148,8 +1148,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "一個菠蘿包，唔該。",
-      "transliteration": "Jat go bo lo baau, m goi.",
+      "text": "一个，唔该。",
+      "transliteration": "Jat go, m goi.",
       "audio_path": "audio/generated/yue/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": false

@@ -1085,13 +1085,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-one-local-food-please",
-          "text": "ஒரு தோசை, தயவு செய்து.",
-          "transliteration": "Oru dosai, thayavu seithu.",
+          "text": "ஒரு, தயவு செய்து.",
+          "transliteration": "Oru, thayavu seithu.",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
-          ]
+          ],
+          "audio_text": "Oru, thayavu seithu.",
+          "tts_text": "ஒரு, தயவு செய்து."
         },
         {
           "index": 2,
@@ -1313,12 +1314,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-one-local-food-please",
-          "text": "ஒரு சாண்ட்விச், தயவுசெய்து.",
-          "transliteration": "Oru sandwich, thayavu seythu.",
+          "text": "ஒரு, தயவு செய்து.",
+          "transliteration": "Oru, thayavu seithu.",
           "meaning_units": [
-            "food_item",
+            "one",
             "please"
-          ]
+          ],
+          "audio_text": "Oru, thayavu seithu.",
+          "tts_text": "ஒரு, தயவு செய்து."
         },
         {
           "index": 2,
@@ -1546,13 +1549,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ta-target-one-local-food-please",
-          "text": "ஒரு தோசை, தயவு செய்து.",
-          "transliteration": "Oru dosai, thayavu seithu.",
+          "text": "ஒரு, தயவு செய்து.",
+          "transliteration": "Oru, thayavu seithu.",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
-          ]
+          ],
+          "audio_text": "Oru, thayavu seithu.",
+          "tts_text": "ஒரு, தயவு செய்து."
         },
         {
           "index": 2,

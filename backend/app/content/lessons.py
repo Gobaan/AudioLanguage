@@ -159,12 +159,46 @@ def meaning_choice_difficulty(card: dict[str, Any]) -> str:
     return "easy"
 
 
+ANCHOR_MEANING_CHOICE_OVERRIDES: dict[str, dict[str, str]] = {
+    "order_local_food": {
+        "question": "What did they say?",
+        "display_text": "What did they say?",
+    },
+}
+
+
+def meaning_choice_question(card: dict[str, Any], target: dict[str, Any]) -> str:
+    function_id = str(card.get("correct_function_id") or target.get("function_id") or "")
+    if card.get("stage") == "guided_scene_production":
+        override = ANCHOR_MEANING_CHOICE_OVERRIDES.get(function_id)
+        if override:
+            return override["question"]
+    if card.get("stage") in {"same_day_transfer", "delayed_review"}:
+        return "What is the best response here?"
+    return "What happened?"
+
+
+def meaning_choice_display_text(card: dict[str, Any], target: dict[str, Any]) -> str:
+    function_id = str(card.get("correct_function_id") or target.get("function_id") or "")
+    if card.get("stage") == "guided_scene_production":
+        override = ANCHOR_MEANING_CHOICE_OVERRIDES.get(function_id)
+        if override:
+            return override["display_text"]
+    if card.get("stage") in {"same_day_transfer", "delayed_review"}:
+        return "What is the best response here?"
+    return "What happened?"
+
+
 def chunks_for_target(target: dict[str, Any]) -> list[dict[str, Any]]:
-    return [
-        {
-            "id": f"{target['id']}-chunk-{index}",
-            "text": str(unit).replace("_", " "),
-            "meaning": str(unit).replace("_", " "),
-        }
-        for index, unit in enumerate(target.get("meaning_units", []))
-    ]
+    labels = target.get("meaning_unit_labels", {})
+    chunks = []
+    for index, unit in enumerate(target.get("meaning_units", [])):
+        unit_key = str(unit)
+        chunks.append(
+            {
+                "id": f"{target['id']}-chunk-{index}",
+                "text": str(labels.get(unit_key, unit_key.replace("_", " "))).strip(),
+                "meaning": unit_key,
+            }
+        )
+    return chunks

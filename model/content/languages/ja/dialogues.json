@@ -224,12 +224,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-one-local-food-please",
-          "text": "サンドイッチください。",
-          "transliteration": "Sandoicchi kudasai.",
+          "text": "一つください。",
+          "transliteration": "Hitotsu kudasai.",
           "meaning_units": [
-            "food_item",
+            "one",
             "please"
-          ]
+          ],
+          "audio_text": "Hitotsu kudasai.",
+          "tts_text": "一つください。"
         },
         {
           "index": 2,
@@ -695,12 +697,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-one-local-food-please",
-          "text": "サンドイッチください。",
-          "transliteration": "Sandoicchi kudasai.",
+          "text": "一つください。",
+          "transliteration": "Hitotsu kudasai.",
           "meaning_units": [
-            "food_item",
+            "one",
             "please"
-          ]
+          ],
+          "audio_text": "Hitotsu kudasai.",
+          "tts_text": "一つください。"
         },
         {
           "index": 2,
@@ -741,12 +745,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "ja-target-one-local-food-please",
-          "text": "サンドイッチください。",
-          "transliteration": "Sandoicchi kudasai.",
+          "text": "一つください。",
+          "transliteration": "Hitotsu kudasai.",
           "meaning_units": [
-            "food_item",
+            "one",
             "please"
-          ]
+          ],
+          "audio_text": "Hitotsu kudasai.",
+          "tts_text": "一つください。"
         },
         {
           "index": 2,

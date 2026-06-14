@@ -251,13 +251,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "zh-target-one-local-food-please",
-          "text": "Yi ge baozi, xiexie.",
-          "transliteration": "Yi ge baozi, xiexie.",
-          "audio_text": "Yi ge baozi, xiexie.",
-          "tts_text": "一个包子，谢谢。",
+          "text": "一个，谢谢。",
+          "transliteration": "Yi ge, xiexie.",
+          "audio_text": "Yi ge, xiexie.",
+          "tts_text": "一个，谢谢。",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
           ]
         },
@@ -481,11 +480,14 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "Yi ge baozi, xiexie.",
-          "transliteration": "Yi ge baozi, xiexie.",
-          "audio_text": "Yi ge baozi, xiexie.",
-          "meaning_units": [],
-          "tts_text": "一个包子，谢谢。",
+          "text": "一个，谢谢。",
+          "transliteration": "Yi ge, xiexie.",
+          "audio_text": "Yi ge, xiexie.",
+          "meaning_units": [
+            "one",
+            "please"
+          ],
+          "tts_text": "一个，谢谢。",
           "target_id": "zh-target-one-local-food-please"
         },
         {
@@ -742,13 +744,12 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "zh-target-one-local-food-please",
-          "text": "Yi ge baozi, xiexie.",
-          "transliteration": "Yi ge baozi, xiexie.",
-          "audio_text": "Yi ge baozi, xiexie.",
-          "tts_text": "一个包子，谢谢。",
+          "text": "一个，谢谢。",
+          "transliteration": "Yi ge, xiexie.",
+          "audio_text": "Yi ge, xiexie.",
+          "tts_text": "一个，谢谢。",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
           ]
         },

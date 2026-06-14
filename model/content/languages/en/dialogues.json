@@ -1022,12 +1022,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-one-local-food-please",
-          "text": "One sandwich, please.",
+          "text": "One, please.",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
-          ]
+          ],
+          "transliteration": "One, please.",
+          "audio_text": "One, please.",
+          "tts_text": "One, please."
         },
         {
           "index": 2,
@@ -1234,11 +1236,15 @@
           "index": 1,
           "speaker_role": "learner",
           "line_type": "learner_target",
-          "text": "One sandwich, please.",
-          "transliteration": "One sandwich, please.",
-          "audio_text": "One sandwich, please.",
-          "meaning_units": [],
-          "target_id": "en-target-one-local-food-please"
+          "text": "One, please.",
+          "transliteration": "One, please.",
+          "audio_text": "One, please.",
+          "meaning_units": [
+            "one",
+            "please"
+          ],
+          "target_id": "en-target-one-local-food-please",
+          "tts_text": "One, please."
         },
         {
           "index": 2,
@@ -1453,12 +1459,14 @@
           "speaker_role": "learner",
           "line_type": "learner_target",
           "target_id": "en-target-one-local-food-please",
-          "text": "One sandwich, please.",
+          "text": "One, please.",
           "meaning_units": [
             "one",
-            "food_item",
             "please"
-          ]
+          ],
+          "transliteration": "One, please.",
+          "audio_text": "One, please.",
+          "tts_text": "One, please."
         },
         {
           "index": 2,

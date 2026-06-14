@@ -357,10 +357,10 @@
       "target_id": "ja-target-one-local-food-please",
       "scene_id": "local-food-counter",
       "line_index": 1,
-      "line_text": "サンドイッチください。",
+      "line_text": "一つください。",
       "timing_role": "learner_turn",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
       "asset_paths": {
@@ -370,8 +370,8 @@
       },
       "gesture_mapping": [
         {
-          "meaning_unit": "food_item,please",
-          "visual_cue": "learner points to a sandwich and asks politely"
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
         }
       ],
       "proper_noun_labels": [],
@@ -1161,10 +1161,10 @@
       "target_id": "ja-target-one-local-food-please",
       "scene_id": "convenience-store-sandwich",
       "line_index": 1,
-      "line_text": "サンドイッチください。",
+      "line_text": "一つください。",
       "timing_role": "learner_turn",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
       "asset_paths": {
@@ -1174,8 +1174,8 @@
       },
       "gesture_mapping": [
         {
-          "meaning_unit": "food_item,please",
-          "visual_cue": "convenience-store-sandwich learner_target visual cue for transfer practice"
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
         }
       ],
       "proper_noun_labels": [],
@@ -1240,10 +1240,10 @@
       "target_id": "ja-target-one-local-food-please",
       "scene_id": "bakery-counter-sandwich",
       "line_index": 1,
-      "line_text": "サンドイッチください。",
+      "line_text": "一つください。",
       "timing_role": "learner_turn",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
       "asset_paths": {
@@ -1253,8 +1253,8 @@
       },
       "gesture_mapping": [
         {
-          "meaning_unit": "food_item,please",
-          "visual_cue": "bakery-counter-sandwich learner_target visual cue for delayed_review practice"
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
         }
       ],
       "proper_noun_labels": [],

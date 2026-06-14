@@ -4,7 +4,13 @@ import re
 from typing import Any
 
 from app.content.graph_core import public_path
-from app.content.lessons import chunks_for_target, meaning_choice_difficulty, meaning_choices
+from app.content.lessons import (
+    chunks_for_target,
+    meaning_choice_difficulty,
+    meaning_choice_display_text,
+    meaning_choice_question,
+    meaning_choices,
+)
 
 LESSON_STEP_TYPES = [
     "scene_setup",
@@ -66,11 +72,11 @@ def lesson_steps(
                 "ChoicePrompt",
                 frame_id=response_frame.get("id") if response_frame else None,
                 frame_mode="single",
-                display_text="What happened?",
+                display_text=meaning_choice_display_text(card, target),
                 audio=audio_behavior(target_audio, autoplay=False, replayable=True, audio_text=target_audio_text),
                 mic=mic_off(),
                 props={
-                    "question": "What happened?",
+                    "question": meaning_choice_question(card, target),
                     "difficulty": meaning_choice_difficulty(card),
                     "choices": meaning_choices(target, card),
                 },
@@ -371,18 +377,48 @@ def backward_build_prompts(
         )
         expected_text = target_text if index == 0 else text
         expected_transliteration = target_transliteration if index == 0 else text
-        prompts.append(
-            {
-                "id": f"{target['id']}-build-{index}",
-                "text": text,
-                "audioUrl": public_path(
-                    backward_build_audio_relative_path(language, target["id"], index)
-                ),
-                "audioText": spoken_text,
-                "mic": recording_mic(expected_text, expected_transliteration),
-            }
+        focus_unit, focus_label = backward_build_focus_for_step(
+            target=target,
+            build_index=index,
+            unit_count=len(units),
         )
+        prompt = {
+            "id": f"{target['id']}-build-{index}",
+            "text": text,
+            "audioUrl": public_path(
+                backward_build_audio_relative_path(language, target["id"], index)
+            ),
+            "audioText": spoken_text,
+            "mic": recording_mic(expected_text, expected_transliteration),
+        }
+        if focus_unit:
+            prompt["focusUnit"] = focus_unit
+        if focus_label:
+            prompt["focusLabel"] = focus_label
+        prompts.append(prompt)
     return prompts
+
+
+def backward_build_focus_for_step(
+    *,
+    target: dict[str, Any],
+    build_index: int,
+    unit_count: int,
+) -> tuple[str | None, str | None]:
+    focus_units = target.get("backward_build_focus_units")
+    if not isinstance(focus_units, list) or not focus_units:
+        return None, None
+    prompt_position = (unit_count - 1) - build_index
+    if prompt_position < 0 or prompt_position >= len(focus_units):
+        return None, None
+    focus_unit = str(focus_units[prompt_position]).strip()
+    if not focus_unit:
+        return None, None
+    labels = target.get("meaning_unit_labels", {})
+    if focus_unit == "full":
+        return focus_unit, "One + please"
+    label = labels.get(focus_unit) or focus_unit.replace("_", " ").title()
+    return focus_unit, str(label)
 
 
 def backward_build_entry_spoken_text(

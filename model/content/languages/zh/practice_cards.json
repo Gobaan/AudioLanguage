@@ -339,7 +339,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "zh-target-one-local-food-please",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "一个，谢谢。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -351,22 +351,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for a sandwich politely in Mandarin.",
+        "learner_intention": "Point to one visible item and order politely in Mandarin.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "一个，谢谢",
+          "一个，谢谢。",
+          "Yi ge, xiexie."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as yi ge xiexie when clear."
         ],
         "wrong_intents": [
           {
@@ -543,7 +543,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "zh-target-one-local-food-please",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "Yi ge baozi, xiexie.",
+      "expected_response": "Yi ge, xiexie.",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -555,19 +555,24 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Order one baozi politely in Mandarin.",
+        "learner_intention": "Order one visible item politely in Mandarin.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "baozi"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "Yi ge baozi, xiexie",
-          "Baozi, xiexie"
+          "一个，谢谢",
+          "一个，谢谢。",
+          "Yi ge, xiexie."
         ],
-        "wrong_intents": []
+        "wrong_intents": [],
+        "acceptance_notes": [
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as yi ge xiexie when clear."
+        ]
       },
       "support": {},
       "success_signal": "learner recalls the ordering phrase"
@@ -891,7 +896,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "zh-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "Yi ge baozi, xiexie.",
+      "expected_response": "Yi ge, xiexie.",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -903,21 +908,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for one baozi politely in Mandarin.",
+        "learner_intention": "Point to one visible item and order politely in Mandarin.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "baozi"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "Yi ge baozi, xiexie",
-          "Baozi, xiexie",
-          "Yi ge baozi"
+          "一个，谢谢",
+          "一个，谢谢。",
+          "Yi ge, xiexie."
         ],
         "acceptance_notes": [
-          "Accept an order for a baozi even if the measure word is imperfect."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as yi ge xiexie when clear."
         ],
         "wrong_intents": [
           {
@@ -1284,7 +1290,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "zh-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "一个，谢谢。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -1296,22 +1302,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for the sandwich politely in Mandarin.",
+        "learner_intention": "Point to one visible item and order politely in Mandarin.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "一个，谢谢",
+          "一个，谢谢。",
+          "Yi ge, xiexie."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as yi ge xiexie when clear."
         ],
         "wrong_intents": [
           {
@@ -1678,7 +1684,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "zh-target-one-local-food-please",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "一个，谢谢。",
       "ai_scene_contract": {
         "language_being_practiced": "Mandarin",
         "support_language": "English",
@@ -1690,22 +1696,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Order a sandwich politely in Mandarin from memory.",
+        "learner_intention": "Order one visible item politely in Mandarin from memory.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "一个，谢谢",
+          "一个，谢谢。",
+          "Yi ge, xiexie."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as yi ge xiexie when clear."
         ],
         "wrong_intents": [
           {

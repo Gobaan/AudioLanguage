@@ -39,6 +39,8 @@ export type BackwardBuildPrompt = {
   text: string;
   audioUrl?: string | null;
   audioText?: string | null;
+  focusUnit?: string;
+  focusLabel?: string;
   mic?: LessonStep['mic'];
 };
 

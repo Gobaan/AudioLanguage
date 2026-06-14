@@ -337,7 +337,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "yue-target-one-local-food-please",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "一个，唔该。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -349,22 +349,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for a sandwich politely in Cantonese.",
+        "learner_intention": "Point to one visible item and order politely in Cantonese.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "一个，唔该",
+          "一个，唔该。",
+          "Jat go, m goi."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as jat go m goi when clear."
         ],
         "wrong_intents": [
           {
@@ -676,7 +676,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "yue-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "Jat go bo lo baau, m goi.",
+      "expected_response": "Jat go, m goi.",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -688,14 +688,15 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for one pineapple bun politely in Cantonese.",
+        "learner_intention": "Point to one visible item and order politely in Cantonese.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "pineapple bun"
+          "visible_item": "counter_display"
         },
         "example_valid_responses": [
-          "Jat go bo lo baau, m goi",
-          "Bo lo baau, m goi"
+          "一个，唔该",
+          "一个，唔该。",
+          "Jat go, m goi."
         ],
         "wrong_intents": [
           {
@@ -710,6 +711,10 @@
             "id": "repair",
             "definition": "The learner says they do not understand."
           }
+        ],
+        "acceptance_notes": [
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as jat go m goi when clear."
         ]
       },
       "support": {},
@@ -1062,7 +1067,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "yue-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "一个，唔该。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -1074,22 +1079,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for the sandwich politely in Cantonese.",
+        "learner_intention": "Point to one visible item and order politely in Cantonese.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "一个，唔该",
+          "一个，唔该。",
+          "Jat go, m goi."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as jat go m goi when clear."
         ],
         "wrong_intents": [
           {
@@ -1456,7 +1461,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "yue-target-one-local-food-please",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "一个，唔该。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -1468,22 +1473,22 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Order a sandwich politely in Cantonese from memory.",
+        "learner_intention": "Order one visible item politely in Cantonese from memory.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "一个，唔该",
+          "一个，唔该。",
+          "Jat go, m goi."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as jat go m goi when clear."
         ],
         "wrong_intents": [
           {

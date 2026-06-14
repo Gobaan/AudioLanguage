@@ -340,20 +340,24 @@
     {
       "id": "ta-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "ஒரு தோசை, தயவு செய்து.",
-      "transliteration": "Oru dosai, thayavu seithu.",
-      "display_meaning": "One dosa, please.",
+      "canonical": "ஒரு, தயவு செய்து.",
+      "transliteration": "Oru, thayavu seithu.",
+      "display_meaning": "One, please.",
       "meaning_units": [
         "one",
-        "food_item",
         "please"
       ],
+      "meaning_unit_labels": {
+        "one": "One",
+        "please": "Please"
+      },
       "accepted_variants": [
-        "ஒரு தோசை கொடுக்க முடியுமா?",
-        "தோசை, தயவு செய்து."
+        "Oru thayavu seithu.",
+        "ஒரு தயவு செய்து."
       ],
       "valid_but_off_target": [
-        "எனக்கு தோசை வேண்டும்."
+        "Thayavu seithu.",
+        "Oru."
       ],
       "wrong_for_context_examples": [
         "மருத்துவமனை எங்கே?",
@@ -362,8 +366,24 @@
       "notes": {
         "food_slot": "dosai",
         "register": "polite-neutral",
-        "native_review_required": true
-      }
+        "native_review_required": true,
+        "spoken_target": "one + please; food item is scene-visible only"
+      },
+      "backward_build_spoken_prompts": [
+        "thayavu seithu.",
+        "Oru,",
+        "Oru, thayavu seithu."
+      ],
+      "backward_build_focus_units": [
+        "please",
+        "one",
+        "full"
+      ],
+      "backward_build_units": [
+        "thayavu seithu",
+        "Oru",
+        "thayavu seithu"
+      ]
     },
     {
       "id": "ta-target-where-is-hospital",

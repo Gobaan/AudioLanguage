@@ -128,17 +128,20 @@
     {
       "id": "zh-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "Yi ge baozi, xiexie.",
-      "transliteration": "Yi ge baozi, xiexie.",
-      "display_meaning": "One baozi, please.",
+      "canonical": "一个，谢谢。",
+      "transliteration": "Yi ge, xiexie.",
+      "display_meaning": "One, please.",
       "meaning_units": [
         "one",
-        "food_item",
         "please"
       ],
+      "meaning_unit_labels": {
+        "one": "One",
+        "please": "Please"
+      },
       "accepted_variants": [
-        "Baozi, xiexie.",
-        "Yi ge baozi."
+        "Yi ge xiexie.",
+        "一个谢谢。"
       ],
       "wrong_for_context_examples": [
         "Wo bu dong.",
@@ -148,13 +151,27 @@
       "notes": {
         "food_slot": "baozi",
         "register": "polite-neutral",
-        "native_review_required": true
+        "native_review_required": true,
+        "spoken_target": "one + please; food item is scene-visible only"
       },
       "backward_build_spoken_prompts": [
         "谢谢。",
-        "包子，谢谢。",
-        "一个包子，谢谢。",
-        "一个包子，谢谢。"
+        "一个，",
+        "一个，谢谢。"
+      ],
+      "valid_but_off_target": [
+        "谢谢。",
+        "一个。"
+      ],
+      "backward_build_focus_units": [
+        "please",
+        "one",
+        "full"
+      ],
+      "backward_build_units": [
+        "xiexie",
+        "Yi ge",
+        "xiexie"
       ]
     }
   ]

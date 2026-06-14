@@ -783,7 +783,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "ta-target-one-local-food-please",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "ஒரு, தயவு செய்து.",
       "ai_scene_contract": {
         "language_being_practiced": "Tamil",
         "support_language": "English",
@@ -795,22 +795,21 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for a sandwich politely in Tamil.",
+        "learner_intention": "Point to one visible item and order politely in Tamil.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "ஒரு, தயவு செய்து",
+          "Oru, thayavu seithu."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as oru thayavu seithu when clear."
         ],
         "wrong_intents": [
           {
@@ -1154,7 +1153,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "ta-target-one-local-food-please",
       "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "ஒரு, தயவு செய்து.",
       "ai_scene_contract": {
         "language_being_practiced": "Tamil",
         "support_language": "English",
@@ -1166,22 +1165,21 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for the sandwich politely in Tamil.",
+        "learner_intention": "Point to one visible item and order politely in Tamil.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "ஒரு, தயவு செய்து",
+          "Oru, thayavu seithu."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as oru thayavu seithu when clear."
         ],
         "wrong_intents": [
           {
@@ -1548,7 +1546,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "ta-target-one-local-food-please",
       "prompt": "Review from the scene cue. Say your part before the model line plays.",
-      "expected_response": "サンドイッチください。",
+      "expected_response": "ஒரு, தயவு செய்து.",
       "ai_scene_contract": {
         "language_being_practiced": "Tamil",
         "support_language": "English",
@@ -1560,22 +1558,21 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Order a sandwich politely in Tamil from memory.",
+        "learner_intention": "Order one visible item politely in Tamil from memory.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional_slots": {
           "politeness": true
         },
         "example_valid_responses": [
-          "サンドイッチください",
-          "サンドイッチをください",
-          "サンドイッチお願いします"
+          "ஒரு, தயவு செய்து",
+          "Oru, thayavu seithu."
         ],
         "acceptance_notes": [
-          "Accept an order for a sandwich even if the particle is omitted.",
-          "Accept romanized attempts such as sandoicchi kudasai when clear."
+          "Accept one + please even if the learner omits the comma or uses a short variant.",
+          "Accept romanized attempts such as oru thayavu seithu when clear."
         ],
         "wrong_intents": [
           {

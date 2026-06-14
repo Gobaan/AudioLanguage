@@ -221,7 +221,7 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Sandoicchi kudasai.",
+                "Hitotsu kudasai.",
             ],
         )
         self.assertEqual(
@@ -231,12 +231,12 @@ class StructuredDataGraphTests(unittest.TestCase):
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Sandoicchi kudasai.",
+                "Hitotsu kudasai.",
                 "Konnichiwa!",
                 "Anna desu.",
                 "Wakarimasen.",
                 "Sumimasen.",
-                "Sandoicchi kudasai.",
+                "Hitotsu kudasai.",
             ],
         )
         self.assertEqual(

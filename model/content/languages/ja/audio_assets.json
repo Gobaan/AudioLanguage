@@ -368,8 +368,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "サンドイッチください。",
-      "transliteration": "Sandoicchi kudasai.",
+      "text": "一つください。",
+      "transliteration": "Hitotsu kudasai.",
       "audio_path": "audio/generated/ja/order-local-food/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1148,8 +1148,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "サンドイッチください。",
-      "transliteration": "Sandoicchi kudasai.",
+      "text": "一つください。",
+      "transliteration": "Hitotsu kudasai.",
       "audio_path": "audio/generated/ja/order-convenience-transfer/line-1.mp3",
       "status": "generated",
       "native_review_required": true
@@ -1226,8 +1226,8 @@
         "provider": "edge_tts",
         "speaker_role": "learner"
       },
-      "text": "サンドイッチください。",
-      "transliteration": "Sandoicchi kudasai.",
+      "text": "一つください。",
+      "transliteration": "Hitotsu kudasai.",
       "audio_path": "audio/generated/ja/order-bakery-review/line-1.mp3",
       "status": "generated",
       "native_review_required": true

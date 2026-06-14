@@ -3,7 +3,10 @@
   "display_name": "Japanese",
   "metadata": {
     "description": "Japanese starter and transfer scenes.",
-    "scene_sets": ["mvp", "delayed"],
+    "scene_sets": [
+      "mvp",
+      "delayed"
+    ],
     "sort_order": 1
   },
   "script": "Japanese",
@@ -158,20 +161,25 @@
     {
       "id": "ja-target-one-local-food-please",
       "function_id": "order_local_food",
-      "canonical": "サンドイッチください。",
-      "transliteration": "Sandoicchi kudasai.",
-      "display_meaning": "Sandwich, please.",
+      "canonical": "一つください。",
+      "transliteration": "Hitotsu kudasai.",
+      "display_meaning": "One, please.",
       "meaning_units": [
-        "food_item",
+        "one",
         "please"
       ],
+      "meaning_unit_labels": {
+        "one": "One",
+        "please": "Please"
+      },
       "accepted_variants": [
-        "サンドイッチをください。",
-        "サンドイッチお願いします。",
-        "サンドイッチを一つください。"
+        "ひとつください。",
+        "一つお願いします。",
+        "Hitotsu onegaishimasu."
       ],
       "valid_but_off_target": [
-        "サンドイッチを一つお願いします。"
+        "ください。",
+        "一つ。"
       ],
       "wrong_for_context_examples": [
         "病院はどこですか？",
@@ -180,7 +188,7 @@
       "semantic_slots": {
         "required": {
           "speech_act": "request_order",
-          "item": "sandwich"
+          "visible_item": "counter_display"
         },
         "optional": {
           "politeness": true
@@ -189,8 +197,24 @@
       "notes": {
         "food_slot": "sandwich",
         "register": "polite-neutral",
-        "native_review_required": true
-      }
+        "native_review_required": true,
+        "spoken_target": "one + please; food item is scene-visible only"
+      },
+      "backward_build_spoken_prompts": [
+        "ください。",
+        "一つ、",
+        "一つください。"
+      ],
+      "backward_build_focus_units": [
+        "please",
+        "one",
+        "full"
+      ],
+      "backward_build_units": [
+        "kudasai",
+        "Hitotsu",
+        "kudasai"
+      ]
     },
     {
       "id": "ja-target-where-is-hospital",
