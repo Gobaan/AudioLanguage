@@ -157,7 +157,7 @@ def transfer_review_steps(
                 "difficulty": meaning_choice_difficulty(card),
                 "choices": meaning_choices(target, card),
                 "revealDialogueAfterChoice": False,
-                "revealDialogueOnIncorrectOnly": True,
+                "revealDialogueOnIncorrectOnly": False,
             },
         ),
         step(
@@ -173,7 +173,7 @@ def transfer_review_steps(
                 "recordBeforeModelLine": record_before_model,
                 "playModelLineAfterAttempt": True,
                 "playWorldResponseAfterAttempt": include_world_response,
-                "showDialogueRevealAfterAttempt": True,
+                "showDialogueRevealAfterAttempt": False,
             },
         ),
     ]

@@ -33,8 +33,8 @@ Scene and review boundaries:
 Stage playback rules:
 
 - **Anchor** (`guided_scene_production`): hear the model learner line before the first record attempt; full-scene primer and meaning guess before production are allowed.
-- **Same-day transfer** (`same_day_transfer`): test first in the new scene. Play only the partner opener cue before production. Do not autoplay the learner line or world response before the mic step. Do not reveal learner script text before the first record attempt. Play the model learner line and optional world response only after the attempt.
-- **Delayed review** (`delayed_review`): same test-first rule as transfer, with stricter meaning-check difficulty and no full-scene primer beyond the opener cue.
+- **Same-day transfer** (`same_day_transfer`): test first in the new scene. Play only the partner opener cue before production. Keep the meaning guess, but do not show dialogue reveal text. Do not autoplay the learner line or world response before the mic step. Play the model learner line and optional world response only after the attempt.
+- **Delayed review** (`delayed_review`): same test-first rule as transfer, with harder meaning-check difficulty and no dialogue reveal text.
 - **Remediation after failure**: optional replay of the model line before a retry only; do not restore full-scene primer on every transfer or delayed run.
 
 Transfer and delayed cards should follow their `playback_flow` order: partner cue, record attempt, model learner line after attempt, optional world response after attempt.

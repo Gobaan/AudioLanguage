@@ -180,14 +180,14 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(meaning_step["props"]["question"], "What is the best response here?")
         self.assertEqual(meaning_step["props"]["difficulty"], "medium")
         self.assertFalse(meaning_step["props"]["revealDialogueAfterChoice"])
-        self.assertTrue(meaning_step["props"]["revealDialogueOnIncorrectOnly"])
+        self.assertFalse(meaning_step["props"]["revealDialogueOnIncorrectOnly"])
         self.assertEqual(recall_step["frameId"], "line-0")
         self.assertFalse(recall_step["audio"]["autoplay"])
         self.assertFalse(recall_step["audio"]["playBeforeMic"])
         self.assertIsNone(recall_step["audio"]["url"])
         self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
         self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])
-        self.assertTrue(recall_step["props"]["showDialogueRevealAfterAttempt"])
+        self.assertFalse(recall_step["props"]["showDialogueRevealAfterAttempt"])
         self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
 
     def test_delayed_review_lesson_tests_before_model_line(self):
@@ -205,6 +205,7 @@ class LessonsApiTests(unittest.TestCase):
         self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
         self.assertTrue(recall_step["props"]["playModelLineAfterAttempt"])
         self.assertTrue(recall_step["props"]["playWorldResponseAfterAttempt"])
+        self.assertFalse(recall_step["props"]["showDialogueRevealAfterAttempt"])
         self.assertFalse(recall_step["audio"]["playBeforeMic"])
         playback_flow = recall_step["props"]["playbackFlow"]
         record_index = next(
@@ -223,9 +224,10 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         payload = response.json()
         lesson = payload["lessons"][0]
-        meaning_step = next(step for step in lesson["steps"] if step["type"] == "broad_meaning_guess")
+        step_types = [step["type"] for step in lesson["steps"]]
 
         self.assertEqual(payload["scene_set"], "delayed")
+        self.assertEqual(step_types, ["scene_setup", "broad_meaning_guess", "scene_recall"])
         self.assertEqual(
             set(tab["id"] for tab in payload["lesson_tabs"]),
             {"hello", "introduce", "repair", "excuse-me", "food-order"},
@@ -236,7 +238,10 @@ class LessonsApiTests(unittest.TestCase):
         )
         self.assertEqual(lesson["id"], "ja-card-greeting-entry-review-delayed_review")
         self.assertEqual(lesson["stage"], "delayed_review")
+        meaning_step = next(step for step in lesson["steps"] if step["type"] == "broad_meaning_guess")
         self.assertEqual(meaning_step["props"]["difficulty"], "hard")
+        self.assertFalse(meaning_step["props"]["revealDialogueAfterChoice"])
+        self.assertFalse(meaning_step["props"]["revealDialogueOnIncorrectOnly"])
 
     def test_lesson_order_seed_reproduces_randomized_groups(self):
         client = TestClient(app)
@@ -251,9 +256,7 @@ class LessonsApiTests(unittest.TestCase):
         )
 
     def test_fallback_choices_do_not_repeat_learner_says_prefix(self):
-        response = TestClient(app).get(
-            "/api/languages/ja/lessons?lesson=ja-card-greeting-neighbor-transfer-same_day_transfer"
-        )
+        response = TestClient(app).get("/api/languages/en/lessons?lesson=hello")
 
         self.assertEqual(response.status_code, 200)
         meaning_step = next(
