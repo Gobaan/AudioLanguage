@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { fetchLessons } from '../api/lessons';
-import type { Lesson, LessonListResponse } from '../components';
+import { fetchLearningPlan } from '../api/lessons';
+import type { Lesson } from '../components';
 import { FALLBACK_LESSON } from './fallbackLesson';
 import {
   DEFAULT_LESSON,
   activeMvpLesson,
   updateLessonUrl,
 } from './lessonUrls';
+import { isLocalHost } from './urlParams';
 
 export type LessonTab = {
   id: string;
@@ -30,51 +31,104 @@ export function useLessonLoader({
   onLessonPageChange,
 }: UseLessonLoaderOptions) {
   const [lessonTabs, setLessonTabs] = useState<LessonTab[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('loading');
 
   useEffect(() => {
     let isCurrent = true;
 
-    async function loadLesson() {
+    async function loadPlan() {
       setLoadState('loading');
       try {
-        const payload = await fetchLessons(language, lessonPage, sceneSet);
+        const payload = await fetchLearningPlan(language, sceneSet, stableOrderSeed(language, sceneSet));
         if (!isCurrent) return;
-        applyLessonPayload(payload);
+        setLessonTabs(payload.lesson_tabs ?? []);
+        setLessons((payload.lessons ?? []).map(activeMvpLesson));
         setLoadState('ready');
       } catch {
-        try {
-          const payload = await fetchLessons(language, DEFAULT_LESSON, sceneSet);
-          if (!isCurrent) return;
-          applyLessonPayload(payload);
-          onLessonPageChange(DEFAULT_LESSON);
-          updateLessonUrl(language, DEFAULT_LESSON, sceneSet, true);
-          setLoadState('ready');
-        } catch {
-          if (!isCurrent) return;
-          setLessonTabs([]);
-          setLesson(activeMvpLesson(FALLBACK_LESSON));
-          setLoadState('ready');
-        }
+        if (!isCurrent) return;
+        setLessonTabs([]);
+        setLessons([activeMvpLesson(FALLBACK_LESSON)]);
+        setLesson(activeMvpLesson(FALLBACK_LESSON));
+        setLoadState('ready');
       }
     }
 
-    function applyLessonPayload(payload: LessonListResponse) {
-      setLessonTabs(payload.lesson_tabs ?? []);
-      setLesson(activeMvpLesson(payload.lessons[0] ?? FALLBACK_LESSON));
-    }
-
-    loadLesson();
+    loadPlan();
 
     return () => {
       isCurrent = false;
     };
-  }, [language, lessonPage, sceneSet, onLessonPageChange]);
+  }, [language, sceneSet]);
+
+  useEffect(() => {
+    if (loadState !== 'ready') {
+      return;
+    }
+
+    const selectedLesson = lessonForPage(lessonPage, lessonTabs, lessons);
+    if (selectedLesson) {
+      setLesson(selectedLesson);
+      return;
+    }
+
+    const fallbackPage = fallbackLessonPage(lessonTabs);
+    const fallbackLesson = fallbackPage
+      ? lessonForPage(fallbackPage, lessonTabs, lessons)
+      : lessons[0];
+    setLesson(fallbackLesson ?? activeMvpLesson(FALLBACK_LESSON));
+
+    if (fallbackPage && fallbackPage !== lessonPage) {
+      onLessonPageChange(fallbackPage);
+      updateLessonUrl(language, fallbackPage, sceneSet, true);
+    }
+  }, [language, lessonPage, lessonTabs, lessons, loadState, sceneSet, onLessonPageChange]);
 
   return {
     lessonTabs,
     lesson,
     loadState,
   };
+}
+
+function stableOrderSeed(language: string, sceneSet: string): string | null {
+  if (!isLocalHost()) {
+    return browserSessionOrderSeed(language, sceneSet);
+  }
+
+  return `local-debug:${language}:${sceneSet}`;
+}
+
+function browserSessionOrderSeed(language: string, sceneSet: string): string {
+  const storageKey = `audio-language-order-seed:${language}:${sceneSet}`;
+  try {
+    const existingSeed = window.sessionStorage.getItem(storageKey);
+    if (existingSeed) {
+      return existingSeed;
+    }
+
+    const seed = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+    window.sessionStorage.setItem(storageKey, seed);
+    return seed;
+  } catch {
+    return `session:${language}:${sceneSet}`;
+  }
+}
+
+function lessonForPage(lessonPage: string, lessonTabs: LessonTab[], lessons: Lesson[]): Lesson | null {
+  const lessonIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
+  if (lessonIndex === -1) {
+    return null;
+  }
+
+  return lessons[lessonIndex] ?? null;
+}
+
+function fallbackLessonPage(lessonTabs: LessonTab[]): string | null {
+  if (lessonTabs.some((tab) => tab.id === DEFAULT_LESSON)) {
+    return DEFAULT_LESSON;
+  }
+
+  return lessonTabs[0]?.id ?? null;
 }

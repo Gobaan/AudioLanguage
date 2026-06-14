@@ -17,6 +17,8 @@ When adding lesson UI, start from the JSON contract and choose the matching comp
 
 The app should be route/parameter driven. Language, scene set, transfer mode, and delayed-review mode should be selected through URLs or app state that call the backend for a different JSON payload.
 
+Load the full learning plan at the start of a lesson run, then move between lessons locally from that plan. Do not refetch a single randomized lesson on every Next/page change.
+
 Keep the language selection page separate from the lesson runner so share links can point friends to the right language flow. On localhost, expose an admin link for validation review.
 
 Track the participant with a human-readable localStorage key. Do not require login for the MVP.

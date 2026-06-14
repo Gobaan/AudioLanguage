@@ -10,6 +10,7 @@ import { useScorecard } from './useScorecard';
 import { useTravellerRoute } from './useTravellerRoute';
 import { viewFromUrl } from './lessonUrls';
 import { useValidationSession } from './useValidationSession';
+import { isLocalHost } from './urlParams';
 
 export function TravellerMvpApp() {
   const { language, lessonPage, sceneSet, selectLessonPage } = useTravellerRoute();
@@ -79,6 +80,21 @@ export function TravellerMvpApp() {
     return lessonTabs[currentIndex + 1] ?? null;
   }, [lessonTabs, lessonPage]);
 
+  const debugLessonSwitcher = isLocalHost() ? (
+    <nav className="lesson-switcher debug-lesson-switcher" aria-label="Local lesson jump">
+      {lessonTabs.map((tab) => (
+        <button
+          key={tab.id}
+          type="button"
+          className={lessonPage === tab.id ? 'active' : ''}
+          onClick={() => selectLessonPage(tab.id)}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </nav>
+  ) : null;
+
   const handleNext = useCallback(() => {
     if (!isLastStep) {
       goToStep('next');
@@ -130,6 +146,7 @@ export function TravellerMvpApp() {
         onCaptureAttempt={handleCaptureAttempt}
         onOpenScorecard={showScorecard}
         onNext={handleNext}
+        debugLessonSwitcher={debugLessonSwitcher}
       />
     </FitToViewport>
   );

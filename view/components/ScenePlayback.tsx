@@ -25,6 +25,13 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
 
     return withMedia.slice(0, stopIndex + 1).filter((frame) => frame.imageUrl || frame.audioUrl);
   }, [frames, stopAtLineType]);
+  const playbackKey = useMemo(
+    () =>
+      playableFrames
+        .map((frame) => `${frame.id}:${frame.audioUrl ?? ''}:${frame.audioText ?? ''}`)
+        .join('|'),
+    [playableFrames],
+  );
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -38,7 +45,7 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
     audioRef.current = null;
     utteranceRef.current = null;
     setIsPlaying(false);
-  }, [playableFrames]);
+  }, [playbackKey]);
 
   useEffect(() => {
     if (!autoplay || playableFrames.length === 0) return;
@@ -48,7 +55,7 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
       stopAudio(audioRef.current);
       stopSpeech(utteranceRef.current);
     };
-  }, [autoplay, playableFrames]);
+  }, [autoplay, playbackKey]);
 
   function playScene() {
     stopAudio(audioRef.current);

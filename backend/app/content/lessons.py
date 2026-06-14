@@ -1,14 +1,27 @@
 from __future__ import annotations
 
+import hashlib
 from typing import Any
 
 
-def lessons_from_session(session: dict[str, Any]) -> list[dict[str, Any]]:
+def lessons_from_session(
+    session: dict[str, Any],
+    *,
+    choice_order_seed: str | None = None,
+) -> list[dict[str, Any]]:
     """Return frontend lesson records derived from hydrated practice cards."""
-    return [lesson_from_card(session["language"], card) for card in session.get("cards", [])]
+    return [
+        lesson_from_card(session["language"], card, choice_order_seed=choice_order_seed)
+        for card in session.get("cards", [])
+    ]
 
 
-def lesson_from_card(language: str, card: dict[str, Any]) -> dict[str, Any]:
+def lesson_from_card(
+    language: str,
+    card: dict[str, Any],
+    *,
+    choice_order_seed: str | None = None,
+) -> dict[str, Any]:
     from app.content.lesson_steps import lesson_steps
 
     dialogue = card["dialogue"]
@@ -39,6 +52,7 @@ def lesson_from_card(language: str, card: dict[str, Any]) -> dict[str, Any]:
             scene=scene,
             learner_line=learner_line,
             frames=frames,
+            choice_order_seed=choice_order_seed,
         ),
     }
 
@@ -85,7 +99,12 @@ def lesson_title(card: dict[str, Any], target: dict[str, Any], scene: dict[str, 
     return str(meaning or card["id"])
 
 
-def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[str, Any]]:
+def meaning_choices(
+    target: dict[str, Any],
+    card: dict[str, Any],
+    *,
+    choice_order_seed: str | None = None,
+) -> list[dict[str, Any]]:
     distractor_set = card.get("distractors")
     if distractor_set:
         difficulty = meaning_choice_difficulty(card)
@@ -113,7 +132,7 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
                 }
             )
         if len(choices) > 1:
-            return choices
+            return order_meaning_choices(choices, card, choice_order_seed)
 
     choices = [{"id": target["id"], "label": clean_choice_label(target.get("display_meaning", target["id"])), "isCorrect": True}]
     contract = card.get("ai_scene_contract", {})
@@ -127,7 +146,31 @@ def meaning_choices(target: dict[str, Any], card: dict[str, Any]) -> list[dict[s
                 "isCorrect": False,
             }
         )
-    return choices
+    return order_meaning_choices(choices, card, choice_order_seed)
+
+
+def order_meaning_choices(
+    choices: list[dict[str, Any]],
+    card: dict[str, Any],
+    choice_order_seed: str | None,
+) -> list[dict[str, Any]]:
+    if len(choices) <= 1:
+        return choices
+
+    seed = choice_order_seed or "default"
+    card_id = str(card.get("id", "unknown-card"))
+    ordered = sorted(
+        choices,
+        key=lambda choice: stable_choice_sort_key(seed, card_id, str(choice.get("id", ""))),
+    )
+    if ordered[0].get("isCorrect") and any(not choice.get("isCorrect") for choice in ordered):
+        return ordered[1:] + ordered[:1]
+    return ordered
+
+
+def stable_choice_sort_key(seed: str, card_id: str, choice_id: str) -> str:
+    value = f"{seed}:{card_id}:{choice_id}"
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
 def clean_choice_label(value: Any) -> str:

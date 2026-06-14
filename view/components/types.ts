@@ -125,3 +125,9 @@ export type LessonListResponse = {
   }>;
   lessons: Lesson[];
 };
+
+export type LearningPlanResponse = LessonListResponse & {
+  plan_version: number;
+  session_id: string;
+  order_seed?: string | null;
+};

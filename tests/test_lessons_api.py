@@ -266,6 +266,79 @@ class LessonsApiTests(unittest.TestCase):
             [tab["id"] for tab in second_response.json()["lesson_tabs"]],
         )
 
+    def test_learning_engine_returns_full_ordered_lesson_plan(self):
+        response = TestClient(app).get(
+            "/api/learning-engine/lessons?language=ja&scene_set=mvp&order_seed=debug-plan"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        lesson_tabs = payload["lesson_tabs"]
+        lessons = payload["lessons"]
+
+        self.assertEqual(payload["plan_version"], 1)
+        self.assertEqual(payload["session_id"], "ja:mvp:debug-plan")
+        self.assertEqual(payload["language"], "ja")
+        self.assertEqual(payload["scene_set"], "mvp")
+        self.assertEqual(payload["order_seed"], "debug-plan")
+        self.assertEqual(len(lesson_tabs), 10)
+        self.assertEqual(len(lessons), len(lesson_tabs))
+        self.assertEqual(
+            [tab["id"] for tab in lesson_tabs[:5]],
+            ["hello", "introduce", "repair", "excuse-me", "food-order"],
+        )
+        self.assertEqual(
+            set(tab["id"] for tab in lesson_tabs[5:]),
+            {
+                "hello-transfer",
+                "introduce-transfer",
+                "repair-transfer",
+                "excuse-me-transfer",
+                "food-order-transfer",
+            },
+        )
+        self.assertEqual(lessons[0]["id"], "ja-card-first-hi-dialogue-practice")
+
+    def test_learning_engine_does_not_put_every_correct_choice_first(self):
+        response = TestClient(app).get(
+            "/api/learning-engine/lessons?language=ja&scene_set=mvp&order_seed=choice-order"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        correct_positions = []
+        for lesson in response.json()["lessons"]:
+            meaning_step = next(step for step in lesson["steps"] if step["type"] == "broad_meaning_guess")
+            choices = meaning_step["props"]["choices"]
+            correct_indexes = [
+                index
+                for index, choice in enumerate(choices)
+                if choice["isCorrect"]
+            ]
+            self.assertEqual(len(correct_indexes), 1)
+            correct_positions.append(correct_indexes[0])
+
+        self.assertTrue(any(position != 0 for position in correct_positions))
+
+    def test_learning_engine_order_seed_reproduces_same_plan(self):
+        client = TestClient(app)
+        first_response = client.get(
+            "/api/learning-engine/lessons?language=ja&scene_set=mvp&order_seed=session-1"
+        )
+        second_response = client.get(
+            "/api/learning-engine/lessons?language=ja&scene_set=mvp&order_seed=session-1"
+        )
+
+        self.assertEqual(first_response.status_code, 200)
+        self.assertEqual(second_response.status_code, 200)
+        self.assertEqual(
+            [tab["id"] for tab in first_response.json()["lesson_tabs"]],
+            [tab["id"] for tab in second_response.json()["lesson_tabs"]],
+        )
+        self.assertEqual(
+            [lesson["id"] for lesson in first_response.json()["lessons"]],
+            [lesson["id"] for lesson in second_response.json()["lessons"]],
+        )
+
     def test_fallback_choices_do_not_repeat_learner_says_prefix(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=hello")
 

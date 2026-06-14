@@ -39,6 +39,7 @@ def lesson_steps(
     scene: dict[str, Any],
     learner_line: dict[str, Any],
     frames: list[dict[str, Any]],
+    choice_order_seed: str | None = None,
 ) -> list[dict[str, Any]]:
     target_text = learner_line.get("text") or target.get("canonical", "")
     target_transliteration = learner_line.get("transliteration") or target.get("transliteration", "")
@@ -78,7 +79,7 @@ def lesson_steps(
                 props={
                     "question": meaning_choice_question(card, target),
                     "difficulty": meaning_choice_difficulty(card),
-                    "choices": meaning_choices(target, card),
+                    "choices": meaning_choices(target, card, choice_order_seed=choice_order_seed),
                 },
             ),
         ]
@@ -111,6 +112,7 @@ def lesson_steps(
         opener_audio_text=opener_audio_text,
         target_text=target_text,
         target_transliteration=target_transliteration,
+        choice_order_seed=choice_order_seed,
     )
 
 
@@ -126,6 +128,7 @@ def transfer_review_steps(
     opener_audio_text: str | None,
     target_text: str,
     target_transliteration: str,
+    choice_order_seed: str | None = None,
 ) -> list[dict[str, Any]]:
     playback_flow = card.get("playback_flow")
     if not isinstance(playback_flow, list) or not playback_flow:
@@ -167,7 +170,7 @@ def transfer_review_steps(
             props={
                 "question": "What is the best response here?",
                 "difficulty": meaning_choice_difficulty(card),
-                "choices": meaning_choices(target, card),
+                "choices": meaning_choices(target, card, choice_order_seed=choice_order_seed),
                 "revealDialogueAfterChoice": False,
                 "revealDialogueOnIncorrectOnly": False,
             },

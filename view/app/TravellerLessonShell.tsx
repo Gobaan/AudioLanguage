@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { ChoiceOption, Lesson, LessonStep } from '../components';
 import { LessonAppLinks } from './LessonAppLinks';
 import { LessonStepRenderer } from './LessonStepRenderer';
@@ -22,6 +24,7 @@ type TravellerLessonShellProps = {
   ) => void;
   onOpenScorecard: () => void;
   onNext: () => void;
+  debugLessonSwitcher?: ReactNode;
 };
 
 export function TravellerLessonShell({
@@ -39,6 +42,7 @@ export function TravellerLessonShell({
   onCaptureAttempt,
   onOpenScorecard,
   onNext,
+  debugLessonSwitcher,
 }: TravellerLessonShellProps) {
   const nextLabel = isLastStep ? (hasNextLesson ? 'Next' : 'Scorecard') : 'Next';
   const stepHandlesNext = !stepHandlesOwnNext(step);
@@ -47,6 +51,7 @@ export function TravellerLessonShell({
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
       <LessonAppLinks participantId={participantId} onOpenScorecard={onOpenScorecard} />
+      {debugLessonSwitcher}
       <LessonStepRenderer
         lesson={stepLesson}
         step={step}

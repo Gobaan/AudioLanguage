@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, HTTPException, Path, Query
 
 from app.content.data_graph import DataGraphError, list_languages, load_distractors, load_language_session
+from app.content.learning_engine import build_learning_plan
 from app.content.lesson_tabs import (
     lesson_tab_key,
     lesson_tabs_from_ordered_tabs,
@@ -16,6 +17,7 @@ from app.runtime import DATA_DIR, PROJECT_DIR
 router = APIRouter()
 
 LanguagePath = Annotated[str, Path(pattern=r"^[a-z]{2,3}(-[a-z]+)?$")]
+LanguageQuery = Annotated[str, Query(pattern=r"^[a-z]{2,3}(-[a-z]+)?$")]
 
 
 @router.get("/api/languages")
@@ -54,7 +56,7 @@ def get_language_lessons(
     except DataGraphError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
 
-    lessons = lessons_from_session(session)
+    lessons = lessons_from_session(session, choice_order_seed=order_seed)
     session_config = session["session"]
     tab_key = lesson_tab_key(scene_set)
     ordered_tabs = ordered_lesson_tabs(session_config, tab_key, scene_set, order_seed)
@@ -72,6 +74,25 @@ def get_language_lessons(
         "lesson_tabs": lesson_tabs_from_ordered_tabs(ordered_tabs),
         "lessons": lessons,
     }
+
+
+@router.get("/api/learning-engine/lessons")
+def get_learning_engine_lessons(
+    language: LanguageQuery,
+    scene_set: str = Query(default="mvp"),
+    order_seed: str | None = Query(default=None),
+):
+    """Return the full ordered lesson plan for the current MVP learning engine."""
+    try:
+        return build_learning_plan(
+            data_dir=DATA_DIR,
+            project_dir=PROJECT_DIR,
+            language=language,
+            scene_set=scene_set,
+            order_seed=order_seed,
+        )
+    except DataGraphError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
 
 
 @router.get("/api/languages/{language}/distractors")

@@ -6,6 +6,7 @@ Lesson APIs should return data the UI can render without hardcoded language bran
 
 When serving lessons:
 
+- Return full learning plans through the learning engine boundary when the UI needs an ordered run. The MVP engine can delegate to existing content order rules, but keep this seam ready for smarter scheduling later.
 - Hydrate public asset paths for frames and audio.
 - Preserve lesson step order exactly as the content graph defines it.
 - Use `audioText` or equivalent romanized text as the beginner-facing fallback for non-Latin languages.
