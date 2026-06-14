@@ -32,7 +32,14 @@ def lesson_from_card(language: str, card: dict[str, Any]) -> dict[str, Any]:
             "meaning": target.get("display_meaning", ""),
         },
         "frames": frames,
-        "steps": lesson_steps(card=card, target=target, scene=scene, learner_line=learner_line, frames=frames),
+        "steps": lesson_steps(
+            language=language,
+            card=card,
+            target=target,
+            scene=scene,
+            learner_line=learner_line,
+            frames=frames,
+        ),
     }
 
 

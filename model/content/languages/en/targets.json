@@ -3,7 +3,10 @@
   "display_name": "English",
   "metadata": {
     "description": "English reference scenes.",
-    "scene_sets": ["mvp"],
+    "scene_sets": [
+      "mvp",
+      "delayed"
+    ],
     "sort_order": 5
   },
   "targets": [
@@ -12,10 +15,29 @@
       "function_id": "respond_to_greeting",
       "canonical": "Hi!",
       "display_meaning": "Respond to Hi.",
-      "meaning_units": ["hello", "response"],
-      "accepted_variants": ["Hi.", "Hi?", "Hello.", "Hello?", "Hey.", "Hi, how are you?", "Hello, nice to see you."],
-      "valid_but_off_target": ["Goodbye.", "Where is the hospital?", "Water, please."],
-      "wrong_for_context_examples": ["Goodbye.", "Where is the hospital?", "How much is this?"],
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "accepted_variants": [
+        "Hi.",
+        "Hi?",
+        "Hello.",
+        "Hello?",
+        "Hey.",
+        "Hi, how are you?",
+        "Hello, nice to see you."
+      ],
+      "valid_but_off_target": [
+        "Goodbye.",
+        "Where is the hospital?",
+        "Water, please."
+      ],
+      "wrong_for_context_examples": [
+        "Goodbye.",
+        "Where is the hospital?",
+        "How much is this?"
+      ],
       "semantic_slots": {
         "required": {
           "speech_act": "greeting_response"
@@ -35,120 +57,274 @@
       "function_id": "greet_and_ask_wellbeing",
       "canonical": "Hello! How are you?",
       "display_meaning": "Hello! How are you?",
-      "meaning_units": ["hello", "you", "question"],
-      "accepted_variants": ["Hello, how are you?", "Hi, how are you?"],
-      "valid_but_off_target": ["Hey, what's up?", "How's it going?"],
-      "wrong_for_context_examples": ["Goodbye.", "Thank you."],
-      "notes": { "register": "neutral-friendly" }
+      "meaning_units": [
+        "hello",
+        "you",
+        "question"
+      ],
+      "accepted_variants": [
+        "Hello, how are you?",
+        "Hi, how are you?"
+      ],
+      "valid_but_off_target": [
+        "Hey, what's up?",
+        "How's it going?"
+      ],
+      "wrong_for_context_examples": [
+        "Goodbye.",
+        "Thank you."
+      ],
+      "notes": {
+        "register": "neutral-friendly"
+      }
     },
     {
       "id": "en-target-my-name-is",
       "function_id": "introduce_self",
       "canonical": "My name is Anna.",
       "display_meaning": "My name is Anna.",
-      "meaning_units": ["my", "name", "proper_noun"],
-      "accepted_variants": ["I'm Anna.", "My name is Ana."],
-      "valid_but_off_target": ["Call me Anna."],
-      "wrong_for_context_examples": ["How are you?", "Thank you."],
-      "notes": { "proper_noun": "Anna", "register": "neutral" }
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "accepted_variants": [
+        "I'm Anna.",
+        "My name is Ana."
+      ],
+      "valid_but_off_target": [
+        "Call me Anna."
+      ],
+      "wrong_for_context_examples": [
+        "How are you?",
+        "Thank you."
+      ],
+      "notes": {
+        "proper_noun": "Anna",
+        "register": "neutral"
+      }
     },
     {
       "id": "en-target-say-it-slowly",
       "function_id": "ask_for_repetition",
       "canonical": "Can you say it slowly?",
       "display_meaning": "Can you say it slowly?",
-      "meaning_units": ["you", "say", "slowly", "question"],
-      "accepted_variants": ["Please say it slowly.", "Can you repeat slowly?"],
-      "valid_but_off_target": ["Say again?", "What did you say?"],
-      "wrong_for_context_examples": ["I am fine.", "How much is it?"],
-      "notes": { "register": "polite-neutral" }
+      "meaning_units": [
+        "you",
+        "say",
+        "slowly",
+        "question"
+      ],
+      "accepted_variants": [
+        "Please say it slowly.",
+        "Can you repeat slowly?"
+      ],
+      "valid_but_off_target": [
+        "Say again?",
+        "What did you say?"
+      ],
+      "wrong_for_context_examples": [
+        "I am fine.",
+        "How much is it?"
+      ],
+      "notes": {
+        "register": "polite-neutral"
+      }
     },
     {
       "id": "en-target-i-dont-understand",
       "function_id": "say_do_not_understand",
       "canonical": "Sorry, I don't understand.",
       "display_meaning": "Sorry, I don't understand.",
-      "meaning_units": ["sorry", "not", "understand"],
-      "accepted_variants": ["I don't understand.", "Sorry, I do not understand."],
-      "valid_but_off_target": ["Can you say it slowly?"],
-      "wrong_for_context_examples": ["Yes, please.", "I want water."],
-      "notes": { "register": "polite-neutral" }
+      "meaning_units": [
+        "sorry",
+        "not",
+        "understand"
+      ],
+      "accepted_variants": [
+        "I don't understand.",
+        "Sorry, I do not understand."
+      ],
+      "valid_but_off_target": [
+        "Can you say it slowly?"
+      ],
+      "wrong_for_context_examples": [
+        "Yes, please.",
+        "I want water."
+      ],
+      "notes": {
+        "register": "polite-neutral"
+      }
     },
     {
       "id": "en-target-can-you-help-me",
       "function_id": "ask_for_help",
       "canonical": "Can you help me?",
       "display_meaning": "Can you help me?",
-      "meaning_units": ["you", "help", "me", "question"],
-      "accepted_variants": ["Will you help me?", "Can you please help me?"],
-      "valid_but_off_target": ["I need help."],
-      "wrong_for_context_examples": ["Goodbye.", "How much is it?"],
-      "notes": { "register": "polite-neutral" }
+      "meaning_units": [
+        "you",
+        "help",
+        "me",
+        "question"
+      ],
+      "accepted_variants": [
+        "Will you help me?",
+        "Can you please help me?"
+      ],
+      "valid_but_off_target": [
+        "I need help."
+      ],
+      "wrong_for_context_examples": [
+        "Goodbye.",
+        "How much is it?"
+      ],
+      "notes": {
+        "register": "polite-neutral"
+      }
     },
     {
       "id": "en-target-where-is-bus-stop",
       "function_id": "ask_where_place_is",
       "canonical": "Where is the bus stop?",
       "display_meaning": "Where is the bus stop?",
-      "meaning_units": ["where", "place", "question"],
-      "accepted_variants": ["Excuse me, where is the bus stop?", "Where's the bus stop?"],
-      "valid_but_off_target": ["Can you help me find the bus stop?"],
-      "wrong_for_context_examples": ["I want water.", "My name is Anna."],
-      "notes": { "register": "neutral" }
+      "meaning_units": [
+        "where",
+        "place",
+        "question"
+      ],
+      "accepted_variants": [
+        "Excuse me, where is the bus stop?",
+        "Where's the bus stop?"
+      ],
+      "valid_but_off_target": [
+        "Can you help me find the bus stop?"
+      ],
+      "wrong_for_context_examples": [
+        "I want water.",
+        "My name is Anna."
+      ],
+      "notes": {
+        "register": "neutral"
+      }
     },
     {
       "id": "en-target-water-please",
       "function_id": "request_basic_item",
       "canonical": "Water, please.",
       "display_meaning": "Water, please.",
-      "meaning_units": ["item", "please"],
-      "accepted_variants": ["One water, please.", "Can I have water, please?"],
-      "valid_but_off_target": ["I want water."],
-      "wrong_for_context_examples": ["Where is the bus stop?", "I am fine."],
-      "notes": { "register": "polite-minimal" }
+      "meaning_units": [
+        "item",
+        "please"
+      ],
+      "accepted_variants": [
+        "One water, please.",
+        "Can I have water, please?"
+      ],
+      "valid_but_off_target": [
+        "I want water."
+      ],
+      "wrong_for_context_examples": [
+        "Where is the bus stop?",
+        "I am fine."
+      ],
+      "notes": {
+        "register": "polite-minimal"
+      }
     },
     {
       "id": "en-target-how-much-is-this",
       "function_id": "ask_price",
       "canonical": "How much is this?",
       "display_meaning": "How much is this?",
-      "meaning_units": ["how_much", "this", "question"],
-      "accepted_variants": ["How much?", "What is the price of this?"],
-      "valid_but_off_target": ["What does it cost?"],
-      "wrong_for_context_examples": ["I don't understand.", "Good morning."],
-      "notes": { "register": "neutral" }
+      "meaning_units": [
+        "how_much",
+        "this",
+        "question"
+      ],
+      "accepted_variants": [
+        "How much?",
+        "What is the price of this?"
+      ],
+      "valid_but_off_target": [
+        "What does it cost?"
+      ],
+      "wrong_for_context_examples": [
+        "I don't understand.",
+        "Good morning."
+      ],
+      "notes": {
+        "register": "neutral"
+      }
     },
     {
       "id": "en-target-here-is-the-money",
       "function_id": "pay_and_close",
       "canonical": "Here is the money. Thank you.",
       "display_meaning": "Here is the money. Thank you.",
-      "meaning_units": ["here", "pay", "thank_you"],
-      "accepted_variants": ["Here you go. Thank you.", "Here is the money."],
-      "valid_but_off_target": ["Can I pay by card?"],
-      "wrong_for_context_examples": ["Where is the hospital?", "What is your name?"],
-      "notes": { "register": "polite-neutral" }
+      "meaning_units": [
+        "here",
+        "pay",
+        "thank_you"
+      ],
+      "accepted_variants": [
+        "Here you go. Thank you.",
+        "Here is the money."
+      ],
+      "valid_but_off_target": [
+        "Can I pay by card?"
+      ],
+      "wrong_for_context_examples": [
+        "Where is the hospital?",
+        "What is your name?"
+      ],
+      "notes": {
+        "register": "polite-neutral"
+      }
     },
     {
       "id": "en-target-sorry",
       "function_id": "apologize",
       "canonical": "Sorry.",
       "display_meaning": "Sorry.",
-      "meaning_units": ["sorry"],
-      "accepted_variants": ["I'm sorry.", "Sorry about that."],
-      "valid_but_off_target": ["Excuse me."],
-      "wrong_for_context_examples": ["Thank you.", "How much is this?"],
-      "notes": { "register": "neutral-politeness" }
+      "meaning_units": [
+        "sorry"
+      ],
+      "accepted_variants": [
+        "I'm sorry.",
+        "Sorry about that."
+      ],
+      "valid_but_off_target": [
+        "Excuse me."
+      ],
+      "wrong_for_context_examples": [
+        "Thank you.",
+        "How much is this?"
+      ],
+      "notes": {
+        "register": "neutral-politeness"
+      }
     },
     {
       "id": "en-target-i-speak-a-little-english",
       "function_id": "say_speak_little_language",
       "canonical": "I speak a little English.",
       "display_meaning": "I speak only a little English.",
-      "meaning_units": ["speak", "little", "language"],
-      "accepted_variants": ["I speak only a little English.", "I don't speak much English."],
-      "valid_but_off_target": ["Can you speak slowly?"],
-      "wrong_for_context_examples": ["I want water.", "Where is the bus stop?"],
+      "meaning_units": [
+        "speak",
+        "little",
+        "language"
+      ],
+      "accepted_variants": [
+        "I speak only a little English.",
+        "I don't speak much English."
+      ],
+      "valid_but_off_target": [
+        "Can you speak slowly?"
+      ],
+      "wrong_for_context_examples": [
+        "I want water.",
+        "Where is the bus stop?"
+      ],
       "notes": {
         "language_slot": "English",
         "register": "humble-neutral",
@@ -160,21 +336,48 @@
       "function_id": "use_polite_basics",
       "canonical": "Please. Thank you.",
       "display_meaning": "Please. Thank you.",
-      "meaning_units": ["please", "thank_you"],
-      "accepted_variants": ["Yes, please. Thank you.", "Please, and thank you."],
-      "valid_but_off_target": ["Thanks.", "Thank you very much."],
-      "wrong_for_context_examples": ["I don't understand.", "Where is the hospital?"],
-      "notes": { "register": "basic-politeness" }
+      "meaning_units": [
+        "please",
+        "thank_you"
+      ],
+      "accepted_variants": [
+        "Yes, please. Thank you.",
+        "Please, and thank you."
+      ],
+      "valid_but_off_target": [
+        "Thanks.",
+        "Thank you very much."
+      ],
+      "wrong_for_context_examples": [
+        "I don't understand.",
+        "Where is the hospital?"
+      ],
+      "notes": {
+        "register": "basic-politeness"
+      }
     },
     {
       "id": "en-target-one-local-food-please",
       "function_id": "order_local_food",
       "canonical": "One sandwich, please.",
       "display_meaning": "One local food item, please.",
-      "meaning_units": ["one", "food_item", "please"],
-      "accepted_variants": ["Can I have one sandwich, please?", "One sandwich, please."],
-      "valid_but_off_target": ["I want a sandwich.", "A sandwich, please."],
-      "wrong_for_context_examples": ["Where is the hospital?", "I speak a little English."],
+      "meaning_units": [
+        "one",
+        "food_item",
+        "please"
+      ],
+      "accepted_variants": [
+        "Can I have one sandwich, please?",
+        "One sandwich, please."
+      ],
+      "valid_but_off_target": [
+        "I want a sandwich.",
+        "A sandwich, please."
+      ],
+      "wrong_for_context_examples": [
+        "Where is the hospital?",
+        "I speak a little English."
+      ],
       "notes": {
         "food_slot": "sandwich",
         "register": "polite-neutral",
@@ -186,57 +389,158 @@
       "function_id": "ask_where_hospital_is",
       "canonical": "Where is the hospital?",
       "display_meaning": "Where is the hospital?",
-      "meaning_units": ["where", "hospital", "question"],
-      "accepted_variants": ["Excuse me, where is the hospital?", "Where's the hospital?"],
-      "valid_but_off_target": ["Can you help me find a hospital?"],
-      "wrong_for_context_examples": ["How much is this?", "Water, please."],
-      "notes": { "register": "urgent-neutral" }
+      "meaning_units": [
+        "where",
+        "hospital",
+        "question"
+      ],
+      "accepted_variants": [
+        "Excuse me, where is the hospital?",
+        "Where's the hospital?"
+      ],
+      "valid_but_off_target": [
+        "Can you help me find a hospital?"
+      ],
+      "wrong_for_context_examples": [
+        "How much is this?",
+        "Water, please."
+      ],
+      "notes": {
+        "register": "urgent-neutral"
+      }
     },
     {
       "id": "en-target-cough-medicine-please",
       "function_id": "ask_pharmacy_medicine",
       "canonical": "Cough medicine, please.",
       "display_meaning": "Cough medicine, please.",
-      "meaning_units": ["cough", "medicine", "please"],
-      "accepted_variants": ["Do you have cough medicine?", "Can I have cough medicine, please?"],
-      "valid_but_off_target": ["I have a cough."],
-      "wrong_for_context_examples": ["Where is the bus stop?", "My name is Anna."],
-      "notes": { "register": "polite-minimal", "medical_note": "Ask a pharmacist for help; do not imply diagnosis." }
+      "meaning_units": [
+        "cough",
+        "medicine",
+        "please"
+      ],
+      "accepted_variants": [
+        "Do you have cough medicine?",
+        "Can I have cough medicine, please?"
+      ],
+      "valid_but_off_target": [
+        "I have a cough."
+      ],
+      "wrong_for_context_examples": [
+        "Where is the bus stop?",
+        "My name is Anna."
+      ],
+      "notes": {
+        "register": "polite-minimal",
+        "medical_note": "Ask a pharmacist for help; do not imply diagnosis."
+      }
     },
     {
       "id": "en-target-diarrhea-medicine-please",
       "function_id": "ask_pharmacy_medicine",
       "canonical": "Diarrhea medicine, please.",
       "display_meaning": "Diarrhea medicine, please.",
-      "meaning_units": ["diarrhea", "medicine", "please"],
-      "accepted_variants": ["Do you have diarrhea medicine?", "Can I have medicine for diarrhea, please?"],
-      "valid_but_off_target": ["I have diarrhea."],
-      "wrong_for_context_examples": ["How are you?", "One dosa, please."],
-      "notes": { "register": "polite-minimal", "medical_note": "Keep visual framing respectful and non-comedic." }
+      "meaning_units": [
+        "diarrhea",
+        "medicine",
+        "please"
+      ],
+      "accepted_variants": [
+        "Do you have diarrhea medicine?",
+        "Can I have medicine for diarrhea, please?"
+      ],
+      "valid_but_off_target": [
+        "I have diarrhea."
+      ],
+      "wrong_for_context_examples": [
+        "How are you?",
+        "One dosa, please."
+      ],
+      "notes": {
+        "register": "polite-minimal",
+        "medical_note": "Keep visual framing respectful and non-comedic."
+      }
     },
     {
       "id": "en-target-i-have-reservation",
       "function_id": "check_in_hostel",
       "canonical": "I have a reservation.",
       "display_meaning": "I have a reservation.",
-      "meaning_units": ["reservation", "check_in"],
-      "accepted_variants": ["I have a booking.", "I have a reservation here."],
-      "valid_but_off_target": ["My name is Anna."],
-      "wrong_for_context_examples": ["Where is the hospital?", "Cough medicine, please."],
-      "notes": { "register": "neutral-travel" }
+      "meaning_units": [
+        "reservation",
+        "check_in"
+      ],
+      "accepted_variants": [
+        "I have a booking.",
+        "I have a reservation here."
+      ],
+      "valid_but_off_target": [
+        "My name is Anna."
+      ],
+      "wrong_for_context_examples": [
+        "Where is the hospital?",
+        "Cough medicine, please."
+      ],
+      "notes": {
+        "register": "neutral-travel"
+      }
     },
     {
       "id": "en-target-coffee-invitation",
       "function_id": "make_respectful_social_invitation",
       "canonical": "Would you like to get coffee sometime?",
       "display_meaning": "Would you like to get coffee sometime?",
-      "meaning_units": ["coffee", "invitation"],
-      "accepted_variants": ["Would you like to have coffee sometime?", "Do you want to get coffee sometime?"],
-      "valid_but_off_target": ["Are you here with someone?", "Do you have a partner?"],
-      "wrong_for_context_examples": ["Where is the hospital?", "I need medicine."],
+      "meaning_units": [
+        "coffee",
+        "invitation"
+      ],
+      "accepted_variants": [
+        "Would you like to have coffee sometime?",
+        "Do you want to get coffee sometime?"
+      ],
+      "valid_but_off_target": [
+        "Are you here with someone?",
+        "Do you have a partner?"
+      ],
+      "wrong_for_context_examples": [
+        "Where is the hospital?",
+        "I need medicine."
+      ],
       "notes": {
         "register": "respectful-social",
         "safety_note": "Teach accepting refusal politely; do not frame pursuit or pressure as success."
+      }
+    },
+    {
+      "id": "en-target-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "canonical": "Excuse me.",
+      "display_meaning": "Excuse me.",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "accepted_variants": [
+        "Excuse me",
+        "Pardon me."
+      ],
+      "valid_but_off_target": [
+        "Thank you."
+      ],
+      "wrong_for_context_examples": [
+        "Hi!",
+        "One sandwich, please."
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "attention_request"
+        },
+        "optional": {
+          "politeness": true
+        }
+      },
+      "notes": {
+        "register": "polite-basic"
       }
     }
   ]

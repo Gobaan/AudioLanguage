@@ -1,0 +1,69 @@
+import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import { LessonStepRenderer } from './LessonStepRenderer';
+import { LocalDevLinks } from './LocalDevLinks';
+import { stepBlocksNextUntilChoice } from './lessonStepHelpers';
+
+type TravellerLessonShellProps = {
+  participantId: string | null;
+  language: string;
+  stepLesson: Lesson;
+  step: LessonStep;
+  isPlaying: boolean;
+  selectedChoiceByStep: Record<string, string>;
+  isLastStep: boolean;
+  hasNextLesson: boolean;
+  onPlayAudio: () => void;
+  onLogAudioPlayed: () => void;
+  onSelectChoice: (stepId: string, choice: ChoiceOption) => void;
+  onCaptureAttempt: (
+    step: LessonStep,
+    recording: { blob: Blob; durationMs: number; mimeType: string },
+    extra?: Record<string, unknown>,
+  ) => void;
+  onNext: () => void;
+};
+
+export function TravellerLessonShell({
+  participantId,
+  language,
+  stepLesson,
+  step,
+  isPlaying,
+  selectedChoiceByStep,
+  isLastStep,
+  hasNextLesson,
+  onPlayAudio,
+  onLogAudioPlayed,
+  onSelectChoice,
+  onCaptureAttempt,
+  onNext,
+}: TravellerLessonShellProps) {
+  const nextLabel = isLastStep ? (hasNextLesson ? 'Next' : 'Scorecard') : 'Next';
+  const stepHandlesNext = step.component !== 'BackwardBuild';
+  const nextBlocked = stepBlocksNextUntilChoice(step, selectedChoiceByStep[step.id]);
+
+  return (
+    <section className="traveller-mvp-app" aria-label="Traveller MVP step">
+      <LocalDevLinks participantId={participantId} />
+      <LessonStepRenderer
+        lesson={stepLesson}
+        step={step}
+        language={language}
+        isPlaying={isPlaying}
+        selectedChoiceId={selectedChoiceByStep[step.id]}
+        onPlayAudio={onPlayAudio}
+        onLogAudioPlayed={onLogAudioPlayed}
+        onSelectChoice={onSelectChoice}
+        onCaptureAttempt={onCaptureAttempt}
+        onStepComplete={onNext}
+      />
+      {stepHandlesNext && !nextBlocked ? (
+        <nav className="step-controls" aria-label="Lesson step controls">
+          <button type="button" onClick={onNext}>
+            {nextLabel}
+          </button>
+        </nav>
+      ) : null}
+    </section>
+  );
+}

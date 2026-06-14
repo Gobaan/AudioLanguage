@@ -77,8 +77,42 @@ export function backwardBuildPrompts(step: LessonStep): BackwardBuildPrompt[] {
   return Array.isArray(step.props.prompts) ? (step.props.prompts as BackwardBuildPrompt[]) : [];
 }
 
+export function introFramesThroughLineType(lesson: Lesson, step: LessonStep): SceneFrameData[] {
+  const stopAt =
+    typeof step.props.playIntroThroughLineType === 'string' ? step.props.playIntroThroughLineType : null;
+  if (!stopAt) {
+    return [];
+  }
+
+  const frames = lesson.frames.filter((frame) => frame.imageUrl || frame.audioUrl || frame.audioText);
+  const stopIndex = frames.findIndex((frame) => frame.lineType === stopAt);
+  if (stopIndex < 0) {
+    return frames;
+  }
+
+  return frames.slice(0, stopIndex + 1);
+}
+
+export function stepBlocksNextUntilChoice(step: LessonStep, selectedChoiceId?: string): boolean {
+  if (!stepRevealsChoicesAfterAudio(step)) {
+    return false;
+  }
+
+  return !selectedChoiceId;
+}
+
+export function stepRevealsChoicesAfterAudio(step: LessonStep): boolean {
+  if (step.props.revealChoicesAfterAudio === true) {
+    return true;
+  }
+
+  return step.type === 'broad_meaning_guess' && step.audio?.autoplay === true;
+}
+
 export function stepHandlesOwnAutoplay(step: LessonStep): boolean {
   if (step.type === 'scene_setup') return true;
+  if (stepRevealsChoicesAfterAudio(step)) return true;
+  if (step.component === 'BackwardBuild') return true;
   if (step.component === 'MicPrompt') return true;
   if (step.component === 'ProductionPrompt') return true;
   if (step.type === 'scene_recall' && step.mic?.enabled) return true;

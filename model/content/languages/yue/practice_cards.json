@@ -2,10 +2,10 @@
   "language": "yue",
   "display_name": "Cantonese",
   "mvp_session": {
-    "id": "yue-first-user-session-1",
-    "name": "Cantonese starter scenes",
-    "goal": "Practice five beginner Cantonese chunks inside visual dialogue scenes.",
-    "estimated_minutes": 10,
+    "id": "yue-first-user-session-15-scene-test",
+    "name": "Cantonese starter anchor, transfer, and review test",
+    "goal": "Test whether five short Cantonese chunks transfer from anchor scenes into new visual contexts and delayed review scenes.",
+    "estimated_minutes": 18,
     "unlock_after": [],
     "lesson_tabs": [
       {
@@ -36,27 +36,54 @@
       {
         "id": "hello-transfer",
         "label": "Scene 6",
-        "card_id": "yue-card-hello-transfer-same_day_transfer"
+        "card_id": "yue-card-greeting-neighbor-transfer-same_day_transfer"
       },
       {
         "id": "introduce-transfer",
         "label": "Scene 7",
-        "card_id": "yue-card-introduce-transfer-same_day_transfer"
+        "card_id": "yue-card-introduce-class-transfer-same_day_transfer"
       },
       {
         "id": "repair-transfer",
         "label": "Scene 8",
-        "card_id": "yue-card-repair-transfer-same_day_transfer"
+        "card_id": "yue-card-repair-ticket-transfer-same_day_transfer"
       },
       {
         "id": "excuse-me-transfer",
         "label": "Scene 9",
-        "card_id": "yue-card-excuse-me-transfer-same_day_transfer"
+        "card_id": "yue-card-excuse-me-cafe-transfer-same_day_transfer"
       },
       {
         "id": "food-order-transfer",
         "label": "Scene 10",
-        "card_id": "yue-card-food-order-transfer-same_day_transfer"
+        "card_id": "yue-card-order-convenience-transfer-same_day_transfer"
+      }
+    ],
+    "delayed_lesson_tabs": [
+      {
+        "id": "hello",
+        "label": "Scene 1",
+        "card_id": "yue-card-greeting-entry-review-delayed_review"
+      },
+      {
+        "id": "introduce",
+        "label": "Scene 2",
+        "card_id": "yue-card-introduce-community-review-delayed_review"
+      },
+      {
+        "id": "repair",
+        "label": "Scene 3",
+        "card_id": "yue-card-repair-clinic-review-delayed_review"
+      },
+      {
+        "id": "excuse-me",
+        "label": "Scene 4",
+        "card_id": "yue-card-excuse-me-station-review-delayed_review"
+      },
+      {
+        "id": "food-order",
+        "label": "Scene 5",
+        "card_id": "yue-card-order-bakery-review-delayed_review"
       }
     ],
     "cards": [
@@ -65,11 +92,16 @@
       "yue-card-dont-understand-dialogue-practice",
       "yue-card-excuse-me-dialogue-practice",
       "yue-card-order-food-dialogue-practice",
-      "yue-card-hello-transfer-same_day_transfer",
-      "yue-card-introduce-transfer-same_day_transfer",
-      "yue-card-repair-transfer-same_day_transfer",
-      "yue-card-excuse-me-transfer-same_day_transfer",
-      "yue-card-food-order-transfer-same_day_transfer"
+      "yue-card-greeting-neighbor-transfer-same_day_transfer",
+      "yue-card-introduce-class-transfer-same_day_transfer",
+      "yue-card-repair-ticket-transfer-same_day_transfer",
+      "yue-card-excuse-me-cafe-transfer-same_day_transfer",
+      "yue-card-order-convenience-transfer-same_day_transfer",
+      "yue-card-greeting-entry-review-delayed_review",
+      "yue-card-introduce-community-review-delayed_review",
+      "yue-card-repair-clinic-review-delayed_review",
+      "yue-card-excuse-me-station-review-delayed_review",
+      "yue-card-order-bakery-review-delayed_review"
     ]
   },
   "practice_cards": [
@@ -82,7 +114,7 @@
       "correct_function_id": "respond_to_greeting",
       "target_id": "yue-target-respond-hi",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "Nei hou!",
+      "expected_response": "こんにちは！",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -98,27 +130,37 @@
         "required_slots": {
           "speech_act": "greeting_response"
         },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
         "example_valid_responses": [
-          "Nei hou",
-          "Nei hou!",
-          "Halo"
+          "こんにちは",
+          "こんにちは！",
+          "やあ",
+          "どうも"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as konnichiwa when the transcription clearly captured the greeting.",
+          "For this first beginner scene, do not require an added wellbeing question."
         ],
         "wrong_intents": [
           {
+            "id": "ignore_greeting",
+            "definition": "The learner says nothing or gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated to greeting the person."
+          },
+          {
             "id": "end_conversation",
-            "definition": "The learner says goodbye."
-          },
-          {
-            "id": "ask_location",
-            "definition": "The learner asks where something is."
-          },
-          {
-            "id": "thank_only",
-            "definition": "The learner only thanks the partner."
+            "definition": "The learner immediately says goodbye or leaves."
           }
         ]
       },
-      "support": {}
+      "support": {},
+      "success_signal": "learner hears the full scene, then successfully supplies the missing greeting response"
     },
     {
       "id": "yue-card-introduce-self-dialogue-practice",
@@ -129,7 +171,7 @@
       "correct_function_id": "introduce_self",
       "target_id": "yue-target-my-name-is",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "Ngo giu Anna.",
+      "expected_response": "アンナです。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -146,9 +188,17 @@
           "speech_act": "self_introduction",
           "name": "Anna"
         },
+        "optional_slots": {
+          "greeting": true
+        },
         "example_valid_responses": [
-          "Ngo giu Anna",
-          "Ngo hai Anna"
+          "アンナです",
+          "アンナです。",
+          "私の名前はアンナです",
+          "アンナと言います"
+        ],
+        "acceptance_notes": [
+          "Accept Ana/Anna spelling variation if the utterance clearly introduces the learner."
         ],
         "wrong_intents": [
           {
@@ -157,15 +207,16 @@
           },
           {
             "id": "ask_name",
-            "definition": "The learner asks for the other person's name."
+            "definition": "The learner asks for the other person's name instead of giving their own."
           },
           {
-            "id": "repair",
-            "definition": "The learner says they do not understand."
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
           }
         ]
       },
-      "support": {}
+      "support": {},
+      "success_signal": "learner introduces themself after being asked their name"
     },
     {
       "id": "yue-card-dont-understand-dialogue-practice",
@@ -176,7 +227,7 @@
       "correct_function_id": "say_do_not_understand",
       "target_id": "yue-target-i-dont-understand",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "M hou ji si, ngo m ming.",
+      "expected_response": "わかりません。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -193,26 +244,35 @@
           "speech_act": "repair",
           "problem": "not_understand"
         },
+        "optional_slots": {
+          "apology": true,
+          "politeness": true
+        },
         "example_valid_responses": [
-          "M hou ji si, ngo m ming",
-          "Ngo m ming"
+          "わかりません",
+          "すみません、わかりません",
+          "すみません、分かりません"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as sumimasen wakarimasen when the transcription clearly captures the phrase."
         ],
         "wrong_intents": [
           {
+            "id": "ask_slowly",
+            "definition": "The learner asks the partner to speak slowly instead of saying they do not understand."
+          },
+          {
             "id": "agree",
-            "definition": "The learner says yes or agrees."
+            "definition": "The learner says yes or agrees even though the scene calls for repair."
           },
           {
-            "id": "request_food",
-            "definition": "The learner orders food."
-          },
-          {
-            "id": "ask_price",
-            "definition": "The learner asks for a price."
+            "id": "request_item",
+            "definition": "The learner requests an unrelated object or service."
           }
         ]
       },
-      "support": {}
+      "support": {},
+      "success_signal": "learner uses a repair phrase instead of freezing"
     },
     {
       "id": "yue-card-excuse-me-dialogue-practice",
@@ -223,11 +283,11 @@
       "correct_function_id": "get_attention_politely",
       "target_id": "yue-target-excuse-me-attention",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "M goi.",
+      "expected_response": "すみません。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
-        "physical_scene": "At a busy counter, the staff calls the next person forward while still looking down.",
+        "physical_scene": "At a busy counter, the staff calls the next person forward while still looking down, and the learner politely gets the staff member's attention.",
         "learner_role": "person politely getting the staff member's attention",
         "partner_role": "staff member",
         "current_turn": "partner_speaks_first",
@@ -235,18 +295,25 @@
           "id": "get_attention_politely",
           "definition": "The learner politely gets attention from someone who is busy or not looking."
         },
-        "learner_intention": "Say excuse me in Cantonese so the staff member looks up.",
+        "learner_intention": "Say excuse me in Cantonese so the staff member looks up and gives attention.",
         "required_slots": {
           "speech_act": "attention_request"
         },
+        "optional_slots": {
+          "politeness": true
+        },
         "example_valid_responses": [
-          "M goi",
-          "M hou ji si"
+          "すみません",
+          "すみません。",
+          "ごめんなさい"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as sumimasen when clear."
         ],
         "wrong_intents": [
           {
             "id": "thank_only",
-            "definition": "The learner thanks the partner."
+            "definition": "The learner thanks the partner instead of getting attention."
           },
           {
             "id": "greet_only",
@@ -254,11 +321,12 @@
           },
           {
             "id": "request_food",
-            "definition": "The learner orders food."
+            "definition": "The learner orders food or asks for an item."
           }
         ]
       },
-      "support": {}
+      "support": {},
+      "success_signal": "learner uses a short polite apology"
     },
     {
       "id": "yue-card-order-food-dialogue-practice",
@@ -269,7 +337,7 @@
       "correct_function_id": "order_local_food",
       "target_id": "yue-target-one-local-food-please",
       "prompt": "Watch the scene once. Then replay the cue and say your part when prompted.",
-      "expected_response": "Jat go bo lo baau, m goi.",
+      "expected_response": "サンドイッチください。",
       "ai_scene_contract": {
         "language_being_practiced": "Cantonese",
         "support_language": "English",
@@ -281,19 +349,27 @@
           "id": "order_local_food",
           "definition": "The learner orders one visible food item politely."
         },
-        "learner_intention": "Ask for one pineapple bun politely in Cantonese.",
+        "learner_intention": "Ask for a sandwich politely in Cantonese.",
         "required_slots": {
           "speech_act": "request_order",
-          "item": "pineapple bun"
+          "item": "sandwich"
+        },
+        "optional_slots": {
+          "politeness": true
         },
         "example_valid_responses": [
-          "Jat go bo lo baau, m goi",
-          "Bo lo baau, m goi"
+          "サンドイッチください",
+          "サンドイッチをください",
+          "サンドイッチお願いします"
+        ],
+        "acceptance_notes": [
+          "Accept an order for a sandwich even if the particle is omitted.",
+          "Accept romanized attempts such as sandoicchi kudasai when clear."
         ],
         "wrong_intents": [
           {
             "id": "ask_price",
-            "definition": "The learner asks how much it costs."
+            "definition": "The learner asks how much it costs instead of ordering."
           },
           {
             "id": "ask_location",
@@ -301,11 +377,12 @@
           },
           {
             "id": "repair",
-            "definition": "The learner says they do not understand."
+            "definition": "The learner says they do not understand instead of ordering."
           }
         ]
       },
-      "support": {}
+      "support": {},
+      "success_signal": "learner orders a simple food item politely"
     },
     {
       "id": "yue-card-hello-transfer-same_day_transfer",
@@ -652,6 +729,794 @@
           "type": "play_line",
           "line_type": "learner_target",
           "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-greeting-neighbor-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-greeting-neighbor-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "yue-target-respond-hi",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "こんにちは！",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A neighbor pauses at a front gate and greets the learner while walking by.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Return the neighbor's friendly greeting in Cantonese.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
+        "example_valid_responses": [
+          "こんにちは",
+          "こんにちは！",
+          "やあ",
+          "どうも"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as konnichiwa when the transcription clearly captured the greeting.",
+          "For this first beginner scene, do not require an added wellbeing question."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ignore_greeting",
+            "definition": "The learner says nothing or gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated to greeting the person."
+          },
+          {
+            "id": "end_conversation",
+            "definition": "The learner immediately says goodbye or leaves."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-respond-hi in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-introduce-class-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-introduce-class-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "introduce_self",
+      "target_id": "yue-target-my-name-is",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "アンナです。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A class partner at a language-class table gestures to blank name tags and asks the learner their name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Tell the class partner that your name is Anna in Cantonese.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional_slots": {
+          "greeting": true
+        },
+        "example_valid_responses": [
+          "アンナです",
+          "アンナです。",
+          "私の名前はアンナです",
+          "アンナと言います"
+        ],
+        "acceptance_notes": [
+          "Accept Ana/Anna spelling variation if the utterance clearly introduces the learner."
+        ],
+        "wrong_intents": [
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name instead of giving their own."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-my-name-is in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-repair-ticket-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-repair-ticket-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "yue-target-i-dont-understand",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "わかりません。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A station helper points at a ticket machine screen and gives an instruction too quickly.",
+        "learner_role": "person who does not understand the instruction",
+        "partner_role": "busy but helpful staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
+        "learner_intention": "Politely say that you do not understand in Cantonese.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional_slots": {
+          "apology": true,
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "わかりません",
+          "すみません、わかりません",
+          "すみません、分かりません"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as sumimasen wakarimasen when the transcription clearly captures the phrase."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_slowly",
+            "definition": "The learner asks the partner to speak slowly instead of saying they do not understand."
+          },
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees even though the scene calls for repair."
+          },
+          {
+            "id": "request_item",
+            "definition": "The learner requests an unrelated object or service."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-i-dont-understand in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-excuse-me-cafe-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-excuse-me-cafe-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "get_attention_politely",
+      "target_id": "yue-target-excuse-me-attention",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "すみません。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A cafe worker is arranging cups and not fully looking at the learner waiting at the counter.",
+        "learner_role": "person politely getting the staff member's attention",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
+        "learner_intention": "Politely get the cafe worker's attention in Cantonese.",
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "すみません",
+          "すみません。",
+          "ごめんなさい"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as sumimasen when clear."
+        ],
+        "wrong_intents": [
+          {
+            "id": "thank_only",
+            "definition": "The learner thanks the partner instead of getting attention."
+          },
+          {
+            "id": "greet_only",
+            "definition": "The learner only greets the partner."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food or asks for an item."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner uses a short polite attention-getter",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-order-convenience-transfer-same_day_transfer",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-order-convenience-transfer",
+      "mode": "ai_guided_response",
+      "stage": "same_day_transfer",
+      "correct_function_id": "order_local_food",
+      "target_id": "yue-target-one-local-food-please",
+      "prompt": "Use the new scene. Say your part when prompted, then hear the model line.",
+      "expected_response": "サンドイッチください。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A convenience-store cashier waits while the learner holds or points to a wrapped sandwich.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Ask for the sandwich politely in Cantonese.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "sandwich"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "サンドイッチください",
+          "サンドイッチをください",
+          "サンドイッチお願いします"
+        ],
+        "acceptance_notes": [
+          "Accept an order for a sandwich even if the particle is omitted.",
+          "Accept romanized attempts such as sandoicchi kudasai when clear."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs instead of ordering."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand instead of ordering."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-one-local-food-please in a same day transfer scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "partner_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-greeting-entry-review-delayed_review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-greeting-entry-review",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "respond_to_greeting",
+      "target_id": "yue-target-respond-hi",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "こんにちは！",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A neighbor holds the apartment entry door and greets the learner.",
+        "learner_role": "person being greeted",
+        "partner_role": "friendly acquaintance",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "respond_to_greeting",
+          "definition": "The learner responds appropriately when someone says hi or hello."
+        },
+        "learner_intention": "Return the greeting in Cantonese from memory.",
+        "required_slots": {
+          "speech_act": "greeting_response"
+        },
+        "optional_slots": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        },
+        "example_valid_responses": [
+          "こんにちは",
+          "こんにちは！",
+          "やあ",
+          "どうも"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as konnichiwa when the transcription clearly captured the greeting.",
+          "For this first beginner scene, do not require an added wellbeing question."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ignore_greeting",
+            "definition": "The learner says nothing or gives no greeting-like response."
+          },
+          {
+            "id": "ask_unrelated_question",
+            "definition": "The learner asks something unrelated to greeting the person."
+          },
+          {
+            "id": "end_conversation",
+            "definition": "The learner immediately says goodbye or leaves."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-respond-hi in a delayed review scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "review_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line_after_attempt"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-introduce-community-review-delayed_review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-introduce-community-review",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "introduce_self",
+      "target_id": "yue-target-my-name-is",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "アンナです。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A community event host at a sign-in table welcomes the learner and asks their name.",
+        "learner_role": "new student being asked their name",
+        "partner_role": "friendly classmate",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "introduce_self",
+          "definition": "The learner says their own name in a simple introduction."
+        },
+        "learner_intention": "Introduce yourself as Anna in Cantonese from memory.",
+        "required_slots": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional_slots": {
+          "greeting": true
+        },
+        "example_valid_responses": [
+          "アンナです",
+          "アンナです。",
+          "私の名前はアンナです",
+          "アンナと言います"
+        ],
+        "acceptance_notes": [
+          "Accept Ana/Anna spelling variation if the utterance clearly introduces the learner."
+        ],
+        "wrong_intents": [
+          {
+            "id": "greet_only",
+            "definition": "The learner only says hi without giving a name."
+          },
+          {
+            "id": "ask_name",
+            "definition": "The learner asks for the other person's name instead of giving their own."
+          },
+          {
+            "id": "thank_only",
+            "definition": "The learner only thanks the partner."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-my-name-is in a delayed review scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "review_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line_after_attempt"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-repair-clinic-review-delayed_review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-repair-clinic-review",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "say_do_not_understand",
+      "target_id": "yue-target-i-dont-understand",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "わかりません。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A clinic receptionist points to a form field and expects the learner to fill it in.",
+        "learner_role": "person who does not understand the instruction",
+        "partner_role": "busy but helpful staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "say_do_not_understand",
+          "definition": "The learner politely signals that they do not understand what was said."
+        },
+        "learner_intention": "Say that you do not understand in Cantonese from memory.",
+        "required_slots": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional_slots": {
+          "apology": true,
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "わかりません",
+          "すみません、わかりません",
+          "すみません、分かりません"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as sumimasen wakarimasen when the transcription clearly captures the phrase."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_slowly",
+            "definition": "The learner asks the partner to speak slowly instead of saying they do not understand."
+          },
+          {
+            "id": "agree",
+            "definition": "The learner says yes or agrees even though the scene calls for repair."
+          },
+          {
+            "id": "request_item",
+            "definition": "The learner requests an unrelated object or service."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-i-dont-understand in a delayed review scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "review_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line_after_attempt"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-excuse-me-station-review-delayed_review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-excuse-me-station-review",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "get_attention_politely",
+      "target_id": "yue-target-excuse-me-attention",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "すみません。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A station information-desk worker gestures for the next person while still focused on a screen.",
+        "learner_role": "person politely getting the staff member's attention",
+        "partner_role": "staff member",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "get_attention_politely",
+          "definition": "The learner politely gets attention from someone who is busy or not looking."
+        },
+        "learner_intention": "Politely get the staff member's attention in Cantonese from memory.",
+        "required_slots": {
+          "speech_act": "attention_request"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "すみません",
+          "すみません。",
+          "ごめんなさい"
+        ],
+        "acceptance_notes": [
+          "Accept romanized attempts such as sumimasen when clear."
+        ],
+        "wrong_intents": [
+          {
+            "id": "thank_only",
+            "definition": "The learner thanks the partner instead of getting attention."
+          },
+          {
+            "id": "greet_only",
+            "definition": "The learner only greets the partner."
+          },
+          {
+            "id": "request_food",
+            "definition": "The learner orders food or asks for an item."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner uses a short polite attention-getter",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "review_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line_after_attempt"
+        },
+        {
+          "type": "play_line",
+          "line_type": "world_response",
+          "state": "social_response",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "yue-card-order-bakery-review-delayed_review",
+      "template_id": "guided-dialogue-replay-v1",
+      "dialogue_id": "yue-order-bakery-review",
+      "mode": "ai_guided_response",
+      "stage": "delayed_review",
+      "correct_function_id": "order_local_food",
+      "target_id": "yue-target-one-local-food-please",
+      "prompt": "Review from the scene cue. Say your part before the model line plays.",
+      "expected_response": "サンドイッチください。",
+      "ai_scene_contract": {
+        "language_being_practiced": "Cantonese",
+        "support_language": "English",
+        "physical_scene": "A bakery worker gestures toward a sandwich display case and waits for the learner to order.",
+        "learner_role": "customer ordering one food item",
+        "partner_role": "food counter server",
+        "current_turn": "partner_speaks_first",
+        "target_function": {
+          "id": "order_local_food",
+          "definition": "The learner orders one visible food item politely."
+        },
+        "learner_intention": "Order a sandwich politely in Cantonese from memory.",
+        "required_slots": {
+          "speech_act": "request_order",
+          "item": "sandwich"
+        },
+        "optional_slots": {
+          "politeness": true
+        },
+        "example_valid_responses": [
+          "サンドイッチください",
+          "サンドイッチをください",
+          "サンドイッチお願いします"
+        ],
+        "acceptance_notes": [
+          "Accept an order for a sandwich even if the particle is omitted.",
+          "Accept romanized attempts such as sandoicchi kudasai when clear."
+        ],
+        "wrong_intents": [
+          {
+            "id": "ask_price",
+            "definition": "The learner asks how much it costs instead of ordering."
+          },
+          {
+            "id": "ask_location",
+            "definition": "The learner asks where something is."
+          },
+          {
+            "id": "repair",
+            "definition": "The learner says they do not understand instead of ordering."
+          }
+        ]
+      },
+      "support": {},
+      "success_signal": "learner reuses ja-target-one-local-food-please in a delayed review scene",
+      "playback_flow": [
+        {
+          "type": "play_line",
+          "line_type": "world_opener",
+          "state": "review_cue"
+        },
+        {
+          "type": "record_attempt",
+          "line_type": "learner_target",
+          "judgement": "deferred"
+        },
+        {
+          "type": "play_line",
+          "line_type": "learner_target",
+          "state": "model_line_after_attempt"
         },
         {
           "type": "play_line",

@@ -61,6 +61,58 @@ def relative_posix(path: Path) -> str:
     return path.as_posix()
 
 
+def asset_folder_slug(value: str) -> str:
+    parts = value.split("-", 1)
+    if len(parts) == 2 and parts[0] in {"en", "es", "fr", "ja", "ta", "yue", "zh"}:
+        return parts[1]
+    return value
+
+
+def audio_path_candidates(
+    language: str,
+    dialogue_id: str,
+    line_index: int,
+    asset_slug: str | None = None,
+) -> list[str]:
+    folder_slugs: list[str] = []
+    for value in (asset_slug, dialogue_id, asset_folder_slug(dialogue_id)):
+        if value and value not in folder_slugs:
+            folder_slugs.append(value)
+
+    candidates: list[str] = []
+    seen: set[str] = set()
+    for slug in folder_slugs:
+        for candidate in (
+            relative_posix(Path("audio") / "generated" / language / slug / f"line-{line_index}.mp3"),
+            relative_posix(Path("audio") / f"{slug}-{line_index}.mp3"),
+        ):
+            if candidate not in seen:
+                seen.add(candidate)
+                candidates.append(candidate)
+    return candidates
+
+
+def resolve_audio_path(
+    project_dir: Path,
+    language: str,
+    dialogue: dict[str, Any],
+    line: dict[str, Any],
+) -> tuple[str, str]:
+    dialogue_id = str(dialogue["id"])
+    asset_slug = dialogue.get("asset_slug")
+    if line.get("audio_path"):
+        audio_path = str(line["audio_path"])
+        status = "generated" if path_exists(project_dir, audio_path) else "needs_generation"
+        return audio_path, status
+
+    candidates = audio_path_candidates(language, dialogue_id, int(line["index"]), asset_slug)
+    for candidate in candidates:
+        if path_exists(project_dir, candidate):
+            return candidate, "generated"
+
+    return candidates[0], "needs_generation"
+
+
 def path_exists(project_dir: Path, relative_path: str) -> bool:
     path = repo_file_for_relative_path(project_dir, relative_path)
     return path.exists() and path.stat().st_size > 0

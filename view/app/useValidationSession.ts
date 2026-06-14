@@ -11,6 +11,22 @@ import { learnerTargetAudioUrl, validationSessionIdForToday } from './lessonUrls
 
 type CaptureAttemptExtra = Record<string, unknown>;
 
+function attemptExpectedPhrase(
+  lesson: Lesson,
+  attemptStep: LessonStep,
+  extra: CaptureAttemptExtra,
+): { expectedText: string; expectedTransliteration: string } {
+  const buildPromptText = typeof extra.buildPromptText === 'string' ? extra.buildPromptText.trim() : '';
+  if (buildPromptText) {
+    return { expectedText: buildPromptText, expectedTransliteration: buildPromptText };
+  }
+
+  return {
+    expectedText: attemptStep.mic?.expectedText ?? lesson.target.text,
+    expectedTransliteration: attemptStep.mic?.expectedTransliteration ?? lesson.target.transliteration,
+  };
+}
+
 type UseValidationSessionOptions = {
   participantId: string | null;
   language: string;
@@ -78,6 +94,9 @@ export function useValidationSession({
       if (!sessionId) return;
 
       const attemptId = crypto.randomUUID();
+      const expectedPhrase = attemptExpectedPhrase(lesson, attemptStep, extra);
+      const buildPromptAudioUrl =
+        typeof extra.buildPromptAudioUrl === 'string' ? extra.buildPromptAudioUrl : undefined;
       void uploadValidationAttempt(sessionId, recording.blob, {
         attemptId,
         participantId,
@@ -87,9 +106,9 @@ export function useValidationSession({
         lessonPage,
         stepId: attemptStep.id,
         targetId: lesson.target.id,
-        expectedText: attemptStep.mic?.expectedText ?? lesson.target.text,
-        expectedTransliteration: attemptStep.mic?.expectedTransliteration ?? lesson.target.transliteration,
-        targetAudioUrl: learnerTargetAudioUrl(lesson),
+        expectedText: expectedPhrase.expectedText,
+        expectedTransliteration: expectedPhrase.expectedTransliteration,
+        targetAudioUrl: buildPromptAudioUrl ?? learnerTargetAudioUrl(lesson),
         recordingDurationMs: recording.durationMs,
         byteCount: recording.blob.size,
         mimeType: recording.mimeType,

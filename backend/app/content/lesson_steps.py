@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from app.content.graph_core import public_path
 from app.content.lessons import chunks_for_target, meaning_choice_difficulty, meaning_choices
 
 LESSON_STEP_TYPES = [
@@ -26,6 +27,7 @@ LESSON_STEP_TYPES = [
 
 def lesson_steps(
     *,
+    language: str,
     card: dict[str, Any],
     target: dict[str, Any],
     scene: dict[str, Any],
@@ -44,6 +46,48 @@ def lesson_steps(
     target_audio_text = learner_line.get("audio_text") or learner_line.get("transliteration") or learner_line.get("text")
     is_anchor_lesson = card.get("stage") == "guided_scene_production"
 
+    if is_anchor_lesson:
+        steps = [
+            step(
+                "broad_meaning_guess",
+                "ChoicePrompt",
+                frame_id=learner_frame.get("id") if learner_frame else None,
+                frame_mode="single",
+                display_text="What happened?",
+                audio=audio_behavior(
+                    target_audio,
+                    autoplay=True,
+                    replayable=True,
+                    audio_text=target_audio_text,
+                ),
+                mic=mic_off(),
+                props={
+                    "question": "What happened?",
+                    "difficulty": meaning_choice_difficulty(card),
+                    "choices": meaning_choices(target, card),
+                    "revealChoicesAfterAudio": True,
+                    "playIntroThroughLineType": "learner_target",
+                },
+            )
+        ]
+
+        steps.append(
+            backward_build_step(
+                card=card,
+                target=target,
+                learner_line=learner_line,
+                learner_frame=learner_frame,
+                target_text=target_text,
+                target_transliteration=target_transliteration,
+                target_phrase=target_phrase,
+                target_audio=target_audio,
+                target_audio_text=target_audio_text,
+                language=language,
+            )
+        )
+
+        return steps
+
     steps = [
         step(
             "scene_setup",
@@ -59,83 +103,6 @@ def lesson_steps(
             },
         )
     ]
-
-    if is_anchor_lesson:
-        steps.extend(
-            [
-                step(
-                    "target_audio",
-                    "AudioButton",
-                    frame_id=learner_frame.get("id") if learner_frame else None,
-                    frame_mode="single",
-                    display_text="Listen to what they say.",
-                    audio=audio_behavior(target_audio, autoplay=True, replayable=True, audio_text=target_audio_text),
-                    mic=mic_off(),
-                    props={
-                        "audioUrl": target_audio,
-                        "text": localized_audio_text(card),
-                    },
-                ),
-                step(
-                    "broad_meaning_guess",
-                    "ChoicePrompt",
-                    frame_id=response_frame.get("id") if response_frame else None,
-                    frame_mode="single",
-                    display_text="What happened?",
-                    audio=audio_behavior(target_audio, autoplay=False, replayable=True),
-                    mic=mic_off(),
-                    props={
-                        "question": "What happened?",
-                        "difficulty": meaning_choice_difficulty(card),
-                        "choices": meaning_choices(target, card),
-                    },
-                ),
-                step(
-                    "repeat_with_mic",
-                    "MicPrompt",
-                    frame_id=learner_frame.get("id") if learner_frame else None,
-                    frame_mode="single",
-                    display_text="Now say it.",
-                    audio=audio_behavior(
-                        target_audio,
-                        autoplay=True,
-                        replayable=True,
-                        play_before_mic=True,
-                        audio_text=target_audio_text,
-                    ),
-                    mic=recording_mic(target_text, target_transliteration, starts_after_audio=True),
-                    props={
-                        "expectedText": target_text,
-                        "expectedTransliteration": target_transliteration,
-                        "text": localized_mic_text(card),
-                    },
-                ),
-            ]
-        )
-
-        if should_include_backward_build(target=target, target_phrase=target_phrase):
-            steps.append(
-                step(
-                    "backward_build",
-                    "BackwardBuild",
-                    frame_id=learner_frame.get("id") if learner_frame else None,
-                    frame_mode="neutral",
-                    display_text="Build it from the end.",
-                    audio=audio_behavior(target_audio, autoplay=False, replayable=True, audio_text=target_audio_text),
-                    mic=recording_mic(target_text, target_transliteration),
-                    props={
-                        "targetPhrase": target_phrase,
-                        "chunks": chunks_for_target(target),
-                        "prompts": backward_build_prompts(
-                            target=target,
-                            target_phrase=target_phrase,
-                            target_audio=target_audio,
-                        ),
-                    },
-                )
-            )
-
-        return steps
 
     steps.extend(
         [
@@ -258,28 +225,153 @@ def recording_mic(
     }
 
 
+def learner_spoken_phrase(*, learner_line: dict[str, Any], target: dict[str, Any]) -> str:
+    for key in ("tts_text", "text", "audio_text"):
+        value = learner_line.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    canonical = target.get("canonical")
+    if isinstance(canonical, str) and canonical.strip():
+        return canonical.strip()
+    return ""
+
+
+def backward_build_audio_relative_path(language: str, target_id: str, build_index: int) -> str:
+    return f"audio/generated/{language}/backward-build/{target_id}/build-{build_index}.mp3"
+
+
+def backward_build_step(
+    *,
+    card: dict[str, Any],
+    target: dict[str, Any],
+    learner_line: dict[str, Any],
+    learner_frame: dict[str, Any] | None,
+    target_text: str,
+    target_transliteration: str,
+    target_phrase: str,
+    target_audio: str | None,
+    target_audio_text: str | None,
+    language: str,
+) -> dict[str, Any]:
+    return step(
+        "backward_build",
+        "BackwardBuild",
+        frame_id=learner_frame.get("id") if learner_frame else None,
+        frame_mode="neutral",
+        display_text="Build it from the end.",
+        audio=audio_behavior(target_audio, autoplay=False, replayable=True, audio_text=target_audio_text),
+        mic=recording_mic(target_text, target_transliteration),
+        props={
+            "targetPhrase": target_phrase,
+            "chunks": chunks_for_target(target),
+            "prompts": backward_build_prompts(
+                target=target,
+                target_phrase=target_phrase,
+                target_text=target_text,
+                target_transliteration=target_transliteration,
+                language=language,
+                spoken_phrase=learner_spoken_phrase(
+                    learner_line=learner_line,
+                    target=target,
+                ),
+            ),
+        },
+    )
+
+
+def backward_build_indices(unit_count: int) -> list[int]:
+    if unit_count >= 3:
+        return list(range(unit_count - 1, -1, -1))
+    return [0]
+
+
 def backward_build_prompts(
     *,
     target: dict[str, Any],
     target_phrase: str,
-    target_audio: str | None,
+    target_text: str,
+    target_transliteration: str,
+    language: str,
+    spoken_phrase: str | None = None,
 ) -> list[dict[str, Any]]:
     units = backward_build_units(target=target, target_phrase=target_phrase)
+    spoken = spoken_phrase or target_phrase
     prompts = []
-    for index in range(len(units) - 1, -1, -1):
+    for index in backward_build_indices(len(units)):
         text = " ".join(units[index:])
         if index == 0:
             text = target_phrase
+        spoken_text = backward_build_entry_spoken_text(
+            target=target,
+            build_index=index,
+            units=units,
+            spoken_phrase=spoken,
+        )
+        expected_text = target_text if index == 0 else text
+        expected_transliteration = target_transliteration if index == 0 else text
         prompts.append(
             {
                 "id": f"{target['id']}-build-{index}",
                 "text": text,
-                "audioUrl": target_audio if index == 0 else None,
-                "audioText": text,
-                "mic": recording_mic(text, ""),
+                "audioUrl": public_path(
+                    backward_build_audio_relative_path(language, target["id"], index)
+                ),
+                "audioText": spoken_text,
+                "mic": recording_mic(expected_text, expected_transliteration),
             }
         )
     return prompts
+
+
+def backward_build_entry_spoken_text(
+    *,
+    target: dict[str, Any],
+    build_index: int,
+    units: list[str],
+    spoken_phrase: str,
+) -> str:
+    explicit_prompts = target.get("backward_build_spoken_prompts")
+    if isinstance(explicit_prompts, list) and explicit_prompts:
+        prompt_position = (len(units) - 1) - build_index
+        if 0 <= prompt_position < len(explicit_prompts):
+            spoken = str(explicit_prompts[prompt_position]).strip()
+            if spoken:
+                return spoken
+
+    spoken_units = backward_build_spoken_units(target=target, spoken_phrase=spoken_phrase)
+    if len(spoken_units) == len(units):
+        text = " ".join(spoken_units[build_index:])
+        if build_index == 0:
+            return spoken_phrase
+        return text
+
+    text = " ".join(units[build_index:])
+    if build_index == 0:
+        return spoken_phrase or text
+    return text
+
+
+def backward_build_spoken_units(*, target: dict[str, Any], spoken_phrase: str) -> list[str]:
+    explicit_units = target.get("backward_build_spoken_units")
+    if isinstance(explicit_units, list):
+        units = [str(unit).strip() for unit in explicit_units if str(unit).strip()]
+        if units:
+            return units
+
+    if isinstance(target.get("backward_build_spoken_prompts"), list):
+        return []
+
+    if re.search(r"[\s,，;]", spoken_phrase):
+        parts = re.split(r"[\s,，;]+", spoken_phrase.strip())
+        units = [
+            part.strip(".,!?。！？\"'")
+            for part in parts
+            if part.strip(".,!?。！？\"'")
+        ]
+        if units:
+            return units
+
+    return backward_build_units(target={}, target_phrase=spoken_phrase)
 
 
 def should_include_backward_build(*, target: dict[str, Any], target_phrase: str) -> bool:

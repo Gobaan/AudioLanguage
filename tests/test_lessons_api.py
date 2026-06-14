@@ -26,11 +26,12 @@ class LessonsApiTests(unittest.TestCase):
 
         self.assertEqual(yue["display_name"], "Cantonese")
         self.assertEqual(yue["description"], "Cantonese starter scenes for your friend.")
-        self.assertEqual(yue["scene_sets"], ["mvp"])
+        self.assertEqual(yue["scene_sets"], ["mvp", "delayed"])
         self.assertEqual(ta["display_name"], "Tamil")
         self.assertEqual(ta["description"], "Tamil starter scenes for you.")
-        self.assertEqual(ta["scene_sets"], ["mvp"])
+        self.assertEqual(ta["scene_sets"], ["mvp", "delayed"])
         self.assertEqual(ja["scene_sets"], ["mvp", "delayed"])
+        self.assertEqual(en["scene_sets"], ["mvp", "delayed"])
         self.assertEqual(en["description"], "English reference scenes.")
         self.assertEqual(ja["sort_order"], 1)
         self.assertEqual(yue["sort_order"], 2)
@@ -75,9 +76,10 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(tab_labels[:5], [f"Scene {index}" for index in range(1, 6)])
         self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 11)})
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].startswith("/visuals/"))
-        self.assertIn("scene_setup", step_types)
-        self.assertIn("target_audio", step_types)
-        self.assertIn("repeat_with_mic", step_types)
+        self.assertNotIn("target_audio", step_types)
+        self.assertNotIn("scene_setup", step_types)
+        self.assertIn("backward_build", step_types)
+        self.assertNotIn("repeat_with_mic", step_types)
         self.assertNotIn("scene_recall", step_types)
         self.assertNotIn("scorecard", step_types)
         self.assertNotIn("schedule_review", step_types)
@@ -87,7 +89,7 @@ class LessonsApiTests(unittest.TestCase):
         )
 
     def test_lessons_endpoint_can_return_named_preview_lesson(self):
-        response = TestClient(app).get("/api/languages/en/lessons?lesson=hospital")
+        response = TestClient(app).get("/api/languages/en/lessons?lesson=excuse-me")
 
         self.assertEqual(response.status_code, 200)
         payload = response.json()
@@ -95,14 +97,16 @@ class LessonsApiTests(unittest.TestCase):
         step_types = [step["type"] for step in lessons[0]["steps"]]
 
         self.assertEqual(len(lessons), 1)
-        self.assertEqual(lessons[0]["id"], "en-card-hospital-directions-dialogue-practice")
-        self.assertEqual(lessons[0]["target"]["text"], "Where is the hospital?")
+        self.assertEqual(lessons[0]["id"], "en-card-excuse-me-dialogue-practice")
+        self.assertEqual(lessons[0]["target"]["text"], "Excuse me.")
         self.assertIn("backward_build", step_types)
+        self.assertNotIn("repeat_with_mic", step_types)
+        self.assertEqual(len(lessons[0]["steps"][-1]["props"]["prompts"]), 1)
         tab_ids = [tab["id"] for tab in payload["lesson_tabs"]]
         tab_labels = [tab["label"] for tab in payload["lesson_tabs"]]
         self.assertEqual(
             tab_ids[:5],
-            ["hello", "introduce", "repair", "food-order", "hospital"],
+            ["hello", "introduce", "repair", "excuse-me", "food-order"],
         )
         self.assertEqual(
             set(tab_ids[5:]),
@@ -110,19 +114,20 @@ class LessonsApiTests(unittest.TestCase):
                 "hello-transfer",
                 "introduce-transfer",
                 "repair-transfer",
+                "excuse-me-transfer",
                 "food-order-transfer",
             },
         )
         self.assertEqual(tab_labels[:5], [f"Scene {index}" for index in range(1, 6)])
-        self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 10)})
+        self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 11)})
 
     def test_lessons_endpoint_supports_all_mvp_lesson_aliases(self):
         aliases = {
             "hello": "en-card-first-hi-dialogue-practice",
             "introduce": "en-card-introduce-self-dialogue-practice",
             "repair": "en-card-dont-understand-dialogue-practice",
+            "excuse-me": "en-card-excuse-me-dialogue-practice",
             "food-order": "en-card-order-food-dialogue-practice",
-            "hospital": "en-card-hospital-directions-dialogue-practice",
         }
 
         for alias, lesson_id in aliases.items():

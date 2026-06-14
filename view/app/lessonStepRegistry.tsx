@@ -2,19 +2,17 @@ import type { ReactNode } from 'react';
 
 import {
   BackwardBuild,
-  ChoicePrompt,
   DialogueReveal,
   PromptedRecording,
   SceneFrame,
   ScenePlayback,
 } from '../components';
 import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import { MeaningGuessStep } from './MeaningGuessStep';
 import { productionPracticeProps, ProductionPracticeStep } from './ProductionPracticeStep';
 import {
   backwardBuildPrompts,
   backwardBuildTarget,
-  choiceOptions,
-  choiceQuestion,
   dialogueRevealLines,
   frameForStep,
   sceneSetupFrames,
@@ -24,15 +22,18 @@ import { StepAudioButton } from './StepAudioButton';
 export type LessonStepRenderContext = {
   lesson: Lesson;
   step: LessonStep;
+  language: string;
   isPlaying?: boolean;
   selectedChoiceId?: string;
   onPlayAudio?: () => void;
+  onLogAudioPlayed?: () => void;
   onSelectChoice?: (stepId: string, choice: ChoiceOption) => void;
   onCaptureAttempt?: (
     step: LessonStep,
     recording: { blob: Blob; durationMs: number; mimeType: string },
     extra?: Record<string, unknown>,
   ) => void;
+  onStepComplete?: () => void;
 };
 
 type StepRenderer = (context: LessonStepRenderContext) => ReactNode;
@@ -91,17 +92,17 @@ const STEP_RENDERERS: StepRenderer[] = [
   },
   (context) => {
     if (context.step.component !== 'ChoicePrompt') return null;
-    return framedStep(
-      context,
-      <div className={context.selectedChoiceId ? 'choice-with-reveal revealed' : 'choice-with-reveal'}>
-        <ChoicePrompt
-          question={choiceQuestion(context.step)}
-          choices={choiceOptions(context.step)}
-          selectedChoiceId={context.selectedChoiceId}
-          onSelectChoice={(choice) => context.onSelectChoice?.(context.step.id, choice)}
-        />
-        {context.selectedChoiceId ? <DialogueReveal lines={dialogueRevealLines(context.lesson)} /> : null}
-      </div>,
+    return (
+      <MeaningGuessStep
+        lesson={context.lesson}
+        step={context.step}
+        language={context.language}
+        isPlaying={context.isPlaying}
+        selectedChoiceId={context.selectedChoiceId}
+        onPlayAudio={context.onPlayAudio}
+        onLogAudioPlayed={context.onLogAudioPlayed}
+        onSelectChoice={context.onSelectChoice}
+      />
     );
   },
   (context) => {
@@ -144,8 +145,10 @@ const STEP_RENDERERS: StepRenderer[] = [
             context.onCaptureAttempt?.(context.step, recording, {
               buildPromptId: prompt.id,
               buildPromptText: prompt.text,
+              buildPromptAudioUrl: prompt.audioUrl ?? undefined,
             })
           }
+          onStepComplete={context.onStepComplete}
         />
       </section>
     );

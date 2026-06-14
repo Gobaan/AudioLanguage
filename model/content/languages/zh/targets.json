@@ -3,7 +3,10 @@
   "display_name": "Mandarin",
   "metadata": {
     "description": "Mandarin starter scenes for testing the same workflow.",
-    "scene_sets": ["mvp", "delayed"],
+    "scene_sets": [
+      "mvp",
+      "delayed"
+    ],
     "sort_order": 3
   },
   "script": "Chinese",
@@ -15,10 +18,24 @@
       "canonical": "Ni hao!",
       "transliteration": "Ni hao!",
       "display_meaning": "Respond to hello.",
-      "meaning_units": ["hello", "response"],
-      "accepted_variants": ["Ni hao.", "Hai.", "Hello."],
-      "wrong_for_context_examples": ["Zai jian.", "Xiexie.", "Zai nali?"],
-      "notes": { "register": "friendly-basic", "native_review_required": true }
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "accepted_variants": [
+        "Ni hao.",
+        "Hai.",
+        "Hello."
+      ],
+      "wrong_for_context_examples": [
+        "Zai jian.",
+        "Xiexie.",
+        "Zai nali?"
+      ],
+      "notes": {
+        "register": "friendly-basic",
+        "native_review_required": true
+      }
     },
     {
       "id": "zh-target-my-name-is",
@@ -26,10 +43,30 @@
       "canonical": "Wo jiao Anna.",
       "transliteration": "Wo jiao Anna.",
       "display_meaning": "My name is Anna.",
-      "meaning_units": ["my", "name", "proper_noun"],
-      "accepted_variants": ["Wo shi Anna.", "Wo de mingzi shi Anna."],
-      "wrong_for_context_examples": ["Ni hao.", "Xiexie.", "Wo bu dong."],
-      "notes": { "proper_noun": "Anna", "register": "neutral", "native_review_required": true }
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "accepted_variants": [
+        "Wo shi Anna.",
+        "Wo de mingzi shi Anna."
+      ],
+      "wrong_for_context_examples": [
+        "Ni hao.",
+        "Xiexie.",
+        "Wo bu dong."
+      ],
+      "notes": {
+        "proper_noun": "Anna",
+        "register": "neutral",
+        "native_review_required": true
+      },
+      "backward_build_spoken_prompts": [
+        "Anna。",
+        "叫 Anna。",
+        "我叫 Anna。"
+      ]
     },
     {
       "id": "zh-target-i-dont-understand",
@@ -37,10 +74,32 @@
       "canonical": "Bu hao yisi, wo bu dong.",
       "transliteration": "Bu hao yisi, wo bu dong.",
       "display_meaning": "Sorry, I don't understand.",
-      "meaning_units": ["sorry", "not", "understand"],
-      "accepted_variants": ["Wo bu dong.", "Duibuqi, wo bu dong."],
-      "wrong_for_context_examples": ["Hao.", "Wo yao shui.", "Duo shao qian?"],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "sorry",
+        "not",
+        "understand"
+      ],
+      "accepted_variants": [
+        "Wo bu dong.",
+        "Duibuqi, wo bu dong."
+      ],
+      "wrong_for_context_examples": [
+        "Hao.",
+        "Wo yao shui.",
+        "Duo shao qian?"
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      },
+      "backward_build_spoken_prompts": [
+        "懂。",
+        "不懂。",
+        "我不懂。",
+        "意思我不懂。",
+        "不好意思我不懂。",
+        "不好意思，我不懂。"
+      ]
     },
     {
       "id": "zh-target-excuse-me-attention",
@@ -48,10 +107,23 @@
       "canonical": "Qing wen.",
       "transliteration": "Qing wen.",
       "display_meaning": "Excuse me.",
-      "meaning_units": ["attention_request", "polite_softener"],
-      "accepted_variants": ["Qing wen.", "Bu hao yisi."],
-      "wrong_for_context_examples": ["Ni hao.", "Xiexie.", "Zai jian."],
-      "notes": { "register": "polite-basic", "native_review_required": true }
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "accepted_variants": [
+        "Qing wen.",
+        "Bu hao yisi."
+      ],
+      "wrong_for_context_examples": [
+        "Ni hao.",
+        "Xiexie.",
+        "Zai jian."
+      ],
+      "notes": {
+        "register": "polite-basic",
+        "native_review_required": true
+      }
     },
     {
       "id": "zh-target-one-local-food-please",
@@ -59,10 +131,31 @@
       "canonical": "Yi ge baozi, xiexie.",
       "transliteration": "Yi ge baozi, xiexie.",
       "display_meaning": "One baozi, please.",
-      "meaning_units": ["one", "food_item", "please"],
-      "accepted_variants": ["Baozi, xiexie.", "Yi ge baozi."],
-      "wrong_for_context_examples": ["Wo bu dong.", "Zai nali?", "Wo jiao Anna."],
-      "notes": { "food_slot": "baozi", "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "one",
+        "food_item",
+        "please"
+      ],
+      "accepted_variants": [
+        "Baozi, xiexie.",
+        "Yi ge baozi."
+      ],
+      "wrong_for_context_examples": [
+        "Wo bu dong.",
+        "Zai nali?",
+        "Wo jiao Anna."
+      ],
+      "notes": {
+        "food_slot": "baozi",
+        "register": "polite-neutral",
+        "native_review_required": true
+      },
+      "backward_build_spoken_prompts": [
+        "谢谢。",
+        "包子，谢谢。",
+        "一个包子，谢谢。",
+        "一个包子，谢谢。"
+      ]
     }
   ]
 }

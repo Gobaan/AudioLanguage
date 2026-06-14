@@ -6,9 +6,10 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from app.conversation.models import CoachResponse, CommunicationJudgement
+from app.conversation.models import CoachResponse, CommunicationJudgement, ConversationContext
 from app.deps import get_conversation_coach
 from app.validation import ValidationStore
+from app.validation.scoring import attempt_expected_phrase
 from test_support import app
 
 
@@ -27,6 +28,14 @@ class FakeConversationCoach:
             speech_available=True,
             speech_feedback="",
         )
+
+
+class CapturingConversationCoach(FakeConversationCoach):
+    last_context: ConversationContext | None = None
+
+    def evaluate_attempt(self, *, attempt, context):
+        CapturingConversationCoach.last_context = context
+        return super().evaluate_attempt(attempt=attempt, context=context)
 
 
 @contextmanager
@@ -318,6 +327,64 @@ class ValidationApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["eventCount"], 1)
+
+    def test_attempt_expected_phrase_prefers_backward_build_prompt_text(self):
+        expected_text, expected_transliteration = attempt_expected_phrase(
+            {
+                "expectedText": "My name is Anna.",
+                "expectedTransliteration": "My name is Anna.",
+                "buildPromptText": "Anna.",
+            }
+        )
+
+        self.assertEqual(expected_text, "Anna.")
+        self.assertEqual(expected_transliteration, "Anna.")
+
+    def test_backward_build_scoring_uses_build_prompt_text(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            CapturingConversationCoach.last_context = None
+            with patch("app.routes.validation.validation_store", store):
+                app.dependency_overrides[get_conversation_coach] = lambda: CapturingConversationCoach()
+                try:
+                    client = TestClient(app)
+                    client.post(
+                        "/api/validation/sessions",
+                        json={
+                            "sessionId": "backward-build",
+                            "participantId": "Bob",
+                            "language": "en",
+                            "sceneSet": "mvp",
+                        },
+                    )
+                    client.post(
+                        "/api/validation/sessions/backward-build/attempts",
+                        data={
+                            "metadata": (
+                                '{"attemptId":"build-attempt-1","language":"en","sceneSet":"mvp",'
+                                '"lessonId":"en-card-introduce-self-dialogue-practice","stepId":"backward_build",'
+                                '"targetId":"en-target-my-name-is","expectedText":"My name is Anna.",'
+                                '"expectedTransliteration":"My name is Anna.",'
+                                '"buildPromptText":"Anna.",'
+                                '"targetAudioUrl":"/audio/generated/en/backward-build/en-target-my-name-is/build-3.mp3"}'
+                            )
+                        },
+                        files={"file": ("attempt.webm", b"audio-bytes", "audio/webm")},
+                    )
+                    score_response = client.post(
+                        "/api/validation/sessions/backward-build/attempts/build-attempt-1/score"
+                    )
+                finally:
+                    app.dependency_overrides.pop(get_conversation_coach, None)
+
+        self.assertEqual(score_response.status_code, 200)
+        self.assertIsNotNone(CapturingConversationCoach.last_context)
+        self.assertEqual(CapturingConversationCoach.last_context.target_text, "Anna.")
+        self.assertEqual(CapturingConversationCoach.last_context.target_romanized, "Anna.")
+        self.assertEqual(
+            CapturingConversationCoach.last_context.target_audio,
+            "/audio/generated/en/backward-build/en-target-my-name-is/build-3.mp3",
+        )
 
 
 if __name__ == "__main__":

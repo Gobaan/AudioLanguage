@@ -12,7 +12,7 @@ sys.path.insert(0, str(BACKEND_DIR))
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 from app.content.data_graph import list_languages, load_language_session
-from app.content.lesson_steps import backward_build_prompts, should_include_backward_build
+from app.content.lesson_steps import backward_build_indices, backward_build_prompts, should_include_backward_build
 from app.content.lessons import lessons_from_session
 from content_assets import read_json, write_json
 from generate_images_from_manifest import generate_language
@@ -32,9 +32,9 @@ class StructuredDataGraphTests(unittest.TestCase):
         first = session["cards"][0]
 
         self.assertEqual(session["language"], "ta")
-        self.assertEqual(first["dialogue"]["id"], "ta-greeting-hello")
-        self.assertEqual(first["target"]["id"], "ta-target-hello-how-are-you")
-        self.assertEqual(first["function"]["id"], "greet_and_ask_wellbeing")
+        self.assertEqual(first["dialogue"]["id"], "ta-first-hi-response")
+        self.assertEqual(first["target"]["id"], "ta-target-respond-hi")
+        self.assertEqual(first["function"]["id"], "respond_to_greeting")
         self.assertEqual(first["scene"]["id"], "study-room-friend")
         self.assertEqual(first["review_mode"]["id"], "ai_guided_response")
         self.assertTrue(first["dialogue"]["lines"][1]["is_learner_target"])
@@ -70,18 +70,22 @@ class StructuredDataGraphTests(unittest.TestCase):
 
         guided_cards = [card for card in session["cards"] if card.get("stage") == "guided_scene_production"]
         transfer_cards = [card for card in session["cards"] if card.get("stage") == "same_day_transfer"]
+        delayed_cards = [card for card in session["cards"] if card.get("stage") == "delayed_review"]
 
+        self.assertEqual(len(session["cards"]), 15)
         self.assertEqual(len(guided_cards), 5)
-        self.assertEqual(len(transfer_cards), 4)
-        for card in guided_cards + transfer_cards:
+        self.assertEqual(len(transfer_cards), 5)
+        self.assertEqual(len(delayed_cards), 5)
+        for card in session["cards"]:
             self.assertEqual(card["template_id"], "guided-dialogue-replay-v1")
             self.assertEqual(card["mode"], "ai_guided_response")
             self.assertTrue(card["ai_scene_contract"]["target_function"]["definition"])
             self.assertTrue(card["ai_scene_contract"]["required_slots"])
-        for card in guided_cards:
-            self.assertTrue(all(line.get("audio") for line in card["dialogue"]["lines"]))
+            for line in card["dialogue"]["lines"]:
+                self.assertTrue(line.get("audio"), f"{card['id']} line {line.get('index')}")
+                self.assertTrue(line.get("visual"), f"{card['id']} line {line.get('index')}")
 
-    def test_short_targets_skip_backward_build(self):
+    def test_short_targets_use_single_full_phrase_build(self):
         session = load_language_session(
             data_dir=CONTENT_DIR,
             project_dir=PROJECT_DIR,
@@ -90,10 +94,13 @@ class StructuredDataGraphTests(unittest.TestCase):
 
         lesson = lessons_from_session(session)[0]
         step_ids = [step["id"] for step in lesson["steps"]]
+        backward_build = next(step for step in lesson["steps"] if step["id"] == "backward_build")
 
         self.assertEqual(lesson["target"]["text"], "Hi!")
-        self.assertNotIn("backward_build", step_ids)
-        self.assertNotIn("audio_replay", step_ids)
+        self.assertEqual(step_ids[-1], "backward_build")
+        self.assertNotIn("repeat_with_mic", step_ids)
+        self.assertEqual(len(backward_build["props"]["prompts"]), 1)
+        self.assertEqual(backward_build["props"]["prompts"][0]["text"], "Hi!")
 
     def test_first_session_excludes_meaning_cued_production_prompt(self):
         session = load_language_session(
@@ -115,7 +122,13 @@ class StructuredDataGraphTests(unittest.TestCase):
 
         self.assertTrue(should_include_backward_build(target=target, target_phrase=target["canonical"]))
         self.assertEqual(
-            [prompt["text"] for prompt in backward_build_prompts(target=target, target_phrase=target["canonical"], target_audio=None)],
+            [prompt["text"] for prompt in backward_build_prompts(
+                target=target,
+                target_phrase=target["canonical"],
+                target_text=target["canonical"],
+                target_transliteration=target["canonical"],
+                language="en",
+            )],
             [
                 "stop",
                 "bus stop",
@@ -125,7 +138,25 @@ class StructuredDataGraphTests(unittest.TestCase):
             ],
         )
 
-    def test_backward_build_audio_only_uses_target_audio_for_full_prompt(self):
+    def test_short_phrase_build_uses_only_full_sentence_prompt(self):
+        target = {
+            "id": "en-target-test",
+            "canonical": "Hi!",
+        }
+
+        prompts = backward_build_prompts(
+            target=target,
+            target_phrase=target["canonical"],
+            target_text=target["canonical"],
+            target_transliteration=target["canonical"],
+            language="en",
+        )
+
+        self.assertEqual([prompt["text"] for prompt in prompts], ["Hi!"])
+        self.assertEqual(backward_build_indices(1), [0])
+        self.assertEqual(backward_build_indices(2), [0])
+
+    def test_backward_build_uses_learner_voice_audio_for_each_prompt(self):
         target = {
             "id": "en-target-test",
             "canonical": "Where is the bus stop?",
@@ -134,12 +165,40 @@ class StructuredDataGraphTests(unittest.TestCase):
         prompts = backward_build_prompts(
             target=target,
             target_phrase=target["canonical"],
-            target_audio="/audio/generated/en/example/line-1.mp3",
+            target_text=target["canonical"],
+            target_transliteration=target["canonical"],
+            language="en",
         )
 
-        self.assertEqual([prompt["audioText"] for prompt in prompts], [prompt["text"] for prompt in prompts])
-        self.assertEqual([prompt["audioUrl"] for prompt in prompts[:-1]], [None, None, None, None])
-        self.assertEqual(prompts[-1]["audioUrl"], "/audio/generated/en/example/line-1.mp3")
+        self.assertEqual(len(prompts), 5)
+        for prompt in prompts:
+            self.assertIsNotNone(prompt["audioUrl"])
+            self.assertIn("/audio/generated/en/backward-build/en-target-test/build-", prompt["audioUrl"])
+            self.assertEqual(prompt["audioText"], prompt["text"])
+
+    def test_anchor_lesson_uses_backward_build_for_all_production(self):
+        session = load_language_session(
+            data_dir=CONTENT_DIR,
+            project_dir=PROJECT_DIR,
+            language="en",
+        )
+
+        lesson = next(
+            item
+            for item in lessons_from_session(session)
+            if item["id"] == "en-card-introduce-self-dialogue-practice"
+        )
+        step_ids = [step["id"] for step in lesson["steps"]]
+        backward_build = next(step for step in lesson["steps"] if step["id"] == "backward_build")
+
+        self.assertEqual(
+            step_ids,
+            [
+                "broad_meaning_guess",
+                "backward_build",
+            ],
+        )
+        self.assertEqual(backward_build["props"]["prompts"][-1]["text"], "My name is Anna.")
 
     def test_japanese_first_session_uses_short_beginner_chunks(self):
         session = load_language_session(

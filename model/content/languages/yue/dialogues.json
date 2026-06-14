@@ -497,6 +497,272 @@
           "tts_text": "好呀。"
         }
       ]
+    },
+    {
+      "id": "yue-greeting-entry-review",
+      "asset_slug": "greeting-entry-review",
+      "type": "delayed_review",
+      "function_id": "respond_to_greeting",
+      "target_id": "yue-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "friend",
+          "line_type": "world_opener",
+          "text": "Nei hou!",
+          "transliteration": "Nei hou!",
+          "audio_text": "Nei hou!",
+          "tts_text": "你好！",
+          "meaning_units": [
+            "hello"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "yue-target-respond-hi",
+          "text": "Nei hou!",
+          "transliteration": "Nei hou!",
+          "audio_text": "Nei hou!",
+          "tts_text": "你好！",
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "friend",
+          "line_type": "world_response",
+          "text": "Hou hoi sam gin dou nei.",
+          "transliteration": "Hou hoi sam gin dou nei.",
+          "audio_text": "Hou hoi sam gin dou nei.",
+          "tts_text": "好開心見到你。",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yue-introduce-community-review",
+      "asset_slug": "introduce-community-review",
+      "type": "delayed_review",
+      "function_id": "introduce_self",
+      "target_id": "yue-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "classmate",
+          "line_type": "world_opener",
+          "text": "Nei giu mat meng?",
+          "transliteration": "Nei giu mat meng?",
+          "audio_text": "Nei giu mat meng?",
+          "tts_text": "你叫乜名？",
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "yue-target-my-name-is",
+          "text": "Ngo giu Anna.",
+          "transliteration": "Ngo giu Anna.",
+          "audio_text": "Ngo giu Anna.",
+          "tts_text": "我叫 Anna。",
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "classmate",
+          "line_type": "world_response",
+          "text": "Hou hoi sam sik nei, Anna.",
+          "transliteration": "Hou hoi sam sik nei, Anna.",
+          "audio_text": "Hou hoi sam sik nei, Anna.",
+          "tts_text": "好開心識你，Anna。",
+          "meaning_units": [
+            "positive_response",
+            "proper_noun"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yue-repair-clinic-review",
+      "asset_slug": "repair-clinic-review",
+      "type": "delayed_review",
+      "function_id": "say_do_not_understand",
+      "target_id": "yue-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "M goi hai ni dou tin.",
+          "transliteration": "M goi hai ni dou tin.",
+          "audio_text": "M goi hai ni dou tin.",
+          "tts_text": "唔該喺呢度填。",
+          "meaning_units": [
+            "this"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "yue-target-i-dont-understand",
+          "text": "M hou ji si, ngo m ming.",
+          "transliteration": "M hou ji si, ngo m ming.",
+          "audio_text": "M hou ji si, ngo m ming.",
+          "tts_text": "唔好意思，我唔明。",
+          "meaning_units": [
+            "sorry",
+            "not",
+            "understand"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "M gan yiu. Ngo bong nei.",
+          "transliteration": "M gan yiu. Ngo bong nei.",
+          "audio_text": "M gan yiu. Ngo bong nei.",
+          "tts_text": "唔緊要。我幫你。",
+          "meaning_units": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yue-excuse-me-station-review",
+      "asset_slug": "sumimasen-station-review",
+      "type": "delayed_review",
+      "function_id": "get_attention_politely",
+      "target_id": "yue-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "Ha yat wai, m goi.",
+          "transliteration": "Ha yat wai, m goi.",
+          "audio_text": "Ha yat wai, m goi.",
+          "tts_text": "下一位，唔該。",
+          "meaning_units": [
+            "attention"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "yue-target-excuse-me-attention",
+          "text": "M goi.",
+          "transliteration": "M goi.",
+          "audio_text": "M goi.",
+          "tts_text": "唔該。",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "Hai, nei hou.",
+          "transliteration": "Hai, nei hou.",
+          "audio_text": "Hai, nei hou.",
+          "tts_text": "係，你好。",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yue-order-bakery-review",
+      "asset_slug": "order-bakery-review",
+      "type": "delayed_review",
+      "function_id": "order_local_food",
+      "target_id": "yue-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "server",
+          "line_type": "world_opener",
+          "text": "Nei yiu mat?",
+          "transliteration": "Nei yiu mat?",
+          "audio_text": "Nei yiu mat?",
+          "tts_text": "你要乜？",
+          "meaning_units": [
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "yue-target-one-local-food-please",
+          "text": "Jat go bo lo baau, m goi.",
+          "transliteration": "Jat go bo lo baau, m goi.",
+          "audio_text": "Jat go bo lo baau, m goi.",
+          "tts_text": "一個菠蘿包，唔該。",
+          "meaning_units": [
+            "one",
+            "food_item",
+            "please"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "server",
+          "line_type": "world_response",
+          "text": "Hou aa.",
+          "transliteration": "Hou aa.",
+          "audio_text": "Hou aa.",
+          "tts_text": "好呀。",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
     }
   ]
 }

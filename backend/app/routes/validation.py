@@ -9,6 +9,7 @@ from app.conversation.coach import ConversationCoach
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.deps import ConversationCoachDep
 from app.runtime import validation_store
+from app.validation.scoring import attempt_expected_phrase
 
 logger = logging.getLogger(__name__)
 
@@ -196,13 +197,14 @@ def score_validation_attempt(session_id: str, attempt: dict, conversation_coach:
     if not attempt_id:
         return {"status": "skipped", "error": "Missing attempt id"}
     try:
+        expected_text, expected_transliteration = attempt_expected_phrase(attempt)
         coach_response = conversation_coach.evaluate_attempt(
             attempt=LearnerAttempt(audio_path=validation_store.attempt_audio_path(session_id, attempt_id)),
             context=ConversationContext(
                 language=str(attempt.get("language", "")),
                 target_id=str(attempt.get("targetId", "")),
-                target_text=str(attempt.get("expectedText", "")),
-                target_romanized=str(attempt.get("expectedTransliteration", "")),
+                target_text=expected_text,
+                target_romanized=expected_transliteration,
                 target_audio=str(attempt.get("targetAudioUrl", "")),
             ),
         )

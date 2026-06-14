@@ -3,50 +3,6 @@
   "display_name": "English",
   "dialogues": [
     {
-      "id": "en-first-hi-response",
-      "asset_slug": "ta-greeting-hello",
-      "type": "anchor",
-      "function_id": "respond_to_greeting",
-      "target_id": "en-target-respond-hi",
-      "scene_id": "study-room-friend",
-      "review_modes": [
-        "listen",
-        "produce_from_visual",
-        "ai_guided_response"
-      ],
-      "lines": [
-        {
-          "index": 0,
-          "speaker_role": "friend",
-          "line_type": "world_opener",
-          "text": "Hi!",
-          "meaning_units": [
-            "hello"
-          ]
-        },
-        {
-          "index": 1,
-          "speaker_role": "learner",
-          "line_type": "learner_target",
-          "target_id": "en-target-respond-hi",
-          "text": "Hi!",
-          "meaning_units": [
-            "hello",
-            "response"
-          ]
-        },
-        {
-          "index": 2,
-          "speaker_role": "friend",
-          "line_type": "world_response",
-          "text": "Nice to see you.",
-          "meaning_units": [
-            "positive_response"
-          ]
-        }
-      ]
-    },
-    {
       "id": "en-greeting-hello",
       "asset_slug": "ta-greeting-hello",
       "type": "anchor",
@@ -247,53 +203,6 @@
       ]
     },
     {
-      "id": "en-introduce-self",
-      "type": "anchor",
-      "function_id": "introduce_self",
-      "target_id": "en-target-my-name-is",
-      "scene_id": "school-hallway-classmate",
-      "review_modes": [
-        "listen",
-        "echo",
-        "produce_from_visual",
-        "missing_line"
-      ],
-      "lines": [
-        {
-          "index": 0,
-          "speaker_role": "classmate",
-          "line_type": "world_opener",
-          "text": "What is your name?",
-          "meaning_units": [
-            "your",
-            "name",
-            "question"
-          ]
-        },
-        {
-          "index": 1,
-          "speaker_role": "learner",
-          "line_type": "learner_target",
-          "target_id": "en-target-my-name-is",
-          "text": "My name is Anna.",
-          "meaning_units": [
-            "my",
-            "name",
-            "proper_noun"
-          ]
-        },
-        {
-          "index": 2,
-          "speaker_role": "classmate",
-          "line_type": "world_response",
-          "text": "Nice to meet you, Anna.",
-          "meaning_units": [
-            "proper_noun"
-          ]
-        }
-      ]
-    },
-    {
       "id": "en-repair-say-slowly",
       "type": "anchor",
       "function_id": "ask_for_repetition",
@@ -337,52 +246,6 @@
           "text": "Yes. Slowly.",
           "meaning_units": [
             "slowly"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "en-repair-dont-understand",
-      "type": "anchor",
-      "function_id": "say_do_not_understand",
-      "target_id": "en-target-i-dont-understand",
-      "scene_id": "busy-service-counter",
-      "review_modes": [
-        "listen",
-        "echo",
-        "produce_from_visual",
-        "missing_line",
-        "response_cue"
-      ],
-      "lines": [
-        {
-          "index": 0,
-          "speaker_role": "staff",
-          "line_type": "world_opener",
-          "text": "Please fill out this form.",
-          "meaning_units": [
-            "this"
-          ]
-        },
-        {
-          "index": 1,
-          "speaker_role": "learner",
-          "line_type": "learner_target",
-          "target_id": "en-target-i-dont-understand",
-          "text": "Sorry, I don't understand.",
-          "meaning_units": [
-            "sorry",
-            "not",
-            "understand"
-          ]
-        },
-        {
-          "index": 2,
-          "speaker_role": "staff",
-          "line_type": "world_response",
-          "text": "That's okay. I can help.",
-          "meaning_units": [
-            "help"
           ]
         }
       ]
@@ -704,52 +567,6 @@
       ]
     },
     {
-      "id": "en-order-local-food",
-      "type": "anchor",
-      "function_id": "order_local_food",
-      "target_id": "en-target-one-local-food-please",
-      "scene_id": "local-food-counter",
-      "review_modes": [
-        "listen",
-        "echo",
-        "produce_from_visual",
-        "missing_line",
-        "free_response"
-      ],
-      "lines": [
-        {
-          "index": 0,
-          "speaker_role": "server",
-          "line_type": "world_opener",
-          "text": "What would you like?",
-          "meaning_units": [
-            "question"
-          ]
-        },
-        {
-          "index": 1,
-          "speaker_role": "learner",
-          "line_type": "learner_target",
-          "target_id": "en-target-one-local-food-please",
-          "text": "One sandwich, please.",
-          "meaning_units": [
-            "one",
-            "food_item",
-            "please"
-          ]
-        },
-        {
-          "index": 2,
-          "speaker_role": "server",
-          "line_type": "world_response",
-          "text": "Okay.",
-          "meaning_units": [
-            "acknowledgement"
-          ]
-        }
-      ]
-    },
-    {
       "id": "en-directions-hospital",
       "type": "anchor",
       "function_id": "ask_where_hospital_is",
@@ -994,6 +811,236 @@
       ]
     },
     {
+      "id": "en-first-hi-response",
+      "asset_slug": "ta-greeting-hello",
+      "type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "friend",
+          "line_type": "world_opener",
+          "text": "Hi!",
+          "meaning_units": [
+            "hello"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-respond-hi",
+          "text": "Hi!",
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "friend",
+          "line_type": "world_response",
+          "text": "Nice to see you.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-introduce-self",
+      "asset_slug": "introduce-self",
+      "type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "classmate",
+          "line_type": "world_opener",
+          "text": "What is your name?",
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-my-name-is",
+          "text": "My name is Anna.",
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "classmate",
+          "line_type": "world_response",
+          "text": "Nice to meet you, Anna.",
+          "meaning_units": [
+            "proper_noun"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-repair-dont-understand",
+      "asset_slug": "repair-dont-understand",
+      "type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "response_cue"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "Please fill out this form.",
+          "meaning_units": [
+            "this"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-i-dont-understand",
+          "text": "Sorry, I don't understand.",
+          "meaning_units": [
+            "sorry",
+            "not",
+            "understand"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "That's okay. I can help.",
+          "meaning_units": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-excuse-me-attention",
+      "asset_slug": "excuse-me-attention",
+      "type": "anchor",
+      "function_id": "get_attention_politely",
+      "target_id": "en-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "Next, please.",
+          "meaning_units": [
+            "attention"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-excuse-me-attention",
+          "text": "Excuse me.",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "Yes, go ahead.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-order-local-food",
+      "asset_slug": "order-local-food",
+      "type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "review_modes": [
+        "listen",
+        "echo",
+        "produce_from_visual",
+        "missing_line",
+        "free_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "server",
+          "line_type": "world_opener",
+          "text": "What would you like?",
+          "meaning_units": [
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-one-local-food-please",
+          "text": "One sandwich, please.",
+          "meaning_units": [
+            "one",
+            "food_item",
+            "please"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "server",
+          "line_type": "world_response",
+          "text": "Okay.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
       "id": "en-greeting-neighbor-transfer",
       "asset_slug": "greeting-neighbor-transfer",
       "type": "transfer",
@@ -1120,6 +1167,49 @@
       ]
     },
     {
+      "id": "en-excuse-me-cafe-transfer",
+      "asset_slug": "excuse-me-cafe-transfer",
+      "type": "transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "en-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "barista",
+          "line_type": "world_opener",
+          "text": "One moment, please.",
+          "meaning_units": [
+            "wait"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-excuse-me-attention",
+          "text": "Excuse me.",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "barista",
+          "line_type": "world_response",
+          "text": "Yes, how can I help?",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
       "id": "en-order-convenience-transfer",
       "asset_slug": "order-convenience-transfer",
       "type": "transfer",
@@ -1158,6 +1248,226 @@
           "transliteration": "Sure.",
           "audio_text": "Sure.",
           "meaning_units": []
+        }
+      ]
+    },
+    {
+      "id": "en-greeting-entry-review",
+      "asset_slug": "greeting-entry-review",
+      "type": "delayed_review",
+      "function_id": "respond_to_greeting",
+      "target_id": "en-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "friend",
+          "line_type": "world_opener",
+          "text": "Hi!",
+          "meaning_units": [
+            "hello"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-respond-hi",
+          "text": "Hi!",
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "friend",
+          "line_type": "world_response",
+          "text": "Nice to see you.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-introduce-community-review",
+      "asset_slug": "introduce-community-review",
+      "type": "delayed_review",
+      "function_id": "introduce_self",
+      "target_id": "en-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "classmate",
+          "line_type": "world_opener",
+          "text": "What is your name?",
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-my-name-is",
+          "text": "My name is Anna.",
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "classmate",
+          "line_type": "world_response",
+          "text": "Nice to meet you, Anna.",
+          "meaning_units": [
+            "proper_noun"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-repair-clinic-review",
+      "asset_slug": "repair-clinic-review",
+      "type": "delayed_review",
+      "function_id": "say_do_not_understand",
+      "target_id": "en-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "Please fill out this form.",
+          "meaning_units": [
+            "this"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-i-dont-understand",
+          "text": "Sorry, I don't understand.",
+          "meaning_units": [
+            "sorry",
+            "not",
+            "understand"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "That's okay. I can help.",
+          "meaning_units": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-excuse-me-station-review",
+      "asset_slug": "sumimasen-station-review",
+      "type": "delayed_review",
+      "function_id": "get_attention_politely",
+      "target_id": "en-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "Next, please.",
+          "meaning_units": [
+            "attention"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-excuse-me-attention",
+          "text": "Excuse me.",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "Yes, go ahead.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en-order-bakery-review",
+      "asset_slug": "order-bakery-review",
+      "type": "delayed_review",
+      "function_id": "order_local_food",
+      "target_id": "en-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "server",
+          "line_type": "world_opener",
+          "text": "What would you like?",
+          "meaning_units": [
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "en-target-one-local-food-please",
+          "text": "One sandwich, please.",
+          "meaning_units": [
+            "one",
+            "food_item",
+            "please"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "server",
+          "line_type": "world_response",
+          "text": "Okay.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
         }
       ]
     }

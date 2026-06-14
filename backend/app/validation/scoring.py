@@ -46,6 +46,16 @@ def score_status(score: dict[str, Any] | None) -> str:
     return str(communication.get("status") or "scored")
 
 
+def attempt_expected_phrase(attempt: dict[str, Any]) -> tuple[str, str]:
+    build_prompt = str(attempt.get("buildPromptText") or "").strip()
+    if build_prompt:
+        return build_prompt, build_prompt
+
+    expected_text = str(attempt.get("expectedText") or "").strip()
+    expected_transliteration = str(attempt.get("expectedTransliteration") or expected_text).strip()
+    return expected_text, expected_transliteration
+
+
 def participant_id_from(
     metadata: dict[str, Any],
     attempts: list[dict[str, Any]],

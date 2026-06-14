@@ -52,64 +52,16 @@ export const FALLBACK_LESSON: Lesson = {
   ],
   steps: [
     {
-      id: 'scene_setup',
-      type: 'scene_setup',
-      component: 'SceneFrame',
-      frameId: 'line-0',
-      frameMode: 'single',
-      displayText: 'Listen.',
-      audio: {
-        url: '/audio/generated/en/en-first-hi-response/line-0.mp3',
-        autoplay: true,
-        replayable: true,
-        playBeforeMic: false,
-      },
-      mic: {
-        enabled: false,
-        record: false,
-        scoring: 'none',
-      },
-      props: {
-        initialFrameId: 'line-0',
-        frames: [],
-      },
-    },
-    {
-      id: 'target_audio',
-      type: 'target_audio',
-      component: 'AudioButton',
-      frameId: 'line-1',
-      frameMode: 'single',
-      displayText: 'Listen to what they say.',
-      audio: {
-        url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        autoplay: true,
-        replayable: true,
-        playBeforeMic: false,
-      },
-      mic: {
-        enabled: false,
-        record: false,
-        scoring: 'none',
-      },
-      props: {
-        audioUrl: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        text: {
-          playLabel: 'Play',
-          playingLabel: 'Playing',
-        },
-      },
-    },
-    {
       id: 'broad_meaning_guess',
       type: 'broad_meaning_guess',
       component: 'ChoicePrompt',
-      frameId: 'line-2',
+      frameId: 'line-1',
       frameMode: 'single',
       displayText: 'What happened?',
       audio: {
         url: '/audio/generated/en/en-first-hi-response/line-1.mp3',
-        autoplay: false,
+        audioText: 'Hi!',
+        autoplay: true,
         replayable: true,
         playBeforeMic: false,
       },
@@ -120,6 +72,8 @@ export const FALLBACK_LESSON: Lesson = {
       },
       props: {
         question: 'What happened?',
+        revealChoicesAfterAudio: true,
+        playIntroThroughLineType: 'learner_target',
         choices: [
           {
             id: 'respond_to_greeting',

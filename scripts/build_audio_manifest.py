@@ -11,19 +11,10 @@ from content_assets import (
     iter_dialogue_lines,
     list_language_dirs,
     load_language_data,
-    path_exists,
-    relative_posix,
+    resolve_audio_path,
     write_json,
 )
 from voice_registry import voice_profile_for
-
-
-def audio_path_for(project_dir: Path, language: str, dialogue_id: str, line: dict[str, Any]) -> str:
-    if line.get("audio_path"):
-        return line["audio_path"]
-
-    generated_path = Path("audio") / "generated" / language / dialogue_id / f"line-{line['index']}.mp3"
-    return relative_posix(generated_path)
 
 
 def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str, Any]:
@@ -43,8 +34,7 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
             )
             continue
 
-        audio_path = audio_path_for(project_dir, language, dialogue["id"], line)
-        status = "generated" if path_exists(project_dir, audio_path) else "needs_generation"
+        audio_path, status = resolve_audio_path(project_dir, language, dialogue, line)
         voice_profile = voice_profile_for(language, line.get("speaker_role", ""))
         asset = {
             "id": f"{dialogue['id']}-line-{line['index']}",

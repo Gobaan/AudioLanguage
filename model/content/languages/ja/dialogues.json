@@ -6,7 +6,7 @@
   "dialogues": [
     {
       "id": "ja-first-hi-response",
-      "asset_slug": "ta-greeting-hello",
+      "asset_slug": "first-hi-response",
       "type": "anchor",
       "function_id": "respond_to_greeting",
       "target_id": "ja-target-respond-hi",
@@ -53,6 +53,7 @@
     },
     {
       "id": "ja-introduce-self",
+      "asset_slug": "introduce-self",
       "type": "anchor",
       "function_id": "introduce_self",
       "target_id": "ja-target-my-name-is",
@@ -102,6 +103,7 @@
     },
     {
       "id": "ja-repair-dont-understand",
+      "asset_slug": "repair-dont-understand",
       "type": "anchor",
       "function_id": "say_do_not_understand",
       "target_id": "ja-target-i-dont-understand",
@@ -148,6 +150,7 @@
     },
     {
       "id": "ja-excuse-me-attention",
+      "asset_slug": "excuse-me-attention",
       "type": "anchor",
       "function_id": "get_attention_politely",
       "target_id": "ja-target-excuse-me-attention",
@@ -195,6 +198,7 @@
     },
     {
       "id": "ja-order-local-food",
+      "asset_slug": "order-local-food",
       "type": "anchor",
       "function_id": "order_local_food",
       "target_id": "ja-target-one-local-food-please",
@@ -241,6 +245,7 @@
     },
     {
       "id": "ja-directions-hospital",
+      "asset_slug": "directions-hospital",
       "type": "anchor",
       "function_id": "ask_where_hospital_is",
       "target_id": "ja-target-where-is-hospital",
@@ -289,6 +294,7 @@
     },
     {
       "id": "ja-greeting-neighbor-transfer",
+      "asset_slug": "greeting-neighbor-transfer",
       "type": "transfer",
       "function_id": "respond_to_greeting",
       "target_id": "ja-target-respond-hi",
@@ -334,6 +340,7 @@
     },
     {
       "id": "ja-greeting-entry-review",
+      "asset_slug": "greeting-entry-review",
       "type": "delayed_review",
       "function_id": "respond_to_greeting",
       "target_id": "ja-target-respond-hi",
@@ -379,6 +386,7 @@
     },
     {
       "id": "ja-introduce-class-transfer",
+      "asset_slug": "introduce-class-transfer",
       "type": "transfer",
       "function_id": "introduce_self",
       "target_id": "ja-target-my-name-is",
@@ -427,6 +435,7 @@
     },
     {
       "id": "ja-introduce-community-review",
+      "asset_slug": "introduce-community-review",
       "type": "delayed_review",
       "function_id": "introduce_self",
       "target_id": "ja-target-my-name-is",
@@ -475,6 +484,7 @@
     },
     {
       "id": "ja-repair-ticket-transfer",
+      "asset_slug": "repair-ticket-transfer",
       "type": "transfer",
       "function_id": "say_do_not_understand",
       "target_id": "ja-target-i-dont-understand",
@@ -521,6 +531,7 @@
     },
     {
       "id": "ja-repair-clinic-review",
+      "asset_slug": "repair-clinic-review",
       "type": "delayed_review",
       "function_id": "say_do_not_understand",
       "target_id": "ja-target-i-dont-understand",
@@ -566,6 +577,7 @@
     },
     {
       "id": "ja-excuse-me-cafe-transfer",
+      "asset_slug": "sumimasen-cafe-transfer",
       "type": "transfer",
       "function_id": "get_attention_politely",
       "target_id": "ja-target-excuse-me-attention",
@@ -611,6 +623,7 @@
     },
     {
       "id": "ja-excuse-me-station-review",
+      "asset_slug": "sumimasen-station-review",
       "type": "delayed_review",
       "function_id": "get_attention_politely",
       "target_id": "ja-target-excuse-me-attention",
@@ -657,6 +670,7 @@
     },
     {
       "id": "ja-order-convenience-transfer",
+      "asset_slug": "order-convenience-transfer",
       "type": "transfer",
       "function_id": "order_local_food",
       "target_id": "ja-target-one-local-food-please",
@@ -702,6 +716,7 @@
     },
     {
       "id": "ja-order-bakery-review",
+      "asset_slug": "order-bakery-review",
       "type": "delayed_review",
       "function_id": "order_local_food",
       "target_id": "ja-target-one-local-food-please",
@@ -747,6 +762,7 @@
     },
     {
       "id": "ja-im-sorry-small-mistake",
+      "asset_slug": "apologize-small-mistake",
       "type": "anchor",
       "function_id": "apologize_for_mistake",
       "target_id": "ja-target-im-sorry",
@@ -794,6 +810,7 @@
     },
     {
       "id": "ja-im-sorry-cafe-transfer",
+      "asset_slug": "im-sorry-cafe-transfer",
       "type": "transfer",
       "function_id": "apologize_for_mistake",
       "target_id": "ja-target-im-sorry",
@@ -840,6 +857,7 @@
     },
     {
       "id": "ja-im-sorry-classroom-review",
+      "asset_slug": "im-sorry-classroom-review",
       "type": "delayed_review",
       "function_id": "apologize_for_mistake",
       "target_id": "ja-target-im-sorry",

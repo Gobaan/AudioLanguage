@@ -1,41 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
-import type { ChoiceOption, LessonStep } from '../components';
-import { LessonStepRenderer } from './LessonStepRenderer';
-import { LessonNavBars } from './LessonNavBars';
-import {
-  DEFAULT_LESSON,
-  languageFromUrl,
-  lessonPageFromUrl,
-  sceneSetFromUrl,
-  updateLessonUrl,
-  withAssetUrls,
-  withStepAssetUrls,
-} from './lessonUrls';
 import { ValidationScorecardView } from './ScorecardView';
-import { stepHandlesOwnAutoplay } from './lessonStepHelpers';
-import { useAudioPlayback } from './useAudioPlayback';
-import { useLanguageOptions } from './useLanguageOptions';
+import { FitToViewport } from './FitToViewport';
+import { TravellerLessonShell } from './TravellerLessonShell';
+import { useActiveLessonStep } from './useActiveLessonStep';
 import { useLessonLoader } from './useLessonLoader';
 import { useParticipantId } from './useParticipantId';
 import { useScorecard } from './useScorecard';
+import { useTravellerRoute } from './useTravellerRoute';
 import { useValidationSession } from './useValidationSession';
-import { isLocalHost } from './urlParams';
 
 export function TravellerMvpApp() {
-  const [language, setLanguage] = useState(() => languageFromUrl());
-  const [lessonPage, setLessonPage] = useState(() => lessonPageFromUrl());
-  const [sceneSet] = useState(() => sceneSetFromUrl());
-  const [stepIndex, setStepIndex] = useState(0);
-  const [selectedChoiceByStep, setSelectedChoiceByStep] = useState<Record<string, string>>({});
-
+  const { language, lessonPage, sceneSet, selectLessonPage } = useTravellerRoute();
   const participantId = useParticipantId();
-  const languageOptions = useLanguageOptions();
   const { lessonTabs, lesson, loadState } = useLessonLoader({
     language,
     lessonPage,
     sceneSet,
-    onLessonPageChange: setLessonPage,
+    onLessonPageChange: selectLessonPage,
   });
   const { sessionId: validationSessionId, logEvent, captureAttempt } = useValidationSession({
     participantId,
@@ -43,11 +25,28 @@ export function TravellerMvpApp() {
     sceneSet,
     lessonPage,
   });
-  const { isPlaying, playAudioOrSpeak, stop: stopPlayback } = useAudioPlayback();
 
-  const currentStep = lesson?.steps[stepIndex];
-  const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
-  const step = useMemo(() => withStepAssetUrls(currentStep), [currentStep]);
+  const {
+    stepLesson,
+    step,
+    stepIndex,
+    isPlaying,
+    selectedChoiceByStep,
+    isLastStep,
+    playStepAudio,
+    logStepAudioPlayed,
+    selectChoice,
+    goToStep,
+    handleCaptureAttempt,
+  } = useActiveLessonStep({
+    lesson,
+    language,
+    lessonPage,
+    sceneSet,
+    validationSessionId,
+    logEvent,
+    captureAttempt,
+  });
 
   const { appView, scorecardState, scorecard, showScorecard, backToLesson, resetScorecard } = useScorecard({
     validationSessionId,
@@ -60,114 +59,26 @@ export function TravellerMvpApp() {
   });
 
   useEffect(() => {
-    setStepIndex(0);
-    setSelectedChoiceByStep({});
     resetScorecard();
   }, [language, lessonPage, sceneSet, resetScorecard]);
 
-  useEffect(() => {
-    stopPlayback();
-  }, [stepIndex, stopPlayback]);
+  const nextLessonTab = useMemo(() => {
+    const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
+    if (currentIndex < 0) return null;
+    return lessonTabs[currentIndex + 1] ?? null;
+  }, [lessonTabs, lessonPage]);
 
-  function playStepAudio() {
-    const audioUrl = step?.audio?.url;
-    const audioText = step?.audio?.audioText;
-    if (!audioUrl && !audioText) return;
-
-    if (stepLesson && step) {
-      logEvent({
-        type: 'audio_played',
-        lessonId: stepLesson.id,
-        lessonPage,
-        stepId: step.id,
-        stepIndex,
-        frameId: step.frameId,
-        targetId: stepLesson.target.id,
-      });
+  const handleNext = useCallback(() => {
+    if (!isLastStep) {
+      goToStep('next');
+      return;
     }
-
-    playAudioOrSpeak(audioUrl, audioText, language);
-  }
-
-  useEffect(() => {
-    if (!step?.audio?.autoplay || stepHandlesOwnAutoplay(step)) return;
-    playStepAudio();
-  }, [step?.id, step?.audio?.autoplay]);
-
-  useEffect(() => {
-    if (!validationSessionId || !stepLesson || !step) return;
-
-    logEvent({
-      type: 'page_view',
-      lessonId: stepLesson.id,
-      lessonPage,
-      stepId: step.id,
-      stepIndex,
-      frameId: step.frameId,
-      targetId: stepLesson.target.id,
-    });
-  }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage, logEvent]);
-
-  function selectChoice(stepId: string, choice: ChoiceOption) {
-    setSelectedChoiceByStep((current) => ({
-      ...current,
-      [stepId]: choice.id,
-    }));
-    if (stepLesson) {
-      logEvent({
-        type: 'choice_selected',
-        lessonId: stepLesson.id,
-        lessonPage,
-        stepId,
-        stepIndex,
-        choiceId: choice.id,
-        isCorrect: choice.isCorrect,
-        targetId: stepLesson.target.id,
-      });
+    if (nextLessonTab) {
+      selectLessonPage(nextLessonTab.id);
+      return;
     }
-  }
-
-  function selectLanguage(nextLanguage: string) {
-    setLanguage(nextLanguage);
-    setLessonPage(DEFAULT_LESSON);
-    updateLessonUrl(nextLanguage, DEFAULT_LESSON, sceneSet);
-  }
-
-  function selectLessonPage(nextPage: string) {
-    setLessonPage(nextPage);
-    updateLessonUrl(language, nextPage, sceneSet);
-  }
-
-  function goToStep(direction: 'previous' | 'next') {
-    setStepIndex((value) => {
-      const nextValue =
-        direction === 'previous'
-          ? Math.max(0, value - 1)
-          : Math.min((stepLesson?.steps.length ?? 1) - 1, value + 1);
-      if (nextValue !== value && stepLesson && step) {
-        logEvent({
-          type: 'navigation',
-          direction,
-          lessonId: stepLesson.id,
-          lessonPage,
-          stepId: step.id,
-          stepIndex: value,
-          frameId: step.frameId,
-          targetId: stepLesson.target.id,
-        });
-      }
-      return nextValue;
-    });
-  }
-
-  function handleCaptureAttempt(
-    attemptStep: LessonStep,
-    recording: { blob: Blob; durationMs: number; mimeType: string },
-    extra: Record<string, unknown> = {},
-  ) {
-    if (!stepLesson) return;
-    captureAttempt(stepLesson, attemptStep, recording, extra);
-  }
+    showScorecard();
+  }, [isLastStep, goToStep, nextLessonTab, selectLessonPage, showScorecard]);
 
   if (loadState === 'loading') {
     return <div className="frame-placeholder" aria-label="Loading first MVP step" />;
@@ -177,57 +88,37 @@ export function TravellerMvpApp() {
     return <div className="frame-placeholder" aria-label="MVP step unavailable" />;
   }
 
-  const isFirstStep = stepIndex === 0;
-  const isLastStep = stepIndex >= stepLesson.steps.length - 1;
-
   if (appView === 'scorecard') {
     return (
-      <ValidationScorecardView
-        sessionId={validationSessionId}
-        state={scorecardState}
-        scorecard={scorecard}
-        onBack={backToLesson}
-        onRefresh={showScorecard}
-      />
+      <FitToViewport>
+        <ValidationScorecardView
+          sessionId={validationSessionId}
+          state={scorecardState}
+          scorecard={scorecard}
+          onBack={backToLesson}
+          onRefresh={showScorecard}
+        />
+      </FitToViewport>
     );
   }
 
   return (
-    <section className="traveller-mvp-app" aria-label="Traveller MVP step">
-      {isLocalHost() ? (
-        <nav className="local-app-links" aria-label="Local app links">
-          {participantId ? <span>{participantId}</span> : null}
-          <a href="/admin/validation">Admin</a>
-        </nav>
-      ) : null}
-      <LessonNavBars
-        languageOptions={languageOptions}
+    <FitToViewport>
+      <TravellerLessonShell
+        participantId={participantId}
         language={language}
-        lessonTabs={lessonTabs}
-        lessonPage={lessonPage}
-        onSelectLanguage={selectLanguage}
-        onSelectLessonPage={selectLessonPage}
-      />
-      <div className="page-number" aria-label={`Page ${stepIndex + 1} of ${stepLesson.steps.length}`}>
-        Page {stepIndex + 1} / {stepLesson.steps.length}
-      </div>
-      <LessonStepRenderer
-        lesson={stepLesson}
+        stepLesson={stepLesson}
         step={step}
         isPlaying={isPlaying}
-        selectedChoiceId={selectedChoiceByStep[step.id]}
+        selectedChoiceByStep={selectedChoiceByStep}
+        isLastStep={isLastStep}
+        hasNextLesson={nextLessonTab !== null}
         onPlayAudio={playStepAudio}
+        onLogAudioPlayed={logStepAudioPlayed}
         onSelectChoice={selectChoice}
         onCaptureAttempt={handleCaptureAttempt}
+        onNext={handleNext}
       />
-      <nav className="step-controls" aria-label="Lesson step controls">
-        <button type="button" onClick={() => goToStep('previous')} disabled={isFirstStep}>
-          Previous
-        </button>
-        <button type="button" onClick={() => (isLastStep ? showScorecard() : goToStep('next'))}>
-          {isLastStep ? 'Scorecard' : 'Next'}
-        </button>
-      </nav>
-    </section>
+    </FitToViewport>
   );
 }

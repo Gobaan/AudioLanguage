@@ -3,7 +3,10 @@
   "display_name": "Tamil",
   "metadata": {
     "description": "Tamil starter scenes for you.",
-    "scene_sets": ["mvp"],
+    "scene_sets": [
+      "mvp",
+      "delayed"
+    ],
     "sort_order": 4
   },
   "script": "Tamil",
@@ -15,11 +18,26 @@
       "canonical": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
       "display_meaning": "Hello! How are you?",
-      "meaning_units": ["hello", "you", "question"],
-      "accepted_variants": ["வணக்கம், எப்படி இருக்கிறீர்கள்?", "ஹாய், எப்படி இருக்கிறீர்கள்?"],
-      "valid_but_off_target": ["எப்படி இருக்கிறீர்கள்?"],
-      "wrong_for_context_examples": ["போய்வருகிறேன்.", "நன்றி."],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "hello",
+        "you",
+        "question"
+      ],
+      "accepted_variants": [
+        "வணக்கம், எப்படி இருக்கிறீர்கள்?",
+        "ஹாய், எப்படி இருக்கிறீர்கள்?"
+      ],
+      "valid_but_off_target": [
+        "எப்படி இருக்கிறீர்கள்?"
+      ],
+      "wrong_for_context_examples": [
+        "போய்வருகிறேன்.",
+        "நன்றி."
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-my-name-is",
@@ -27,11 +45,27 @@
       "canonical": "என் பெயர் அன்னா.",
       "transliteration": "En peyar Anna.",
       "display_meaning": "My name is Anna.",
-      "meaning_units": ["my", "name", "proper_noun"],
-      "accepted_variants": ["நான் அன்னா.", "என் பெயர் ஆனா."],
-      "valid_but_off_target": ["என்னை அன்னா என்று அழைக்கலாம்."],
-      "wrong_for_context_examples": ["எப்படி இருக்கிறீர்கள்?", "நன்றி."],
-      "notes": { "proper_noun": "Anna", "register": "neutral", "native_review_required": true }
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "accepted_variants": [
+        "நான் அன்னா.",
+        "என் பெயர் ஆனா."
+      ],
+      "valid_but_off_target": [
+        "என்னை அன்னா என்று அழைக்கலாம்."
+      ],
+      "wrong_for_context_examples": [
+        "எப்படி இருக்கிறீர்கள்?",
+        "நன்றி."
+      ],
+      "notes": {
+        "proper_noun": "Anna",
+        "register": "neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-say-it-slowly",
@@ -39,11 +73,27 @@
       "canonical": "மெதுவாக சொல்ல முடியுமா?",
       "transliteration": "Methuvaga solla mudiyuma?",
       "display_meaning": "Can you say it slowly?",
-      "meaning_units": ["you", "say", "slowly", "question"],
-      "accepted_variants": ["தயவு செய்து மெதுவாக சொல்லுங்கள்.", "மீண்டும் மெதுவாக சொல்ல முடியுமா?"],
-      "valid_but_off_target": ["மீண்டும் சொல்ல முடியுமா?"],
-      "wrong_for_context_examples": ["நான் நன்றாக இருக்கிறேன்.", "இது எவ்வளவு?"],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "you",
+        "say",
+        "slowly",
+        "question"
+      ],
+      "accepted_variants": [
+        "தயவு செய்து மெதுவாக சொல்லுங்கள்.",
+        "மீண்டும் மெதுவாக சொல்ல முடியுமா?"
+      ],
+      "valid_but_off_target": [
+        "மீண்டும் சொல்ல முடியுமா?"
+      ],
+      "wrong_for_context_examples": [
+        "நான் நன்றாக இருக்கிறேன்.",
+        "இது எவ்வளவு?"
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-i-dont-understand",
@@ -51,11 +101,26 @@
       "canonical": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
       "transliteration": "Mannikkavum, enakku puriyavillai.",
       "display_meaning": "Sorry, I don't understand.",
-      "meaning_units": ["sorry", "not", "understand"],
-      "accepted_variants": ["எனக்கு புரியவில்லை.", "மன்னிக்கவும், புரியவில்லை."],
-      "valid_but_off_target": ["மெதுவாக சொல்ல முடியுமா?"],
-      "wrong_for_context_examples": ["ஆம், தயவு செய்து.", "எனக்கு தண்ணீர் வேண்டும்."],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "sorry",
+        "not",
+        "understand"
+      ],
+      "accepted_variants": [
+        "எனக்கு புரியவில்லை.",
+        "மன்னிக்கவும், புரியவில்லை."
+      ],
+      "valid_but_off_target": [
+        "மெதுவாக சொல்ல முடியுமா?"
+      ],
+      "wrong_for_context_examples": [
+        "ஆம், தயவு செய்து.",
+        "எனக்கு தண்ணீர் வேண்டும்."
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-can-you-help-me",
@@ -63,11 +128,27 @@
       "canonical": "நீங்கள் எனக்கு உதவி செய்ய முடியுமா?",
       "transliteration": "Neengal enakku udhavi seyya mudiyuma?",
       "display_meaning": "Can you help me?",
-      "meaning_units": ["you", "help", "me", "question"],
-      "accepted_variants": ["எனக்கு உதவி செய்ய முடியுமா?", "தயவு செய்து உதவி செய்ய முடியுமா?"],
-      "valid_but_off_target": ["எனக்கு உதவி வேண்டும்."],
-      "wrong_for_context_examples": ["போய்வருகிறேன்.", "இது எவ்வளவு?"],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "you",
+        "help",
+        "me",
+        "question"
+      ],
+      "accepted_variants": [
+        "எனக்கு உதவி செய்ய முடியுமா?",
+        "தயவு செய்து உதவி செய்ய முடியுமா?"
+      ],
+      "valid_but_off_target": [
+        "எனக்கு உதவி வேண்டும்."
+      ],
+      "wrong_for_context_examples": [
+        "போய்வருகிறேன்.",
+        "இது எவ்வளவு?"
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-where-is-bus-stop",
@@ -75,11 +156,26 @@
       "canonical": "பேருந்து நிறுத்தம் எங்கே?",
       "transliteration": "Perundhu niruththam enge?",
       "display_meaning": "Where is the bus stop?",
-      "meaning_units": ["where", "place", "question"],
-      "accepted_variants": ["மன்னிக்கவும், பேருந்து நிறுத்தம் எங்கே?", "பஸ் ஸ்டாப் எங்கே?"],
-      "valid_but_off_target": ["பேருந்து நிறுத்தம் எங்கே என்று உதவி செய்ய முடியுமா?"],
-      "wrong_for_context_examples": ["எனக்கு தண்ணீர் வேண்டும்.", "என் பெயர் அன்னா."],
-      "notes": { "register": "neutral", "native_review_required": true }
+      "meaning_units": [
+        "where",
+        "place",
+        "question"
+      ],
+      "accepted_variants": [
+        "மன்னிக்கவும், பேருந்து நிறுத்தம் எங்கே?",
+        "பஸ் ஸ்டாப் எங்கே?"
+      ],
+      "valid_but_off_target": [
+        "பேருந்து நிறுத்தம் எங்கே என்று உதவி செய்ய முடியுமா?"
+      ],
+      "wrong_for_context_examples": [
+        "எனக்கு தண்ணீர் வேண்டும்.",
+        "என் பெயர் அன்னா."
+      ],
+      "notes": {
+        "register": "neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-water-please",
@@ -87,11 +183,25 @@
       "canonical": "தண்ணீர், தயவு செய்து.",
       "transliteration": "Thanneer, thayavu seithu.",
       "display_meaning": "Water, please.",
-      "meaning_units": ["item", "please"],
-      "accepted_variants": ["ஒரு தண்ணீர், தயவு செய்து.", "தண்ணீர் கொடுக்க முடியுமா?"],
-      "valid_but_off_target": ["எனக்கு தண்ணீர் வேண்டும்."],
-      "wrong_for_context_examples": ["பேருந்து நிறுத்தம் எங்கே?", "நான் நன்றாக இருக்கிறேன்."],
-      "notes": { "register": "polite-minimal", "native_review_required": true }
+      "meaning_units": [
+        "item",
+        "please"
+      ],
+      "accepted_variants": [
+        "ஒரு தண்ணீர், தயவு செய்து.",
+        "தண்ணீர் கொடுக்க முடியுமா?"
+      ],
+      "valid_but_off_target": [
+        "எனக்கு தண்ணீர் வேண்டும்."
+      ],
+      "wrong_for_context_examples": [
+        "பேருந்து நிறுத்தம் எங்கே?",
+        "நான் நன்றாக இருக்கிறேன்."
+      ],
+      "notes": {
+        "register": "polite-minimal",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-how-much-is-this",
@@ -99,11 +209,26 @@
       "canonical": "இது எவ்வளவு?",
       "transliteration": "Idhu evvalavu?",
       "display_meaning": "How much is this?",
-      "meaning_units": ["how_much", "this", "question"],
-      "accepted_variants": ["எவ்வளவு?", "இதன் விலை எவ்வளவு?"],
-      "valid_but_off_target": ["இது எவ்வளவு ரூபாய்?"],
-      "wrong_for_context_examples": ["எனக்கு புரியவில்லை.", "காலை வணக்கம்."],
-      "notes": { "register": "neutral", "native_review_required": true }
+      "meaning_units": [
+        "how_much",
+        "this",
+        "question"
+      ],
+      "accepted_variants": [
+        "எவ்வளவு?",
+        "இதன் விலை எவ்வளவு?"
+      ],
+      "valid_but_off_target": [
+        "இது எவ்வளவு ரூபாய்?"
+      ],
+      "wrong_for_context_examples": [
+        "எனக்கு புரியவில்லை.",
+        "காலை வணக்கம்."
+      ],
+      "notes": {
+        "register": "neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-here-is-the-money",
@@ -111,11 +236,26 @@
       "canonical": "இதோ பணம். நன்றி.",
       "transliteration": "Idho panam. Nandri.",
       "display_meaning": "Here is the money. Thank you.",
-      "meaning_units": ["here", "pay", "thank_you"],
-      "accepted_variants": ["இதோ. நன்றி.", "இதோ பணம்."],
-      "valid_but_off_target": ["கார்டில் பணம் செலுத்தலாமா?"],
-      "wrong_for_context_examples": ["மருத்துவமனை எங்கே?", "உங்கள் பெயர் என்ன?"],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "here",
+        "pay",
+        "thank_you"
+      ],
+      "accepted_variants": [
+        "இதோ. நன்றி.",
+        "இதோ பணம்."
+      ],
+      "valid_but_off_target": [
+        "கார்டில் பணம் செலுத்தலாமா?"
+      ],
+      "wrong_for_context_examples": [
+        "மருத்துவமனை எங்கே?",
+        "உங்கள் பெயர் என்ன?"
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-sorry",
@@ -123,11 +263,24 @@
       "canonical": "மன்னிக்கவும்.",
       "transliteration": "Mannikkavum.",
       "display_meaning": "Sorry.",
-      "meaning_units": ["sorry"],
-      "accepted_variants": ["மன்னிக்கணும்.", "மன்னிக்கவும், தவறு."],
-      "valid_but_off_target": ["மன்னிக்கவும், ஒரு நிமிடம்."],
-      "wrong_for_context_examples": ["நன்றி.", "இது எவ்வளவு?"],
-      "notes": { "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "sorry"
+      ],
+      "accepted_variants": [
+        "மன்னிக்கணும்.",
+        "மன்னிக்கவும், தவறு."
+      ],
+      "valid_but_off_target": [
+        "மன்னிக்கவும், ஒரு நிமிடம்."
+      ],
+      "wrong_for_context_examples": [
+        "நன்றி.",
+        "இது எவ்வளவு?"
+      ],
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-i-speak-a-little-tamil",
@@ -135,11 +288,27 @@
       "canonical": "எனக்கு கொஞ்சம் தமிழ் தெரியும்.",
       "transliteration": "Enakku konjam Tamil theriyum.",
       "display_meaning": "I know/speak a little Tamil.",
-      "meaning_units": ["speak", "little", "language"],
-      "accepted_variants": ["நான் கொஞ்சம் தமிழ் பேசுவேன்.", "எனக்கு கொஞ்சம் தான் தமிழ் தெரியும்."],
-      "valid_but_off_target": ["மெதுவாக பேச முடியுமா?"],
-      "wrong_for_context_examples": ["எனக்கு தண்ணீர் வேண்டும்.", "பேருந்து நிறுத்தம் எங்கே?"],
-      "notes": { "language_slot": "Tamil", "register": "humble-neutral", "native_review_required": true }
+      "meaning_units": [
+        "speak",
+        "little",
+        "language"
+      ],
+      "accepted_variants": [
+        "நான் கொஞ்சம் தமிழ் பேசுவேன்.",
+        "எனக்கு கொஞ்சம் தான் தமிழ் தெரியும்."
+      ],
+      "valid_but_off_target": [
+        "மெதுவாக பேச முடியுமா?"
+      ],
+      "wrong_for_context_examples": [
+        "எனக்கு தண்ணீர் வேண்டும்.",
+        "பேருந்து நிறுத்தம் எங்கே?"
+      ],
+      "notes": {
+        "language_slot": "Tamil",
+        "register": "humble-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-please-and-thank-you",
@@ -147,11 +316,26 @@
       "canonical": "தயவு செய்து. நன்றி.",
       "transliteration": "Thayavu seithu. Nandri.",
       "display_meaning": "Please. Thank you.",
-      "meaning_units": ["please", "thank_you"],
-      "accepted_variants": ["ஆம், தயவு செய்து. நன்றி.", "தயவு செய்து, நன்றி."],
-      "valid_but_off_target": ["நன்றி.", "மிக்க நன்றி."],
-      "wrong_for_context_examples": ["எனக்கு புரியவில்லை.", "மருத்துவமனை எங்கே?"],
-      "notes": { "register": "basic-politeness", "native_review_required": true }
+      "meaning_units": [
+        "please",
+        "thank_you"
+      ],
+      "accepted_variants": [
+        "ஆம், தயவு செய்து. நன்றி.",
+        "தயவு செய்து, நன்றி."
+      ],
+      "valid_but_off_target": [
+        "நன்றி.",
+        "மிக்க நன்றி."
+      ],
+      "wrong_for_context_examples": [
+        "எனக்கு புரியவில்லை.",
+        "மருத்துவமனை எங்கே?"
+      ],
+      "notes": {
+        "register": "basic-politeness",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-one-local-food-please",
@@ -159,11 +343,27 @@
       "canonical": "ஒரு தோசை, தயவு செய்து.",
       "transliteration": "Oru dosai, thayavu seithu.",
       "display_meaning": "One dosa, please.",
-      "meaning_units": ["one", "food_item", "please"],
-      "accepted_variants": ["ஒரு தோசை கொடுக்க முடியுமா?", "தோசை, தயவு செய்து."],
-      "valid_but_off_target": ["எனக்கு தோசை வேண்டும்."],
-      "wrong_for_context_examples": ["மருத்துவமனை எங்கே?", "எனக்கு கொஞ்சம் தமிழ் தெரியும்."],
-      "notes": { "food_slot": "dosai", "register": "polite-neutral", "native_review_required": true }
+      "meaning_units": [
+        "one",
+        "food_item",
+        "please"
+      ],
+      "accepted_variants": [
+        "ஒரு தோசை கொடுக்க முடியுமா?",
+        "தோசை, தயவு செய்து."
+      ],
+      "valid_but_off_target": [
+        "எனக்கு தோசை வேண்டும்."
+      ],
+      "wrong_for_context_examples": [
+        "மருத்துவமனை எங்கே?",
+        "எனக்கு கொஞ்சம் தமிழ் தெரியும்."
+      ],
+      "notes": {
+        "food_slot": "dosai",
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-where-is-hospital",
@@ -171,11 +371,26 @@
       "canonical": "மருத்துவமனை எங்கே?",
       "transliteration": "Maruthuvamanai enge?",
       "display_meaning": "Where is the hospital?",
-      "meaning_units": ["where", "hospital", "question"],
-      "accepted_variants": ["மன்னிக்கவும், மருத்துவமனை எங்கே?", "ஆஸ்பத்திரி எங்கே?"],
-      "valid_but_off_target": ["மருத்துவமனைக்கு வழி சொல்ல முடியுமா?"],
-      "wrong_for_context_examples": ["இது எவ்வளவு?", "தண்ணீர், தயவு செய்து."],
-      "notes": { "register": "urgent-neutral", "native_review_required": true }
+      "meaning_units": [
+        "where",
+        "hospital",
+        "question"
+      ],
+      "accepted_variants": [
+        "மன்னிக்கவும், மருத்துவமனை எங்கே?",
+        "ஆஸ்பத்திரி எங்கே?"
+      ],
+      "valid_but_off_target": [
+        "மருத்துவமனைக்கு வழி சொல்ல முடியுமா?"
+      ],
+      "wrong_for_context_examples": [
+        "இது எவ்வளவு?",
+        "தண்ணீர், தயவு செய்து."
+      ],
+      "notes": {
+        "register": "urgent-neutral",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-cough-medicine-please",
@@ -183,11 +398,27 @@
       "canonical": "இருமல் மருந்து, தயவு செய்து.",
       "transliteration": "Irumal marundhu, thayavu seithu.",
       "display_meaning": "Cough medicine, please.",
-      "meaning_units": ["cough", "medicine", "please"],
-      "accepted_variants": ["இருமலுக்கு மருந்து இருக்கிறதா?", "இருமல் மருந்து கொடுக்க முடியுமா?"],
-      "valid_but_off_target": ["எனக்கு இருமல் இருக்கிறது."],
-      "wrong_for_context_examples": ["பேருந்து நிறுத்தம் எங்கே?", "என் பெயர் அன்னா."],
-      "notes": { "register": "polite-minimal", "medical_note": "Ask a pharmacist for help; do not imply diagnosis.", "native_review_required": true }
+      "meaning_units": [
+        "cough",
+        "medicine",
+        "please"
+      ],
+      "accepted_variants": [
+        "இருமலுக்கு மருந்து இருக்கிறதா?",
+        "இருமல் மருந்து கொடுக்க முடியுமா?"
+      ],
+      "valid_but_off_target": [
+        "எனக்கு இருமல் இருக்கிறது."
+      ],
+      "wrong_for_context_examples": [
+        "பேருந்து நிறுத்தம் எங்கே?",
+        "என் பெயர் அன்னா."
+      ],
+      "notes": {
+        "register": "polite-minimal",
+        "medical_note": "Ask a pharmacist for help; do not imply diagnosis.",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-diarrhea-medicine-please",
@@ -195,11 +426,27 @@
       "canonical": "வயிற்றுப்போக்கு மருந்து, தயவு செய்து.",
       "transliteration": "Vayitruppokku marundhu, thayavu seithu.",
       "display_meaning": "Diarrhea medicine, please.",
-      "meaning_units": ["diarrhea", "medicine", "please"],
-      "accepted_variants": ["வயிற்றுப்போக்குக்கு மருந்து இருக்கிறதா?", "வயிற்றுப்போக்கு மருந்து கொடுக்க முடியுமா?"],
-      "valid_but_off_target": ["எனக்கு வயிற்றுப்போக்கு இருக்கிறது."],
-      "wrong_for_context_examples": ["எப்படி இருக்கிறீர்கள்?", "ஒரு தோசை, தயவு செய்து."],
-      "notes": { "register": "polite-minimal", "medical_note": "Keep visual framing respectful and non-comedic.", "native_review_required": true }
+      "meaning_units": [
+        "diarrhea",
+        "medicine",
+        "please"
+      ],
+      "accepted_variants": [
+        "வயிற்றுப்போக்குக்கு மருந்து இருக்கிறதா?",
+        "வயிற்றுப்போக்கு மருந்து கொடுக்க முடியுமா?"
+      ],
+      "valid_but_off_target": [
+        "எனக்கு வயிற்றுப்போக்கு இருக்கிறது."
+      ],
+      "wrong_for_context_examples": [
+        "எப்படி இருக்கிறீர்கள்?",
+        "ஒரு தோசை, தயவு செய்து."
+      ],
+      "notes": {
+        "register": "polite-minimal",
+        "medical_note": "Keep visual framing respectful and non-comedic.",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-i-have-reservation",
@@ -207,11 +454,25 @@
       "canonical": "எனக்கு முன்பதிவு இருக்கிறது.",
       "transliteration": "Enakku munpadhivu irukkiradhu.",
       "display_meaning": "I have a reservation.",
-      "meaning_units": ["reservation", "check_in"],
-      "accepted_variants": ["எனக்கு புக்கிங் இருக்கிறது.", "இங்கே எனக்கு முன்பதிவு இருக்கிறது."],
-      "valid_but_off_target": ["என் பெயர் அன்னா."],
-      "wrong_for_context_examples": ["மருத்துவமனை எங்கே?", "இருமல் மருந்து, தயவு செய்து."],
-      "notes": { "register": "neutral-travel", "native_review_required": true }
+      "meaning_units": [
+        "reservation",
+        "check_in"
+      ],
+      "accepted_variants": [
+        "எனக்கு புக்கிங் இருக்கிறது.",
+        "இங்கே எனக்கு முன்பதிவு இருக்கிறது."
+      ],
+      "valid_but_off_target": [
+        "என் பெயர் அன்னா."
+      ],
+      "wrong_for_context_examples": [
+        "மருத்துவமனை எங்கே?",
+        "இருமல் மருந்து, தயவு செய்து."
+      ],
+      "notes": {
+        "register": "neutral-travel",
+        "native_review_required": true
+      }
     },
     {
       "id": "ta-target-coffee-invitation",
@@ -219,11 +480,73 @@
       "canonical": "ஒருநாள் காபி குடிக்க வர விரும்புகிறீர்களா?",
       "transliteration": "Orunaal kaapi kudikka vara virumbugireergala?",
       "display_meaning": "Would you like to get coffee sometime?",
-      "meaning_units": ["coffee", "invitation"],
-      "accepted_variants": ["காபி குடிக்க வர விரும்புகிறீர்களா?", "ஒருநாள் காபிக்கு வரலாமா?"],
-      "valid_but_off_target": ["நீங்கள் யாரோடாவது வந்திருக்கிறீர்களா?", "உங்களுக்கு துணைவர் இருக்கிறாரா?"],
-      "wrong_for_context_examples": ["மருத்துவமனை எங்கே?", "எனக்கு மருந்து வேண்டும்."],
-      "notes": { "register": "respectful-social", "safety_note": "Teach accepting refusal politely; do not frame pursuit or pressure as success.", "native_review_required": true }
+      "meaning_units": [
+        "coffee",
+        "invitation"
+      ],
+      "accepted_variants": [
+        "காபி குடிக்க வர விரும்புகிறீர்களா?",
+        "ஒருநாள் காபிக்கு வரலாமா?"
+      ],
+      "valid_but_off_target": [
+        "நீங்கள் யாரோடாவது வந்திருக்கிறீர்களா?",
+        "உங்களுக்கு துணைவர் இருக்கிறாரா?"
+      ],
+      "wrong_for_context_examples": [
+        "மருத்துவமனை எங்கே?",
+        "எனக்கு மருந்து வேண்டும்."
+      ],
+      "notes": {
+        "register": "respectful-social",
+        "safety_note": "Teach accepting refusal politely; do not frame pursuit or pressure as success.",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ta-target-respond-hi",
+      "function_id": "respond_to_greeting",
+      "canonical": "Vanakkam!",
+      "transliteration": "Vanakkam!",
+      "display_meaning": "Respond to hello.",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "accepted_variants": [
+        "Vanakkam.",
+        "Vanakkam!"
+      ],
+      "wrong_for_context_examples": [
+        "Nandri.",
+        "En peyar Anna."
+      ],
+      "notes": {
+        "register": "friendly-basic",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ta-target-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "canonical": "Mannikkavum.",
+      "transliteration": "Mannikkavum.",
+      "display_meaning": "Excuse me.",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "accepted_variants": [
+        "Mannikkavum",
+        "Mannippu."
+      ],
+      "wrong_for_context_examples": [
+        "Vanakkam!",
+        "Nandri."
+      ],
+      "notes": {
+        "register": "polite-basic",
+        "native_review_required": true
+      }
     }
   ]
 }

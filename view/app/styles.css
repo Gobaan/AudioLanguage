@@ -116,6 +116,34 @@ body {
   color: var(--ink);
 }
 
+#root:has(.fit-viewport-shell) {
+  align-items: stretch;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: 12px;
+  place-items: stretch center;
+  width: 100%;
+}
+
+.fit-viewport-shell {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  width: min(100%, 920px);
+}
+
+.fit-viewport-frame {
+  overflow: hidden;
+  width: 100%;
+}
+
+.fit-viewport-content {
+  transform-origin: top center;
+  width: 100%;
+}
+
 .traveller-mvp-app {
   display: grid;
   gap: 14px;
@@ -286,6 +314,13 @@ body {
   justify-items: center;
 }
 
+.meaning-guess-listening {
+  color: var(--ink);
+  font: 800 1rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
 .choice-with-reveal.revealed {
   align-items: start;
   grid-template-columns: minmax(260px, 420px) minmax(280px, 1fr);
@@ -384,6 +419,23 @@ body {
 
 .prompted-recording.captured {
   border-color: #267247;
+}
+
+.prompted-recording.submitted {
+  border-color: #267247;
+}
+
+.recording-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.record-button-secondary {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
 }
 
 .recording-playback {

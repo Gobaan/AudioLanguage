@@ -32,8 +32,8 @@
       },
       "text": "வணக்கம்!",
       "transliteration": "Vanakkam!",
-      "audio_path": "audio/generated/ta/ta-greeting-hello/line-0.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/first-hi-response/line-0.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -58,8 +58,8 @@
       },
       "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
-      "audio_path": "audio/generated/ta/ta-greeting-hello/line-1.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/first-hi-response/line-1.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -84,8 +84,8 @@
       },
       "text": "நன்றாக இருக்கிறேன். நன்றி.",
       "transliteration": "Nandraaga irukkiren. Nandri.",
-      "audio_path": "audio/generated/ta/ta-greeting-hello/line-2.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/first-hi-response/line-2.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -111,7 +111,7 @@
       "text": "காலை வணக்கம்!",
       "transliteration": "Kaalai vanakkam!",
       "audio_path": "audio/generated/ta/ta-greeting-neighbor/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -137,7 +137,7 @@
       "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
       "audio_path": "audio/generated/ta/ta-greeting-neighbor/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -163,7 +163,7 @@
       "text": "நன்றாக இருக்கிறேன். நன்றி.",
       "transliteration": "Nandraaga irukkiren. Nandri.",
       "audio_path": "audio/generated/ta/ta-greeting-neighbor/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -189,7 +189,7 @@
       "text": "ஹாய்!",
       "transliteration": "Hi!",
       "audio_path": "audio/generated/ta/ta-greeting-classmate/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -215,7 +215,7 @@
       "text": "ஹாய், எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Hi, eppadi irukkireergal?",
       "audio_path": "audio/generated/ta/ta-greeting-classmate/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -241,7 +241,7 @@
       "text": "நன்றாக இருக்கிறேன், நன்றி.",
       "transliteration": "Nandraaga irukkiren, nandri.",
       "audio_path": "audio/generated/ta/ta-greeting-classmate/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -267,7 +267,7 @@
       "text": "வணக்கம்! எப்படி இருக்கிறீர்கள்?",
       "transliteration": "Vanakkam! Eppadi irukkireergal?",
       "audio_path": "audio/generated/ta/ta-greeting-and-you/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -293,7 +293,7 @@
       "text": "நன்றாக இருக்கிறேன், நன்றி. நீங்கள்?",
       "transliteration": "Nandraaga irukkiren, nandri. Neengal?",
       "audio_path": "audio/generated/ta/ta-greeting-and-you/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -319,85 +319,7 @@
       "text": "நானும் நன்றாக இருக்கிறேன்.",
       "transliteration": "Naanum nandraaga irukkiren.",
       "audio_path": "audio/generated/ta/ta-greeting-and-you/line-2.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-introduce-self-line-0",
-      "language": "ta",
-      "dialogue_id": "ta-introduce-self",
-      "dialogue_type": "anchor",
-      "function_id": "introduce_self",
-      "target_id": "ta-target-my-name-is",
-      "scene_id": "school-hallway-classmate",
-      "line_index": 0,
-      "line_type": "world_opener",
-      "speaker_role": "classmate",
-      "voice_id": "ta-classmate",
-      "voice_profile": {
-        "provider_voice": "ta-IN-ValluvarNeural",
-        "rate": "+5%",
-        "pitch": "+1Hz",
-        "id": "ta-classmate",
-        "provider": "edge_tts",
-        "speaker_role": "classmate"
-      },
-      "text": "உங்கள் பெயர் என்ன?",
-      "transliteration": "Ungal peyar enna?",
-      "audio_path": "audio/generated/ta/ta-introduce-self/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-introduce-self-line-1",
-      "language": "ta",
-      "dialogue_id": "ta-introduce-self",
-      "dialogue_type": "anchor",
-      "function_id": "introduce_self",
-      "target_id": "ta-target-my-name-is",
-      "scene_id": "school-hallway-classmate",
-      "line_index": 1,
-      "line_type": "learner_target",
-      "speaker_role": "learner",
-      "voice_id": "ta-learner",
-      "voice_profile": {
-        "provider_voice": "ta-IN-PallaviNeural",
-        "rate": "+0%",
-        "pitch": "+0Hz",
-        "id": "ta-learner",
-        "provider": "edge_tts",
-        "speaker_role": "learner"
-      },
-      "text": "என் பெயர் அன்னா.",
-      "transliteration": "En peyar Anna.",
-      "audio_path": "audio/generated/ta/ta-introduce-self/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-introduce-self-line-2",
-      "language": "ta",
-      "dialogue_id": "ta-introduce-self",
-      "dialogue_type": "anchor",
-      "function_id": "introduce_self",
-      "target_id": "ta-target-my-name-is",
-      "scene_id": "school-hallway-classmate",
-      "line_index": 2,
-      "line_type": "world_response",
-      "speaker_role": "classmate",
-      "voice_id": "ta-classmate",
-      "voice_profile": {
-        "provider_voice": "ta-IN-ValluvarNeural",
-        "rate": "+5%",
-        "pitch": "+1Hz",
-        "id": "ta-classmate",
-        "provider": "edge_tts",
-        "speaker_role": "classmate"
-      },
-      "text": "சந்தித்ததில் மகிழ்ச்சி, அன்னா.",
-      "transliteration": "Sandhiththathil magizhchi, Anna.",
-      "audio_path": "audio/generated/ta/ta-introduce-self/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -422,8 +344,8 @@
       },
       "text": "உங்கள் பெயரை இங்கே எழுதுங்கள்.",
       "transliteration": "Ungal peyarai inge ezhuthungal.",
-      "audio_path": "audio/generated/ta/ta-repair-say-slowly/line-0.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/repair-dont-understand/line-0.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -448,8 +370,8 @@
       },
       "text": "மெதுவாக சொல்ல முடியுமா?",
       "transliteration": "Methuvaga solla mudiyuma?",
-      "audio_path": "audio/generated/ta/ta-repair-say-slowly/line-1.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/repair-dont-understand/line-1.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -474,86 +396,8 @@
       },
       "text": "சரி. மெதுவாக சொல்கிறேன்.",
       "transliteration": "Sari. Methuvaga solgiren.",
-      "audio_path": "audio/generated/ta/ta-repair-say-slowly/line-2.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-repair-dont-understand-line-0",
-      "language": "ta",
-      "dialogue_id": "ta-repair-dont-understand",
-      "dialogue_type": "anchor",
-      "function_id": "say_do_not_understand",
-      "target_id": "ta-target-i-dont-understand",
-      "scene_id": "busy-service-counter",
-      "line_index": 0,
-      "line_type": "world_opener",
-      "speaker_role": "staff",
-      "voice_id": "ta-staff",
-      "voice_profile": {
-        "provider_voice": "ta-IN-ValluvarNeural",
-        "rate": "+0%",
-        "pitch": "-1Hz",
-        "id": "ta-staff",
-        "provider": "edge_tts",
-        "speaker_role": "staff"
-      },
-      "text": "இந்த படிவத்தை நிரப்புங்கள்.",
-      "transliteration": "Indha padivathai nirappungal.",
-      "audio_path": "audio/generated/ta/ta-repair-dont-understand/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-repair-dont-understand-line-1",
-      "language": "ta",
-      "dialogue_id": "ta-repair-dont-understand",
-      "dialogue_type": "anchor",
-      "function_id": "say_do_not_understand",
-      "target_id": "ta-target-i-dont-understand",
-      "scene_id": "busy-service-counter",
-      "line_index": 1,
-      "line_type": "learner_target",
-      "speaker_role": "learner",
-      "voice_id": "ta-learner",
-      "voice_profile": {
-        "provider_voice": "ta-IN-PallaviNeural",
-        "rate": "+0%",
-        "pitch": "+0Hz",
-        "id": "ta-learner",
-        "provider": "edge_tts",
-        "speaker_role": "learner"
-      },
-      "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
-      "transliteration": "Mannikkavum, enakku puriyavillai.",
-      "audio_path": "audio/generated/ta/ta-repair-dont-understand/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-repair-dont-understand-line-2",
-      "language": "ta",
-      "dialogue_id": "ta-repair-dont-understand",
-      "dialogue_type": "anchor",
-      "function_id": "say_do_not_understand",
-      "target_id": "ta-target-i-dont-understand",
-      "scene_id": "busy-service-counter",
-      "line_index": 2,
-      "line_type": "world_response",
-      "speaker_role": "staff",
-      "voice_id": "ta-staff",
-      "voice_profile": {
-        "provider_voice": "ta-IN-ValluvarNeural",
-        "rate": "+0%",
-        "pitch": "-1Hz",
-        "id": "ta-staff",
-        "provider": "edge_tts",
-        "speaker_role": "staff"
-      },
-      "text": "பரவாயில்லை. நான் உதவுகிறேன்.",
-      "transliteration": "Paravaayillai. Naan udhavugiren.",
-      "audio_path": "audio/generated/ta/ta-repair-dont-understand/line-2.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/repair-dont-understand/line-2.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -579,7 +423,7 @@
       "text": "பேருந்து நிறுத்தம் எங்கே?",
       "transliteration": "Perundhu niruththam enge?",
       "audio_path": "audio/generated/ta/ta-directions-bus-stop/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -605,7 +449,7 @@
       "text": "அங்கே.",
       "transliteration": "Ange.",
       "audio_path": "audio/generated/ta/ta-directions-bus-stop/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -631,7 +475,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-directions-bus-stop/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -657,7 +501,7 @@
       "text": "தண்ணீர், தயவு செய்து.",
       "transliteration": "Thanneer, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-shop-water/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -683,7 +527,7 @@
       "text": "இதோ.",
       "transliteration": "Idho.",
       "audio_path": "audio/generated/ta/ta-shop-water/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -709,7 +553,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-shop-water/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -735,7 +579,7 @@
       "text": "இது எவ்வளவு?",
       "transliteration": "Idhu evvalavu?",
       "audio_path": "audio/generated/ta/ta-market-price/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -761,7 +605,7 @@
       "text": "முப்பது ரூபாய்.",
       "transliteration": "Muppadhu rupai.",
       "audio_path": "audio/generated/ta/ta-market-price/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -787,7 +631,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-market-price/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -813,7 +657,7 @@
       "text": "முப்பது ரூபாய்.",
       "transliteration": "Muppadhu rupai.",
       "audio_path": "audio/generated/ta/ta-pay-and-close/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -839,7 +683,7 @@
       "text": "இதோ பணம். நன்றி.",
       "transliteration": "Idho panam. Nandri.",
       "audio_path": "audio/generated/ta/ta-pay-and-close/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -865,7 +709,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-pay-and-close/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -891,7 +735,7 @@
       "text": "மன்னிக்கவும்.",
       "transliteration": "Mannikkavum.",
       "audio_path": "audio/generated/ta/ta-apologize-small-mistake/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -917,7 +761,7 @@
       "text": "பரவாயில்லை.",
       "transliteration": "Paravaayillai.",
       "audio_path": "audio/generated/ta/ta-apologize-small-mistake/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -943,7 +787,7 @@
       "text": "இந்த படிவத்தை நிரப்புங்கள்.",
       "transliteration": "Indha padivathai nirappungal.",
       "audio_path": "audio/generated/ta/ta-speak-little-language/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -969,7 +813,7 @@
       "text": "எனக்கு கொஞ்சம் தமிழ் தெரியும்.",
       "transliteration": "Enakku konjam Tamil theriyum.",
       "audio_path": "audio/generated/ta/ta-speak-little-language/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -995,7 +839,7 @@
       "text": "சரி. மெதுவாக பேசுகிறேன்.",
       "transliteration": "Sari. Methuvaga pesugiren.",
       "audio_path": "audio/generated/ta/ta-speak-little-language/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1021,7 +865,7 @@
       "text": "தண்ணீர்?",
       "transliteration": "Thanneer?",
       "audio_path": "audio/generated/ta/ta-politeness-please-thanks/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1047,7 +891,7 @@
       "text": "ஆம், தயவு செய்து. நன்றி.",
       "transliteration": "Aam, thayavu seithu. Nandri.",
       "audio_path": "audio/generated/ta/ta-politeness-please-thanks/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1073,85 +917,7 @@
       "text": "பரவாயில்லை.",
       "transliteration": "Paravaayillai.",
       "audio_path": "audio/generated/ta/ta-politeness-please-thanks/line-2.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-order-local-food-line-0",
-      "language": "ta",
-      "dialogue_id": "ta-order-local-food",
-      "dialogue_type": "anchor",
-      "function_id": "order_local_food",
-      "target_id": "ta-target-one-local-food-please",
-      "scene_id": "local-food-counter",
-      "line_index": 0,
-      "line_type": "world_opener",
-      "speaker_role": "server",
-      "voice_id": "ta-server",
-      "voice_profile": {
-        "provider_voice": "ta-IN-PallaviNeural",
-        "rate": "+4%",
-        "pitch": "+1Hz",
-        "id": "ta-server",
-        "provider": "edge_tts",
-        "speaker_role": "server"
-      },
-      "text": "என்ன வேண்டும்?",
-      "transliteration": "Enna vendum?",
-      "audio_path": "audio/generated/ta/ta-order-local-food/line-0.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-order-local-food-line-1",
-      "language": "ta",
-      "dialogue_id": "ta-order-local-food",
-      "dialogue_type": "anchor",
-      "function_id": "order_local_food",
-      "target_id": "ta-target-one-local-food-please",
-      "scene_id": "local-food-counter",
-      "line_index": 1,
-      "line_type": "learner_target",
-      "speaker_role": "learner",
-      "voice_id": "ta-learner",
-      "voice_profile": {
-        "provider_voice": "ta-IN-PallaviNeural",
-        "rate": "+0%",
-        "pitch": "+0Hz",
-        "id": "ta-learner",
-        "provider": "edge_tts",
-        "speaker_role": "learner"
-      },
-      "text": "ஒரு தோசை, தயவு செய்து.",
-      "transliteration": "Oru dosai, thayavu seithu.",
-      "audio_path": "audio/generated/ta/ta-order-local-food/line-1.mp3",
-      "status": "needs_generation",
-      "native_review_required": true
-    },
-    {
-      "id": "ta-order-local-food-line-2",
-      "language": "ta",
-      "dialogue_id": "ta-order-local-food",
-      "dialogue_type": "anchor",
-      "function_id": "order_local_food",
-      "target_id": "ta-target-one-local-food-please",
-      "scene_id": "local-food-counter",
-      "line_index": 2,
-      "line_type": "world_response",
-      "speaker_role": "server",
-      "voice_id": "ta-server",
-      "voice_profile": {
-        "provider_voice": "ta-IN-PallaviNeural",
-        "rate": "+4%",
-        "pitch": "+1Hz",
-        "id": "ta-server",
-        "provider": "edge_tts",
-        "speaker_role": "server"
-      },
-      "text": "சரி.",
-      "transliteration": "Sari.",
-      "audio_path": "audio/generated/ta/ta-order-local-food/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1177,7 +943,7 @@
       "text": "மருத்துவமனை எங்கே?",
       "transliteration": "Maruthuvamanai enge?",
       "audio_path": "audio/generated/ta/ta-directions-hospital/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1203,7 +969,7 @@
       "text": "அங்கே.",
       "transliteration": "Ange.",
       "audio_path": "audio/generated/ta/ta-directions-hospital/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1229,7 +995,7 @@
       "text": "நன்றி.",
       "transliteration": "Nandri.",
       "audio_path": "audio/generated/ta/ta-directions-hospital/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1255,7 +1021,7 @@
       "text": "வணக்கம். உதவி வேண்டுமா?",
       "transliteration": "Vanakkam. Udhavi venduma?",
       "audio_path": "audio/generated/ta/ta-pharmacy-cough-medicine/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1281,7 +1047,7 @@
       "text": "இருமல் மருந்து, தயவு செய்து.",
       "transliteration": "Irumal marundhu, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-pharmacy-cough-medicine/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1307,7 +1073,7 @@
       "text": "சரி. ஒரு நிமிடம்.",
       "transliteration": "Sari. Oru nimidam.",
       "audio_path": "audio/generated/ta/ta-pharmacy-cough-medicine/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1333,7 +1099,7 @@
       "text": "வணக்கம். உதவி வேண்டுமா?",
       "transliteration": "Vanakkam. Udhavi venduma?",
       "audio_path": "audio/generated/ta/ta-pharmacy-diarrhea-medicine/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1359,7 +1125,7 @@
       "text": "வயிற்றுப்போக்கு மருந்து, தயவு செய்து.",
       "transliteration": "Vayitruppokku marundhu, thayavu seithu.",
       "audio_path": "audio/generated/ta/ta-pharmacy-diarrhea-medicine/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1385,7 +1151,7 @@
       "text": "சரி. ஒரு நிமிடம்.",
       "transliteration": "Sari. Oru nimidam.",
       "audio_path": "audio/generated/ta/ta-pharmacy-diarrhea-medicine/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1411,7 +1177,7 @@
       "text": "வணக்கம். செக்-இன்?",
       "transliteration": "Vanakkam. Check-in?",
       "audio_path": "audio/generated/ta/ta-hostel-check-in/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1437,7 +1203,7 @@
       "text": "எனக்கு முன்பதிவு இருக்கிறது.",
       "transliteration": "Enakku munpadhivu irukkiradhu.",
       "audio_path": "audio/generated/ta/ta-hostel-check-in/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1463,7 +1229,7 @@
       "text": "உங்கள் பெயர், தயவு செய்து?",
       "transliteration": "Ungal peyar, thayavu seithu?",
       "audio_path": "audio/generated/ta/ta-hostel-check-in/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1489,7 +1255,7 @@
       "text": "இது நன்றாக இருந்தது.",
       "transliteration": "Idhu nandraaga irundhadhu.",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-0.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1515,7 +1281,7 @@
       "text": "ஒருநாள் காபி குடிக்க வர விரும்புகிறீர்களா?",
       "transliteration": "Orunaal kaapi kudikka vara virumbugireergala?",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-1.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1541,7 +1307,7 @@
       "text": "ஆம், அது நன்றாக இருக்கும்.",
       "transliteration": "Aam, adhu nandraaga irukkum.",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-2.mp3",
-      "status": "needs_generation",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1567,7 +1333,397 @@
       "text": "சிறப்பு. விரைவில் சந்திப்போம்.",
       "transliteration": "Sirappu. Viraivil sandhippom.",
       "audio_path": "audio/generated/ta/ta-social-coffee-invitation/line-3.mp3",
-      "status": "needs_generation",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-first-hi-response-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-first-hi-response",
+      "dialogue_type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "ta-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "neighbor",
+      "voice_id": "ta-neighbor",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "-3%",
+        "pitch": "-3Hz",
+        "id": "ta-neighbor",
+        "provider": "edge_tts",
+        "speaker_role": "neighbor"
+      },
+      "text": "வணக்கம்!",
+      "transliteration": "Vanakkam!",
+      "audio_path": "audio/generated/ta/first-hi-response/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-first-hi-response-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-first-hi-response",
+      "dialogue_type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "ta-target-hello-how-are-you",
+      "scene_id": "study-room-friend",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "வணக்கம்! நலமா?",
+      "transliteration": "Vanakkam! Nalama?",
+      "audio_path": "audio/generated/ta/first-hi-response/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-first-hi-response-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-first-hi-response",
+      "dialogue_type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "ta-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "neighbor",
+      "voice_id": "ta-neighbor",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "-3%",
+        "pitch": "-3Hz",
+        "id": "ta-neighbor",
+        "provider": "edge_tts",
+        "speaker_role": "neighbor"
+      },
+      "text": "நலம், நன்றி.",
+      "transliteration": "Nalam, nandri.",
+      "audio_path": "audio/generated/ta/first-hi-response/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-introduce-self-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-introduce-self",
+      "dialogue_type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "classmate",
+      "voice_id": "ta-classmate",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+5%",
+        "pitch": "+1Hz",
+        "id": "ta-classmate",
+        "provider": "edge_tts",
+        "speaker_role": "classmate"
+      },
+      "text": "உங்கள் பெயர் என்ன?",
+      "transliteration": "Ungal peyar enna?",
+      "audio_path": "audio/generated/ta/introduce-self/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-introduce-self-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-introduce-self",
+      "dialogue_type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "என் பெயர் அன்னா.",
+      "transliteration": "En peyar Anna.",
+      "audio_path": "audio/generated/ta/introduce-self/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-introduce-self-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-introduce-self",
+      "dialogue_type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "classmate",
+      "voice_id": "ta-classmate",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+5%",
+        "pitch": "+1Hz",
+        "id": "ta-classmate",
+        "provider": "edge_tts",
+        "speaker_role": "classmate"
+      },
+      "text": "சந்தித்ததில் மகிழ்ச்சி, அன்னா.",
+      "transliteration": "Sandhiththathil magizhchi, Anna.",
+      "audio_path": "audio/generated/ta/introduce-self/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-repair-dont-understand-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-repair-dont-understand",
+      "dialogue_type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "இந்த படிவத்தை நிரப்புங்கள்.",
+      "transliteration": "Indha padivathai nirappungal.",
+      "audio_path": "audio/generated/ta/repair-dont-understand/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-repair-dont-understand-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-repair-dont-understand",
+      "dialogue_type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
+      "transliteration": "Mannikkavum, enakku puriyavillai.",
+      "audio_path": "audio/generated/ta/repair-dont-understand/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-repair-dont-understand-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-repair-dont-understand",
+      "dialogue_type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "பரவாயில்லை. நான் உதவுகிறேன்.",
+      "transliteration": "Paravaayillai. Naan udhavugiren.",
+      "audio_path": "audio/generated/ta/repair-dont-understand/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-attention-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-attention",
+      "dialogue_type": "anchor",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "அடுத்தவர், தயவுசெய்து.",
+      "transliteration": "Aduththavar, thayavu seythu.",
+      "audio_path": "audio/generated/ta/excuse-me-attention/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-attention-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-attention",
+      "dialogue_type": "anchor",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "மன்னிக்கவும்.",
+      "transliteration": "Mannikkavum.",
+      "audio_path": "audio/generated/ta/excuse-me-attention/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-attention-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-attention",
+      "dialogue_type": "anchor",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "ஆமாம், சொல்லுங்கள்.",
+      "transliteration": "Aamam, sollungal.",
+      "audio_path": "audio/generated/ta/excuse-me-attention/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-local-food-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-order-local-food",
+      "dialogue_type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "server",
+      "voice_id": "ta-server",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+4%",
+        "pitch": "+1Hz",
+        "id": "ta-server",
+        "provider": "edge_tts",
+        "speaker_role": "server"
+      },
+      "text": "என்ன வேண்டும்?",
+      "transliteration": "Enna vendum?",
+      "audio_path": "audio/generated/ta/order-local-food/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-local-food-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-order-local-food",
+      "dialogue_type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "ஒரு தோசை, தயவு செய்து.",
+      "transliteration": "Oru dosai, thayavu seithu.",
+      "audio_path": "audio/generated/ta/order-local-food/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-local-food-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-order-local-food",
+      "dialogue_type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "server",
+      "voice_id": "ta-server",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+4%",
+        "pitch": "+1Hz",
+        "id": "ta-server",
+        "provider": "edge_tts",
+        "speaker_role": "server"
+      },
+      "text": "சரி.",
+      "transliteration": "Sari.",
+      "audio_path": "audio/generated/ta/order-local-food/line-2.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1592,8 +1748,8 @@
       },
       "text": "வணக்கம்!",
       "transliteration": "Vanakkam!",
-      "audio_path": "audio/generated/ta/ta-greeting-neighbor-transfer/line-0.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/greeting-neighbor-transfer/line-0.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1618,8 +1774,8 @@
       },
       "text": "வணக்கம்! நலமா?",
       "transliteration": "Vanakkam! Nalama?",
-      "audio_path": "audio/generated/ta/ta-greeting-neighbor-transfer/line-1.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/greeting-neighbor-transfer/line-1.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1644,8 +1800,8 @@
       },
       "text": "நலம், நன்றி.",
       "transliteration": "Nalam, nandri.",
-      "audio_path": "audio/generated/ta/ta-greeting-neighbor-transfer/line-2.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/greeting-neighbor-transfer/line-2.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1670,8 +1826,8 @@
       },
       "text": "உங்கள் பெயர் என்ன?",
       "transliteration": "Ungal peyar enna?",
-      "audio_path": "audio/generated/ta/ta-introduce-class-transfer/line-0.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/introduce-class-transfer/line-0.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1696,8 +1852,8 @@
       },
       "text": "என் பெயர் Anna.",
       "transliteration": "En peyar Anna.",
-      "audio_path": "audio/generated/ta/ta-introduce-class-transfer/line-1.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/introduce-class-transfer/line-1.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1722,8 +1878,8 @@
       },
       "text": "சந்தோஷம், Anna.",
       "transliteration": "Sandhosham, Anna.",
-      "audio_path": "audio/generated/ta/ta-introduce-class-transfer/line-2.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/introduce-class-transfer/line-2.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1748,8 +1904,8 @@
       },
       "text": "இங்கே அழுத்துங்க.",
       "transliteration": "Inge azhuthunga.",
-      "audio_path": "audio/generated/ta/ta-repair-ticket-transfer/line-0.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/repair-ticket-transfer/line-0.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1774,8 +1930,8 @@
       },
       "text": "மன்னிக்கவும், எனக்கு புரியல.",
       "transliteration": "Mannikkavum, enakku puriyala.",
-      "audio_path": "audio/generated/ta/ta-repair-ticket-transfer/line-1.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/repair-ticket-transfer/line-1.mp3",
+      "status": "generated",
       "native_review_required": true
     },
     {
@@ -1800,8 +1956,554 @@
       },
       "text": "பரவாயில்லை. நான் உதவி பண்றேன்.",
       "transliteration": "Parava illai. Naan udhavi panren.",
-      "audio_path": "audio/generated/ta/ta-repair-ticket-transfer/line-2.mp3",
-      "status": "needs_generation",
+      "audio_path": "audio/generated/ta/repair-ticket-transfer/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-cafe-transfer-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-cafe-transfer",
+      "dialogue_type": "transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "barista",
+      "voice_id": "ta-barista",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-barista",
+        "provider": "edge_tts",
+        "speaker_role": "barista"
+      },
+      "text": "சிறிது நேரம் காத்திருங்கள்.",
+      "transliteration": "Sirithu neram kaathirungal.",
+      "audio_path": "audio/generated/ta/sumimasen-cafe-transfer/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-cafe-transfer-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-cafe-transfer",
+      "dialogue_type": "transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "மன்னிக்கவும்.",
+      "transliteration": "Mannikkavum.",
+      "audio_path": "audio/generated/ta/sumimasen-cafe-transfer/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-cafe-transfer-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-cafe-transfer",
+      "dialogue_type": "transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "barista",
+      "voice_id": "ta-barista",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-barista",
+        "provider": "edge_tts",
+        "speaker_role": "barista"
+      },
+      "text": "ஆமாம், என்ன வேண்டும்?",
+      "transliteration": "Aamam, enna vendum?",
+      "audio_path": "audio/generated/ta/sumimasen-cafe-transfer/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-convenience-transfer-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-order-convenience-transfer",
+      "dialogue_type": "transfer",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "cashier",
+      "voice_id": "ta-cashier",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-cashier",
+        "provider": "edge_tts",
+        "speaker_role": "cashier"
+      },
+      "text": "என்ன வேண்டும்?",
+      "transliteration": "Enna vendum?",
+      "audio_path": "audio/generated/ta/order-convenience-transfer/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-convenience-transfer-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-order-convenience-transfer",
+      "dialogue_type": "transfer",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "ஒரு சாண்ட்விச், தயவுசெய்து.",
+      "transliteration": "Oru sandwich, thayavu seythu.",
+      "audio_path": "audio/generated/ta/order-convenience-transfer/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-convenience-transfer-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-order-convenience-transfer",
+      "dialogue_type": "transfer",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "cashier",
+      "voice_id": "ta-cashier",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-cashier",
+        "provider": "edge_tts",
+        "speaker_role": "cashier"
+      },
+      "text": "சரி.",
+      "transliteration": "Sari.",
+      "audio_path": "audio/generated/ta/order-convenience-transfer/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-greeting-entry-review-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-greeting-entry-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ta-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "neighbor",
+      "voice_id": "ta-neighbor",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "-3%",
+        "pitch": "-3Hz",
+        "id": "ta-neighbor",
+        "provider": "edge_tts",
+        "speaker_role": "neighbor"
+      },
+      "text": "வணக்கம்!",
+      "transliteration": "Vanakkam!",
+      "audio_path": "audio/generated/ta/greeting-entry-review/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-greeting-entry-review-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-greeting-entry-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ta-target-hello-how-are-you",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "வணக்கம்! நலமா?",
+      "transliteration": "Vanakkam! Nalama?",
+      "audio_path": "audio/generated/ta/greeting-entry-review/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-greeting-entry-review-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-greeting-entry-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ta-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "neighbor",
+      "voice_id": "ta-neighbor",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "-3%",
+        "pitch": "-3Hz",
+        "id": "ta-neighbor",
+        "provider": "edge_tts",
+        "speaker_role": "neighbor"
+      },
+      "text": "நலம், நன்றி.",
+      "transliteration": "Nalam, nandri.",
+      "audio_path": "audio/generated/ta/greeting-entry-review/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-introduce-community-review-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-introduce-community-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "classmate",
+      "voice_id": "ta-classmate",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+5%",
+        "pitch": "+1Hz",
+        "id": "ta-classmate",
+        "provider": "edge_tts",
+        "speaker_role": "classmate"
+      },
+      "text": "உங்கள் பெயர் என்ன?",
+      "transliteration": "Ungal peyar enna?",
+      "audio_path": "audio/generated/ta/introduce-community-review/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-introduce-community-review-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-introduce-community-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "என் பெயர் அன்னா.",
+      "transliteration": "En peyar Anna.",
+      "audio_path": "audio/generated/ta/introduce-community-review/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-introduce-community-review-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-introduce-community-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "introduce_self",
+      "target_id": "ta-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "classmate",
+      "voice_id": "ta-classmate",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+5%",
+        "pitch": "+1Hz",
+        "id": "ta-classmate",
+        "provider": "edge_tts",
+        "speaker_role": "classmate"
+      },
+      "text": "சந்தித்ததில் மகிழ்ச்சி, அன்னா.",
+      "transliteration": "Sandhiththathil magizhchi, Anna.",
+      "audio_path": "audio/generated/ta/introduce-community-review/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-repair-clinic-review-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-repair-clinic-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "இந்த படிவத்தை நிரப்புங்கள்.",
+      "transliteration": "Indha padivathai nirappungal.",
+      "audio_path": "audio/generated/ta/repair-clinic-review/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-repair-clinic-review-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-repair-clinic-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "மன்னிக்கவும், எனக்கு புரியவில்லை.",
+      "transliteration": "Mannikkavum, enakku puriyavillai.",
+      "audio_path": "audio/generated/ta/repair-clinic-review/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-repair-clinic-review-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-repair-clinic-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ta-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "பரவாயில்லை. நான் உதவுகிறேன்.",
+      "transliteration": "Paravaayillai. Naan udhavugiren.",
+      "audio_path": "audio/generated/ta/repair-clinic-review/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-station-review-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-station-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "அடுத்தவர், தயவுசெய்து.",
+      "transliteration": "Aduththavar, thayavu seythu.",
+      "audio_path": "audio/generated/ta/sumimasen-station-review/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-station-review-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-station-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "மன்னிக்கவும்.",
+      "transliteration": "Mannikkavum.",
+      "audio_path": "audio/generated/ta/sumimasen-station-review/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-excuse-me-station-review-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-excuse-me-station-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "get_attention_politely",
+      "target_id": "ta-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "staff",
+      "voice_id": "ta-staff",
+      "voice_profile": {
+        "provider_voice": "ta-IN-ValluvarNeural",
+        "rate": "+0%",
+        "pitch": "-1Hz",
+        "id": "ta-staff",
+        "provider": "edge_tts",
+        "speaker_role": "staff"
+      },
+      "text": "ஆமாம், சொல்லுங்கள்.",
+      "transliteration": "Aamam, sollungal.",
+      "audio_path": "audio/generated/ta/sumimasen-station-review/line-2.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-bakery-review-line-0",
+      "language": "ta",
+      "dialogue_id": "ta-order-bakery-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 0,
+      "line_type": "world_opener",
+      "speaker_role": "server",
+      "voice_id": "ta-server",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+4%",
+        "pitch": "+1Hz",
+        "id": "ta-server",
+        "provider": "edge_tts",
+        "speaker_role": "server"
+      },
+      "text": "என்ன வேண்டும்?",
+      "transliteration": "Enna vendum?",
+      "audio_path": "audio/generated/ta/order-bakery-review/line-0.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-bakery-review-line-1",
+      "language": "ta",
+      "dialogue_id": "ta-order-bakery-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 1,
+      "line_type": "learner_target",
+      "speaker_role": "learner",
+      "voice_id": "ta-learner",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+0%",
+        "pitch": "+0Hz",
+        "id": "ta-learner",
+        "provider": "edge_tts",
+        "speaker_role": "learner"
+      },
+      "text": "ஒரு தோசை, தயவு செய்து.",
+      "transliteration": "Oru dosai, thayavu seithu.",
+      "audio_path": "audio/generated/ta/order-bakery-review/line-1.mp3",
+      "status": "generated",
+      "native_review_required": true
+    },
+    {
+      "id": "ta-order-bakery-review-line-2",
+      "language": "ta",
+      "dialogue_id": "ta-order-bakery-review",
+      "dialogue_type": "delayed_review",
+      "function_id": "order_local_food",
+      "target_id": "ta-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 2,
+      "line_type": "world_response",
+      "speaker_role": "server",
+      "voice_id": "ta-server",
+      "voice_profile": {
+        "provider_voice": "ta-IN-PallaviNeural",
+        "rate": "+4%",
+        "pitch": "+1Hz",
+        "id": "ta-server",
+        "provider": "edge_tts",
+        "speaker_role": "server"
+      },
+      "text": "சரி.",
+      "transliteration": "Sari.",
+      "audio_path": "audio/generated/ta/order-bakery-review/line-2.mp3",
+      "status": "generated",
       "native_review_required": true
     }
   ],
