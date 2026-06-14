@@ -12,4 +12,6 @@ node_modules/
 server.log
 server.err.log
 model/validation/
-view/static/assets/
+view/static/assets/*
+!view/static/assets/*.css
+!view/static/assets/*.js
