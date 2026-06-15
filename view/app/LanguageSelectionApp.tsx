@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchLanguages, type LanguageSummary } from '../api/languages';
 import { clearLocalValidationSessions } from '../api/validation';
-import { isLocalHost, participantFromUrl } from './urlParams';
+import { isLocalHost } from './urlParams';
+import { START_LESSON } from './lessonUrls';
 import { PARTICIPANT_STORAGE_KEY } from './useParticipantId';
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -11,7 +12,6 @@ export function LanguageSelectionApp() {
   const [languages, setLanguages] = useState<LanguageSummary[]>([]);
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [clearState, setClearState] = useState<ClearState>('idle');
-  const participant = useMemo(() => participantFromUrl(), []);
 
   useEffect(() => {
     let isCurrent = true;
@@ -56,9 +56,9 @@ export function LanguageSelectionApp() {
             <h2>{language.display_name}</h2>
             <p>{language.description || 'Starter speaking scenes.'}</p>
             <div className="language-card-actions">
-              <a href={lessonLink(language.id, participant, 'mvp')}>Original</a>
+              <a href={lessonLink(language.id, 'mvp')}>Original</a>
               {language.scene_sets.includes('delayed') ? (
-                <a href={lessonLink(language.id, participant, 'delayed')}>Delayed</a>
+                <a href={lessonLink(language.id, 'delayed')}>Delayed</a>
               ) : null}
             </div>
           </article>
@@ -94,9 +94,9 @@ export function LanguageSelectionApp() {
   }
 }
 
-function lessonLink(language: string, participant: string | null, sceneSet: 'mvp' | 'delayed'): string {
-  const params = new URLSearchParams({ language, lesson: 'hello' });
+function lessonLink(language: string, sceneSet: 'mvp' | 'delayed'): string {
+  const lesson = sceneSet === 'delayed' ? START_LESSON : 'hello';
+  const params = new URLSearchParams({ language, lesson });
   if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
-  if (participant) params.set('participant', participant);
   return `/learn?${params.toString()}`;
 }

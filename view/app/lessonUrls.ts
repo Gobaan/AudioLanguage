@@ -3,13 +3,14 @@ import type { Lesson, LessonStep } from '../components';
 export const DEFAULT_LANGUAGE = 'ja';
 export const DEFAULT_LESSON = 'hello';
 export const DEFAULT_SCENE_SET = 'mvp';
+export const START_LESSON = 'start';
 
 export function languageFromUrl(): string {
   return new URLSearchParams(window.location.search).get('language') ?? DEFAULT_LANGUAGE;
 }
 
 export function lessonPageFromUrl(): string {
-  return new URLSearchParams(window.location.search).get('lesson') ?? DEFAULT_LESSON;
+  return new URLSearchParams(window.location.search).get('lesson') ?? START_LESSON;
 }
 
 export function sceneSetFromUrl(): string {

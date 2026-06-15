@@ -136,8 +136,6 @@ def transfer_review_steps(
 
     record_before_model = _record_before_model_line(playback_flow)
     include_world_response = _includes_world_response_feedback(playback_flow)
-    should_autoplay_opener = card.get("stage") != "delayed_review"
-
     return [
         step(
             "scene_setup",
@@ -147,7 +145,7 @@ def transfer_review_steps(
             display_text="Listen.",
             audio=audio_behavior(
                 opener_audio,
-                autoplay=should_autoplay_opener,
+                autoplay=True,
                 replayable=True,
                 audio_text=opener_audio_text,
             ),

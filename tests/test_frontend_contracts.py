@@ -49,3 +49,30 @@ def test_scene_playback_autoplay_depends_on_frame_identity_not_array_reference()
     assert "frame.audioText" in scene_playback_source
     assert "}, [autoplay, playbackKey]);" in scene_playback_source
     assert "}, [autoplay, playableFrames]);" not in scene_playback_source
+
+
+def test_admin_link_and_participant_name_stay_off_lesson_page():
+    lesson_links_source = (PROJECT_DIR / "view" / "app" / "LessonAppLinks.tsx").read_text(encoding="utf-8")
+    lesson_shell_source = (PROJECT_DIR / "view" / "app" / "TravellerLessonShell.tsx").read_text(encoding="utf-8")
+    language_selection_source = (PROJECT_DIR / "view" / "app" / "LanguageSelectionApp.tsx").read_text(
+        encoding="utf-8"
+    )
+
+    assert 'href="/admin/validation"' not in lesson_links_source
+    assert "participantId" not in lesson_links_source
+    assert "participantId" not in lesson_shell_source
+    assert 'href="/admin/validation"' in language_selection_source
+    assert "params.set('participant'" not in language_selection_source
+
+
+def test_delayed_review_starts_from_first_backend_plan_tab():
+    language_selection_source = (PROJECT_DIR / "view" / "app" / "LanguageSelectionApp.tsx").read_text(
+        encoding="utf-8"
+    )
+    lesson_urls_source = (PROJECT_DIR / "view" / "app" / "lessonUrls.ts").read_text(encoding="utf-8")
+    loader_source = (PROJECT_DIR / "view" / "app" / "useLessonLoader.ts").read_text(encoding="utf-8")
+
+    assert "export const START_LESSON = 'start'" in lesson_urls_source
+    assert "sceneSet === 'delayed' ? START_LESSON : 'hello'" in language_selection_source
+    assert "lessonPage === START_LESSON ? null : lessonForPage" in loader_source
+    assert "fallbackLessonPage(lessonTabs, lessonPage !== START_LESSON)" in loader_source

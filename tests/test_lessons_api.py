@@ -206,7 +206,7 @@ class LessonsApiTests(unittest.TestCase):
         recall_step = next(step for step in steps if step["type"] == "scene_recall")
 
         self.assertEqual(setup_step["props"]["stopAtLineType"], "world_opener")
-        self.assertFalse(setup_step["audio"]["autoplay"])
+        self.assertTrue(setup_step["audio"]["autoplay"])
         self.assertTrue(setup_step["audio"]["replayable"])
         self.assertEqual(recall_step["frameId"], "line-0")
         self.assertTrue(recall_step["props"]["recordBeforeModelLine"])
@@ -249,10 +249,37 @@ class LessonsApiTests(unittest.TestCase):
         )
         self.assertEqual(lesson["id"], "ja-card-greeting-entry-review-delayed_review")
         self.assertEqual(lesson["stage"], "delayed_review")
+        setup_step = next(step for step in lesson["steps"] if step["type"] == "scene_setup")
+        self.assertTrue(setup_step["audio"]["autoplay"])
         meaning_step = next(step for step in lesson["steps"] if step["type"] == "broad_meaning_guess")
         self.assertEqual(meaning_step["props"]["difficulty"], "hard")
         self.assertFalse(meaning_step["props"]["revealDialogueAfterChoice"])
         self.assertFalse(meaning_step["props"]["revealDialogueOnIncorrectOnly"])
+
+    def test_learning_engine_delayed_plan_returns_all_delayed_scenes(self):
+        response = TestClient(app).get(
+            "/api/learning-engine/lessons?language=ja&scene_set=delayed&order_seed=review-day-1"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        tab_ids = [tab["id"] for tab in payload["lesson_tabs"]]
+        lessons = payload["lessons"]
+
+        self.assertEqual(payload["scene_set"], "delayed")
+        self.assertEqual(len(tab_ids), 5)
+        self.assertEqual(len(lessons), 5)
+        self.assertEqual(
+            set(tab_ids),
+            {"hello", "introduce", "repair", "excuse-me", "food-order"},
+        )
+        self.assertTrue(all(lesson["stage"] == "delayed_review" for lesson in lessons))
+        self.assertTrue(
+            all(
+                next(step for step in lesson["steps"] if step["type"] == "scene_setup")["audio"]["autoplay"]
+                for lesson in lessons
+            )
+        )
 
     def test_lesson_order_seed_reproduces_randomized_groups(self):
         client = TestClient(app)

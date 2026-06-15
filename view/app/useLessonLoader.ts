@@ -5,6 +5,7 @@ import type { Lesson } from '../components';
 import { FALLBACK_LESSON } from './fallbackLesson';
 import {
   DEFAULT_LESSON,
+  START_LESSON,
   activeMvpLesson,
   updateLessonUrl,
 } from './lessonUrls';
@@ -67,13 +68,13 @@ export function useLessonLoader({
       return;
     }
 
-    const selectedLesson = lessonForPage(lessonPage, lessonTabs, lessons);
+    const selectedLesson = lessonPage === START_LESSON ? null : lessonForPage(lessonPage, lessonTabs, lessons);
     if (selectedLesson) {
       setLesson(selectedLesson);
       return;
     }
 
-    const fallbackPage = fallbackLessonPage(lessonTabs);
+    const fallbackPage = fallbackLessonPage(lessonTabs, lessonPage !== START_LESSON);
     const fallbackLesson = fallbackPage
       ? lessonForPage(fallbackPage, lessonTabs, lessons)
       : lessons[0];
@@ -125,8 +126,8 @@ function lessonForPage(lessonPage: string, lessonTabs: LessonTab[], lessons: Les
   return lessons[lessonIndex] ?? null;
 }
 
-function fallbackLessonPage(lessonTabs: LessonTab[]): string | null {
-  if (lessonTabs.some((tab) => tab.id === DEFAULT_LESSON)) {
+function fallbackLessonPage(lessonTabs: LessonTab[], preferDefaultLesson: boolean): string | null {
+  if (preferDefaultLesson && lessonTabs.some((tab) => tab.id === DEFAULT_LESSON)) {
     return DEFAULT_LESSON;
   }
 

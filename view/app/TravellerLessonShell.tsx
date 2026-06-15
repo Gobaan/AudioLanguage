@@ -6,7 +6,6 @@ import { LessonStepRenderer } from './LessonStepRenderer';
 import { stepBlocksNextUntilChoice, stepHandlesOwnNext } from './lessonStepHelpers';
 
 type TravellerLessonShellProps = {
-  participantId: string | null;
   language: string;
   stepLesson: Lesson;
   step: LessonStep;
@@ -28,7 +27,6 @@ type TravellerLessonShellProps = {
 };
 
 export function TravellerLessonShell({
-  participantId,
   language,
   stepLesson,
   step,
@@ -50,7 +48,7 @@ export function TravellerLessonShell({
 
   return (
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
-      <LessonAppLinks participantId={participantId} onOpenScorecard={onOpenScorecard} />
+      <LessonAppLinks onOpenScorecard={onOpenScorecard} />
       {debugLessonSwitcher}
       <LessonStepRenderer
         lesson={stepLesson}

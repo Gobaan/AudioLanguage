@@ -25,7 +25,6 @@ export function ValidationScorecardView({
     <section className="validation-scorecard" aria-label="Validation scorecard">
       <header className="scorecard-header">
         <div>
-          <span>Local validation</span>
           <h1>Scorecard</h1>
         </div>
         <nav className="scorecard-actions" aria-label="Scorecard controls">

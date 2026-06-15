@@ -132,7 +132,6 @@ export function TravellerMvpApp() {
   return (
     <FitToViewport>
       <TravellerLessonShell
-        participantId={participantId}
         language={language}
         stepLesson={stepLesson}
         step={step}
