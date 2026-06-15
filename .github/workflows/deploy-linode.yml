@@ -136,6 +136,8 @@ jobs:
           WantedBy=default.target
           SERVICE
 
+          pkill -f "[s]cripts/launch_server.py --host 0.0.0.0 --port $PORT" || true
+
           if command -v systemctl >/dev/null 2>&1 && systemctl --user daemon-reload; then
             systemctl --user enable "$SERVICE_NAME.service"
             systemctl --user restart "$SERVICE_NAME.service"
