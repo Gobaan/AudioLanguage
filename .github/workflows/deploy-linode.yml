@@ -68,7 +68,7 @@ jobs:
             --exclude="server.err.log" \
             --exclude="project_config/config/secrets.local.json" \
             --exclude="model/validation" \
-            -czf deploy.tar.gz .
+            -czf "$RUNNER_TEMP/audio-language-deploy.tar.gz" .
 
       - name: Configure SSH
         run: |
@@ -78,7 +78,7 @@ jobs:
           ssh-keyscan -H gobaan.com >> ~/.ssh/known_hosts
 
       - name: Upload archive
-        run: scp -i ~/.ssh/linode_deploy_key deploy.tar.gz "$TARGET:$REMOTE_TMP"
+        run: scp -i ~/.ssh/linode_deploy_key "$RUNNER_TEMP/audio-language-deploy.tar.gz" "$TARGET:$REMOTE_TMP"
 
       - name: Install and restart app
         run: |
