@@ -4,17 +4,11 @@ import { fetchLearningPlan } from '../api/lessons';
 import type { Lesson } from '../components';
 import { FALLBACK_LESSON } from './fallbackLesson';
 import {
-  DEFAULT_LESSON,
-  START_LESSON,
   activeMvpLesson,
   updateLessonUrl,
 } from './lessonUrls';
+import { selectLessonForPage, type LessonTab } from './lessonSelection';
 import { isLocalHost } from './urlParams';
-
-export type LessonTab = {
-  id: string;
-  label: string;
-};
 
 export type LoadState = 'loading' | 'ready' | 'error';
 
@@ -68,21 +62,12 @@ export function useLessonLoader({
       return;
     }
 
-    const selectedLesson = lessonPage === START_LESSON ? null : lessonForPage(lessonPage, lessonTabs, lessons);
-    if (selectedLesson) {
-      setLesson(selectedLesson);
-      return;
-    }
+    const selected = selectLessonForPage(lessonPage, lessonTabs, lessons);
+    setLesson(selected.lesson ?? activeMvpLesson(FALLBACK_LESSON));
 
-    const fallbackPage = fallbackLessonPage(lessonTabs, lessonPage !== START_LESSON);
-    const fallbackLesson = fallbackPage
-      ? lessonForPage(fallbackPage, lessonTabs, lessons)
-      : lessons[0];
-    setLesson(fallbackLesson ?? activeMvpLesson(FALLBACK_LESSON));
-
-    if (fallbackPage && fallbackPage !== lessonPage) {
-      onLessonPageChange(fallbackPage);
-      updateLessonUrl(language, fallbackPage, sceneSet, true);
+    if (selected.shouldReplaceUrl && selected.resolvedLessonPage) {
+      onLessonPageChange(selected.resolvedLessonPage);
+      updateLessonUrl(language, selected.resolvedLessonPage, sceneSet, true);
     }
   }, [language, lessonPage, lessonTabs, lessons, loadState, sceneSet, onLessonPageChange]);
 
@@ -115,21 +100,4 @@ function browserSessionOrderSeed(language: string, sceneSet: string): string {
   } catch {
     return `session:${language}:${sceneSet}`;
   }
-}
-
-function lessonForPage(lessonPage: string, lessonTabs: LessonTab[], lessons: Lesson[]): Lesson | null {
-  const lessonIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
-  if (lessonIndex === -1) {
-    return null;
-  }
-
-  return lessons[lessonIndex] ?? null;
-}
-
-function fallbackLessonPage(lessonTabs: LessonTab[], preferDefaultLesson: boolean): string | null {
-  if (preferDefaultLesson && lessonTabs.some((tab) => tab.id === DEFAULT_LESSON)) {
-    return DEFAULT_LESSON;
-  }
-
-  return lessonTabs[0]?.id ?? null;
 }

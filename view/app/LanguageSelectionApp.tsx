@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchLanguages, type LanguageSummary } from '../api/languages';
 import { clearLocalValidationSessions } from '../api/validation';
 import { isLocalHost } from './urlParams';
-import { START_LESSON } from './lessonUrls';
+import { languageLessonLink } from './lessonLinks';
 import { PARTICIPANT_STORAGE_KEY } from './useParticipantId';
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -56,9 +56,9 @@ export function LanguageSelectionApp() {
             <h2>{language.display_name}</h2>
             <p>{language.description || 'Starter speaking scenes.'}</p>
             <div className="language-card-actions">
-              <a href={lessonLink(language.id, 'mvp')}>Original</a>
+              <a href={languageLessonLink(language.id, 'mvp')}>Original</a>
               {language.scene_sets.includes('delayed') ? (
-                <a href={lessonLink(language.id, 'delayed')}>Delayed</a>
+                <a href={languageLessonLink(language.id, 'delayed')}>Delayed</a>
               ) : null}
             </div>
           </article>
@@ -92,11 +92,4 @@ export function LanguageSelectionApp() {
       setClearState('error');
     }
   }
-}
-
-function lessonLink(language: string, sceneSet: 'mvp' | 'delayed'): string {
-  const lesson = sceneSet === 'delayed' ? START_LESSON : 'hello';
-  const params = new URLSearchParams({ language, lesson });
-  if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
-  return `/learn?${params.toString()}`;
 }
