@@ -1,0 +1,151 @@
+name: Deploy to Linode
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: linode-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TARGET: lordofall@gobaan.com
+      REMOTE_DIR: ~/AudioLanguage
+      REMOTE_TMP: /tmp/audio-language-deploy.tar.gz
+      PORT: "8000"
+      SERVICE_NAME: language-learning
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: view/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: view
+        run: npm ci
+
+      - name: Run backend and contract tests
+        run: python -m pytest tests/test_lessons_api.py tests/test_frontend_contracts.py
+
+      - name: Build frontend
+        working-directory: view
+        run: npm run build
+
+      - name: Package application
+        run: |
+          tar \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude=".venv" \
+            --exclude="venv" \
+            --exclude="env" \
+            --exclude="node_modules" \
+            --exclude="view/node_modules" \
+            --exclude="__pycache__" \
+            --exclude="*.pyc" \
+            --exclude="server.log" \
+            --exclude="server.err.log" \
+            --exclude="project_config/config/secrets.local.json" \
+            --exclude="model/validation" \
+            -czf deploy.tar.gz .
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          install -m 600 /dev/null ~/.ssh/linode_deploy_key
+          printf '%s\n' "${{ secrets.LINODE_SSH_PRIVATE_KEY }}" > ~/.ssh/linode_deploy_key
+          ssh-keyscan -H gobaan.com >> ~/.ssh/known_hosts
+
+      - name: Upload archive
+        run: scp -i ~/.ssh/linode_deploy_key deploy.tar.gz "$TARGET:$REMOTE_TMP"
+
+      - name: Install and restart app
+        run: |
+          ssh -i ~/.ssh/linode_deploy_key "$TARGET" "REMOTE_DIR='$REMOTE_DIR' REMOTE_TMP='$REMOTE_TMP' PORT='$PORT' SERVICE_NAME='$SERVICE_NAME' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          REMOTE_DIR="$(eval echo "$REMOTE_DIR")"
+
+          mkdir -p "$REMOTE_DIR"
+          tar -xzf "$REMOTE_TMP" -C "$REMOTE_DIR"
+          cd "$REMOTE_DIR"
+
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt
+
+          if command -v npm >/dev/null 2>&1; then
+            cd view
+            npm ci
+            npm run build
+            cd ..
+          else
+            echo "npm is not installed; using committed frontend static assets"
+          fi
+
+          cat > run_server.sh <<'RUNNER'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          cd "$(dirname "$0")"
+          if [ -f .env ]; then
+            set -a
+            . ./.env
+            set +a
+          fi
+          exec .venv/bin/python scripts/launch_server.py --host 0.0.0.0 --port __PORT__ --no-port-fallback
+          RUNNER
+          sed -i "s/__PORT__/$PORT/g" run_server.sh
+          chmod +x run_server.sh
+
+          mkdir -p "$HOME/.config/systemd/user"
+          cat > "$HOME/.config/systemd/user/$SERVICE_NAME.service" <<SERVICE
+          [Unit]
+          Description=Audio Language
+          After=network.target
+
+          [Service]
+          Type=simple
+          WorkingDirectory=$REMOTE_DIR
+          ExecStart=$REMOTE_DIR/run_server.sh
+          Restart=always
+          RestartSec=3
+
+          [Install]
+          WantedBy=default.target
+          SERVICE
+
+          if command -v systemctl >/dev/null 2>&1 && systemctl --user daemon-reload; then
+            systemctl --user enable "$SERVICE_NAME.service"
+            systemctl --user restart "$SERVICE_NAME.service"
+            systemctl --user --no-pager --full status "$SERVICE_NAME.service" || true
+          else
+            pkill -f "scripts/launch_server.py --host 0.0.0.0 --port $PORT" || true
+            nohup ./run_server.sh > server.log 2> server.err.log &
+            echo "Started with nohup on port $PORT"
+          fi
+
+          rm -f "$REMOTE_TMP"
+          echo "Deployed to http://$(hostname -f 2>/dev/null || hostname):$PORT"
+          REMOTE
