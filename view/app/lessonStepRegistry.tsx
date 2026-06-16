@@ -41,6 +41,12 @@ export type LessonStepRenderContext = {
 
 type StepRenderer = (context: LessonStepRenderContext) => ReactNode;
 
+function recordingDurationMs(step: LessonStep): number | undefined {
+  return typeof step.mic?.maxDurationMs === 'number' && step.mic.maxDurationMs > 0
+    ? step.mic.maxDurationMs
+    : undefined;
+}
+
 function framedStep(
   context: LessonStepRenderContext,
   children: ReactNode,
@@ -131,6 +137,7 @@ const STEP_RENDERERS: StepRenderer[] = [
           audioUrl={context.step.audio?.url}
           audioText={context.step.audio?.audioText}
           prompt="Now you say it."
+          recordingMs={recordingDurationMs(context.step)}
           onCaptured={(recording) => context.onCaptureAttempt?.(context.step, recording)}
         />
       </section>
@@ -149,6 +156,7 @@ const STEP_RENDERERS: StepRenderer[] = [
         <BackwardBuild
           targetPhrase={backwardBuildTarget(context.step)}
           prompts={backwardBuildPrompts(context.step)}
+          recordingMs={recordingDurationMs(context.step)}
           onCaptured={(recording, prompt) => {
             if (!isFinalBackwardBuildPrompt(context.step, prompt)) {
               return;

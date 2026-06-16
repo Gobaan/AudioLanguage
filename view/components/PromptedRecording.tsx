@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAudioPlayback } from '../app/useAudioPlayback';
 import { playAudioOrSpeakThen, stopAudio, stopSpeech } from '../app/audioPlayback';
 import { AudioButton } from './AudioButton';
+import { RecordingCountdownBar } from './RecordingCountdownBar';
 import type { CapturedRecording } from './types';
 
 type RecordingState = 'ready' | 'prompting' | 'recording' | 'captured' | 'submitted' | 'blocked';
+
+const SPEECH_VISUAL_HOLD_MS = 500;
 
 type PromptedRecordingProps = {
   audioUrl?: string | null;
@@ -46,6 +49,7 @@ export function PromptedRecording({
   const [recordingUrl, setRecordingUrl] = useState<string | null>(null);
   const [pendingCapture, setPendingCapture] = useState<CapturedRecording | null>(null);
   const [audioError, setAudioError] = useState<string | null>(null);
+  const [isSpeechActive, setIsSpeechActive] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -55,11 +59,13 @@ export function PromptedRecording({
   const recordingUrlRef = useRef<string | null>(null);
   const stopTimerRef = useRef<number | null>(null);
   const hardStopTimerRef = useRef<number | null>(null);
+  const speechVisualHoldTimerRef = useRef<number | null>(null);
   const recordingStartedAtRef = useRef<number | null>(null);
   const speechDetectedRef = useRef(false);
   const isSpeakingRef = useRef(false);
   const lastSpeechAtRef = useRef<number | null>(null);
   const softTimeoutReachedRef = useRef(false);
+  const isSpeechActiveRef = useRef(false);
   const stoppedByRef = useRef<CapturedRecording['stoppedBy']>('manual');
   const modelPlayback = useAudioPlayback();
   const canReplayModel = Boolean(modelReplayLabel && (audioUrl || audioText?.trim()));
@@ -68,6 +74,8 @@ export function PromptedRecording({
     setState('ready');
     setPendingCapture(null);
     setAudioError(null);
+    clearSpeechVisualHoldTimer();
+    setSpeechActiveNow(false);
     setRecordingUrl((currentUrl) => {
       if (currentUrl) URL.revokeObjectURL(currentUrl);
       return null;
@@ -85,6 +93,26 @@ export function PromptedRecording({
   useEffect(() => {
     recordingUrlRef.current = recordingUrl;
   }, [recordingUrl]);
+
+  function setSpeechActive(isActive: boolean) {
+    if (isActive) {
+      clearSpeechVisualHoldTimer();
+      setSpeechActiveNow(true);
+      return;
+    }
+
+    if (speechVisualHoldTimerRef.current !== null) return;
+    speechVisualHoldTimerRef.current = window.setTimeout(() => {
+      speechVisualHoldTimerRef.current = null;
+      setSpeechActiveNow(false);
+    }, SPEECH_VISUAL_HOLD_MS);
+  }
+
+  function setSpeechActiveNow(isActive: boolean) {
+    if (isSpeechActiveRef.current === isActive) return;
+    isSpeechActiveRef.current = isActive;
+    setIsSpeechActive(isActive);
+  }
 
   function startPromptFlow() {
     cleanupActiveFlow();
@@ -115,6 +143,8 @@ export function PromptedRecording({
       isSpeakingRef.current = false;
       lastSpeechAtRef.current = null;
       softTimeoutReachedRef.current = false;
+      clearSpeechVisualHoldTimer();
+      setSpeechActiveNow(false);
       stoppedByRef.current = 'manual';
       startSpeechDetection(stream, stopAfterSilenceMs);
 
@@ -211,6 +241,7 @@ export function PromptedRecording({
       const now = Date.now();
 
       isSpeakingRef.current = isSpeaking;
+      setSpeechActive(isSpeaking);
       if (isSpeaking) {
         speechDetectedRef.current = true;
         lastSpeechAtRef.current = now;
@@ -253,6 +284,7 @@ export function PromptedRecording({
 
   function cleanupActiveFlow() {
     clearRecordingTimers();
+    clearSpeechVisualHoldTimer();
 
     stopAudio(audioRef.current);
     audioRef.current = null;
@@ -265,6 +297,14 @@ export function PromptedRecording({
     stopStream(streamRef.current);
     streamRef.current = null;
     recordingStartedAtRef.current = null;
+    setSpeechActiveNow(false);
+  }
+
+  function clearSpeechVisualHoldTimer() {
+    if (speechVisualHoldTimerRef.current !== null) {
+      window.clearTimeout(speechVisualHoldTimerRef.current);
+      speechVisualHoldTimerRef.current = null;
+    }
   }
 
   function stopSpeechDetection() {
@@ -321,13 +361,7 @@ export function PromptedRecording({
         </button>
       ) : null}
       {state === 'recording' ? (
-        <div
-          className="recording-countdown"
-          aria-hidden="true"
-          style={{ '--recording-duration': `${recordingMs}ms` } as CSSProperties}
-        >
-          <span />
-        </div>
+        <RecordingCountdownBar durationMs={recordingMs} isPaused={isSpeechActive} />
       ) : null}
       {audioError || modelPlayback.audioError ? (
         <p className="audio-error" role="alert">

@@ -16,12 +16,14 @@ class LessonsApiTests(unittest.TestCase):
 
         languages_response = client.get("/languages")
         learn_response = client.get("/learn?language=yue&lesson=hello")
+        debug_response = client.get("/debug/recording-countdown")
         api_languages_response = client.get("/api/languages")
         cantonese_response = client.get("/api/languages/yue/lessons?lesson=hello")
         tamil_response = client.get("/api/languages/ta/lessons?lesson=hello")
 
         self.assertEqual(languages_response.status_code, 200)
         self.assertEqual(learn_response.status_code, 200)
+        self.assertEqual(debug_response.status_code, 200)
         self.assertEqual(api_languages_response.status_code, 200)
         languages = api_languages_response.json()
         yue = next(item for item in languages if item["id"] == "yue")

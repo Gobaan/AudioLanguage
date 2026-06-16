@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AdminValidationApp } from './admin/AdminValidationApp';
 import { LanguageSelectionApp } from './LanguageSelectionApp';
+import { RecordingCountdownPreview } from './RecordingCountdownPreview';
 import { TravellerMvpApp } from './TravellerMvpApp';
 import './styles.css';
 
@@ -19,6 +20,7 @@ createRoot(root).render(
 
 function appForPath(pathname: string) {
   if (pathname === '/admin/validation') return <AdminValidationApp />;
+  if (pathname === '/debug/recording-countdown') return <RecordingCountdownPreview />;
   if (pathname === '/learn') return <TravellerMvpApp />;
   return <LanguageSelectionApp />;
 }

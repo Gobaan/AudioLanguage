@@ -118,14 +118,30 @@ def test_recording_timer_uses_five_second_countdown_bar():
     recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
         encoding="utf-8"
     )
+    preview_source = (PROJECT_DIR / "view" / "app" / "RecordingCountdownPreview.tsx").read_text(encoding="utf-8")
+    countdown_source = (PROJECT_DIR / "view" / "components" / "RecordingCountdownBar.tsx").read_text(
+        encoding="utf-8"
+    )
     production_source = (PROJECT_DIR / "view" / "app" / "ProductionPracticeStep.tsx").read_text(encoding="utf-8")
+    registry_source = (PROJECT_DIR / "view" / "app" / "lessonStepRegistry.tsx").read_text(encoding="utf-8")
     styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
 
     assert "step.mic?.maxDurationMs" in production_source
     assert "recordingMs={recordingMs}" in production_source
     assert "recordingMs = 5000" in recording_source
-    assert "recording-countdown" in recording_source
-    assert "--recording-duration" in recording_source
+    assert "RecordingCountdownBar" in recording_source
+    assert "isPaused={isSpeechActive}" in recording_source
+    assert "setSpeechActive(isSpeaking)" in recording_source
+    assert "SPEECH_VISUAL_HOLD_MS = 500" in recording_source
+    assert "clearSpeechVisualHoldTimer()" in recording_source
+    assert "recordingDurationMs(context.step)" in registry_source
+    assert "recordingMs={recordingDurationMs(context.step)}" in registry_source
+    assert "recording-countdown" in countdown_source
+    assert "--recording-duration" in countdown_source
+    assert "recording-countdown--paused" in countdown_source
+    assert "<PromptedRecording" in preview_source
+    assert 'startMode="manual"' in preview_source
+    assert "animation-play-state: paused" in styles_source
     assert "@keyframes recording-countdown-drain" in styles_source
 
 

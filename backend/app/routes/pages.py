@@ -21,6 +21,11 @@ def learner_app():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+@router.get("/debug/recording-countdown")
+def recording_countdown_preview():
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
 @router.get("/admin/validation")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))
