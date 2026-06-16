@@ -101,6 +101,10 @@ export function recordingFrameForProduction(
 ): SceneFrameData | undefined {
   const learnerFrame = learnerFrameForLesson(lesson);
 
+  if (step.mic?.enabled === true && step.mic?.record === true) {
+    return learnerFrame ?? frameForStep(lesson, step);
+  }
+
   if (step.type === 'scene_recall') {
     return learnerFrame ?? frameForStep(lesson, step);
   }

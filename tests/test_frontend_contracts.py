@@ -77,7 +77,7 @@ def test_scene_recall_recording_uses_auto_start_helper():
     assert "startMode={startsRecordingAutomatically ? 'auto' : 'manual'}" in production_source
 
 
-def test_scene_recall_recording_shows_learner_frame_before_attempt():
+def test_recording_steps_show_learner_frame_before_attempt():
     result = run_frontend_script(
         ["view/app/lessonStepHelpers.ts"],
         """
@@ -94,13 +94,13 @@ def test_scene_recall_recording_shows_learner_frame_before_attempt():
           type: 'scene_recall',
           frameId: 'line-1',
           props: { recordBeforeModelLine: true },
-          mic: { enabled: true },
+          mic: { enabled: true, record: true },
         };
         const anchorStep = {
           type: 'backward_build',
           frameId: 'line-1',
           props: { recordBeforeModelLine: true },
-          mic: { enabled: true },
+          mic: { enabled: true, record: true },
         };
 
         console.log(JSON.stringify({
@@ -111,7 +111,7 @@ def test_scene_recall_recording_shows_learner_frame_before_attempt():
     )
 
     assert result["recallFrameId"] == "line-1"
-    assert result["anchorFrameId"] == "line-0"
+    assert result["anchorFrameId"] == "line-1"
 
 
 def test_recording_timer_uses_five_second_countdown_bar():

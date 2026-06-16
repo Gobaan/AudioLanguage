@@ -236,6 +236,30 @@ class LessonsApiTests(unittest.TestCase):
         ]
         self.assertEqual(post_record_lines, ["learner_target", "world_response"])
 
+    def test_mic_steps_use_learner_frame_for_transfer_and_delayed_lessons(self):
+        client = TestClient(app)
+        lesson_urls = [
+            "/api/languages/ja/lessons?lesson=hello-transfer",
+            "/api/languages/ja/lessons?scene_set=delayed&lesson=hello",
+        ]
+
+        for url in lesson_urls:
+            with self.subTest(url=url):
+                lesson = client.get(url).json()["lessons"][0]
+                learner_frame = next(
+                    frame for frame in lesson["frames"] if frame["lineType"] == "learner_target"
+                )
+
+                mic_steps = [
+                    step
+                    for step in lesson["steps"]
+                    if step.get("mic", {}).get("enabled") and step.get("mic", {}).get("record")
+                ]
+
+                self.assertTrue(mic_steps)
+                for step in mic_steps:
+                    self.assertEqual(step["frameId"], learner_frame["id"])
+
     def test_delayed_scene_set_uses_delayed_review_aliases(self):
         response = TestClient(app).get("/api/languages/ja/lessons?scene_set=delayed&lesson=hello")
 
