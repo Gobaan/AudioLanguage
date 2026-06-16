@@ -34,7 +34,7 @@ export function useActiveLessonStep({
 }: UseActiveLessonStepOptions) {
   const [stepIndex, setStepIndex] = useState(0);
   const [selectedChoiceByStep, setSelectedChoiceByStep] = useState<Record<string, string>>({});
-  const { isPlaying, playAudioOrSpeak, stop: stopPlayback } = useAudioPlayback();
+  const { isPlaying, audioError, playAudioOrSpeak, stop: stopPlayback } = useAudioPlayback();
 
   const currentStep = lesson?.steps[stepIndex];
   const stepLesson = useMemo(() => withAssetUrls(lesson), [lesson]);
@@ -162,6 +162,7 @@ export function useActiveLessonStep({
     step,
     stepIndex,
     isPlaying,
+    audioError,
     selectedChoiceByStep,
     isFirstStep,
     isLastStep,

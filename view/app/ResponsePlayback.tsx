@@ -3,8 +3,14 @@ import { useEffect } from 'react';
 import { AudioButton } from '../components';
 import { useAudioPlayback } from './useAudioPlayback';
 
-export function ResponsePlayback({ audioUrl, audioText }: { audioUrl?: string; audioText?: string }) {
-  const { isPlaying, playAudioOrSpeak, stop } = useAudioPlayback();
+export function ResponsePlayback({
+  audioUrl,
+  audioText,
+}: {
+  audioUrl?: string | null;
+  audioText?: string | null;
+}) {
+  const { isPlaying, audioError, playAudioOrSpeak, stop } = useAudioPlayback();
 
   useEffect(() => {
     playAudioOrSpeak(audioUrl, audioText);
@@ -13,6 +19,11 @@ export function ResponsePlayback({ audioUrl, audioText }: { audioUrl?: string; a
 
   return (
     <div className="response-playback">
+      {audioError ? (
+        <p className="audio-error" role="alert">
+          {audioError}
+        </p>
+      ) : null}
       <AudioButton
         label="Play response"
         isPlaying={isPlaying}

@@ -33,6 +33,7 @@ export function TravellerMvpApp() {
     step,
     stepIndex,
     isPlaying,
+    audioError,
     selectedChoiceByStep,
     isLastStep,
     playStepAudio,
@@ -136,6 +137,7 @@ export function TravellerMvpApp() {
         stepLesson={stepLesson}
         step={step}
         isPlaying={isPlaying}
+        audioError={audioError}
         selectedChoiceByStep={selectedChoiceByStep}
         isLastStep={isLastStep}
         hasNextLesson={nextLessonTab !== null}

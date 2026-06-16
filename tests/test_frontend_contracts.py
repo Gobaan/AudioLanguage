@@ -152,6 +152,26 @@ def test_recording_timer_tracks_no_response_and_extends_while_speaking():
     assert "recordingStoppedBy: recording.stoppedBy" in validation_source
 
 
+def test_lesson_audio_errors_instead_of_browser_tts_fallback():
+    audio_source = (PROJECT_DIR / "view" / "app" / "audioPlayback.ts").read_text(encoding="utf-8")
+    hook_source = (PROJECT_DIR / "view" / "app" / "useAudioPlayback.ts").read_text(encoding="utf-8")
+    scene_source = (PROJECT_DIR / "view" / "components" / "ScenePlayback.tsx").read_text(encoding="utf-8")
+    recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
+        encoding="utf-8"
+    )
+    step_audio_source = (PROJECT_DIR / "view" / "app" / "StepAudioButton.tsx").read_text(encoding="utf-8")
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+
+    assert "speechSynthesis.speak" not in audio_source
+    assert "AUDIO_PLAYBACK_ERROR" in audio_source
+    assert "AUDIO_MISSING_ERROR" in audio_source
+    assert "audioError" in hook_source
+    assert "role=\"alert\"" in scene_source
+    assert "role=\"alert\"" in recording_source
+    assert "step.audio?.audioText" not in step_audio_source
+    assert ".audio-error" in styles_source
+
+
 def test_localhost_lesson_jump_uses_backend_lesson_tabs():
     app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
     shell_source = (PROJECT_DIR / "view" / "app" / "TravellerLessonShell.tsx").read_text(encoding="utf-8")

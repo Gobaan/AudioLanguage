@@ -10,6 +10,7 @@ type TravellerLessonShellProps = {
   stepLesson: Lesson;
   step: LessonStep;
   isPlaying: boolean;
+  audioError?: string | null;
   selectedChoiceByStep: Record<string, string>;
   isLastStep: boolean;
   hasNextLesson: boolean;
@@ -31,6 +32,7 @@ export function TravellerLessonShell({
   stepLesson,
   step,
   isPlaying,
+  audioError,
   selectedChoiceByStep,
   isLastStep,
   hasNextLesson,
@@ -50,6 +52,11 @@ export function TravellerLessonShell({
     <section className="traveller-mvp-app" aria-label="Traveller MVP step">
       <LessonAppLinks onOpenScorecard={onOpenScorecard} />
       {debugLessonSwitcher}
+      {audioError ? (
+        <p className="audio-error" role="alert">
+          {audioError}
+        </p>
+      ) : null}
       <LessonStepRenderer
         lesson={stepLesson}
         step={step}

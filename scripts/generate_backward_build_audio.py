@@ -19,7 +19,7 @@ from app.content.lesson_steps import (  # noqa: E402
     backward_build_indices,
     backward_build_units,
 )
-from content_assets import DEFAULT_DATA_DIR, list_language_dirs, path_exists, read_json  # noqa: E402
+from content_assets import DEFAULT_DATA_DIR, iter_dialogue_lines, list_language_dirs, path_exists, read_json  # noqa: E402
 from project_config.paths import repo_file_for_relative_path  # noqa: E402
 from voice_registry import voice_profile_for  # noqa: E402
 
@@ -39,10 +39,23 @@ async def synthesize_mp3(
     await communicate.save(str(out_path))
 
 
-def spoken_phrase_for_target(target: dict) -> str:
+def tts_text_for_line(line: dict | None) -> str:
+    if not line:
+        return ""
+    for key in ("tts_text", "text", "transliteration", "audio_text"):
+        value = line.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def spoken_phrase_for_target(target: dict, learner_line: dict | None = None) -> str:
     explicit_prompts = target.get("backward_build_spoken_prompts")
     if isinstance(explicit_prompts, list) and explicit_prompts:
         return str(explicit_prompts[-1]).strip()
+    learner_tts_text = tts_text_for_line(learner_line)
+    if learner_tts_text:
+        return learner_tts_text
     canonical = target.get("canonical")
     if isinstance(canonical, str) and canonical.strip():
         return canonical.strip()
@@ -87,6 +100,17 @@ def language_codes(data_dir: Path, requested: list[str] | None) -> list[str]:
     return [path.name for path in list_language_dirs(data_dir)]
 
 
+def learner_lines_by_target(dialogues_payload: dict) -> dict[str, dict]:
+    learner_lines: dict[str, dict] = {}
+    for dialogue, line in iter_dialogue_lines(dialogues_payload):
+        if line.get("line_type") != "learner_target":
+            continue
+        target_id = line.get("target_id") or dialogue.get("target_id")
+        if isinstance(target_id, str) and target_id and target_id not in learner_lines:
+            learner_lines[target_id] = line
+    return learner_lines
+
+
 async def generate_language(
     *,
     data_dir: Path,
@@ -96,6 +120,8 @@ async def generate_language(
     mvp_only: bool,
 ) -> tuple[int, int]:
     targets_payload = read_json(data_dir / "languages" / language / "targets.json")
+    dialogues_payload = read_json(data_dir / "languages" / language / "dialogues.json")
+    learner_lines = learner_lines_by_target(dialogues_payload)
     profile = voice_profile_for(language, "learner")
     created = 0
     skipped = 0
@@ -109,7 +135,7 @@ async def generate_language(
         if not units:
             continue
 
-        spoken_phrase = spoken_phrase_for_target(target)
+        spoken_phrase = spoken_phrase_for_target(target, learner_lines.get(target["id"]))
         for build_index in backward_build_indices(len(units)):
             spoken_text = backward_build_entry_spoken_text(
                 target=target,

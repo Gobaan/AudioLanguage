@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { playAudioUrl, speakTextAudio, stopAudio, stopSpeech } from '../app/audioPlayback';
+import { playAudioOrSpeakThen, stopAudio, stopSpeech } from '../app/audioPlayback';
 import { AudioButton } from './AudioButton';
 import { SceneFrame } from './SceneFrame';
 import type { SceneFrameData } from './types';
@@ -34,6 +34,7 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
   );
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const activeFrame = playableFrames[activeIndex] ?? playableFrames[0];
@@ -45,6 +46,7 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
     audioRef.current = null;
     utteranceRef.current = null;
     setIsPlaying(false);
+    setAudioError(null);
   }, [playbackKey]);
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
     stopAudio(audioRef.current);
     stopSpeech(utteranceRef.current);
     setIsPlaying(true);
+    setAudioError(null);
     playFrameAt(0);
   }
 
@@ -73,29 +76,28 @@ export function ScenePlayback({ frames = [], autoplay = false, stopAtLineType }:
     }
 
     setActiveIndex(index);
-    if (!frame.audioUrl) {
-      speakFrameText(frame.audioText || frame.transliteration || frame.text, () => playFrameAt(index + 1));
-      return;
-    }
-
-    playAudioUrl(frame.audioUrl, audioRef, (playing) => {
-      if (!playing) {
-        playFrameAt(index + 1);
-      }
-    });
-  }
-
-  function speakFrameText(text: string | undefined, onDone: () => void) {
-    speakTextAudio(text, utteranceRef, (playing) => {
-      if (!playing) {
-        onDone();
-      }
-    });
+    playAudioOrSpeakThen(
+      frame.audioUrl,
+      frame.audioText || frame.transliteration || frame.text,
+      audioRef,
+      utteranceRef,
+      () => playFrameAt(index + 1),
+      undefined,
+      (message) => {
+        setIsPlaying(false);
+        setAudioError(message);
+      },
+    );
   }
 
   return (
     <section className="scene-playback" aria-label="Scene playback">
       <SceneFrame frame={activeFrame} isActive showCaption={false} placeholderLabel="Lesson scene frame" />
+      {audioError ? (
+        <p className="audio-error" role="alert">
+          {audioError}
+        </p>
+      ) : null}
       <AudioButton label="Play scene" isPlaying={isPlaying} disabled={isPlaying} onPlay={playScene} />
     </section>
   );

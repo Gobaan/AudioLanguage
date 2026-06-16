@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { playAudioUrl, speakTextAudio, stopAudio, stopSpeech } from './audioPlayback';
+import { AUDIO_MISSING_ERROR, playAudioUrl, stopAudio, stopSpeech } from './audioPlayback';
 
 export function useAudioPlayback() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
@@ -13,40 +14,40 @@ export function useAudioPlayback() {
     audioRef.current = null;
     utteranceRef.current = null;
     setIsPlaying(false);
+    setAudioError(null);
   }, []);
 
   const playAudio = useCallback((url: string | null | undefined) => {
-    if (!url) return;
+    setAudioError(null);
+    if (!url) {
+      setAudioError(AUDIO_MISSING_ERROR);
+      return;
+    }
 
     stopAudio(audioRef.current);
     stopSpeech(utteranceRef.current);
-    playAudioUrl(url, audioRef, setIsPlaying);
-  }, []);
-
-  const speakText = useCallback((text: string | null | undefined, language?: string) => {
-    stopAudio(audioRef.current);
-    stopSpeech(utteranceRef.current);
-    speakTextAudio(text, utteranceRef, setIsPlaying, language);
+    playAudioUrl(url, audioRef, setIsPlaying, setAudioError);
   }, []);
 
   const playAudioOrSpeak = useCallback(
-    (url: string | null | undefined, text: string | null | undefined, language?: string) => {
+    (url: string | null | undefined, text: string | null | undefined, _language?: string) => {
       if (url) {
         playAudio(url);
         return;
       }
 
-      speakText(text, language);
+      setIsPlaying(false);
+      setAudioError(text?.trim() ? AUDIO_MISSING_ERROR : null);
     },
-    [playAudio, speakText],
+    [playAudio],
   );
 
   useEffect(() => stop, [stop]);
 
   return {
     isPlaying,
+    audioError,
     playAudio,
-    speakText,
     playAudioOrSpeak,
     stop,
   };

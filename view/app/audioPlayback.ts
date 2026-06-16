@@ -1,3 +1,6 @@
+export const AUDIO_PLAYBACK_ERROR = 'Audio file could not be played.';
+export const AUDIO_MISSING_ERROR = 'Audio file is missing.';
+
 export function stopAudio(audio: HTMLAudioElement | null) {
   if (!audio) return;
 
@@ -15,6 +18,7 @@ export function playAudioUrl(
   url: string,
   audioRef: { current: HTMLAudioElement | null },
   setIsPlaying: (playing: boolean) => void,
+  onError?: (message: string) => void,
 ) {
   const audio = new Audio(url);
   audioRef.current = audio;
@@ -34,6 +38,7 @@ export function playAudioUrl(
     () => {
       setIsPlaying(false);
       audioRef.current = null;
+      onError?.(AUDIO_PLAYBACK_ERROR);
     },
     { once: true },
   );
@@ -41,46 +46,8 @@ export function playAudioUrl(
   audio.play().catch(() => {
     setIsPlaying(false);
     audioRef.current = null;
+    onError?.(AUDIO_PLAYBACK_ERROR);
   });
-}
-
-export function speakTextAudio(
-  text: string | null | undefined,
-  utteranceRef: { current: SpeechSynthesisUtterance | null },
-  setIsPlaying: (playing: boolean) => void,
-  language?: string,
-) {
-  const spokenText = text?.trim();
-  if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
-    setIsPlaying(false);
-    utteranceRef.current = null;
-    return;
-  }
-
-  const utterance = new SpeechSynthesisUtterance(spokenText);
-  if (language) {
-    utterance.lang = language;
-  }
-  utteranceRef.current = utterance;
-  setIsPlaying(true);
-  utterance.addEventListener(
-    'end',
-    () => {
-      setIsPlaying(false);
-      utteranceRef.current = null;
-    },
-    { once: true },
-  );
-  utterance.addEventListener(
-    'error',
-    () => {
-      setIsPlaying(false);
-      utteranceRef.current = null;
-    },
-    { once: true },
-  );
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
 }
 
 export function playAudioOrSpeakThen(
@@ -89,7 +56,8 @@ export function playAudioOrSpeakThen(
   audioRef: { current: HTMLAudioElement | null },
   utteranceRef: { current: SpeechSynthesisUtterance | null },
   onComplete: () => void,
-  language?: string,
+  _language?: string,
+  onError?: (message: string) => void,
 ) {
   stopAudio(audioRef.current);
   stopSpeech(utteranceRef.current);
@@ -102,29 +70,28 @@ export function playAudioOrSpeakThen(
       onComplete();
     };
     audio.addEventListener('ended', complete, { once: true });
-    audio.addEventListener('error', complete, { once: true });
-    audio.play().catch(complete);
+    audio.addEventListener(
+      'error',
+      () => {
+        audioRef.current = null;
+        onError?.(AUDIO_PLAYBACK_ERROR);
+      },
+      { once: true },
+    );
+    audio.play().catch(() => {
+      audioRef.current = null;
+      onError?.(AUDIO_PLAYBACK_ERROR);
+    });
     return;
   }
 
   const spokenText = text?.trim();
-  if (!spokenText || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+  if (!spokenText) {
     utteranceRef.current = null;
     onComplete();
     return;
   }
 
-  const utterance = new SpeechSynthesisUtterance(spokenText);
-  if (language) {
-    utterance.lang = language;
-  }
-  utteranceRef.current = utterance;
-  const complete = () => {
-    utteranceRef.current = null;
-    onComplete();
-  };
-  utterance.addEventListener('end', complete, { once: true });
-  utterance.addEventListener('error', complete, { once: true });
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
+  utteranceRef.current = null;
+  onError?.(AUDIO_MISSING_ERROR);
 }

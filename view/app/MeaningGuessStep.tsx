@@ -44,6 +44,7 @@ export function MeaningGuessStep({
   const hideLearnerLineInReveal = stepHidesLearnerScriptBeforeAttempt(lesson, step);
   const [choicesVisible, setChoicesVisible] = useState(!revealAfterAudio);
   const [isIntroPlaying, setIsIntroPlaying] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const [activeFrame, setActiveFrame] = useState<SceneFrameData | undefined>(() =>
     frameForStep(lesson, step),
   );
@@ -53,6 +54,7 @@ export function MeaningGuessStep({
   useEffect(() => {
     setChoicesVisible(!revealAfterAudio);
     setIsIntroPlaying(false);
+    setAudioError(null);
     setActiveFrame(frameForStep(lesson, step));
   }, [lesson, step, revealAfterAudio]);
 
@@ -62,6 +64,7 @@ export function MeaningGuessStep({
     audioRef.current = null;
     utteranceRef.current = null;
     setIsIntroPlaying(false);
+    setAudioError(null);
   }, []);
 
   const playFrameAudio = useCallback(
@@ -74,6 +77,10 @@ export function MeaningGuessStep({
         utteranceRef,
         onComplete,
         language,
+        (message) => {
+          setIsIntroPlaying(false);
+          setAudioError(message);
+        },
       );
     },
     [language, onLogAudioPlayed],
@@ -89,6 +96,7 @@ export function MeaningGuessStep({
       }
 
       setIsIntroPlaying(true);
+      setAudioError(null);
       setChoicesVisible(false);
       setActiveFrame(introFrames[0]);
 
@@ -124,6 +132,7 @@ export function MeaningGuessStep({
       }
 
       setIsIntroPlaying(true);
+      setAudioError(null);
       onLogAudioPlayed?.();
       playAudioOrSpeakThen(
         audioUrl,
@@ -137,6 +146,10 @@ export function MeaningGuessStep({
           }
         },
         language,
+        (message) => {
+          setIsIntroPlaying(false);
+          setAudioError(message);
+        },
       );
     },
     [language, onLogAudioPlayed, step.audio?.audioText, step.audio?.url],
@@ -181,6 +194,11 @@ export function MeaningGuessStep({
         {revealAfterAudio && !choicesVisible ? (
           <p className="meaning-guess-listening" aria-live="polite">
             Listen.
+          </p>
+        ) : null}
+        {audioError ? (
+          <p className="audio-error" role="alert">
+            {audioError}
           </p>
         ) : null}
         {choicesVisible ? (

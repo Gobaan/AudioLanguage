@@ -45,6 +45,7 @@ export function PromptedRecording({
   const [state, setState] = useState<RecordingState>('ready');
   const [recordingUrl, setRecordingUrl] = useState<string | null>(null);
   const [pendingCapture, setPendingCapture] = useState<CapturedRecording | null>(null);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -66,6 +67,7 @@ export function PromptedRecording({
   useEffect(() => {
     setState('ready');
     setPendingCapture(null);
+    setAudioError(null);
     setRecordingUrl((currentUrl) => {
       if (currentUrl) URL.revokeObjectURL(currentUrl);
       return null;
@@ -87,10 +89,11 @@ export function PromptedRecording({
   function startPromptFlow() {
     cleanupActiveFlow();
     setState('prompting');
+    setAudioError(null);
     playAudioOrSpeakThen(audioUrl, audioText, audioRef, utteranceRef, () => {
       onListenComplete?.();
       startRecording();
-    });
+    }, undefined, setAudioError);
   }
 
   async function startRecording() {
@@ -325,6 +328,11 @@ export function PromptedRecording({
         >
           <span />
         </div>
+      ) : null}
+      {audioError || modelPlayback.audioError ? (
+        <p className="audio-error" role="alert">
+          {audioError || modelPlayback.audioError}
+        </p>
       ) : null}
       {recordingUrl ? (
         <audio className="recording-playback" controls src={recordingUrl} />

@@ -17,6 +17,7 @@ export type SceneFrameData = {
   text?: string;
   originalText?: string;
   transliteration?: string;
+  audioUrl?: string | null;
   audioText?: string;
   lineType?: string;
 };

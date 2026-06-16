@@ -49,6 +49,7 @@ export function ProductionPracticeStep({
 }: ProductionPracticeStepProps) {
   const [phase, setPhase] = useState<PracticePhase>('record');
   const [feedbackIndex, setFeedbackIndex] = useState(0);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const learnerFrame = learnerFrameForLesson(lesson);
   const responseFrame = responseFrameForLesson(lesson);
   const feedbackFrames = useMemo(() => postAttemptFeedbackFrames(lesson, step), [lesson, step]);
@@ -86,7 +87,7 @@ export function ProductionPracticeStep({
         return;
       }
 
-      await new Promise<void>((resolve) => {
+      await new Promise<void>((resolve, reject) => {
         playAudioOrSpeakThen(
           targetFrame.audioUrl,
           targetFrame.audioText || targetFrame.transliteration || targetFrame.text,
@@ -94,6 +95,10 @@ export function ProductionPracticeStep({
           utteranceRef,
           resolve,
           language,
+          (message) => {
+            setAudioError(message);
+            reject(new Error(message));
+          },
         );
       });
     },
@@ -103,6 +108,7 @@ export function ProductionPracticeStep({
   useEffect(() => {
     setPhase('record');
     setFeedbackIndex(0);
+    setAudioError(null);
     stopPlayback();
   }, [step.id, stopPlayback]);
 
@@ -122,7 +128,11 @@ export function ProductionPracticeStep({
     let cancelled = false;
 
     async function runFeedbackSequence() {
-      await playFrameAudio(targetFrame);
+      try {
+        await playFrameAudio(targetFrame);
+      } catch {
+        return;
+      }
       if (cancelled) {
         return;
       }
@@ -170,6 +180,11 @@ export function ProductionPracticeStep({
     <section className="lesson-step-view" aria-label={step.type}>
       <SceneFrame frame={displayFrame} isActive showCaption={false} placeholderLabel="Lesson scene frame" />
       <section className="production-practice">
+        {audioError ? (
+          <p className="audio-error" role="alert">
+            {audioError}
+          </p>
+        ) : null}
         {phase === 'record' ? <p>{prompt}</p> : null}
         {phase === 'record' ? (
           <PromptedRecording

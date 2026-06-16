@@ -11,9 +11,6 @@ export function StepAudioButton({
   onPlayAudio?: () => void;
 }) {
   if (!step.audio?.url) {
-    if (step.audio?.audioText) {
-      return <AudioButton label="Play" isPlaying={isPlaying} disabled={isPlaying} onPlay={onPlayAudio} />;
-    }
     return null;
   }
 
