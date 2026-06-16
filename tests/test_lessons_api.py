@@ -6,6 +6,11 @@ from test_support import app
 
 
 class LessonsApiTests(unittest.TestCase):
+    def test_learning_engine_package_exports_build_learning_plan(self):
+        from app.content.learning_engine import build_learning_plan
+
+        self.assertTrue(callable(build_learning_plan))
+
     def test_language_selection_routes_and_new_languages_load(self):
         client = TestClient(app)
 
