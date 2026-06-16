@@ -26,6 +26,11 @@ def recording_countdown_preview():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+@router.get("/debug/audio")
+def audio_debug_player():
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
 @router.get("/admin/validation")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))

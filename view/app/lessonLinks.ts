@@ -8,3 +8,9 @@ export function languageLessonLink(language: string, sceneSet: LessonSceneSet): 
   if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
   return `/learn?${params.toString()}`;
 }
+
+export function languageAudioDebugLink(language: string, sceneSet: LessonSceneSet): string {
+  const params = new URLSearchParams({ debug: 'audio', language });
+  if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
+  return `/?${params.toString()}`;
+}
