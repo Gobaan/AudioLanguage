@@ -1,16 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 
 import { useAudioPlayback } from '../app/useAudioPlayback';
 import { playAudioOrSpeakThen, stopAudio, stopSpeech } from '../app/audioPlayback';
 import { AudioButton } from './AudioButton';
+import type { CapturedRecording } from './types';
 
 type RecordingState = 'ready' | 'prompting' | 'recording' | 'captured' | 'submitted' | 'blocked';
-
-type CapturedRecording = {
-  blob: Blob;
-  durationMs: number;
-  mimeType: string;
-};
 
 type PromptedRecordingProps = {
   audioUrl?: string | null;
@@ -35,7 +30,7 @@ export function PromptedRecording({
   audioText,
   prompt = 'Now you say it.',
   playbackPrompt = 'Listen.',
-  recordingMs = 4000,
+  recordingMs = 5000,
   startMode = 'auto',
   startLabel = 'Record',
   nextLabel = 'Next',
@@ -54,9 +49,17 @@ export function PromptedRecording({
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioLevelFrameRef = useRef<number | null>(null);
   const recordingUrlRef = useRef<string | null>(null);
   const stopTimerRef = useRef<number | null>(null);
+  const hardStopTimerRef = useRef<number | null>(null);
   const recordingStartedAtRef = useRef<number | null>(null);
+  const speechDetectedRef = useRef(false);
+  const isSpeakingRef = useRef(false);
+  const lastSpeechAtRef = useRef<number | null>(null);
+  const softTimeoutReachedRef = useRef(false);
+  const stoppedByRef = useRef<CapturedRecording['stoppedBy']>('manual');
   const modelPlayback = useAudioPlayback();
   const canReplayModel = Boolean(modelReplayLabel && (audioUrl || audioText?.trim()));
 
@@ -100,9 +103,17 @@ export function PromptedRecording({
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const chunks: Blob[] = [];
       const recorder = new MediaRecorder(stream);
+      const stopAfterSilenceMs = Math.min(900, Math.max(450, Math.floor(recordingMs * 0.18)));
+      const hardLimitMs = recordingMs + 5000;
 
       streamRef.current = stream;
       mediaRecorderRef.current = recorder;
+      speechDetectedRef.current = false;
+      isSpeakingRef.current = false;
+      lastSpeechAtRef.current = null;
+      softTimeoutReachedRef.current = false;
+      stoppedByRef.current = 'manual';
+      startSpeechDetection(stream, stopAfterSilenceMs);
 
       recorder.addEventListener('dataavailable', (event) => {
         if (event.data.size > 0) {
@@ -113,17 +124,28 @@ export function PromptedRecording({
       recorder.addEventListener(
         'stop',
         () => {
+          clearRecordingTimers();
           const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
           const durationMs = recordingStartedAtRef.current ? Date.now() - recordingStartedAtRef.current : recordingMs;
+          const speechDetected = speechDetectedRef.current;
+          const timedOutWithoutSpeech = stoppedByRef.current === 'no_speech_timeout';
           recordingStartedAtRef.current = null;
           setRecordingUrl((currentUrl) => {
             if (currentUrl) URL.revokeObjectURL(currentUrl);
             return URL.createObjectURL(blob);
           });
+          stopSpeechDetection();
           stopStream(stream);
           streamRef.current = null;
           mediaRecorderRef.current = null;
-          const capture = { blob, durationMs, mimeType: blob.type };
+          const capture = {
+            blob,
+            durationMs,
+            mimeType: blob.type,
+            speechDetected,
+            timedOutWithoutSpeech,
+            stoppedBy: stoppedByRef.current,
+          };
           if (onCaptured) {
             if (autoConfirmCapture) {
               onCaptured(capture);
@@ -144,11 +166,73 @@ export function PromptedRecording({
       setState('recording');
       onRecording?.();
       stopTimerRef.current = window.setTimeout(() => {
-        stopRecorder(recorder);
+        softTimeoutReachedRef.current = true;
+        if (!speechDetectedRef.current) {
+          stoppedByRef.current = 'no_speech_timeout';
+          stopRecorder(recorder);
+          return;
+        }
+
+        if (!isSpeakingRef.current && recordingHasBeenSilentFor(stopAfterSilenceMs)) {
+          stoppedByRef.current = 'timer';
+          stopRecorder(recorder);
+        }
       }, recordingMs);
+      hardStopTimerRef.current = window.setTimeout(() => {
+        stoppedByRef.current = 'hard_limit';
+        stopRecorder(recorder);
+      }, hardLimitMs);
     } catch {
       setState('blocked');
     }
+  }
+
+  function startSpeechDetection(stream: MediaStream, stopAfterSilenceMs: number) {
+    const AudioContextConstructor = window.AudioContext;
+    if (!AudioContextConstructor) {
+      return;
+    }
+
+    const audioContext = new AudioContextConstructor();
+    const source = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 1024;
+    source.connect(analyser);
+    audioContextRef.current = audioContext;
+    const samples = new Uint8Array(analyser.fftSize);
+
+    function watchAudioLevel() {
+      analyser.getByteTimeDomainData(samples);
+      const level = rootMeanSquare(samples);
+      const isSpeaking = level > 0.025;
+      const now = Date.now();
+
+      isSpeakingRef.current = isSpeaking;
+      if (isSpeaking) {
+        speechDetectedRef.current = true;
+        lastSpeechAtRef.current = now;
+      }
+
+      if (
+        softTimeoutReachedRef.current &&
+        speechDetectedRef.current &&
+        !isSpeaking &&
+        recordingHasBeenSilentFor(stopAfterSilenceMs)
+      ) {
+        stoppedByRef.current = 'speech_completed';
+        stopRecorder(mediaRecorderRef.current);
+        return;
+      }
+
+      audioLevelFrameRef.current = window.requestAnimationFrame(watchAudioLevel);
+    }
+
+    audioLevelFrameRef.current = window.requestAnimationFrame(watchAudioLevel);
+  }
+
+  function recordingHasBeenSilentFor(durationMs: number): boolean {
+    const lastSpeechAt = lastSpeechAtRef.current;
+    return lastSpeechAt === null || Date.now() - lastSpeechAt >= durationMs;
   }
 
   function replayModelAudio() {
@@ -165,21 +249,44 @@ export function PromptedRecording({
   }
 
   function cleanupActiveFlow() {
-    if (stopTimerRef.current !== null) {
-      window.clearTimeout(stopTimerRef.current);
-      stopTimerRef.current = null;
-    }
+    clearRecordingTimers();
 
     stopAudio(audioRef.current);
     audioRef.current = null;
     stopSpeech(utteranceRef.current);
     utteranceRef.current = null;
 
+    stopSpeechDetection();
     stopRecorder(mediaRecorderRef.current);
     mediaRecorderRef.current = null;
     stopStream(streamRef.current);
     streamRef.current = null;
     recordingStartedAtRef.current = null;
+  }
+
+  function stopSpeechDetection() {
+    if (audioLevelFrameRef.current !== null) {
+      window.cancelAnimationFrame(audioLevelFrameRef.current);
+      audioLevelFrameRef.current = null;
+    }
+
+    const audioContext = audioContextRef.current;
+    audioContextRef.current = null;
+    if (audioContext && audioContext.state !== 'closed') {
+      void audioContext.close().catch(() => undefined);
+    }
+  }
+
+  function clearRecordingTimers() {
+    if (stopTimerRef.current !== null) {
+      window.clearTimeout(stopTimerRef.current);
+      stopTimerRef.current = null;
+    }
+
+    if (hardStopTimerRef.current !== null) {
+      window.clearTimeout(hardStopTimerRef.current);
+      hardStopTimerRef.current = null;
+    }
   }
 
   function confirmRecording() {
@@ -209,6 +316,15 @@ export function PromptedRecording({
         <button type="button" className="record-button" onClick={startPromptFlow}>
           {startLabel}
         </button>
+      ) : null}
+      {state === 'recording' ? (
+        <div
+          className="recording-countdown"
+          aria-hidden="true"
+          style={{ '--recording-duration': `${recordingMs}ms` } as CSSProperties}
+        >
+          <span />
+        </div>
       ) : null}
       {recordingUrl ? (
         <audio className="recording-playback" controls src={recordingUrl} />
@@ -243,6 +359,15 @@ function statusText(state: RecordingState, prompt: string, playbackPrompt: strin
   if (state === 'submitted') return 'Saved.';
   if (state === 'blocked') return 'Microphone access is needed.';
   return prompt;
+}
+
+function rootMeanSquare(samples: Uint8Array): number {
+  let total = 0;
+  for (const sample of samples) {
+    const centered = (sample - 128) / 128;
+    total += centered * centered;
+  }
+  return Math.sqrt(total / samples.length);
 }
 
 function stopRecorder(recorder: MediaRecorder | null) {

@@ -444,6 +444,23 @@ body {
   border-color: #267247;
 }
 
+.recording-countdown {
+  background: #d8d2c8;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.recording-countdown span {
+  animation: recording-countdown-drain var(--recording-duration, 5000ms) linear forwards;
+  background: #2d8f5a;
+  display: block;
+  height: 100%;
+  transform-origin: left center;
+  width: 100%;
+}
+
 body:has(.prompted-recording.recording)::before {
   animation: recording-page-border 0.8s steps(2, end) infinite;
   border: 12px solid #2d8f5a;
@@ -491,10 +508,24 @@ body:has(.prompted-recording.recording)::before {
   }
 }
 
+@keyframes recording-countdown-drain {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body:has(.prompted-recording.recording)::before {
     animation: none;
     opacity: 1;
+  }
+
+  .recording-countdown span {
+    animation: none;
   }
 }
 

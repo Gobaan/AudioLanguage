@@ -1,4 +1,4 @@
-import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
 import { frameForStep } from './lessonStepHelpers';
 import { renderLessonStep } from './lessonStepRegistry';
 
@@ -13,7 +13,7 @@ type LessonStepRendererProps = {
   onSelectChoice?: (stepId: string, choice: ChoiceOption) => void;
   onCaptureAttempt?: (
     step: LessonStep,
-    recording: { blob: Blob; durationMs: number; mimeType: string },
+    recording: CapturedRecording,
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;

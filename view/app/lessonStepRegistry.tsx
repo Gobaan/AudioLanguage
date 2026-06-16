@@ -7,7 +7,7 @@ import {
   SceneFrame,
   ScenePlayback,
 } from '../components';
-import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
 import { MeaningGuessStep } from './MeaningGuessStep';
 import { productionPracticeProps, ProductionPracticeStep } from './ProductionPracticeStep';
 import {
@@ -32,7 +32,7 @@ export type LessonStepRenderContext = {
   onSelectChoice?: (stepId: string, choice: ChoiceOption) => void;
   onCaptureAttempt?: (
     step: LessonStep,
-    recording: { blob: Blob; durationMs: number; mimeType: string },
+    recording: CapturedRecording,
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;

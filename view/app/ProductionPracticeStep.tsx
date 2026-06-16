@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { DialogueReveal, PromptedRecording, SceneFrame } from '../components';
-import type { Lesson, LessonStep, SceneFrameData } from '../components';
+import type { CapturedRecording, Lesson, LessonStep, SceneFrameData } from '../components';
 import { playAudioOrSpeakThen, stopAudio, stopSpeech } from './audioPlayback';
 import {
   dialogueRevealLines,
   frameForStep,
   learnerFrameForLesson,
-  openerFrameForLesson,
   postAttemptFeedbackFrames,
   productionPromptText,
+  recordingFrameForProduction,
   recordingPromptText,
   recordingStartsAutomatically,
   responseFrameForLesson,
-  stepHidesLearnerScriptBeforeAttempt,
   stepShowsDialogueRevealAfterAttempt,
   stepUsesPostAttemptFeedback,
 } from './lessonStepHelpers';
@@ -29,7 +28,7 @@ type ProductionPracticeStepProps = {
   nextLabel?: string;
   onCaptureAttempt?: (
     step: LessonStep,
-    recording: { blob: Blob; durationMs: number; mimeType: string },
+    recording: CapturedRecording,
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;
@@ -51,21 +50,20 @@ export function ProductionPracticeStep({
   const [phase, setPhase] = useState<PracticePhase>('record');
   const [feedbackIndex, setFeedbackIndex] = useState(0);
   const learnerFrame = learnerFrameForLesson(lesson);
-  const openerFrame = openerFrameForLesson(lesson);
   const responseFrame = responseFrameForLesson(lesson);
   const feedbackFrames = useMemo(() => postAttemptFeedbackFrames(lesson, step), [lesson, step]);
   const usesPostAttemptFeedback = stepUsesPostAttemptFeedback(step);
-  const hidesLearnerScriptBeforeAttempt = stepHidesLearnerScriptBeforeAttempt(lesson, step);
   const showDialogueRevealAfterAttempt = stepShowsDialogueRevealAfterAttempt(step);
   const startsRecordingAutomatically = recordingStartsAutomatically(step);
+  const recordingMs =
+    typeof step.mic?.maxDurationMs === 'number' && step.mic.maxDurationMs > 0
+      ? step.mic.maxDurationMs
+      : 5000;
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const activeFeedbackFrame = feedbackFrames[feedbackIndex];
-  const recordFrame =
-    hidesLearnerScriptBeforeAttempt
-      ? openerFrame ?? frameForStep(lesson, step)
-      : learnerFrame ?? frame ?? frameForStep(lesson, step);
+  const recordFrame = recordingFrameForProduction(lesson, step, frame);
   const displayFrame =
     phase === 'record'
       ? recordFrame
@@ -146,7 +144,7 @@ export function ProductionPracticeStep({
   }, [feedbackFrames, feedbackIndex, phase, playFrameAudio, stopPlayback]);
 
   const handleCaptured = useCallback(
-    (recording: { blob: Blob; durationMs: number; mimeType: string }) => {
+    (recording: CapturedRecording) => {
       onCaptureAttempt?.(step, recording);
 
       if (usesPostAttemptFeedback && feedbackFrames.length > 0) {
@@ -178,6 +176,7 @@ export function ProductionPracticeStep({
             audioUrl={recordingAudioUrl ?? step.audio?.url}
             audioText={step.audio?.audioText}
             prompt={recordingPromptText(step)}
+            recordingMs={recordingMs}
             startMode={startsRecordingAutomatically ? 'auto' : 'manual'}
             startLabel="Record"
             onCaptured={handleCaptured}

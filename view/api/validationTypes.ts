@@ -16,6 +16,9 @@ export type ScorecardAttempt = {
   expectedTransliteration?: string;
   recordingPath?: string;
   recordingDurationMs?: number;
+  speechDetected?: boolean;
+  timedOutWithoutSpeech?: boolean;
+  recordingStoppedBy?: string;
   byteCount?: number;
   mimeType?: string;
   buildPromptText?: string;
@@ -142,6 +145,9 @@ export type AttemptMetadata = {
   expectedTransliteration: string;
   targetAudioUrl?: string | null;
   recordingDurationMs?: number;
+  speechDetected?: boolean;
+  timedOutWithoutSpeech?: boolean;
+  recordingStoppedBy?: string;
   byteCount?: number;
   mimeType?: string;
   buildPromptId?: string;

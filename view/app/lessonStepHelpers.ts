@@ -94,6 +94,24 @@ export function productionPromptText(step: LessonStep): string {
   return 'What do you say?';
 }
 
+export function recordingFrameForProduction(
+  lesson: Lesson,
+  step: LessonStep,
+  fallbackFrame?: SceneFrameData,
+): SceneFrameData | undefined {
+  const learnerFrame = learnerFrameForLesson(lesson);
+
+  if (step.type === 'scene_recall') {
+    return learnerFrame ?? frameForStep(lesson, step);
+  }
+
+  if (stepHidesLearnerScriptBeforeAttempt(lesson, step)) {
+    return openerFrameForLesson(lesson) ?? frameForStep(lesson, step);
+  }
+
+  return learnerFrame ?? fallbackFrame ?? frameForStep(lesson, step);
+}
+
 export function recordingPromptText(step: LessonStep): string {
   return step.type === 'scene_recall' ? 'Now you respond.' : 'Now you say it.';
 }

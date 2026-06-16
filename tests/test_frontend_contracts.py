@@ -77,6 +77,81 @@ def test_scene_recall_recording_uses_auto_start_helper():
     assert "startMode={startsRecordingAutomatically ? 'auto' : 'manual'}" in production_source
 
 
+def test_scene_recall_recording_shows_learner_frame_before_attempt():
+    result = run_frontend_script(
+        ["view/app/lessonStepHelpers.ts"],
+        """
+        const { recordingFrameForProduction } = requireSource('view/app/lessonStepHelpers.ts');
+        const lesson = {
+          stage: 'same_day_transfer',
+          frames: [
+            { id: 'line-0', lineType: 'world_opener' },
+            { id: 'line-1', lineType: 'learner_target' },
+            { id: 'line-2', lineType: 'world_response' },
+          ],
+        };
+        const recallStep = {
+          type: 'scene_recall',
+          frameId: 'line-1',
+          props: { recordBeforeModelLine: true },
+          mic: { enabled: true },
+        };
+        const anchorStep = {
+          type: 'backward_build',
+          frameId: 'line-1',
+          props: { recordBeforeModelLine: true },
+          mic: { enabled: true },
+        };
+
+        console.log(JSON.stringify({
+          recallFrameId: recordingFrameForProduction(lesson, recallStep).id,
+          anchorFrameId: recordingFrameForProduction(lesson, anchorStep).id,
+        }));
+        """,
+    )
+
+    assert result["recallFrameId"] == "line-1"
+    assert result["anchorFrameId"] == "line-0"
+
+
+def test_recording_timer_uses_five_second_countdown_bar():
+    recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
+        encoding="utf-8"
+    )
+    production_source = (PROJECT_DIR / "view" / "app" / "ProductionPracticeStep.tsx").read_text(encoding="utf-8")
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+
+    assert "step.mic?.maxDurationMs" in production_source
+    assert "recordingMs={recordingMs}" in production_source
+    assert "recordingMs = 5000" in recording_source
+    assert "recording-countdown" in recording_source
+    assert "--recording-duration" in recording_source
+    assert "@keyframes recording-countdown-drain" in styles_source
+
+
+def test_recording_timer_tracks_no_response_and_extends_while_speaking():
+    recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
+        encoding="utf-8"
+    )
+    validation_source = (PROJECT_DIR / "view" / "app" / "useValidationSession.ts").read_text(encoding="utf-8")
+    types_source = (PROJECT_DIR / "view" / "components" / "types.ts").read_text(encoding="utf-8")
+
+    assert "export type CapturedRecording" in types_source
+    assert "speechDetected?: boolean" in types_source
+    assert "timedOutWithoutSpeech?: boolean" in types_source
+    assert "recordingStoppedBy?: string" in (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(
+        encoding="utf-8"
+    )
+    assert "startSpeechDetection(stream, stopAfterSilenceMs)" in recording_source
+    assert "rootMeanSquare(samples)" in recording_source
+    assert "stoppedByRef.current = 'no_speech_timeout'" in recording_source
+    assert "stoppedByRef.current = 'speech_completed'" in recording_source
+    assert "hardLimitMs = recordingMs + 5000" in recording_source
+    assert "speechDetected: recording.speechDetected" in validation_source
+    assert "timedOutWithoutSpeech: recording.timedOutWithoutSpeech" in validation_source
+    assert "recordingStoppedBy: recording.stoppedBy" in validation_source
+
+
 def test_localhost_lesson_jump_uses_backend_lesson_tabs():
     app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
     shell_source = (PROJECT_DIR / "view" / "app" / "TravellerLessonShell.tsx").read_text(encoding="utf-8")

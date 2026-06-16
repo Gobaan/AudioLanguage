@@ -6,7 +6,7 @@ import {
   uploadValidationAttempt,
   type ValidationEvent,
 } from '../api/validation';
-import type { Lesson, LessonStep } from '../components';
+import type { CapturedRecording, Lesson, LessonStep } from '../components';
 import { learnerTargetAudioUrl, validationSessionIdForToday } from './lessonUrls';
 
 type CaptureAttemptExtra = Record<string, unknown>;
@@ -88,7 +88,7 @@ export function useValidationSession({
     (
       lesson: Lesson,
       attemptStep: LessonStep,
-      recording: { blob: Blob; durationMs: number; mimeType: string },
+      recording: CapturedRecording,
       extra: CaptureAttemptExtra = {},
     ) => {
       if (!sessionId) return;
@@ -97,7 +97,7 @@ export function useValidationSession({
       const expectedPhrase = attemptExpectedPhrase(lesson, attemptStep, extra);
       void uploadValidationAttempt(sessionId, recording.blob, {
         attemptId,
-        participantId,
+        participantId: participantId ?? undefined,
         language,
         sceneSet,
         lessonId: lesson.id,
@@ -108,6 +108,9 @@ export function useValidationSession({
         expectedTransliteration: expectedPhrase.expectedTransliteration,
         targetAudioUrl: learnerTargetAudioUrl(lesson),
         recordingDurationMs: recording.durationMs,
+        speechDetected: recording.speechDetected,
+        timedOutWithoutSpeech: recording.timedOutWithoutSpeech,
+        recordingStoppedBy: recording.stoppedBy,
         byteCount: recording.blob.size,
         mimeType: recording.mimeType,
         buildPromptId: typeof extra.buildPromptId === 'string' ? extra.buildPromptId : undefined,

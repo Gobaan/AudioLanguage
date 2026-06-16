@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
 import { LessonAppLinks } from './LessonAppLinks';
 import { LessonStepRenderer } from './LessonStepRenderer';
 import { stepBlocksNextUntilChoice, stepHandlesOwnNext } from './lessonStepHelpers';
@@ -18,7 +18,7 @@ type TravellerLessonShellProps = {
   onSelectChoice: (stepId: string, choice: ChoiceOption) => void;
   onCaptureAttempt: (
     step: LessonStep,
-    recording: { blob: Blob; durationMs: number; mimeType: string },
+    recording: CapturedRecording,
     extra?: Record<string, unknown>,
   ) => void;
   onOpenScorecard: () => void;

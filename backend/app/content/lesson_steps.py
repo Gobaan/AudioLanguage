@@ -176,7 +176,7 @@ def transfer_review_steps(
         step(
             "scene_recall",
             "ProductionPrompt",
-            frame_id=opener_frame.get("id") if opener_frame else None,
+            frame_id=learner_frame.get("id") if learner_frame else None,
             frame_mode="single",
             display_text="What would you say?",
             audio=audio_behavior(None, autoplay=False, replayable=False, play_before_mic=False),
@@ -287,11 +287,13 @@ def recording_mic(
     expected_transliteration: str,
     *,
     starts_after_audio: bool = False,
+    max_duration_ms: int = 5000,
 ) -> dict[str, Any]:
     return {
         "enabled": True,
         "record": True,
         "startsAfterAudio": starts_after_audio,
+        "maxDurationMs": max_duration_ms,
         "expectedText": expected_text,
         "expectedTransliteration": expected_transliteration,
         "scoring": "deferred",

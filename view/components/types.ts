@@ -44,6 +44,15 @@ export type BackwardBuildPrompt = {
   mic?: LessonStep['mic'];
 };
 
+export type CapturedRecording = {
+  blob: Blob;
+  durationMs: number;
+  mimeType: string;
+  speechDetected?: boolean;
+  timedOutWithoutSpeech?: boolean;
+  stoppedBy?: string;
+};
+
 export type ProgressMetric = {
   label: string;
   value: string | number;
@@ -90,6 +99,7 @@ export type LessonStep = {
     enabled: boolean;
     record: boolean;
     startsAfterAudio?: boolean;
+    maxDurationMs?: number;
     expectedText?: string;
     expectedTransliteration?: string;
     scoring: 'none' | 'deferred' | string;

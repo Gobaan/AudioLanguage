@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { ValidationEvent } from '../api/validation';
-import type { ChoiceOption, Lesson, LessonStep } from '../components';
+import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
 import { stepHandlesOwnAutoplay } from './lessonStepHelpers';
 import { withAssetUrls, withStepAssetUrls } from './lessonUrls';
 import { useAudioPlayback } from './useAudioPlayback';
@@ -9,7 +9,7 @@ import { useAudioPlayback } from './useAudioPlayback';
 type CaptureAttempt = (
   lesson: Lesson,
   step: LessonStep,
-  recording: { blob: Blob; durationMs: number; mimeType: string },
+  recording: CapturedRecording,
   extra?: Record<string, unknown>,
 ) => void;
 
@@ -145,7 +145,7 @@ export function useActiveLessonStep({
   const handleCaptureAttempt = useCallback(
     (
       attemptStep: LessonStep,
-      recording: { blob: Blob; durationMs: number; mimeType: string },
+      recording: CapturedRecording,
       extra: Record<string, unknown> = {},
     ) => {
       if (!stepLesson) return;

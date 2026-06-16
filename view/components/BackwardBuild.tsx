@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { BackwardBuildPrompt } from './types';
+import type { BackwardBuildPrompt, CapturedRecording } from './types';
 import { PromptedRecording } from './PromptedRecording';
 
 type BackwardBuildProps = {
@@ -7,7 +7,7 @@ type BackwardBuildProps = {
   prompts?: BackwardBuildPrompt[];
   recordingMs?: number;
   onCaptured?: (
-    recording: { blob: Blob; durationMs: number; mimeType: string },
+    recording: CapturedRecording,
     prompt: BackwardBuildPrompt,
   ) => void;
   onStepComplete?: () => void;
