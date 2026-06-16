@@ -6,4 +6,10 @@ Audio references in content should identify the exact dialogue line or prompt be
 
 For non-Latin beginner languages, keep romanized `audioText` or equivalent pronunciation support available for speech synthesis and learner-facing fallback.
 
-Voice generation should use a stable role-based cast per language. The recurring learner avatar is female unless a task explicitly changes the learner persona. Scene partners should match the character role and visual gender when known; use masculine voices for male-coded partners and feminine voices for female-coded partners. Do not use romanized learner-facing text as TTS input when a native-script `tts_text` field is available.
+Voice generation should use a stable character-based cast per language, not a generic male/female split and not broad role-only guessing. Resolve each spoken line to the visual character through `scripts/character_cast.py`, then use that character's voice profile from `scripts/voice_registry.py`.
+
+The recurring learner avatar is always the `learner` character unless a task explicitly changes the learner persona. Scene partners should keep the same `character_id`, `visual_reference`, and voice across anchor, transfer, and delayed scenes when the same visual character is used.
+
+Every generated audio manifest row should include `character_id`, `visual_reference`, `voice_id`, and `voice_profile`. Two lines with identical text may still need different MP3 files if different characters speak them. Do not reuse an MP3 from another character just because the words match.
+
+Do not use romanized learner-facing text as TTS input when a native-script `tts_text` field is available.

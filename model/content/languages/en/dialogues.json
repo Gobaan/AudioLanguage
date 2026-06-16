@@ -493,7 +493,7 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "Please fill out this form.",
+          "text": "Here.",
           "meaning_units": [
             "this"
           ]
@@ -923,7 +923,7 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "Please fill out this form.",
+          "text": "Here.",
           "meaning_units": [
             "this"
           ]
@@ -946,7 +946,7 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "That's okay. I can help.",
+          "text": "Okay.",
           "meaning_units": [
             "help"
           ]
@@ -1149,9 +1149,9 @@
           "index": 0,
           "speaker_role": "station_helper",
           "line_type": "world_opener",
-          "text": "Press here, please.",
-          "transliteration": "Press here, please.",
-          "audio_text": "Press here, please.",
+          "text": "This one.",
+          "transliteration": "This one.",
+          "audio_text": "This one.",
           "meaning_units": []
         },
         {
@@ -1172,9 +1172,9 @@
           "index": 2,
           "speaker_role": "station_helper",
           "line_type": "world_response",
-          "text": "No problem. I'll help.",
-          "transliteration": "No problem. I'll help.",
-          "audio_text": "No problem. I'll help.",
+          "text": "No problem.",
+          "transliteration": "No problem.",
+          "audio_text": "No problem.",
           "meaning_units": []
         }
       ]
@@ -1215,7 +1215,7 @@
           "index": 2,
           "speaker_role": "barista",
           "line_type": "world_response",
-          "text": "Yes, how can I help?",
+          "text": "Yes.",
           "meaning_units": [
             "acknowledgement"
           ]
@@ -1374,7 +1374,7 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "Please fill out this form.",
+          "text": "Here.",
           "meaning_units": [
             "this"
           ]
@@ -1397,7 +1397,7 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "That's okay. I can help.",
+          "text": "Okay.",
           "meaning_units": [
             "help"
           ]

@@ -15,6 +15,7 @@ from content_assets import (
     relative_posix,
     write_json,
 )
+from character_cast import character_for_role, partner_character_for_scene
 
 
 LINE_TYPE_INTENTIONS = {
@@ -23,26 +24,6 @@ LINE_TYPE_INTENTIONS = {
     "world_response": "The scene partner responds so the learner can infer whether the attempt worked.",
     "learner_close": "The learner-character closes the exchange politely.",
     "world_action": "A silent setup beat shows the situation and the learner-character's need.",
-}
-
-
-PARTNER_REFERENCE_BY_ROLE = {
-    "barista": "vendor-reference.png",
-    "cashier": "vendor-reference.png",
-    "class_partner": "friend-reference.png",
-    "classmate": "friend-reference.png",
-    "conversation_partner": "friend-reference.png",
-    "friend": "friend-reference.png",
-    "host": "staff-reference.png",
-    "local": "local-helper-reference.png",
-    "neighbor": "friend-reference.png",
-    "pharmacist": "pharmacist-reference.png",
-    "receptionist": "staff-reference.png",
-    "server": "vendor-reference.png",
-    "shopkeeper": "vendor-reference.png",
-    "staff": "staff-reference.png",
-    "station_helper": "staff-reference.png",
-    "vendor": "vendor-reference.png",
 }
 
 
@@ -67,12 +48,8 @@ def summarize_gestures(function: dict[str, Any], meaning_units: list[str]) -> st
 def partner_reference_for(scene: dict[str, Any], line: dict[str, Any]) -> str:
     speaker_role = str(line.get("speaker_role", ""))
     if speaker_role == "learner":
-        for character in scene.get("characters", []):
-            role = str(character.get("role", ""))
-            if role != "learner":
-                return PARTNER_REFERENCE_BY_ROLE.get(role, "staff-reference.png")
-        return "staff-reference.png"
-    return PARTNER_REFERENCE_BY_ROLE.get(speaker_role, "staff-reference.png")
+        return partner_character_for_scene(scene)["visual_reference"]
+    return character_for_role(speaker_role)["visual_reference"]
 
 
 def target_meaning(targets_by_id: dict[str, Any], dialogue: dict[str, Any], line: dict[str, Any]) -> str:
@@ -229,6 +206,12 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
                     "line_index": line["index"],
                     "line_type": line.get("line_type", ""),
                     "speaker_role": line.get("speaker_role", ""),
+                    "character_id": character_for_role(str(line.get("speaker_role", "")))[
+                        "character_id"
+                    ],
+                    "visual_reference": character_for_role(str(line.get("speaker_role", "")))[
+                        "visual_reference"
+                    ],
                     "meaning_units": line.get("meaning_units", []),
                     "visual_intention": line_intention(function, targets_by_id, dialogue, line),
                     "shared_prompt": shared_prompt,

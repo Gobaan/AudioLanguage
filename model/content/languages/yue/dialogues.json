@@ -45,10 +45,10 @@
           "index": 2,
           "speaker_role": "friend",
           "line_type": "world_response",
-          "text": "Hou hoi sam gin dou nei.",
-          "transliteration": "Hou hoi sam gin dou nei.",
-          "audio_text": "Hou hoi sam gin dou nei.",
-          "tts_text": "好開心見到你。",
+          "text": "Hou aa.",
+          "transliteration": "Hou aa.",
+          "audio_text": "Hou aa.",
+          "tts_text": "好呀。",
           "meaning_units": [
             "positive_response"
           ]
@@ -101,10 +101,10 @@
           "index": 2,
           "speaker_role": "classmate",
           "line_type": "world_response",
-          "text": "Hou hoi sam sik nei, Anna.",
-          "transliteration": "Hou hoi sam sik nei, Anna.",
-          "audio_text": "Hou hoi sam sik nei, Anna.",
-          "tts_text": "好開心識你，Anna。",
+          "text": "Hou aa.",
+          "transliteration": "Hou aa.",
+          "audio_text": "Hou aa.",
+          "tts_text": "好呀。",
           "meaning_units": [
             "positive_response",
             "proper_noun"
@@ -129,10 +129,10 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "M goi hai ni dou tin.",
-          "transliteration": "M goi hai ni dou tin.",
-          "audio_text": "M goi hai ni dou tin.",
-          "tts_text": "唔該喺呢度填。",
+          "text": "Ni dou.",
+          "transliteration": "Ni dou.",
+          "audio_text": "Ni dou.",
+          "tts_text": "呢度。",
           "meaning_units": [
             "this"
           ]
@@ -155,10 +155,10 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "M gan yiu. Ngo bong nei.",
-          "transliteration": "M gan yiu. Ngo bong nei.",
-          "audio_text": "M gan yiu. Ngo bong nei.",
-          "tts_text": "唔緊要。我幫你。",
+          "text": "M gan yiu.",
+          "transliteration": "M gan yiu.",
+          "audio_text": "M gan yiu.",
+          "tts_text": "唔緊要。",
           "meaning_units": [
             "help"
           ]
@@ -352,11 +352,11 @@
           "index": 2,
           "speaker_role": "class_partner",
           "line_type": "world_response",
-          "text": "Hou hoi sam sik nei, Anna.",
-          "transliteration": "Hou hoi sam sik nei, Anna.",
-          "audio_text": "Hou hoi sam sik nei, Anna.",
+          "text": "Hou aa.",
+          "transliteration": "Hou aa.",
+          "audio_text": "Hou aa.",
           "meaning_units": [],
-          "tts_text": "好開心識你，Anna。"
+          "tts_text": "好呀。"
         }
       ]
     },
@@ -376,11 +376,11 @@
           "index": 0,
           "speaker_role": "station_helper",
           "line_type": "world_opener",
-          "text": "M goi aam ni dou.",
-          "transliteration": "M goi aam ni dou.",
-          "audio_text": "M goi aam ni dou.",
+          "text": "Ni go.",
+          "transliteration": "Ni go.",
+          "audio_text": "Ni go.",
           "meaning_units": [],
-          "tts_text": "唔該撳呢度。"
+          "tts_text": "呢個。"
         },
         {
           "index": 1,
@@ -400,11 +400,11 @@
           "index": 2,
           "speaker_role": "station_helper",
           "line_type": "world_response",
-          "text": "M gan yiu. Ngo bong nei.",
-          "transliteration": "M gan yiu. Ngo bong nei.",
-          "audio_text": "M gan yiu. Ngo bong nei.",
+          "text": "M gan yiu.",
+          "transliteration": "M gan yiu.",
+          "audio_text": "M gan yiu.",
           "meaning_units": [],
-          "tts_text": "唔緊要。我幫你。"
+          "tts_text": "唔緊要。"
         }
       ]
     },
@@ -542,10 +542,10 @@
           "index": 2,
           "speaker_role": "friend",
           "line_type": "world_response",
-          "text": "Hou hoi sam gin dou nei.",
-          "transliteration": "Hou hoi sam gin dou nei.",
-          "audio_text": "Hou hoi sam gin dou nei.",
-          "tts_text": "好開心見到你。",
+          "text": "Hou aa.",
+          "transliteration": "Hou aa.",
+          "audio_text": "Hou aa.",
+          "tts_text": "好呀。",
           "meaning_units": [
             "positive_response"
           ]
@@ -597,10 +597,10 @@
           "index": 2,
           "speaker_role": "classmate",
           "line_type": "world_response",
-          "text": "Hou hoi sam sik nei, Anna.",
-          "transliteration": "Hou hoi sam sik nei, Anna.",
-          "audio_text": "Hou hoi sam sik nei, Anna.",
-          "tts_text": "好開心識你，Anna。",
+          "text": "Hou aa.",
+          "transliteration": "Hou aa.",
+          "audio_text": "Hou aa.",
+          "tts_text": "好呀。",
           "meaning_units": [
             "positive_response",
             "proper_noun"
@@ -624,10 +624,10 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "M goi hai ni dou tin.",
-          "transliteration": "M goi hai ni dou tin.",
-          "audio_text": "M goi hai ni dou tin.",
-          "tts_text": "唔該喺呢度填。",
+          "text": "Ni dou.",
+          "transliteration": "Ni dou.",
+          "audio_text": "Ni dou.",
+          "tts_text": "呢度。",
           "meaning_units": [
             "this"
           ]
@@ -650,10 +650,10 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "M gan yiu. Ngo bong nei.",
-          "transliteration": "M gan yiu. Ngo bong nei.",
-          "audio_text": "M gan yiu. Ngo bong nei.",
-          "tts_text": "唔緊要。我幫你。",
+          "text": "M gan yiu.",
+          "transliteration": "M gan yiu.",
+          "audio_text": "M gan yiu.",
+          "tts_text": "唔緊要。",
           "meaning_units": [
             "help"
           ]

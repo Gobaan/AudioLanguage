@@ -10,14 +10,17 @@ from content_assets import (
     DEFAULT_DATA_DIR,
     iter_dialogue_lines,
     list_language_dirs,
+    load_curriculum,
     load_language_data,
     resolve_audio_path,
     write_json,
 )
-from voice_registry import voice_profile_for
+from character_cast import character_for_role, partner_character_for_scene
+from voice_registry import character_voice_profile_for
 
 
 def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str, Any]:
+    _, scenes_by_id = load_curriculum(data_dir)
     _, dialogues_payload = load_language_data(data_dir, language)
     assets: list[dict[str, Any]] = []
     skipped_empty_text: list[dict[str, Any]] = []
@@ -35,7 +38,15 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
             continue
 
         audio_path, status = resolve_audio_path(project_dir, language, dialogue, line)
-        voice_profile = voice_profile_for(language, line.get("speaker_role", ""))
+        speaker_role = str(line.get("speaker_role", ""))
+        scene = scenes_by_id.get(dialogue.get("scene_id"), {})
+        speaking_character = character_for_role(speaker_role)
+        partner_character = partner_character_for_scene(scene)
+        voice_profile = character_voice_profile_for(
+            language,
+            speaking_character["character_id"],
+            speaker_role,
+        )
         asset = {
             "id": f"{dialogue['id']}-line-{line['index']}",
             "language": language,
@@ -46,7 +57,13 @@ def build_manifest(data_dir: Path, project_dir: Path, language: str) -> dict[str
             "scene_id": dialogue.get("scene_id", ""),
             "line_index": line["index"],
             "line_type": line.get("line_type", ""),
-            "speaker_role": line.get("speaker_role", ""),
+            "visual_prompt_id": f"{dialogue['id']}-frame-{line['index']}",
+            "speaker_role": speaker_role,
+            "character_id": speaking_character["character_id"],
+            "character_gender": speaking_character["gender"],
+            "visual_reference": speaking_character["visual_reference"],
+            "scene_partner_character_id": partner_character["character_id"],
+            "scene_partner_visual_reference": partner_character["visual_reference"],
             "voice_id": voice_profile["id"],
             "voice_profile": voice_profile,
             "text": text,

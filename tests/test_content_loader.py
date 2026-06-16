@@ -380,6 +380,137 @@ class StructuredDataGraphTests(unittest.TestCase):
                             self.assertTrue(visual, line_label)
                             self.assertTrue((ASSETS_DIR / str(visual).lstrip("/")).exists(), line_label)
 
+    def test_active_dialogue_audio_uses_visual_character_voice_identity(self):
+        languages = [language["id"] for language in list_languages(CONTENT_DIR)]
+
+        for language in languages:
+            with self.subTest(language=language):
+                session = load_language_session(
+                    data_dir=CONTENT_DIR,
+                    project_dir=PROJECT_DIR,
+                    language=language,
+                )
+                audio_assets = read_json(CONTENT_DIR / "languages" / language / "audio_assets.json")[
+                    "assets"
+                ]
+                audio_by_line = {
+                    (asset["dialogue_id"], asset["line_index"]): asset for asset in audio_assets
+                }
+
+                for card in session["cards"]:
+                    for line in card["dialogue"]["lines"]:
+                        line_label = f"{card['id']} line {line.get('index')}"
+                        asset = audio_by_line[(card["dialogue"]["id"], line["index"])]
+
+                        self.assertTrue(asset.get("character_id"), line_label)
+                        self.assertTrue(asset.get("visual_reference"), line_label)
+                        self.assertEqual(
+                            asset.get("visual_prompt_id"),
+                            f"{card['dialogue']['id']}-frame-{line['index']}",
+                            line_label,
+                        )
+                        self.assertTrue(asset.get("voice_id"), line_label)
+                        self.assertEqual(
+                            asset["voice_id"],
+                            f"{language}-{asset['character_id']}",
+                            line_label,
+                        )
+                        self.assertEqual(
+                            asset["voice_profile"].get("character_id"),
+                            asset["character_id"],
+                            line_label,
+                        )
+
+    def test_matching_text_from_different_active_characters_keeps_distinct_audio_files(self):
+        languages = [language["id"] for language in list_languages(CONTENT_DIR)]
+
+        for language in languages:
+            with self.subTest(language=language):
+                session = load_language_session(
+                    data_dir=CONTENT_DIR,
+                    project_dir=PROJECT_DIR,
+                    language=language,
+                )
+                audio_assets = read_json(CONTENT_DIR / "languages" / language / "audio_assets.json")[
+                    "assets"
+                ]
+                audio_by_line = {
+                    (asset["dialogue_id"], asset["line_index"]): asset for asset in audio_assets
+                }
+                by_text: dict[str, list[dict]] = {}
+
+                for card in session["cards"]:
+                    for line in card["dialogue"]["lines"]:
+                        asset = audio_by_line[(card["dialogue"]["id"], line["index"])]
+                        by_text.setdefault(str(asset.get("text", "")), []).append(asset)
+
+                for text, assets in by_text.items():
+                    character_ids = {asset["character_id"] for asset in assets}
+                    if len(character_ids) <= 1:
+                        continue
+
+                    audio_paths = {asset["audio_path"] for asset in assets}
+                    self.assertEqual(
+                        len(audio_paths),
+                        len(assets),
+                        f"{language} reuses audio for text {text!r} across characters",
+                    )
+
+    def test_active_beginner_dialogues_keep_cue_target_confirmation_shape(self):
+        languages = [language["id"] for language in list_languages(CONTENT_DIR)]
+        forbidden_opener_terms = (
+            "fill",
+            "form",
+            "press",
+            "nirapp",
+            "azhuth",
+            "tian",
+            "an zheli",
+            "tin",
+            "aam",
+        )
+        forbidden_closer_terms = (
+            "help",
+            "udhav",
+            "bang",
+            "bong",
+        )
+
+        for language in languages:
+            with self.subTest(language=language):
+                session = load_language_session(
+                    data_dir=CONTENT_DIR,
+                    project_dir=PROJECT_DIR,
+                    language=language,
+                )
+
+                for card in session["cards"]:
+                    with self.subTest(language=language, card=card["id"]):
+                        lines = card["dialogue"]["lines"]
+                        openers = [line for line in lines if line.get("line_type") == "world_opener"]
+                        targets = [line for line in lines if line.get("line_type") == "learner_target"]
+                        closers = [line for line in lines if line.get("line_type") == "world_response"]
+
+                        self.assertEqual(len(openers), 1)
+                        self.assertEqual(len(targets), 1)
+                        self.assertEqual(len(closers), 1)
+
+                        opener_text = learner_facing_line_text(openers[0])
+                        closer_text = learner_facing_line_text(closers[0])
+                        lower_opener = opener_text.lower()
+                        lower_closer = closer_text.lower()
+
+                        self.assertLessEqual(word_count(opener_text), 6, opener_text)
+                        self.assertLessEqual(word_count(closer_text), 5, closer_text)
+                        self.assertFalse(
+                            any(term in lower_opener for term in forbidden_opener_terms),
+                            opener_text,
+                        )
+                        self.assertFalse(
+                            any(term in lower_closer for term in forbidden_closer_terms),
+                            closer_text,
+                        )
+
     def test_lists_languages_from_data_graph(self):
         languages = list_languages(CONTENT_DIR)
 
@@ -400,6 +531,20 @@ def target_ids_for_tabs(cards: dict, tabs: list[dict], stage: str) -> set[str]:
             target_ids.add(card["target_id"])
 
     return target_ids
+
+
+def learner_facing_line_text(line: dict) -> str:
+    return str(
+        line.get("transliteration")
+        or line.get("audio_text")
+        or line.get("display_text")
+        or line.get("text")
+        or ""
+    ).strip()
+
+
+def word_count(value: str) -> int:
+    return len([word for word in value.replace(".", " ").replace(",", " ").split() if word])
 
 
 class VisualGenerationScriptTests(unittest.TestCase):

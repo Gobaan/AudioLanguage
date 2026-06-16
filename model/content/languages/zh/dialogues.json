@@ -131,10 +131,10 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "Qing zai zheli tian.",
-          "transliteration": "Qing zai zheli tian.",
-          "audio_text": "Qing zai zheli tian.",
-          "tts_text": "请在这里填。",
+          "text": "Zheli.",
+          "transliteration": "Zheli.",
+          "audio_text": "Zheli.",
+          "tts_text": "这里。",
           "meaning_units": [
             "this"
           ]
@@ -157,10 +157,10 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "Mei guanxi. Wo bang ni.",
-          "transliteration": "Mei guanxi. Wo bang ni.",
-          "audio_text": "Mei guanxi. Wo bang ni.",
-          "tts_text": "没关系。我帮你。",
+          "text": "Mei guanxi.",
+          "transliteration": "Mei guanxi.",
+          "audio_text": "Mei guanxi.",
+          "tts_text": "没关系。",
           "meaning_units": [
             "help"
           ]
@@ -378,11 +378,11 @@
           "index": 0,
           "speaker_role": "station_helper",
           "line_type": "world_opener",
-          "text": "Qing an zheli.",
-          "transliteration": "Qing an zheli.",
-          "audio_text": "Qing an zheli.",
+          "text": "Zhe ge.",
+          "transliteration": "Zhe ge.",
+          "audio_text": "Zhe ge.",
           "meaning_units": [],
-          "tts_text": "请按这里。"
+          "tts_text": "这个。"
         },
         {
           "index": 1,
@@ -402,11 +402,11 @@
           "index": 2,
           "speaker_role": "station_helper",
           "line_type": "world_response",
-          "text": "Mei guanxi. Wo bang ni.",
-          "transliteration": "Mei guanxi. Wo bang ni.",
-          "audio_text": "Mei guanxi. Wo bang ni.",
+          "text": "Mei guanxi.",
+          "transliteration": "Mei guanxi.",
+          "audio_text": "Mei guanxi.",
           "meaning_units": [],
-          "tts_text": "没关系。我帮你。"
+          "tts_text": "没关系。"
         }
       ]
     },
@@ -626,10 +626,10 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "Qing zai zheli tian.",
-          "transliteration": "Qing zai zheli tian.",
-          "audio_text": "Qing zai zheli tian.",
-          "tts_text": "请在这里填。",
+          "text": "Zheli.",
+          "transliteration": "Zheli.",
+          "audio_text": "Zheli.",
+          "tts_text": "这里。",
           "meaning_units": [
             "this"
           ]
@@ -652,10 +652,10 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "Mei guanxi. Wo bang ni.",
-          "transliteration": "Mei guanxi. Wo bang ni.",
-          "audio_text": "Mei guanxi. Wo bang ni.",
-          "tts_text": "没关系。我帮你。",
+          "text": "Mei guanxi.",
+          "transliteration": "Mei guanxi.",
+          "audio_text": "Mei guanxi.",
+          "tts_text": "没关系。",
           "meaning_units": [
             "help"
           ]

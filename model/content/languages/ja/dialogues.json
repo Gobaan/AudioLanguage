@@ -118,8 +118,8 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "こちらに記入してください。",
-          "transliteration": "Kochira ni kinyuu shite kudasai.",
+          "text": "こちらです。",
+          "transliteration": "Kochira desu.",
           "meaning_units": [
             "this"
           ]
@@ -140,8 +140,8 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "大丈夫です。手伝います。",
-          "transliteration": "Daijoubu desu. Tetsudaimasu.",
+          "text": "大丈夫です。",
+          "transliteration": "Daijoubu desu.",
           "meaning_units": [
             "help"
           ]
@@ -499,8 +499,8 @@
           "index": 0,
           "speaker_role": "station_helper",
           "line_type": "world_opener",
-          "text": "ここを押してください。",
-          "transliteration": "Koko o oshite kudasai.",
+          "text": "これです。",
+          "transliteration": "Kore desu.",
           "meaning_units": [
             "this",
             "instruction"
@@ -568,8 +568,8 @@
           "index": 2,
           "speaker_role": "receptionist",
           "line_type": "world_response",
-          "text": "手伝います。",
-          "transliteration": "Tetsudaimasu.",
+          "text": "大丈夫です。",
+          "transliteration": "Daijoubu desu.",
           "meaning_units": [
             "help"
           ]

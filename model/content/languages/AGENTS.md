@@ -9,6 +9,11 @@ Dialogue shape:
 - Deeper scenes can grow to 6 to 8 turns, but freeze an anchor at 4 to 6 turns if adding more would bloat it.
 - Prefer this line shape when possible: world opener, learner target, optional world response.
 - Keep learner/world roles consistent so the learner knows when they are expected to respond.
+- For beginner active session cards, treat the dialogue as a cue contract: `world_opener` cues the response, `learner_target` is the taught target, and `world_response` confirms that the response worked.
+- Keep beginner `world_opener` lines short and cue-like. They should not require the learner to understand extra task logic such as filling forms, pressing buttons, moving to another counter, or following multi-step instructions.
+- Keep beginner `world_response` lines as simple confirmation only. Do not introduce a new task, new important vocabulary, or a follow-up question unless that response is the target of a later card.
+- Let the visual scene carry object/task complexity. The dialogue should not become an explanation of the visual.
+- Keep dialogue speaker roles aligned with the scene characters in `model/content/curriculum/scenes.json`. Audio generation resolves `speaker_role` through `scripts/character_cast.py`; do not introduce a new speaker role without adding its character identity, visual reference, and voice mapping.
 
 Learning progression:
 

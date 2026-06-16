@@ -523,8 +523,8 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "இந்த படிவத்தை நிரப்புங்கள்.",
-          "transliteration": "Indha padivathai nirappungal.",
+          "text": "இதோ.",
+          "transliteration": "Idho.",
           "meaning_units": [
             "this"
           ]
@@ -979,8 +979,8 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "இந்த படிவத்தை நிரப்புங்கள்.",
-          "transliteration": "Indha padivathai nirappungal.",
+          "text": "இதோ.",
+          "transliteration": "Idho.",
           "meaning_units": [
             "this"
           ]
@@ -1002,8 +1002,8 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "பரவாயில்லை. நான் உதவுகிறேன்.",
-          "transliteration": "Paravaayillai. Naan udhavugiren.",
+          "text": "சரி.",
+          "transliteration": "Sari.",
           "meaning_units": [
             "help"
           ]
@@ -1215,11 +1215,11 @@
           "index": 0,
           "speaker_role": "station_helper",
           "line_type": "world_opener",
-          "text": "Inge azhuthunga.",
-          "transliteration": "Inge azhuthunga.",
-          "audio_text": "Inge azhuthunga.",
+          "text": "இது.",
+          "transliteration": "Idhu.",
+          "audio_text": "Idhu.",
           "meaning_units": [],
-          "tts_text": "இங்கே அழுத்துங்க."
+          "tts_text": "இது."
         },
         {
           "index": 1,
@@ -1238,11 +1238,11 @@
           "index": 2,
           "speaker_role": "station_helper",
           "line_type": "world_response",
-          "text": "Parava illai. Naan udhavi panren.",
-          "transliteration": "Parava illai. Naan udhavi panren.",
-          "audio_text": "Parava illai. Naan udhavi panren.",
+          "text": "சரி.",
+          "transliteration": "Sari.",
+          "audio_text": "Sari.",
           "meaning_units": [],
-          "tts_text": "பரவாயில்லை. நான் உதவி பண்றேன்."
+          "tts_text": "சரி."
         }
       ]
     },
@@ -1453,8 +1453,8 @@
           "index": 0,
           "speaker_role": "staff",
           "line_type": "world_opener",
-          "text": "இந்த படிவத்தை நிரப்புங்கள்.",
-          "transliteration": "Indha padivathai nirappungal.",
+          "text": "இதோ.",
+          "transliteration": "Idho.",
           "meaning_units": [
             "this"
           ]
@@ -1476,8 +1476,8 @@
           "index": 2,
           "speaker_role": "staff",
           "line_type": "world_response",
-          "text": "பரவாயில்லை. நான் உதவுகிறேன்.",
-          "transliteration": "Paravaayillai. Naan udhavugiren.",
+          "text": "சரி.",
+          "transliteration": "Sari.",
           "meaning_units": [
             "help"
           ]
