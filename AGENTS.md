@@ -14,4 +14,18 @@ Keep lesson runtime JSON focused on what the app needs to render and play. Do no
 
 Validation data and recordings are local by default. Do not send learner audio or scorecard data to external services or shared servers unless the task explicitly asks for that.
 
+## Agent Context Hygiene
+
+This repository has large generated content and media manifests. Preserve token budget by finding the narrow file set before reading content.
+
+- Use `python scripts/summarize_content_json.py` before opening broad `model/content/**/*.json` files.
+- Use `python scripts/summarize_content_json.py --language ja` when a task is scoped to one language.
+- Use `python scripts/summarize_content_json.py --largest 8` when looking for the noisiest files.
+- Prefer targeted `rg` searches by target id, dialogue id, language, or route name.
+- Do not dump generated manifests, media directories, validation recordings, build assets, or broad `rg "frame|audio|line"` output into chat unless the task specifically requires it.
+- Read `AGENTS.md` files near the subsystem first, then inspect only the 1-3 files needed for the change.
+- For content edits, inspect the specific language file and target/dialogue/card ids involved rather than every language.
+- Treat `model/assets/**`, `model/validation/**`, `view/static/assets/**`, and temporary scratch folders as high-noise unless the task is directly about assets, validation data, or deployment bundles.
+- Prefer short verification commands that assert behavior over broad full-suite runs unless the touched area requires the full suite.
+
 Local `AGENTS.md` files override global skills for this repository. If a global skill conflicts with these instructions, follow the local project instructions.
