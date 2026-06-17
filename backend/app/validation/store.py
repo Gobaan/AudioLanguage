@@ -6,6 +6,7 @@ import shutil
 import uuid
 from typing import Any
 
+from app.content.learning_engine.state_store import LearningStateStore
 from app.validation.jsonl_io import (
     append_jsonl,
     delete_file,
@@ -24,6 +25,7 @@ from app.validation.scoring import HUMAN_NAMES, participant_id_from
 class ValidationStore:
     def __init__(self, root: Path):
         self.root = root
+        self.learning_state = LearningStateStore(root / "learning_state.sqlite")
 
     def create_session(self, metadata: dict[str, Any]) -> dict[str, Any]:
         session_id = safe_id(str(metadata.get("sessionId") or uuid.uuid4()))
@@ -80,6 +82,7 @@ class ValidationStore:
             **event,
         }
         append_jsonl(session_dir / "events.jsonl", stored_event)
+        self.learning_state.record_choice(stored_event, self.session_metadata(session_dir))
         return stored_event
 
     def save_attempt(
@@ -110,6 +113,7 @@ class ValidationStore:
                 **metadata,
             }
             append_jsonl(session_dir / "attempts.jsonl", stored_attempt)
+            self.learning_state.record_attempt(stored_attempt, self.session_metadata(session_dir))
             return stored_attempt
 
         existing = self.find_attempt(session_dir, attempt_id)
@@ -125,6 +129,7 @@ class ValidationStore:
             **metadata,
         }
         append_jsonl(session_dir / "attempts.jsonl", stored_attempt)
+        self.learning_state.record_attempt(stored_attempt, self.session_metadata(session_dir))
         return stored_attempt
 
     def scorecard(self, session_id: str, *, data_dir: Path | None = None, project_dir: Path | None = None) -> dict[str, Any]:
@@ -142,6 +147,7 @@ class ValidationStore:
     def delete_session(self, session_id: str) -> dict[str, str]:
         session_dir = self.require_session(session_id)
         shutil.rmtree(session_dir)
+        self.rebuild_learning_state()
         return {"sessionId": safe_id(session_id), "status": "deleted"}
 
     def delete_all_sessions(self) -> dict[str, Any]:
@@ -152,6 +158,7 @@ class ValidationStore:
             shutil.rmtree(sessions_dir)
 
         sessions_dir.mkdir(parents=True, exist_ok=True)
+        self.learning_state.clear()
         return {"deletedSessionCount": deleted_count, "status": "deleted"}
 
     def delete_attempt(self, session_id: str, attempt_id: str) -> dict[str, str]:
@@ -167,6 +174,7 @@ class ValidationStore:
         scores = [item for item in read_jsonl(session_dir / "scores.jsonl") if item.get("attemptId") != attempt_id]
         write_jsonl(session_dir / "attempts.jsonl", attempts)
         write_jsonl(session_dir / "scores.jsonl", scores)
+        self.rebuild_learning_state()
         return {"sessionId": safe_id(session_id), "attemptId": attempt_id, "status": "deleted"}
 
     def delete_user(self, participant_id: str) -> dict[str, Any]:
@@ -185,6 +193,7 @@ class ValidationStore:
             deleted_sessions.append(str(metadata.get("sessionId") or session_dir.name))
             shutil.rmtree(session_dir)
 
+        self.rebuild_learning_state()
         return {
             "participantId": participant_id,
             "deletedSessionCount": len(deleted_sessions),
@@ -211,6 +220,9 @@ class ValidationStore:
                     deleted.append(kind)
             else:
                 unknown.append(kind)
+
+        if deleted:
+            self.rebuild_learning_state()
 
         return {
             "sessionId": safe_id(session_id),
@@ -242,6 +254,13 @@ class ValidationStore:
             **score,
         }
         append_jsonl(session_dir / "scores.jsonl", stored_score)
+        attempt = self.find_attempt(session_dir, safe_id(attempt_id))
+        if attempt:
+            self.learning_state.record_score(
+                attempt=attempt,
+                score=stored_score,
+                session=self.session_metadata(session_dir),
+            )
         return stored_score
 
     def attempt_audio_path(self, session_id: str, attempt_id: str) -> Path:
@@ -263,6 +282,12 @@ class ValidationStore:
         if not (session_dir / "metadata.json").exists():
             raise FileNotFoundError(session_id)
         return session_dir
+
+    def session_metadata(self, session_dir: Path) -> dict[str, Any]:
+        return json.loads((session_dir / "metadata.json").read_text(encoding="utf-8"))
+
+    def rebuild_learning_state(self) -> None:
+        self.learning_state.rebuild_from_validation_root(self.root)
 
     def find_attempt(self, session_dir: Path, attempt_id: str) -> dict[str, Any] | None:
         for attempt in read_jsonl(session_dir / "attempts.jsonl"):

@@ -24,6 +24,20 @@ The learning engine chooses the user's next session plan. Keep it deterministic,
 - Multiple choice is diagnostic, not mastery.
 - Spoken production scores dominate scheduling.
 
+## Spaced Repetition Policy
+
+- The engine uses Anki-like scheduling, but it does not need exact Anki compatibility.
+- Spoken production quality drives spaced repetition.
+- Current quality mapping is intentionally coarse:
+  - failed spoken production maps to quality `0`;
+  - passed, understood, close, or exact spoken production maps to quality `4`.
+- Future work must wire richer quality signals into the scheduler:
+  - quality `3` for shaky, slow, low-confidence, or close-enough responses;
+  - quality `5` for fast, confident, strong passes.
+- Do not let multiple choice update review intervals directly.
+- Pending or unscored attempts must not update review intervals.
+- Due review uses calendar-day boundaries, with a soft minimum gap when timestamp-level data is available.
+
 ## Repair Categories
 
 - `meaning_repair`: wrong meaning choice, off-target response, or evidence that the learner misunderstood the scene intent.

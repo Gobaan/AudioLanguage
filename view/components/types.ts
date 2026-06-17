@@ -116,6 +116,10 @@ export type Lesson = {
   title: string;
   mode?: string;
   stage?: string;
+  targetId?: string;
+  planPurpose?: string;
+  repairCategory?: string;
+  sceneSet?: string;
   target: {
     id: string;
     text: string;
@@ -141,5 +145,6 @@ export type LessonListResponse = {
 export type LearningPlanResponse = LessonListResponse & {
   plan_version: number;
   session_id: string;
+  participant_id?: string;
   order_seed?: string | null;
 };

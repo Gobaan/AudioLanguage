@@ -30,6 +30,7 @@ export async function fetchLearningPlan(
   language: string,
   sceneSet?: string | null,
   orderSeed?: string | null,
+  participantId?: string | null,
 ): Promise<LearningPlanResponse> {
   const params = new URLSearchParams();
   params.set('language', language);
@@ -38,6 +39,9 @@ export async function fetchLearningPlan(
   }
   if (orderSeed) {
     params.set('order_seed', orderSeed);
+  }
+  if (participantId) {
+    params.set('participant_id', participantId);
   }
 
   const response = await fetch(`/api/learning-engine/lessons?${params.toString()}`);

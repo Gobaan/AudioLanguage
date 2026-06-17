@@ -128,6 +128,8 @@ export type ValidationEvent = {
   isCorrect?: boolean;
   direction?: string;
   targetId?: string;
+  planPurpose?: string;
+  repairCategory?: string;
   timestamp?: string;
   metadata?: Record<string, unknown>;
 };
@@ -141,6 +143,8 @@ export type AttemptMetadata = {
   lessonPage: string;
   stepId: string;
   targetId: string;
+  planPurpose?: string;
+  repairCategory?: string;
   expectedText: string;
   expectedTransliteration: string;
   targetAudioUrl?: string | null;

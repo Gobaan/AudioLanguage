@@ -104,6 +104,8 @@ export function useValidationSession({
         lessonPage,
         stepId: attemptStep.id,
         targetId: lesson.target.id,
+        planPurpose: lesson.planPurpose,
+        repairCategory: lesson.repairCategory,
         expectedText: expectedPhrase.expectedText,
         expectedTransliteration: expectedPhrase.expectedTransliteration,
         targetAudioUrl: learnerTargetAudioUrl(lesson),

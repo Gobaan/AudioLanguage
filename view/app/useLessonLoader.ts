@@ -16,6 +16,7 @@ type UseLessonLoaderOptions = {
   language: string;
   lessonPage: string;
   sceneSet: string;
+  participantId: string | null;
   onLessonPageChange: (lessonPage: string) => void;
 };
 
@@ -23,6 +24,7 @@ export function useLessonLoader({
   language,
   lessonPage,
   sceneSet,
+  participantId,
   onLessonPageChange,
 }: UseLessonLoaderOptions) {
   const [lessonTabs, setLessonTabs] = useState<LessonTab[]>([]);
@@ -36,7 +38,7 @@ export function useLessonLoader({
     async function loadPlan() {
       setLoadState('loading');
       try {
-        const payload = await fetchLearningPlan(language, sceneSet, stableOrderSeed(language, sceneSet));
+        const payload = await fetchLearningPlan(language, sceneSet, stableOrderSeed(language, sceneSet), participantId);
         if (!isCurrent) return;
         setLessonTabs(payload.lesson_tabs ?? []);
         setLessons((payload.lessons ?? []).map(activeMvpLesson));
@@ -55,7 +57,7 @@ export function useLessonLoader({
     return () => {
       isCurrent = false;
     };
-  }, [language, sceneSet]);
+  }, [language, sceneSet, participantId]);
 
   useEffect(() => {
     if (loadState !== 'ready') {

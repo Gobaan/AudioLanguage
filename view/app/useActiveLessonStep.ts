@@ -63,6 +63,8 @@ export function useActiveLessonStep({
         stepIndex,
         frameId: step.frameId,
         targetId: stepLesson.target.id,
+        planPurpose: stepLesson.planPurpose,
+        repairCategory: stepLesson.repairCategory,
       });
     }
   }, [step, stepLesson, lessonPage, stepIndex, logEvent]);
@@ -92,6 +94,8 @@ export function useActiveLessonStep({
       stepIndex,
       frameId: step.frameId,
       targetId: stepLesson.target.id,
+      planPurpose: stepLesson.planPurpose,
+      repairCategory: stepLesson.repairCategory,
     });
   }, [validationSessionId, stepLesson?.id, step?.id, stepIndex, lessonPage, logEvent]);
 
@@ -111,6 +115,8 @@ export function useActiveLessonStep({
           choiceId: choice.id,
           isCorrect: choice.isCorrect,
           targetId: stepLesson.target.id,
+          planPurpose: stepLesson.planPurpose,
+          repairCategory: stepLesson.repairCategory,
         });
       }
     },
@@ -134,6 +140,8 @@ export function useActiveLessonStep({
             stepIndex: value,
             frameId: step.frameId,
             targetId: stepLesson.target.id,
+            planPurpose: stepLesson.planPurpose,
+            repairCategory: stepLesson.repairCategory,
           });
         }
         return nextValue;

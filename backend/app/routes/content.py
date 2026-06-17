@@ -12,7 +12,7 @@ from app.content.lesson_tabs import (
     selected_lessons,
 )
 from app.content.lessons import lessons_from_session
-from app.runtime import DATA_DIR, PROJECT_DIR
+from app.runtime import DATA_DIR, PROJECT_DIR, validation_store
 
 router = APIRouter()
 
@@ -81,6 +81,7 @@ def get_learning_engine_lessons(
     language: LanguageQuery,
     scene_set: str = Query(default="mvp"),
     order_seed: str | None = Query(default=None),
+    participant_id: str | None = Query(default=None),
 ):
     """Return the full ordered lesson plan for the current MVP learning engine."""
     try:
@@ -90,6 +91,8 @@ def get_learning_engine_lessons(
             language=language,
             scene_set=scene_set,
             order_seed=order_seed,
+            participant_id=participant_id,
+            state_store=validation_store.learning_state,
         )
     except DataGraphError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error

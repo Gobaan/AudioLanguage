@@ -19,6 +19,7 @@ export function TravellerMvpApp() {
     language,
     lessonPage,
     sceneSet,
+    participantId,
     onLessonPageChange: selectLessonPage,
   });
   const { sessionId: validationSessionId, logEvent, captureAttempt } = useValidationSession({

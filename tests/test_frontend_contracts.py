@@ -203,11 +203,32 @@ def test_localhost_lesson_jump_uses_backend_lesson_tabs():
     assert "params.set('order_seed', orderSeed)" in api_source
     assert "fetchLearningPlan" in api_source
     assert "/api/learning-engine/lessons" in api_source
-    assert "fetchLearningPlan(language, sceneSet, stableOrderSeed(language, sceneSet))" in loader_source
+    assert "fetchLearningPlan(language, sceneSet, stableOrderSeed(language, sceneSet), participantId)" in loader_source
+    assert "participantId: string | null" in loader_source
+    assert "participantId," in app_source
     assert "selectLessonForPage(lessonPage, lessonTabs, lessons)" in loader_source
     assert "fetchLessons(language, lessonPage" not in loader_source
     assert "stableOrderSeed(language, sceneSet)" in loader_source
     assert "local-debug:${language}:${sceneSet}" in loader_source
+
+
+def test_frontend_sends_learning_plan_metadata_to_validation():
+    active_step_source = (PROJECT_DIR / "view" / "app" / "useActiveLessonStep.ts").read_text(encoding="utf-8")
+    validation_source = (PROJECT_DIR / "view" / "app" / "useValidationSession.ts").read_text(encoding="utf-8")
+    types_source = (PROJECT_DIR / "view" / "components" / "types.ts").read_text(encoding="utf-8")
+    api_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
+    lesson_api_source = (PROJECT_DIR / "view" / "api" / "lessons.ts").read_text(encoding="utf-8")
+
+    assert "targetId?: string" in types_source
+    assert "planPurpose?: string" in types_source
+    assert "repairCategory?: string" in types_source
+    assert "participant_id" in lesson_api_source
+    assert "planPurpose: stepLesson.planPurpose" in active_step_source
+    assert "repairCategory: stepLesson.repairCategory" in active_step_source
+    assert "planPurpose: lesson.planPurpose" in validation_source
+    assert "repairCategory: lesson.repairCategory" in validation_source
+    assert "planPurpose?: string" in api_types_source
+    assert "repairCategory?: string" in api_types_source
 
 
 def test_scene_playback_autoplay_depends_on_frame_identity_not_array_reference():

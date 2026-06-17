@@ -1,0 +1,118 @@
+from __future__ import annotations
+
+from app.content.learning_engine.classification import repair_category_for_state
+from app.content.learning_engine.models import IndexedLesson, PlannedLesson, TargetState
+from app.content.learning_engine.policy import REPAIR_PRIORITY, TARGET_SESSION_SIZE, is_anchor_stage, is_delayed_stage, is_transfer_stage
+from app.content.learning_engine.scheduling import is_due_for_review
+
+
+def select_session_lessons(
+    indexed_lessons: list[IndexedLesson],
+    states: dict[str, TargetState],
+    *,
+    planning_date: str,
+) -> list[PlannedLesson]:
+    selected: list[PlannedLesson] = []
+    used_targets: set[str] = set()
+
+    repairs = repair_candidates(indexed_lessons, states)
+    for candidate in repairs:
+        if add_candidate(selected, used_targets, candidate):
+            continue
+
+    if len(selected) < TARGET_SESSION_SIZE:
+        for candidate in due_review_candidates(indexed_lessons, states, planning_date):
+            if add_candidate(selected, used_targets, candidate):
+                continue
+
+    if len(selected) < TARGET_SESSION_SIZE and repair_load_is_light(selected):
+        for candidate in new_anchor_candidates(indexed_lessons, states):
+            if add_candidate(selected, used_targets, candidate):
+                continue
+
+    if len(selected) < TARGET_SESSION_SIZE:
+        for candidate in transfer_candidates(indexed_lessons, states):
+            if add_candidate(selected, used_targets, candidate):
+                continue
+
+    return selected[:TARGET_SESSION_SIZE]
+
+
+def repair_candidates(
+    indexed_lessons: list[IndexedLesson],
+    states: dict[str, TargetState],
+) -> list[PlannedLesson]:
+    candidates = []
+    for indexed in indexed_lessons:
+        state = states.get(indexed.target_id)
+        category = repair_category_for_state(state)
+        if category not in REPAIR_PRIORITY:
+            continue
+        if category == "transfer_repair" and not is_transfer_stage(indexed.stage):
+            continue
+        if category == "memory_repair" and not is_delayed_stage(indexed.stage):
+            continue
+        if category in {"meaning_repair", "recall_repair"} and not is_anchor_stage(indexed.stage):
+            continue
+        candidates.append(PlannedLesson(indexed.tab, indexed.lesson, category, category))
+
+    return sorted(candidates, key=lambda item: REPAIR_PRIORITY[str(item.repair_category)])
+
+
+def due_review_candidates(
+    indexed_lessons: list[IndexedLesson],
+    states: dict[str, TargetState],
+    planning_date: str,
+) -> list[PlannedLesson]:
+    return [
+        PlannedLesson(indexed.tab, indexed.lesson, "due_review", None)
+        for indexed in indexed_lessons
+        if is_delayed_stage(indexed.stage)
+        and (state := states.get(indexed.target_id)) is not None
+        and (state.anchor_passed or state.transfer_passed)
+        and is_due_for_review(state.next_review_at, planning_date, state.last_reviewed_at)
+        and not state.failed_delayed
+    ]
+
+
+def new_anchor_candidates(
+    indexed_lessons: list[IndexedLesson],
+    states: dict[str, TargetState],
+) -> list[PlannedLesson]:
+    return [
+        PlannedLesson(indexed.tab, indexed.lesson, "new", "new")
+        for indexed in indexed_lessons
+        if is_anchor_stage(indexed.stage) and repair_category_for_state(states.get(indexed.target_id)) == "new"
+    ]
+
+
+def transfer_candidates(
+    indexed_lessons: list[IndexedLesson],
+    states: dict[str, TargetState],
+) -> list[PlannedLesson]:
+    return [
+        PlannedLesson(indexed.tab, indexed.lesson, "transfer_repair", None)
+        for indexed in indexed_lessons
+        if is_transfer_stage(indexed.stage)
+        and (state := states.get(indexed.target_id)) is not None
+        and state.anchor_passed
+        and not state.transfer_passed
+        and not state.failed_transfer
+    ]
+
+
+def add_candidate(
+    selected: list[PlannedLesson],
+    used_targets: set[str],
+    candidate: PlannedLesson,
+) -> bool:
+    target_id = str(candidate.lesson.get("target", {}).get("id", ""))
+    if not target_id or target_id in used_targets or len(selected) >= TARGET_SESSION_SIZE:
+        return False
+    selected.append(candidate)
+    used_targets.add(target_id)
+    return True
+
+
+def repair_load_is_light(selected: list[PlannedLesson]) -> bool:
+    return sum(1 for item in selected if item.repair_category in REPAIR_PRIORITY) < 2
