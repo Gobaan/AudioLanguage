@@ -11,6 +11,7 @@ type AudioDebugItem = {
   id: string;
   lessonTitle: string;
   label: string;
+  contextText?: string;
   url: string;
 };
 
@@ -145,6 +146,7 @@ export function DebugAudioLessonPlayer() {
             <div>
               <strong>{item.label}</strong>
               <em>{item.lessonTitle}</em>
+              {item.contextText ? <small>{item.contextText}</small> : null}
             </div>
           </li>
         ))}
@@ -161,6 +163,7 @@ function audioItemsForLesson(lesson: Lesson): AudioDebugItem[] {
       id: `${lesson.id}:${frame.id}`,
       lessonTitle: lesson.title,
       label: frame.title || frame.lineType || frame.id,
+      contextText: contextTextForFrame(frame, lesson),
       url: frame.audioUrl as string,
     }));
 
@@ -175,9 +178,32 @@ function audioItemsForLesson(lesson: Lesson): AudioDebugItem[] {
         id: `${lesson.id}:${step.id}:prompt-${prompt.id ?? index}`,
         lessonTitle: lesson.title,
         label: `Backward build: ${prompt.text || prompt.id || index + 1}`,
+        contextText: phraseWithMeaning(prompt.text, targetPhraseMeaning(lesson)),
         url: prompt.audioUrl,
       }));
   });
 
   return [...frameItems, ...backwardBuildItems];
+}
+
+function contextTextForFrame(frame: Lesson['frames'][number], lesson: Lesson): string | undefined {
+  const lineText = lineDisplayText(frame);
+  if (frame.lineType === 'learner_target') {
+    return phraseWithMeaning(lineText, targetPhraseMeaning(lesson));
+  }
+  return lineText;
+}
+
+function targetPhraseMeaning(lesson: Lesson): string {
+  return lesson.target.englishMeaning || lesson.target.meaning;
+}
+
+function phraseWithMeaning(phrase: string | undefined, meaning: string): string {
+  if (!phrase) return meaning;
+  if (!meaning) return phrase;
+  return `${phrase} (${meaning})`;
+}
+
+function lineDisplayText(frame: Lesson['frames'][number]): string | undefined {
+  return frame.audioText || frame.transliteration || frame.text || frame.originalText;
 }

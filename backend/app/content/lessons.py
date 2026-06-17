@@ -26,6 +26,7 @@ def lesson_from_card(
 
     dialogue = card["dialogue"]
     target = card["target"]
+    english_target = card.get("english_target") or {}
     scene = card["scene"]
     learner_line = find_learner_line(dialogue.get("lines", []))
     frames = frame_data(dialogue.get("lines", []))
@@ -43,6 +44,7 @@ def lesson_from_card(
             "text": target_transliteration or target_text,
             "transliteration": target_transliteration,
             "meaning": target.get("display_meaning", ""),
+            "englishMeaning": target_english_meaning(target, english_target),
         },
         "frames": frames,
         "steps": lesson_steps(
@@ -55,6 +57,15 @@ def lesson_from_card(
             choice_order_seed=choice_order_seed,
         ),
     }
+
+
+def target_english_meaning(target: dict[str, Any], english_target: dict[str, Any]) -> str:
+    return str(
+        target.get("english_meaning")
+        or english_target.get("canonical")
+        or english_target.get("display_meaning")
+        or target.get("display_meaning", "")
+    ).strip()
 
 
 def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:

@@ -73,6 +73,7 @@ def load_language_session(
     audio_assets = load_audio_assets(language_dir)
 
     targets = index_by_id(targets_data, "targets")
+    english_targets = english_targets_lookup(data_dir)
     dialogues = index_by_id(dialogues_data, "dialogues")
     visual_beats = visual_data.get("visual_beats", [])
 
@@ -90,6 +91,7 @@ def load_language_session(
                 review_modes=review_modes,
                 card_templates=card_templates,
                 targets=targets,
+                english_targets=english_targets,
                 dialogues=dialogues,
                 visual_beats=visual_beats,
                 distractors=distractors,
@@ -117,6 +119,7 @@ def hydrate_practice_card(
     review_modes: dict[str, dict[str, Any]],
     card_templates: dict[str, dict[str, Any]],
     targets: dict[str, dict[str, Any]],
+    english_targets: dict[str, dict[str, dict[str, Any]]],
     dialogues: dict[str, dict[str, Any]],
     visual_beats: list[dict[str, Any]],
     distractors: dict[str, dict[str, Any]],
@@ -126,6 +129,7 @@ def hydrate_practice_card(
 ) -> dict[str, Any]:
     dialogue = required(dialogues, card.get("dialogue_id"), "dialogue")
     target = required(targets, card.get("target_id"), "target")
+    english_target = english_target_for(target, english_targets)
     function = required(functions, card.get("correct_function_id"), "function")
     scene = required(scenes, dialogue.get("scene_id"), "scene")
     review_mode = required(review_modes, card.get("mode"), "review mode")
@@ -151,6 +155,7 @@ def hydrate_practice_card(
         **card,
         "function": function,
         "target": target,
+        "english_target": english_target,
         "scene": scene,
         "review_mode": review_mode,
         "dialogue": hydrated_dialogue,
@@ -170,6 +175,39 @@ def hydrate_practice_card(
     )
 
     return hydrated_card
+
+
+def english_targets_lookup(data_dir: Path) -> dict[str, dict[str, dict[str, Any]]]:
+    english_targets_path = data_dir / "languages" / "en" / "targets.json"
+    if not english_targets_path.exists():
+        return {"by_slug": {}, "by_function": {}}
+
+    targets_data = read_json(english_targets_path)
+    by_slug: dict[str, dict[str, Any]] = {}
+    by_function: dict[str, dict[str, Any]] = {}
+    for target in targets_data.get("targets", []):
+        target_slug = target_id_slug(str(target.get("id", "")))
+        if target_slug:
+            by_slug[target_slug] = target
+        function_id = str(target.get("function_id", ""))
+        if function_id and function_id not in by_function:
+            by_function[function_id] = target
+    return {"by_slug": by_slug, "by_function": by_function}
+
+
+def english_target_for(
+    target: dict[str, Any],
+    english_targets: dict[str, dict[str, dict[str, Any]]],
+) -> dict[str, Any] | None:
+    target_slug = target_id_slug(str(target.get("id", "")))
+    function_id = str(target.get("function_id", ""))
+    return english_targets["by_slug"].get(target_slug) or english_targets["by_function"].get(function_id)
+
+
+def target_id_slug(target_id: str) -> str:
+    if "-target-" not in target_id:
+        return target_id
+    return target_id.split("-target-", 1)[1]
 
 
 def ui_labels_for_card(

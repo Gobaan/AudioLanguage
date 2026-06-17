@@ -273,6 +273,13 @@ def test_audio_debug_player_skips_choices_and_recording_uploads():
 
     assert "fetchLearningPlan" in debug_source
     assert "new Audio(item.url)" in debug_source
+    assert "contextTextForFrame(frame, lesson)" in debug_source
+    assert "targetPhraseMeaning(lesson)" in debug_source
+    assert "lesson.target.englishMeaning || lesson.target.meaning" in debug_source
+    assert "World opener: context prompt" not in debug_source
+    assert "World response: follow-up" not in debug_source
+    assert "lineDisplayText(frame)" in debug_source
+    assert "<small>{item.contextText}</small>" in debug_source
     assert "uploadValidationAttempt" not in debug_source
     assert "useValidationSession" not in debug_source
     assert "PromptedRecording" not in debug_source

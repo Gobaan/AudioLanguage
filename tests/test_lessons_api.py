@@ -60,6 +60,8 @@ class LessonsApiTests(unittest.TestCase):
         meaning_step = next(step for step in first_lesson["steps"] if step["type"] == "broad_meaning_guess")
 
         self.assertEqual(payload["language"], "ja")
+        self.assertEqual(first_lesson["target"]["meaning"], "Respond to Hi.")
+        self.assertEqual(first_lesson["target"]["englishMeaning"], "Hi!")
         tab_ids = [tab["id"] for tab in payload["lesson_tabs"]]
         tab_labels = [tab["label"] for tab in payload["lesson_tabs"]]
         self.assertEqual(

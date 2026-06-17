@@ -121,6 +121,7 @@ export type Lesson = {
     text: string;
     transliteration: string;
     meaning: string;
+    englishMeaning?: string;
   };
   frames: SceneFrameData[];
   steps: LessonStep[];
