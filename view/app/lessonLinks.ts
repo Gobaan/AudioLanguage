@@ -10,7 +10,7 @@ export function languageLessonLink(language: string, sceneSet: LessonSceneSet): 
 }
 
 export function languageAudioDebugLink(language: string, sceneSet: LessonSceneSet): string {
-  const params = new URLSearchParams({ debug: 'audio', language });
+  const params = new URLSearchParams({ language });
   if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
-  return `/?${params.toString()}`;
+  return `/debug/audio?${params.toString()}`;
 }

@@ -6,13 +6,8 @@ from app.runtime import STATIC_DIR
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/gobi-home")
 def index():
-    return FileResponse(str(STATIC_DIR / "index.html"))
-
-
-@router.get("/languages")
-def language_selection():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
@@ -31,6 +26,6 @@ def audio_debug_player():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
-@router.get("/admin/validation")
+@router.get("/gobi-admin")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))

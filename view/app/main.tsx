@@ -20,10 +20,10 @@ createRoot(root).render(
 );
 
 function appForPath(pathname: string) {
-  if (new URLSearchParams(window.location.search).get('debug') === 'audio') return <DebugAudioLessonPlayer />;
-  if (pathname === '/admin/validation') return <AdminValidationApp />;
+  if (pathname === '/gobi-admin') return <AdminValidationApp />;
+  if (pathname === '/gobi-home') return <LanguageSelectionApp />;
   if (pathname === '/debug/audio') return <DebugAudioLessonPlayer />;
   if (pathname === '/debug/recording-countdown') return <RecordingCountdownPreview />;
   if (pathname === '/learn') return <TravellerMvpApp />;
-  return <LanguageSelectionApp />;
+  return <div className="frame-placeholder" aria-label="Page unavailable" />;
 }

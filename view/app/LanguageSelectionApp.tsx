@@ -70,7 +70,7 @@ export function LanguageSelectionApp() {
       </div>
       {isLocalHost() ? (
         <nav className="local-app-links" aria-label="Local app links">
-          <a href="/admin/validation">Admin</a>
+          <a href="/gobi-admin">Admin</a>
           <button type="button" className="app-link-button danger" disabled={clearState === 'clearing'} onClick={clearAllLocalFiles}>
             {clearState === 'clearing' ? 'Clearing...' : 'Clear all files'}
           </button>

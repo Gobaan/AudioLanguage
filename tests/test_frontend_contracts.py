@@ -247,6 +247,41 @@ def test_admin_link_and_participant_name_stay_off_lesson_page():
     assert "Bob" not in result["html"]
 
 
+def test_localhost_admin_link_uses_private_route():
+    result = run_frontend_script(
+        ["view/app/LocalDevLinks.tsx", "view/app/LanguageSelectionApp.tsx", "view/app/main.tsx"],
+        """
+        const localLinksSource = require('fs').readFileSync(
+          require('path').join(projectDir, 'view/app/LocalDevLinks.tsx'),
+          'utf8'
+        );
+        const languageSelectionSource = require('fs').readFileSync(
+          require('path').join(projectDir, 'view/app/LanguageSelectionApp.tsx'),
+          'utf8'
+        );
+        const mainSource = require('fs').readFileSync(
+          require('path').join(projectDir, 'view/app/main.tsx'),
+          'utf8'
+        );
+        console.log(JSON.stringify({ localLinksSource, languageSelectionSource, mainSource }));
+        """,
+    )
+
+    assert 'href="/gobi-admin"' in result["localLinksSource"]
+    assert 'href="/gobi-admin"' in result["languageSelectionSource"]
+    assert "pathname === '/gobi-admin'" in result["mainSource"]
+    assert "/admin/validation" not in result["localLinksSource"]
+    assert "/admin/validation" not in result["languageSelectionSource"]
+    assert "/admin/validation" not in result["mainSource"]
+
+
+def test_homepage_uses_private_route():
+    main_source = (PROJECT_DIR / "view" / "app" / "main.tsx").read_text(encoding="utf-8")
+
+    assert "pathname === '/gobi-home'" in main_source
+    assert 'aria-label="Page unavailable"' in main_source
+
+
 def test_language_links_do_not_expose_participant_and_delayed_uses_start_marker():
     result = run_frontend_script(
         ["view/app/lessonUrls.ts", "view/app/lessonLinks.ts"],
@@ -286,9 +321,9 @@ def test_audio_debug_player_skips_choices_and_recording_uploads():
     assert "ChoicePrompt" not in debug_source
     assert "languageAudioDebugLink" in selection_source
     assert "isLocalHost() ? <a href={languageAudioDebugLink" in selection_source
-    assert "get('debug') === 'audio'" in main_source
     assert "if (pathname === '/debug/audio')" in main_source
-    assert "return `/?${params.toString()}`" in link_source
+    assert "return `/debug/audio?${params.toString()}`" in link_source
+    assert "return `/?${params.toString()}`" not in link_source
 
 
 def test_delayed_review_start_marker_resolves_to_first_backend_plan_tab():
