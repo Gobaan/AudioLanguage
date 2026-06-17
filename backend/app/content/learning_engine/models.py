@@ -17,7 +17,7 @@ PlanPurpose = Literal[
     "recall_repair",
     "transfer_repair",
     "memory_repair",
-    "due_review",
+    "transfer_practice",
     "new",
 ]
 

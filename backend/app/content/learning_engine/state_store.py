@@ -346,7 +346,7 @@ def stage_from_attempt(attempt: dict[str, Any]) -> str:
     plan_purpose = str(attempt.get("planPurpose") or "")
     if plan_purpose in {"transfer_repair"}:
         return "transfer"
-    if plan_purpose in {"memory_repair", "due_review"}:
+    if plan_purpose in {"memory_repair"}:
         return "delayed"
 
     lesson_id = str(attempt.get("lessonId") or "")

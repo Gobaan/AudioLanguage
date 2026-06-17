@@ -50,7 +50,7 @@ class LearningEngineScenarioTests(unittest.TestCase):
         rows = plan_rows(plan)
         self.assertLessEqual(len(rows), 3)
         self.assertNotIn("meaning_repair", [purpose for _, purpose, _ in rows])
-        self.assertEqual(rows[0], (HELLO_TARGET, "due_review", None))
+        self.assertEqual(rows[0], (HELLO_TARGET, "transfer_practice", None))
 
     def test_failed_anchor_production_produces_recall_repair(self):
         with make_learning_state() as scenario:
@@ -70,6 +70,24 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
         self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertEqual(plan_rows(plan)[0], (REPAIR_TARGET, "transfer_repair", "transfer_repair"))
+
+    def test_passed_anchor_transfer_followup_is_transfer_practice_not_repair(self):
+        with make_learning_state() as scenario:
+            for target_id, lesson_id in [
+                (HELLO_TARGET, HELLO_ANCHOR),
+                (INTRODUCE_TARGET, INTRODUCE_ANCHOR),
+                (REPAIR_TARGET, REPAIR_ANCHOR),
+                (EXCUSE_ME_TARGET, EXCUSE_ME_ANCHOR),
+                (FOOD_TARGET, FOOD_ANCHOR),
+            ]:
+                scenario.record_passed_anchor(target_id=target_id, lesson_id=lesson_id)
+
+            plan = scenario.build_plan_for()
+
+        rows = plan_rows(plan)
+        self.assertTrue(rows)
+        self.assertTrue(all(purpose == "transfer_practice" for _, purpose, _ in rows))
+        self.assertTrue(all(repair is None for _, _, repair in rows))
 
     def test_passed_earlier_but_failed_delayed_review_produces_memory_repair(self):
         with make_learning_state() as scenario:
@@ -125,9 +143,9 @@ class LearningEngineScenarioTests(unittest.TestCase):
         rows = plan_rows(plan)
         self.assertLessEqual(len(rows), 3)
         self.assertTrue(rows)
-        self.assertTrue(all(purpose == "due_review" for _, purpose, _ in rows))
+        self.assertTrue(all(purpose == "transfer_practice" for _, purpose, _ in rows))
 
-    def test_repair_priority_matrix_and_due_review_before_new_content(self):
+    def test_repair_priority_matrix_and_due_practice_before_new_content(self):
         with make_learning_state() as scenario:
             scenario.record_choice(target_id=HELLO_TARGET, lesson_id=HELLO_ANCHOR, is_correct=False)
             scenario.record_failed_anchor(target_id=INTRODUCE_TARGET, lesson_id=INTRODUCE_ANCHOR)
@@ -146,12 +164,12 @@ class LearningEngineScenarioTests(unittest.TestCase):
         with make_learning_state() as scenario:
             scenario.record_passed_anchor(target_id=HELLO_TARGET, lesson_id=HELLO_ANCHOR)
 
-            due_review_plan = scenario.build_plan_for(planning_date="2026-06-02")
+            transfer_practice_plan = scenario.build_plan_for(planning_date="2026-06-02")
 
-        due_review_rows = plan_rows(due_review_plan)
-        self.assertEqual(due_review_rows[0], (HELLO_TARGET, "due_review", None))
+        transfer_practice_rows = plan_rows(transfer_practice_plan)
+        self.assertEqual(transfer_practice_rows[0], (HELLO_TARGET, "transfer_practice", None))
         self.assertEqual(
-            due_review_rows[1:],
+            transfer_practice_rows[1:],
             [(INTRODUCE_TARGET, "new", "new"), (REPAIR_TARGET, "new", "new")],
         )
 
@@ -175,13 +193,13 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
         self.assertEqual(plan_rows(plan), [])
 
-    def test_due_target_appears_as_due_review(self):
+    def test_due_target_appears_as_transfer_practice(self):
         with make_learning_state() as scenario:
             scenario.record_passed_anchor(target_id=HELLO_TARGET, lesson_id=HELLO_ANCHOR, reviewed_at="2026-06-01")
 
             plan = scenario.build_plan_for(scene_set="delayed", planning_date="2026-06-02")
 
-        self.assertEqual(plan_rows(plan), [(HELLO_TARGET, "due_review", None)])
+        self.assertEqual(plan_rows(plan), [(HELLO_TARGET, "transfer_practice", None)])
 
     def test_next_day_review_waits_for_soft_minimum_gap_when_timestamps_exist(self):
         with make_learning_state() as scenario:
@@ -205,7 +223,7 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
             plan = scenario.build_plan_for(scene_set="delayed", planning_date="2026-06-02T08:00:00")
 
-        self.assertEqual(plan_rows(plan), [(HELLO_TARGET, "due_review", None)])
+        self.assertEqual(plan_rows(plan), [(HELLO_TARGET, "transfer_practice", None)])
 
     def test_repeated_passes_grow_review_interval(self):
         with make_learning_state() as scenario:

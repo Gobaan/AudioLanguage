@@ -36,7 +36,7 @@ The learning engine chooses the user's next session plan. Keep it deterministic,
   - quality `5` for fast, confident, strong passes.
 - Do not let multiple choice update review intervals directly.
 - Pending or unscored attempts must not update review intervals.
-- Due review uses calendar-day boundaries, with a soft minimum gap when timestamp-level data is available.
+- Transfer practice uses calendar-day boundaries, with a soft minimum gap when timestamp-level data is available.
 
 ## Repair Categories
 
@@ -57,7 +57,8 @@ For MVP scheduling, the current validation logs are close enough to start, but t
 
 - `participant_id` must be sent to the learning-plan endpoint; without it, the engine cannot personalize.
 - `lessonStage` should be recorded on attempts and events, such as `guided_scene_production`, `same_day_transfer`, or `delayed_review`.
-- `planPurpose` should be recorded when a planned lesson is presented, such as `meaning_repair`, `recall_repair`, `transfer_repair`, `memory_repair`, `due_review`, or `new`.
+- `planPurpose` should be recorded when a planned lesson is presented, such as `meaning_repair`, `recall_repair`, `transfer_repair`, `memory_repair`, `transfer_practice`, or `new`.
+- Use `transfer_practice` for healthy same-day transfer and spaced practice; reserve `transfer_repair` for a failed transfer diagnosis.
 - `recording_skipped` events should be logged when the learner reaches a production step and leaves without a usable recording.
 - `recordingDurationMs` and `byteCount` should continue to be stored so empty or near-empty recordings can be treated as weak production evidence.
 - AI score results should preserve `communication.status`, `close_enough`, `missing_slots`, and `extra_intent`.
@@ -142,7 +143,7 @@ Present next:
 Choose scenes in this order:
 
 1. High-priority repairs.
-2. Due delayed reviews.
+2. Due transfer practice from the spaced schedule.
 3. One new i+1 anchor when repair load is light.
 4. Transfer for recently passed anchors.
 

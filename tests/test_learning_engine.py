@@ -130,7 +130,7 @@ class LearningEngineTests(unittest.TestCase):
             ],
         )
 
-    def test_unscored_attempt_is_neutral_and_due_review_can_fill_slot(self):
+    def test_unscored_attempt_is_neutral_and_transfer_practice_can_fill_slot(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
             create_session(store, "pending", "Bob", "ja")
@@ -171,7 +171,7 @@ class LearningEngineTests(unittest.TestCase):
             )
 
         self.assertLessEqual(len(plan["lessons"]), 3)
-        self.assertIn("due_review", [lesson["planPurpose"] for lesson in plan["lessons"]])
+        self.assertIn("transfer_practice", [lesson["planPurpose"] for lesson in plan["lessons"]])
         self.assertNotIn("recall_repair", [lesson["planPurpose"] for lesson in plan["lessons"]])
 
     def test_state_can_rebuild_from_validation_jsonl(self):

@@ -21,7 +21,7 @@ def select_session_lessons(
             continue
 
     if len(selected) < TARGET_SESSION_SIZE:
-        for candidate in due_review_candidates(indexed_lessons, states, planning_date):
+        for candidate in due_transfer_practice_candidates(indexed_lessons, states, planning_date):
             if add_candidate(selected, used_targets, candidate):
                 continue
 
@@ -59,13 +59,13 @@ def repair_candidates(
     return sorted(candidates, key=lambda item: REPAIR_PRIORITY[str(item.repair_category)])
 
 
-def due_review_candidates(
+def due_transfer_practice_candidates(
     indexed_lessons: list[IndexedLesson],
     states: dict[str, TargetState],
     planning_date: str,
 ) -> list[PlannedLesson]:
     return [
-        PlannedLesson(indexed.tab, indexed.lesson, "due_review", None)
+        PlannedLesson(indexed.tab, indexed.lesson, "transfer_practice", None)
         for indexed in indexed_lessons
         if is_delayed_stage(indexed.stage)
         and (state := states.get(indexed.target_id)) is not None
@@ -91,7 +91,7 @@ def transfer_candidates(
     states: dict[str, TargetState],
 ) -> list[PlannedLesson]:
     return [
-        PlannedLesson(indexed.tab, indexed.lesson, "transfer_repair", None)
+        PlannedLesson(indexed.tab, indexed.lesson, "transfer_practice", None)
         for indexed in indexed_lessons
         if is_transfer_stage(indexed.stage)
         and (state := states.get(indexed.target_id)) is not None
