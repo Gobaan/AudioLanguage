@@ -435,12 +435,15 @@ def test_lesson_loader_waits_for_participant_and_session_request():
     assert "PlanSelectionDebugPanel" in app_source
 
 
-def test_session_queue_completion_returns_to_landing():
+def test_session_queue_completion_shows_scorecard_with_next_lesson_action():
     app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
+    scorecard_source = (PROJECT_DIR / "view" / "app" / "ScorecardView.tsx").read_text(encoding="utf-8")
 
-    assert "sessionPhase === 'landing' || sessionPhase === 'complete'" in app_source
     assert "completeSession();" in app_source
+    assert "if (appView === 'scorecard')" in app_source
+    assert "onNextLesson={sessionPhase === 'complete' ? beginSession : null}" in app_source
     assert "onContinue={beginSession}" in app_source
+    assert "Next lesson" in scorecard_source
 
 
 def test_frontend_sends_lesson_stage_to_validation():

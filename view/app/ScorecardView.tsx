@@ -12,6 +12,7 @@ type ValidationScorecardViewProps = {
   scorecard: ValidationScorecard | null;
   onBack: () => void;
   onRefresh: () => void;
+  onNextLesson?: (() => void) | null;
 };
 
 export function ValidationScorecardView({
@@ -20,6 +21,7 @@ export function ValidationScorecardView({
   scorecard,
   onBack,
   onRefresh,
+  onNextLesson,
 }: ValidationScorecardViewProps) {
   return (
     <section className="validation-scorecard" aria-label="Validation scorecard">
@@ -28,6 +30,11 @@ export function ValidationScorecardView({
           <h1>Scorecard</h1>
         </div>
         <nav className="scorecard-actions" aria-label="Scorecard controls">
+          {onNextLesson ? (
+            <button type="button" onClick={onNextLesson}>
+              Next lesson
+            </button>
+          ) : null}
           <button type="button" onClick={onBack}>
             Back
           </button>

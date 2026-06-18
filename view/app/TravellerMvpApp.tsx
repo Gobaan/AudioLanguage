@@ -87,10 +87,16 @@ export function TravellerMvpApp() {
   }, [language, sceneSet, validationSessionId, sessionPhase, showScorecard]);
 
   const nextLessonTab = useMemo(() => {
-    const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
-    if (currentIndex < 0) return null;
+    const currentLessonId = stepLesson?.id;
+    if (!currentLessonId) {
+      return null;
+    }
+    const currentIndex = lessons.findIndex((item) => item.id === currentLessonId);
+    if (currentIndex < 0) {
+      return null;
+    }
     return lessonTabs[currentIndex + 1] ?? null;
-  }, [lessonTabs, lessonPage]);
+  }, [lessonTabs, lessons, stepLesson?.id]);
 
   const beginSession = useCallback(() => {
     resetScorecard();
@@ -101,11 +107,9 @@ export function TravellerMvpApp() {
   }, [language, sceneSet, resetScorecard, selectLessonPage]);
 
   const completeSession = useCallback(() => {
-    resetScorecard();
     setSessionPhase('complete');
-    selectLessonPage(START_LESSON);
-    updateLessonUrl(language, START_LESSON, sceneSet, true, null);
-  }, [language, sceneSet, resetScorecard, selectLessonPage]);
+    showScorecard();
+  }, [showScorecard]);
 
   const debugLessonSwitcher = isLocalHost() ? (
     <nav className="lesson-switcher debug-lesson-switcher" aria-label="Local lesson jump">
@@ -139,11 +143,28 @@ export function TravellerMvpApp() {
       return;
     }
     if (nextLessonTab) {
+      resetScorecard();
+      setSessionPhase('running');
       selectLessonPage(nextLessonTab.id);
       return;
     }
     completeSession();
-  }, [isLastStep, goToStep, nextLessonTab, selectLessonPage, completeSession]);
+  }, [isLastStep, goToStep, nextLessonTab, selectLessonPage, completeSession, resetScorecard]);
+
+  if (appView === 'scorecard') {
+    return (
+      <FitToViewport scrollable>
+        <ValidationScorecardView
+          sessionId={validationSessionId}
+          state={scorecardState}
+          scorecard={scorecard}
+          onBack={backToLesson}
+          onRefresh={showScorecard}
+          onNextLesson={sessionPhase === 'complete' ? beginSession : null}
+        />
+      </FitToViewport>
+    );
+  }
 
   if (sessionPhase === 'landing' || sessionPhase === 'complete') {
     return (
@@ -165,20 +186,6 @@ export function TravellerMvpApp() {
             sessionId={sessionId}
           />
         ) : null}
-      </FitToViewport>
-    );
-  }
-
-  if (appView === 'scorecard') {
-    return (
-      <FitToViewport scrollable>
-        <ValidationScorecardView
-          sessionId={validationSessionId}
-          state={scorecardState}
-          scorecard={scorecard}
-          onBack={backToLesson}
-          onRefresh={showScorecard}
-        />
       </FitToViewport>
     );
   }

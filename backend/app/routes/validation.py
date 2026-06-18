@@ -69,6 +69,7 @@ def log_validation_event(session_id: str, request: ValidationEventRequest):
 @router.post("/api/validation/sessions/{session_id}/attempts")
 async def save_validation_attempt(
     session_id: str,
+    conversation_coach: ConversationCoachDep,
     file: UploadFile = File(...),
     metadata: str = Form("{}"),
 ):
@@ -82,7 +83,7 @@ async def save_validation_attempt(
 
     audio_bytes = await file.read()
     try:
-        return validation_store.save_attempt(
+        stored_attempt = validation_store.save_attempt(
             session_id=session_id,
             attempt_id=parsed_metadata.get("attemptId"),
             filename=file.filename,
@@ -90,6 +91,12 @@ async def save_validation_attempt(
             audio_bytes=audio_bytes,
             metadata=parsed_metadata,
         )
+        attempt_id = str(stored_attempt.get("attemptId") or "")
+        if attempt_id:
+            pending_attempts = validation_store.attempts_needing_score(session_id)
+            if any(str(item.get("attemptId") or "") == attempt_id for item in pending_attempts):
+                score_validation_attempt(session_id, stored_attempt, conversation_coach)
+        return stored_attempt
     except FileNotFoundError as error:
         raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found") from error
     except ValueError as error:

@@ -97,7 +97,7 @@ class ValidationApiTests(unittest.TestCase):
                     files={"file": ("attempt.webm", b"duplicate-audio", "audio/webm")},
                 )
                 audio_response = client.get("/api/validation/sessions/test-session/attempts/attempt-1/audio")
-                scorecard_response = client.get("/api/validation/sessions/test-session/scorecard?score=true")
+                scorecard_response = client.get("/api/validation/sessions/test-session/scorecard")
                 admin_response = client.get("/api/validation/admin/summary")
 
         self.assertEqual(session_response.status_code, 200)
