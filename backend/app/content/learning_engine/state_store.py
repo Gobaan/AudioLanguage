@@ -10,7 +10,7 @@ from typing import Any, Iterator
 from app.content.learning_engine.models import TargetState
 from app.content.learning_engine.scheduling import (
     STARTING_EASE_FACTOR,
-    quality_from_score,
+    quality_decision_from_attempt_and_score,
     update_schedule,
     utc_now_iso,
 )
@@ -104,7 +104,12 @@ class LearningStateStore:
 
         status = score_status(score)
         passed = is_remembered_score(score)
-        quality = quality_from_score(score, passed)
+        quality_decision = quality_decision_from_attempt_and_score(
+            attempt=attempt,
+            score=score,
+            passed=passed,
+        )
+        quality = quality_decision.quality if quality_decision is not None else None
         scored_failure = score.get("status") == "scored" and not passed
         attempt_status = "passed" if passed else "failed" if scored_failure else "pending"
         stage = stage_from_attempt(attempt)
@@ -126,6 +131,14 @@ class LearningStateStore:
                     "updated_at": reviewed_at,
                 }
             )
+            if quality_decision is not None:
+                state.update(
+                    {
+                        "last_duration_ratio": quality_decision.duration_ratio,
+                        "last_confidence_band": quality_decision.confidence_band,
+                        "last_quality_reason": quality_decision.reason_code,
+                    }
+                )
             if passed and stage == "anchor":
                 state["anchor_passed"] = 1
             elif passed and stage == "transfer":
@@ -240,6 +253,9 @@ class LearningStateStore:
                 last_reviewed_at TEXT NOT NULL DEFAULT '',
                 next_review_at TEXT NOT NULL DEFAULT '',
                 last_quality INTEGER,
+                last_duration_ratio REAL,
+                last_confidence_band TEXT NOT NULL DEFAULT '',
+                last_quality_reason TEXT NOT NULL DEFAULT '',
                 updated_at TEXT NOT NULL DEFAULT '',
                 PRIMARY KEY (participant_id, language, target_id)
             )
@@ -256,6 +272,9 @@ class LearningStateStore:
                 "last_reviewed_at": "TEXT NOT NULL DEFAULT ''",
                 "next_review_at": "TEXT NOT NULL DEFAULT ''",
                 "last_quality": "INTEGER",
+                "last_duration_ratio": "REAL",
+                "last_confidence_band": "TEXT NOT NULL DEFAULT ''",
+                "last_quality_reason": "TEXT NOT NULL DEFAULT ''",
             },
         )
 
@@ -317,6 +336,9 @@ def base_state(participant_id: str, language: str, target_id: str) -> dict[str, 
         "last_reviewed_at": "",
         "next_review_at": "",
         "last_quality": None,
+        "last_duration_ratio": None,
+        "last_confidence_band": "",
+        "last_quality_reason": "",
         "updated_at": "",
     }
 
@@ -343,6 +365,9 @@ def target_state_from_row(row: sqlite3.Row) -> TargetState:
         last_reviewed_at=str(row["last_reviewed_at"]),
         next_review_at=str(row["next_review_at"]),
         last_quality=int(row["last_quality"]) if row["last_quality"] is not None else None,
+        last_duration_ratio=float(row["last_duration_ratio"]) if row["last_duration_ratio"] is not None else None,
+        last_confidence_band=str(row["last_confidence_band"] or ""),
+        last_quality_reason=str(row["last_quality_reason"] or ""),
         updated_at=str(row["updated_at"]),
     )
 
@@ -360,8 +385,16 @@ def int_to_bool(value: int | None) -> bool | None:
 
 
 def stage_from_attempt(attempt: dict[str, Any]) -> str:
+    lesson_stage = str(attempt.get("lessonStage") or "").strip()
+    if lesson_stage in {"guided_scene_production", "anchor"}:
+        return "anchor"
+    if lesson_stage in {"same_day_transfer", "transfer"}:
+        return "transfer"
+    if lesson_stage in {"delayed_review", "delayed"}:
+        return "delayed"
+
     plan_purpose = str(attempt.get("planPurpose") or "")
-    if plan_purpose in {"transfer_repair"}:
+    if plan_purpose in {"transfer_repair", "transfer_practice"}:
         return "transfer"
     if plan_purpose in {"memory_repair"}:
         return "delayed"

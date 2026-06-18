@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 import tempfile
-from typing import Iterator
+from typing import Any, Iterator
 
 import test_support  # noqa: F401
 from app.content.learning_engine import build_learning_plan
@@ -59,6 +59,8 @@ class SyntheticLearningState:
         target_id: str,
         lesson_id: str,
         reviewed_at: str = DEFAULT_REVIEWED_AT,
+        attempt_overrides: dict[str, Any] | None = None,
+        score_overrides: dict[str, Any] | None = None,
     ) -> None:
         self.record_scored_attempt(
             target_id=target_id,
@@ -66,6 +68,8 @@ class SyntheticLearningState:
             passed=True,
             scene_set="mvp",
             reviewed_at=reviewed_at,
+            attempt_overrides=attempt_overrides,
+            score_overrides=score_overrides,
         )
 
     def record_failed_anchor(
@@ -74,6 +78,8 @@ class SyntheticLearningState:
         target_id: str,
         lesson_id: str,
         reviewed_at: str = DEFAULT_REVIEWED_AT,
+        attempt_overrides: dict[str, Any] | None = None,
+        score_overrides: dict[str, Any] | None = None,
     ) -> None:
         self.record_scored_attempt(
             target_id=target_id,
@@ -81,6 +87,8 @@ class SyntheticLearningState:
             passed=False,
             scene_set="mvp",
             reviewed_at=reviewed_at,
+            attempt_overrides=attempt_overrides,
+            score_overrides=score_overrides,
         )
 
     def record_failed_transfer(
@@ -89,13 +97,20 @@ class SyntheticLearningState:
         target_id: str,
         lesson_id: str,
         reviewed_at: str = DEFAULT_REVIEWED_AT,
+        attempt_overrides: dict[str, Any] | None = None,
+        score_overrides: dict[str, Any] | None = None,
     ) -> None:
+        merged_attempt_overrides = {"lessonStage": "same_day_transfer"}
+        if attempt_overrides:
+            merged_attempt_overrides.update(attempt_overrides)
         self.record_scored_attempt(
             target_id=target_id,
             lesson_id=lesson_id,
             passed=False,
             scene_set="mvp",
             reviewed_at=reviewed_at,
+            attempt_overrides=merged_attempt_overrides,
+            score_overrides=score_overrides,
         )
 
     def record_failed_delayed(
@@ -104,6 +119,8 @@ class SyntheticLearningState:
         target_id: str,
         lesson_id: str,
         reviewed_at: str = DEFAULT_REVIEWED_AT,
+        attempt_overrides: dict[str, Any] | None = None,
+        score_overrides: dict[str, Any] | None = None,
     ) -> None:
         self.record_scored_attempt(
             target_id=target_id,
@@ -111,6 +128,8 @@ class SyntheticLearningState:
             passed=False,
             scene_set="delayed",
             reviewed_at=reviewed_at,
+            attempt_overrides=attempt_overrides,
+            score_overrides=score_overrides,
         )
 
     def record_pending_attempt(self, *, target_id: str, lesson_id: str, scene_set: str = "mvp") -> None:
@@ -135,8 +154,10 @@ class SyntheticLearningState:
         passed: bool,
         scene_set: str,
         reviewed_at: str = DEFAULT_REVIEWED_AT,
+        attempt_overrides: dict[str, Any] | None = None,
+        score_overrides: dict[str, Any] | None = None,
     ) -> None:
-        attempt = {
+        attempt: dict[str, Any] = {
             "attemptId": self.next_attempt_id(),
             "participantId": self.participant_id,
             "language": self.language,
@@ -146,9 +167,16 @@ class SyntheticLearningState:
             "stepId": "scene_recall" if scene_set == "delayed" else "backward_build",
             "targetId": target_id,
             "receivedAt": reviewed_at,
+            "lessonStage": lesson_stage_for_scene_set(scene_set),
+            "recordingLimitMs": 5000,
         }
+        if attempt_overrides:
+            attempt.update(attempt_overrides)
         self.store.record_attempt(attempt)
-        self.store.record_score(attempt=attempt, score=score_payload(passed, reviewed_at=reviewed_at))
+        self.store.record_score(
+            attempt=attempt,
+            score=score_payload(passed, reviewed_at=reviewed_at, overrides=score_overrides),
+        )
 
     def build_plan_for(
         self,
@@ -186,8 +214,13 @@ def plan_rows(plan: dict) -> list[tuple[str, str | None, str | None]]:
     ]
 
 
-def score_payload(passed: bool, *, reviewed_at: str = DEFAULT_REVIEWED_AT) -> dict:
-    return {
+def score_payload(
+    passed: bool,
+    *,
+    reviewed_at: str = DEFAULT_REVIEWED_AT,
+    overrides: dict[str, Any] | None = None,
+) -> dict:
+    payload: dict[str, Any] = {
         "receivedAt": reviewed_at,
         "status": "scored",
         "result": {
@@ -197,6 +230,27 @@ def score_payload(passed: bool, *, reviewed_at: str = DEFAULT_REVIEWED_AT) -> di
             }
         },
     }
+    if overrides:
+        payload = deep_merge(payload, overrides)
+    return payload
+
+
+def deep_merge(base: dict[str, Any], updates: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in updates.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = deep_merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def lesson_stage_for_scene_set(scene_set: str) -> str:
+    if scene_set == "delayed":
+        return "delayed_review"
+    if scene_set == "transfer":
+        return "same_day_transfer"
+    return "guided_scene_production"
 
 
 def page_from_lesson_id(lesson_id: str) -> str:

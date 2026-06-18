@@ -185,6 +185,82 @@ class LearningEngineScenarioTests(unittest.TestCase):
         self.assertEqual(state.last_reviewed_at, "2026-06-01")
         self.assertEqual(state.next_review_at, "2026-06-02")
 
+    def test_no_speech_timeout_downgrades_quality_to_failure(self):
+        with make_learning_state() as scenario:
+            scenario.record_passed_anchor(
+                target_id=HELLO_TARGET,
+                lesson_id=HELLO_ANCHOR,
+                reviewed_at="2026-06-01",
+                attempt_overrides={
+                    "timedOutWithoutSpeech": True,
+                    "speechDetected": False,
+                    "recordingStoppedBy": "no_speech_timeout",
+                    "recordingDurationMs": 5000,
+                    "byteCount": 200,
+                },
+                score_overrides={"result": {"communication": {"confidence": 0.9}}},
+            )
+
+            state = scenario.store.target_states("Bob", "ja")[HELLO_TARGET]
+
+        self.assertEqual(state.last_quality, 0)
+        self.assertEqual(state.last_quality_reason, "no_speech_signal")
+        self.assertEqual(state.last_confidence_band, "high")
+
+    def test_slow_low_confidence_success_maps_to_shaky_quality(self):
+        with make_learning_state() as scenario:
+            scenario.record_passed_anchor(
+                target_id=HELLO_TARGET,
+                lesson_id=HELLO_ANCHOR,
+                reviewed_at="2026-06-01",
+                attempt_overrides={
+                    "recordingDurationMs": 4900,
+                    "recordingLimitMs": 5000,
+                    "recordingStoppedBy": "hard_limit",
+                    "speechDetected": True,
+                    "byteCount": 3200,
+                },
+                score_overrides={
+                    "result": {
+                        "communication": {
+                            "status": "close",
+                            "confidence": 0.42,
+                            "missing_slots": ["target_phrase"],
+                        }
+                    }
+                },
+            )
+
+            state = scenario.store.target_states("Bob", "ja")[HELLO_TARGET]
+
+        self.assertEqual(state.last_quality, 3)
+        self.assertEqual(state.last_confidence_band, "low")
+        self.assertEqual(state.last_quality_reason, "shaky_success")
+        self.assertAlmostEqual(state.last_duration_ratio or 0.0, 0.98, places=2)
+
+    def test_timely_high_confidence_exact_success_maps_to_quality_five(self):
+        with make_learning_state() as scenario:
+            scenario.record_passed_anchor(
+                target_id=HELLO_TARGET,
+                lesson_id=HELLO_ANCHOR,
+                reviewed_at="2026-06-01",
+                attempt_overrides={
+                    "recordingDurationMs": 1800,
+                    "recordingLimitMs": 5000,
+                    "recordingStoppedBy": "speech_completed",
+                    "speechDetected": True,
+                    "byteCount": 4800,
+                },
+                score_overrides={"result": {"communication": {"confidence": 0.95, "status": "exact"}}},
+            )
+
+            state = scenario.store.target_states("Bob", "ja")[HELLO_TARGET]
+
+        self.assertEqual(state.last_quality, 5)
+        self.assertEqual(state.last_confidence_band, "high")
+        self.assertEqual(state.last_quality_reason, "strong_fluent_success")
+        self.assertEqual(state.interval_days, 1)
+
     def test_not_due_target_is_skipped_in_delayed_review(self):
         with make_learning_state() as scenario:
             scenario.record_passed_anchor(target_id=HELLO_TARGET, lesson_id=HELLO_ANCHOR, reviewed_at="2026-06-01")

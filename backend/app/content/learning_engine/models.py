@@ -44,6 +44,9 @@ class TargetState:
     last_reviewed_at: str = ""
     next_review_at: str = ""
     last_quality: int | None = None
+    last_duration_ratio: float | None = None
+    last_confidence_band: str = ""
+    last_quality_reason: str = ""
     updated_at: str = ""
 
 

@@ -2,6 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from typing import Any
 
 from fastapi.testclient import TestClient
 
@@ -193,6 +194,44 @@ class LearningEngineTests(unittest.TestCase):
 
         self.assertTrue(states["ja-target-respond-hi"].anchor_passed)
 
+    def test_implicit_quality_signals_flow_into_learning_state(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            create_session(store, "implicit-quality", "Bob", "ja")
+            save_and_score(
+                store,
+                "implicit-quality",
+                "attempt-hello-fast",
+                "ja-card-first-hi-dialogue-practice",
+                "ja-target-respond-hi",
+                passed=True,
+                reviewed_at="2026-06-01T10:00:00",
+                attempt_overrides={
+                    "lessonStage": "guided_scene_production",
+                    "recordingDurationMs": 1700,
+                    "recordingLimitMs": 5000,
+                    "speechDetected": True,
+                    "recordingStoppedBy": "speech_completed",
+                    "byteCount": 5000,
+                },
+                score_overrides={
+                    "result": {
+                        "communication": {
+                            "status": "exact",
+                            "confidence": 0.96,
+                            "missing_slots": [],
+                            "extra_intent": None,
+                        }
+                    }
+                },
+            )
+            state = store.learning_state.target_states("Bob", "ja")["ja-target-respond-hi"]
+
+        self.assertEqual(state.last_quality, 5)
+        self.assertEqual(state.last_quality_reason, "strong_fluent_success")
+        self.assertEqual(state.last_confidence_band, "high")
+        self.assertAlmostEqual(state.last_duration_ratio or 0.0, 0.34, places=2)
+
 
 def create_session(store: ValidationStore, session_id: str, participant_id: str, language: str) -> None:
     store.create_session(
@@ -216,38 +255,57 @@ def save_and_score(
     passed: bool,
     scene_set: str = "mvp",
     reviewed_at: str = "2026-06-01",
+    attempt_overrides: dict[str, Any] | None = None,
+    score_overrides: dict[str, Any] | None = None,
 ) -> None:
+    attempt_metadata: dict[str, Any] = {
+        "participantId": "Bob",
+        "language": "ja",
+        "sceneSet": scene_set,
+        "lessonId": lesson_id,
+        "lessonPage": "hello",
+        "stepId": "scene_recall" if scene_set == "delayed" else "backward_build",
+        "targetId": target_id,
+        "receivedAt": reviewed_at,
+    }
+    if attempt_overrides:
+        attempt_metadata.update(attempt_overrides)
+
     store.save_attempt(
         session_id=session_id,
         attempt_id=attempt_id,
         filename="attempt.webm",
         content_type="audio/webm",
         audio_bytes=b"audio",
-        metadata={
-            "participantId": "Bob",
-            "language": "ja",
-            "sceneSet": scene_set,
-            "lessonId": lesson_id,
-            "lessonPage": "hello",
-            "stepId": "scene_recall" if scene_set == "delayed" else "backward_build",
-            "targetId": target_id,
-            "receivedAt": reviewed_at,
-        },
+        metadata=attempt_metadata,
     )
+    score_payload: dict[str, Any] = {
+        "receivedAt": reviewed_at,
+        "status": "scored",
+        "result": {
+            "communication": {
+                "status": "exact" if passed else "missed",
+                "close_enough": passed,
+            }
+        },
+    }
+    if score_overrides:
+        score_payload = deep_merge(score_payload, score_overrides)
     store.save_score(
         session_id,
         attempt_id,
-        {
-            "receivedAt": reviewed_at,
-            "status": "scored",
-            "result": {
-                "communication": {
-                    "status": "exact" if passed else "missed",
-                    "close_enough": passed,
-                }
-            },
-        },
+        score_payload,
     )
+
+
+def deep_merge(base: dict[str, Any], updates: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in updates.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = deep_merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
 
 
 if __name__ == "__main__":

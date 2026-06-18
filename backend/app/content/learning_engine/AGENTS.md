@@ -28,12 +28,12 @@ The learning engine chooses the user's next session plan. Keep it deterministic,
 
 - The engine uses Anki-like scheduling, but it does not need exact Anki compatibility.
 - Spoken production quality drives spaced repetition.
-- Current quality mapping is intentionally coarse:
-  - failed spoken production maps to quality `0`;
-  - passed, understood, close, or exact spoken production maps to quality `4`.
-- Future work must wire richer quality signals into the scheduler:
-  - quality `3` for shaky, slow, low-confidence, or close-enough responses;
-  - quality `5` for fast, confident, strong passes.
+- Current quality mapping uses implicit production signals:
+  - quality `0` for no speech or clear semantic failure;
+  - quality `3` for shaky success (slow pace, low confidence, or close-with-gaps);
+  - quality `4` for solid pass;
+  - quality `5` for timely, high-confidence, semantically exact passes.
+- Keep the rollout toggle in `scheduling.py` (`ENABLE_IMPLICIT_QUALITY_SIGNALS`) available for quick rollback to coarse pass/fail mapping if thresholds regress behavior.
 - Do not let multiple choice update review intervals directly.
 - Pending or unscored attempts must not update review intervals.
 - Transfer practice uses calendar-day boundaries, with a soft minimum gap when timestamp-level data is available.

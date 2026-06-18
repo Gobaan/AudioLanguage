@@ -4,11 +4,14 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
+from app.content.learning_engine.implicit_quality import ImplicitQualityDecision, derive_implicit_quality_decision
+
 STARTING_EASE_FACTOR = 2.5
 MINIMUM_EASE_FACTOR = 1.3
 
 QUALITY_FAIL = 0
 QUALITY_PASS = 4
+ENABLE_IMPLICIT_QUALITY_SIGNALS = True
 MINIMUM_REVIEW_GAP_HOURS = 8
 
 
@@ -32,9 +35,44 @@ def planning_date_or_today(planning_date: str | None = None) -> str:
 
 
 def quality_from_score(score: dict[str, Any], passed: bool) -> int | None:
+    decision = quality_decision_from_attempt_and_score(attempt={}, score=score, passed=passed)
+    if decision is None:
+        return None
+    return decision.quality
+
+
+def quality_decision_from_attempt_and_score(
+    *,
+    attempt: dict[str, Any],
+    score: dict[str, Any],
+    passed: bool,
+) -> ImplicitQualityDecision | None:
     if score.get("status") != "scored":
         return None
-    return QUALITY_PASS if passed else QUALITY_FAIL
+    if not ENABLE_IMPLICIT_QUALITY_SIGNALS:
+        return ImplicitQualityDecision(
+            quality=QUALITY_PASS if passed else QUALITY_FAIL,
+            reason_code="coarse_pass_fail",
+            duration_ratio=None,
+            response_pace="unknown",
+            confidence_band="unknown",
+            semantic_outcome="clean_pass" if passed else "off_target",
+            no_speech=False,
+        )
+
+    decision = derive_implicit_quality_decision(attempt=attempt, score=score, passed=passed)
+    if decision is not None:
+        return decision
+
+    return ImplicitQualityDecision(
+        quality=QUALITY_PASS if passed else QUALITY_FAIL,
+        reason_code="coarse_pass_fail_fallback",
+        duration_ratio=None,
+        response_pace="unknown",
+        confidence_band="unknown",
+        semantic_outcome="clean_pass" if passed else "off_target",
+        no_speech=False,
+    )
 
 
 def update_schedule(
