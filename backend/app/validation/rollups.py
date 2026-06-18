@@ -153,6 +153,8 @@ def build_admin_summary(
         session_summary = {
             "sessionId": metadata.get("sessionId"),
             "participantId": participant_id,
+            "clientIp": metadata.get("clientIp"),
+            "locationFlag": metadata.get("locationFlag"),
             "language": language,
             "sceneSet": scene_set,
             "lessonPage": metadata.get("lessonPage"),

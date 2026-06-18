@@ -36,6 +36,8 @@ class ValidationStore:
             "sessionId": session_id,
             "createdAt": now_iso(),
             "participantId": metadata.get("participantId") or "local",
+            "clientIp": metadata.get("clientIp"),
+            "locationFlag": metadata.get("locationFlag"),
             "language": metadata.get("language"),
             "sceneSet": metadata.get("sceneSet"),
             "lessonPage": metadata.get("lessonPage"),
@@ -194,6 +196,7 @@ class ValidationStore:
             shutil.rmtree(session_dir)
 
         self.rebuild_learning_state()
+        self.learning_state.delete_participant(participant_id)
         return {
             "participantId": participant_id,
             "deletedSessionCount": len(deleted_sessions),

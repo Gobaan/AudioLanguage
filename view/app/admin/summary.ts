@@ -2,22 +2,33 @@ import type { ValidationAdminSession, ValidationAdminSummary, ValidationAdminTar
 import type { Day, PhraseRow, UserSummary } from './types';
 
 export function usersFromSummary(summary: ValidationAdminSummary): UserSummary[] {
-  const users: Record<string, UserSummary> = {};
+  const users: Record<string, UserSummary & { latestSeenAt: string }> = {};
   for (const session of summary.sessions) {
     const participantId = session.participantId || 'local';
+    const createdAt = String(session.createdAt || '');
     const user = users[participantId] ?? {
       participantId,
+      locationFlag: session.locationFlag || undefined,
+      clientIp: session.clientIp || undefined,
       sessionCount: 0,
       attemptCount: 0,
       rememberedAttemptCount: 0,
+      latestSeenAt: createdAt,
     };
     user.sessionCount += 1;
     user.attemptCount += session.attemptCount;
     user.rememberedAttemptCount += session.rememberedAttemptCount;
+    if (createdAt >= user.latestSeenAt) {
+      user.latestSeenAt = createdAt;
+      user.locationFlag = session.locationFlag || undefined;
+      user.clientIp = session.clientIp || undefined;
+    }
     users[participantId] = user;
   }
 
-  return Object.values(users).sort((left, right) => left.participantId.localeCompare(right.participantId));
+  return Object.values(users)
+    .map(({ latestSeenAt: _latestSeenAt, ...rest }) => rest)
+    .sort((left, right) => left.participantId.localeCompare(right.participantId));
 }
 
 export function daysForUser(sessions: ValidationAdminSession[], participantId: string): Day[] {

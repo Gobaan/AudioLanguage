@@ -179,6 +179,23 @@ class LearningStateStore:
     def clear(self) -> None:
         self.database_path.unlink(missing_ok=True)
 
+    def delete_participant(self, participant_id: str) -> int:
+        """Delete all learner target history for one participant."""
+        normalized = str(participant_id or "").strip()
+        if not normalized:
+            return 0
+
+        with self.connect() as connection:
+            self.ensure_schema(connection)
+            cursor = connection.execute(
+                """
+                DELETE FROM learner_target_state
+                WHERE participant_id = ?
+                """,
+                (normalized,),
+            )
+            return int(cursor.rowcount or 0)
+
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:
         self.database_path.parent.mkdir(parents=True, exist_ok=True)

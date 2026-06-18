@@ -182,6 +182,30 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(delete_response.json()["status"], "deleted")
         self.assertEqual(deleted_summary_response.json()["sessionCount"], 0)
 
+    def test_validation_admin_summary_includes_ip_location_flag(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.routes.validation.validation_store", store):
+                client = TestClient(app)
+                client.post(
+                    "/api/validation/sessions",
+                    json={
+                        "sessionId": "ip-location",
+                        "participantId": "friend-a",
+                        "language": "ja",
+                        "sceneSet": "mvp",
+                    },
+                    headers={"x-forwarded-for": "73.44.12.199"},
+                )
+
+                response = client.get("/api/validation/admin/summary")
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["sessionCount"], 1)
+        self.assertEqual(payload["sessions"][0]["clientIp"], "73.44.12.199")
+        self.assertEqual(payload["sessions"][0]["locationFlag"], "🌍 Public 73.44.*.*")
+
     def test_validation_admin_can_delete_selected_session_data(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
@@ -260,6 +284,19 @@ class ValidationApiTests(unittest.TestCase):
                 delete_attempt_response = client.delete("/api/validation/sessions/bob-day-1/attempts/attempt-1")
                 bob_audio_response = client.get("/api/validation/sessions/bob-day-1/attempts/attempt-1/audio")
                 after_attempt_delete_response = client.get("/api/validation/admin/summary")
+                store.learning_state.record_attempt(
+                    {
+                        "attemptId": "orphan-attempt",
+                        "participantId": "Maya",
+                        "language": "ja",
+                        "targetId": "orphan-target",
+                    },
+                    {
+                        "participantId": "Maya",
+                        "language": "ja",
+                        "sceneSet": "mvp",
+                    },
+                )
                 delete_user_response = client.delete("/api/validation/users/Maya")
                 after_user_delete_response = client.get("/api/validation/admin/summary")
 
@@ -271,6 +308,7 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(delete_user_response.json()["deletedSessionCount"], 1)
         self.assertEqual(after_user_delete_response.json()["sessionCount"], 1)
         self.assertEqual(after_user_delete_response.json()["attemptCount"], 0)
+        self.assertEqual(store.learning_state.target_states("Maya", "ja"), {})
 
     def test_local_clear_deletes_all_validation_sessions(self):
         with tempfile.TemporaryDirectory() as temp_dir:

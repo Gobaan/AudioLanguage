@@ -10,6 +10,7 @@ from app.conversation.coach import ConversationCoach
 from app.conversation.models import ConversationContext, LearnerAttempt
 from app.deps import ConversationCoachDep
 from app.runtime import DATA_DIR, PROJECT_DIR, validation_store
+from app.validation.location import enrich_session_metadata_with_location
 from app.validation.scoring import attempt_expected_phrase
 
 logger = logging.getLogger(__name__)
@@ -47,10 +48,11 @@ class ValidationEventRequest(BaseModel):
 
 
 @router.post("/api/validation/sessions")
-def start_validation_session(request: ValidationSessionRequest):
+def start_validation_session(request: ValidationSessionRequest, http_request: Request):
     """Create a local validation session for workflow events and recordings."""
     try:
-        return validation_store.create_session(request.model_dump())
+        metadata = enrich_session_metadata_with_location(request.model_dump(), http_request)
+        return validation_store.create_session(metadata)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
 

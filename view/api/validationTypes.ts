@@ -65,6 +65,8 @@ export type ValidationScorecard = {
 export type ValidationAdminSession = {
   sessionId: string;
   participantId?: string;
+  clientIp?: string | null;
+  locationFlag?: string | null;
   language: string;
   sceneSet: string;
   lessonPage?: string;

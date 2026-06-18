@@ -20,6 +20,7 @@ export function UserList({
           onClick={() => onSelectUser(user.participantId)}
         >
           <strong>{user.participantId}</strong>
+          <span>{user.locationFlag || '❓ Unknown'}</span>
           <span>
             {user.rememberedAttemptCount} / {user.attemptCount}
           </span>

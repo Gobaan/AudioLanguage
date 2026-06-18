@@ -6,6 +6,8 @@ import type {
 
 export type UserSummary = {
   participantId: string;
+  locationFlag?: string;
+  clientIp?: string;
   sessionCount: number;
   attemptCount: number;
   rememberedAttemptCount: number;
