@@ -10,13 +10,14 @@ import {
 import { selectLessonForPage, type LessonTab } from './lessonSelection';
 import { isLocalHost } from './urlParams';
 
-export type LoadState = 'loading' | 'ready' | 'error';
+export type LoadState = 'idle' | 'loading' | 'ready' | 'error';
 
 type UseLessonLoaderOptions = {
   language: string;
   lessonPage: string;
   sceneSet: string;
   participantId: string | null;
+  sessionRequestId: number;
   onLessonPageChange: (lessonPage: string) => void;
 };
 
@@ -25,14 +26,23 @@ export function useLessonLoader({
   lessonPage,
   sceneSet,
   participantId,
+  sessionRequestId,
   onLessonPageChange,
 }: UseLessonLoaderOptions) {
   const [lessonTabs, setLessonTabs] = useState<LessonTab[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [lesson, setLesson] = useState<Lesson | null>(null);
-  const [loadState, setLoadState] = useState<LoadState>('loading');
+  const [displayName, setDisplayName] = useState<string | null>(null);
+  const [planVersion, setPlanVersion] = useState<number | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [loadState, setLoadState] = useState<LoadState>('idle');
 
   useEffect(() => {
+    if (!participantId || sessionRequestId === 0) {
+      setLoadState('idle');
+      return;
+    }
+
     let isCurrent = true;
 
     async function loadPlan() {
@@ -42,12 +52,18 @@ export function useLessonLoader({
         if (!isCurrent) return;
         setLessonTabs(payload.lesson_tabs ?? []);
         setLessons((payload.lessons ?? []).map(activeMvpLesson));
+        setDisplayName(payload.display_name ?? null);
+        setPlanVersion(payload.plan_version ?? null);
+        setSessionId(payload.session_id ?? null);
         setLoadState('ready');
       } catch {
         if (!isCurrent) return;
         setLessonTabs([]);
         setLessons([activeMvpLesson(FALLBACK_LESSON)]);
         setLesson(activeMvpLesson(FALLBACK_LESSON));
+        setDisplayName(null);
+        setPlanVersion(null);
+        setSessionId(null);
         setLoadState('ready');
       }
     }
@@ -57,7 +73,7 @@ export function useLessonLoader({
     return () => {
       isCurrent = false;
     };
-  }, [language, sceneSet, participantId]);
+  }, [language, sceneSet, participantId, sessionRequestId]);
 
   useEffect(() => {
     if (loadState !== 'ready') {
@@ -75,7 +91,11 @@ export function useLessonLoader({
 
   return {
     lessonTabs,
+    lessons,
     lesson,
+    displayName,
+    planVersion,
+    sessionId,
     loadState,
   };
 }

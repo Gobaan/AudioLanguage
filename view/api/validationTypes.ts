@@ -130,6 +130,7 @@ export type ValidationEvent = {
   targetId?: string;
   planPurpose?: string;
   repairCategory?: string;
+  lessonStage?: string;
   timestamp?: string;
   metadata?: Record<string, unknown>;
 };
@@ -145,6 +146,7 @@ export type AttemptMetadata = {
   targetId: string;
   planPurpose?: string;
   repairCategory?: string;
+  lessonStage?: string;
   expectedText: string;
   expectedTransliteration: string;
   targetAudioUrl?: string | null;

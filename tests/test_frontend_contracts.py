@@ -315,7 +315,7 @@ def test_language_links_do_not_expose_participant_and_delayed_uses_start_marker(
         """,
     )
 
-    assert result["mvp"] == "/learn?language=ja&lesson=hello"
+    assert result["mvp"] == "/learn?language=ja&lesson=start"
     assert result["delayed"] == "/learn?language=ja&lesson=start&scene_set=delayed"
     assert "participant" not in result["mvp"]
     assert "participant" not in result["delayed"]
@@ -377,3 +377,119 @@ def test_delayed_review_start_marker_resolves_to_first_backend_plan_tab():
     assert result["explicit"]["shouldReplaceUrl"] is False
     assert result["missing"]["lesson"]["id"] == "hello-lesson"
     assert result["missing"]["resolvedLessonPage"] == "hello"
+
+
+def test_learner_session_landing_renders_next_session_actions():
+    result = run_frontend_script(
+        ["view/app/LearnerSessionLanding.tsx"],
+        """
+        const React = require('react');
+        const { renderToStaticMarkup } = require('react-dom/server');
+        const { LearnerSessionLanding } = requireSource('view/app/LearnerSessionLanding.tsx');
+
+        const landing = renderToStaticMarkup(
+          React.createElement(LearnerSessionLanding, {
+            language: 'ja',
+            displayName: 'Japanese',
+            lessonCount: 3,
+            sessionPhase: 'landing',
+            participantReady: true,
+            onStartSession() {},
+            onContinue() {},
+          })
+        );
+        const complete = renderToStaticMarkup(
+          React.createElement(LearnerSessionLanding, {
+            language: 'ja',
+            displayName: 'Japanese',
+            lessonCount: 3,
+            sessionPhase: 'complete',
+            participantReady: true,
+            onStartSession() {},
+            onContinue() {},
+          })
+        );
+        console.log(JSON.stringify({ landing, complete }));
+        """,
+    )
+
+    assert "Next session" in result["landing"]
+    assert "Ready for your next session?" in result["landing"]
+    assert "Continue" in result["complete"]
+    assert "Nice work" in result["complete"]
+    assert "Take a break" not in result["complete"]
+
+
+def test_lesson_loader_waits_for_participant_and_session_request():
+    loader_source = (PROJECT_DIR / "view" / "app" / "useLessonLoader.ts").read_text(encoding="utf-8")
+    app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
+
+    assert "sessionRequestId: number" in loader_source
+    assert "sessionRequestId === 0" in loader_source
+    assert "!participantId || sessionRequestId === 0" in loader_source
+    assert "'idle'" in loader_source
+    assert "sessionRequestId" in app_source
+    assert "LearnerSessionLanding" in app_source
+    assert "beginSession" in app_source
+    assert "completeSession()" in app_source
+    assert "PlanSelectionDebugPanel" in app_source
+
+
+def test_session_queue_completion_returns_to_landing():
+    app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
+
+    assert "sessionPhase === 'landing' || sessionPhase === 'complete'" in app_source
+    assert "completeSession();" in app_source
+    assert "onContinue={beginSession}" in app_source
+
+
+def test_frontend_sends_lesson_stage_to_validation():
+    active_step_source = (PROJECT_DIR / "view" / "app" / "useActiveLessonStep.ts").read_text(encoding="utf-8")
+    validation_source = (PROJECT_DIR / "view" / "app" / "useValidationSession.ts").read_text(encoding="utf-8")
+    api_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
+
+    assert "lessonStage: stepLesson.stage" in active_step_source
+    assert "lessonStage: lesson.stage" in validation_source
+    assert "lessonStage?: string" in api_types_source
+
+
+def test_localhost_plan_selection_debug_panel_shows_engine_reasons():
+    result = run_frontend_script(
+        ["view/app/planSelectionDebug.ts", "view/app/PlanSelectionDebugPanel.tsx", "view/app/lessonSelection.ts", "view/app/lessonUrls.ts"],
+        """
+        const React = require('react');
+        const { renderToStaticMarkup } = require('react-dom/server');
+        const { planSelectionSummary } = requireSource('view/app/planSelectionDebug.ts');
+        const { PlanSelectionDebugPanel } = requireSource('view/app/PlanSelectionDebugPanel.tsx');
+
+        const lesson = {
+          id: 'ja-card-first-hi-dialogue-practice',
+          language: 'ja',
+          title: 'Hello',
+          stage: 'guided_scene_production',
+          planPurpose: 'new',
+          repairCategory: 'new',
+          target: { id: 'ja-target-respond-hi', text: 'x', transliteration: 'x', meaning: 'hi' },
+          frames: [],
+          steps: [],
+        };
+
+        const html = renderToStaticMarkup(
+          React.createElement(PlanSelectionDebugPanel, {
+            lessons: [lesson],
+            lessonTabs: [{ id: 'hello', label: 'Hello' }],
+            planVersion: 2,
+            sessionId: 'Bob:ja:mvp:seed',
+          })
+        );
+        console.log(JSON.stringify({
+          summary: planSelectionSummary(lesson),
+          html,
+        }));
+        """,
+    )
+
+    assert "New i+1 anchor" in result["summary"]
+    assert "Why these scenes?" in result["html"]
+    assert "purpose=new" in result["html"]
+    assert "ja-target-respond-hi" in result["html"]

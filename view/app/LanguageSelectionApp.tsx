@@ -56,12 +56,12 @@ export function LanguageSelectionApp() {
             <h2>{language.display_name}</h2>
             <p>{language.description || 'Starter speaking scenes.'}</p>
             <div className="language-card-actions">
-              <a href={languageLessonLink(language.id, 'mvp')}>Original</a>
+              <a href={languageLessonLink(language.id, 'mvp')}>Learn</a>
               {isLocalHost() ? <a href={languageAudioDebugLink(language.id, 'mvp')}>Audio debug</a> : null}
-              {language.scene_sets.includes('delayed') ? (
+              {language.scene_sets.includes('delayed') && isLocalHost() ? (
                 <>
                   <a href={languageLessonLink(language.id, 'delayed')}>Delayed</a>
-                  {isLocalHost() ? <a href={languageAudioDebugLink(language.id, 'delayed')}>Delayed audio</a> : null}
+                  <a href={languageAudioDebugLink(language.id, 'delayed')}>Delayed audio</a>
                 </>
               ) : null}
             </div>
