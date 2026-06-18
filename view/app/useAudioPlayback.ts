@@ -17,7 +17,7 @@ export function useAudioPlayback() {
     setAudioError(null);
   }, []);
 
-  const playAudio = useCallback((url: string | null | undefined) => {
+  const playAudio = useCallback((url: string | null | undefined, playbackRate = 1) => {
     setAudioError(null);
     if (!url) {
       setAudioError(AUDIO_MISSING_ERROR);
@@ -26,13 +26,18 @@ export function useAudioPlayback() {
 
     stopAudio(audioRef.current);
     stopSpeech(utteranceRef.current);
-    playAudioUrl(url, audioRef, setIsPlaying, setAudioError);
+    playAudioUrl(url, audioRef, setIsPlaying, setAudioError, playbackRate);
   }, []);
 
   const playAudioOrSpeak = useCallback(
-    (url: string | null | undefined, text: string | null | undefined, _language?: string) => {
+    (
+      url: string | null | undefined,
+      text: string | null | undefined,
+      _language?: string,
+      playbackRate = 1,
+    ) => {
       if (url) {
-        playAudio(url);
+        playAudio(url, playbackRate);
         return;
       }
 

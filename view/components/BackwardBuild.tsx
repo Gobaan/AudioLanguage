@@ -45,6 +45,8 @@ export function BackwardBuild({
         audioText={currentPrompt.audioText ?? currentPrompt.text}
         prompt="Now you say it."
         playbackPrompt="Listen."
+        modelReplayNormalLabel="🔊 Normal speed"
+        modelReplaySlowLabel="🐌 Half speed"
         recordingMs={recordingMs}
         onCaptured={(recording) => onCaptured?.(recording, currentPrompt)}
         onNext={() => {

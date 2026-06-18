@@ -21,8 +21,10 @@ export function playAudioUrl(
   audioRef: { current: HTMLAudioElement | null },
   setIsPlaying: (playing: boolean) => void,
   onError?: (message: string) => void,
+  playbackRate = 1,
 ) {
   const audio = getPrefetchedAudioElement(url) ?? new Audio(url);
+  audio.playbackRate = playbackRate;
   audioRef.current = audio;
   setIsPlaying(true);
 

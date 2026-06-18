@@ -66,6 +66,21 @@ export function usePromptedRecordingController(props: PromptedRecordingProps) {
     return cleanup;
   }, [audioUrl, audioText, startMode]);
 
-  return { ...engine, modelPlayback, audioError, prompt, playbackPrompt, recordingMs, startPromptFlow, confirmRecording, reRecord };
+  const replayModelAtSpeed = (speed: number) => {
+    modelPlayback.playAudioOrSpeak(audioUrl, audioText, undefined, speed);
+  };
+
+  return {
+    ...engine,
+    modelPlayback,
+    audioError,
+    prompt,
+    playbackPrompt,
+    recordingMs,
+    startPromptFlow,
+    confirmRecording,
+    reRecord,
+    replayModelAtSpeed,
+  };
 }
 

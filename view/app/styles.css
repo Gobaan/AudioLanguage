@@ -769,6 +769,13 @@ body:has(.prompted-recording.recording)::before {
   justify-content: center;
 }
 
+.recording-replay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
 .record-button-secondary {
   background: var(--surface);
   border-color: var(--line);

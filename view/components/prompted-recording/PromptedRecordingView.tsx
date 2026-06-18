@@ -16,13 +16,15 @@ type PromptedRecordingViewProps = {
   modelAudioError?: string | null;
   recordingUrl?: string | null;
   canReplayModel: boolean;
-  modelReplayLabel: string;
+  modelReplayNormalLabel: string;
+  modelReplaySlowLabel?: string;
   isModelPlaying: boolean;
   pendingCapture: CapturedRecording | null;
   reRecordLabel: string;
   nextLabel: string;
   onStart: () => void;
-  onReplayModel: () => void;
+  onReplayModelNormal: () => void;
+  onReplayModelSlow: () => void;
   onReRecord: () => void;
   onConfirm: () => void;
 };
@@ -37,7 +39,24 @@ export function PromptedRecordingView(props: PromptedRecordingViewProps) {
       {visibleError ? <p className="audio-error" role="alert">{visibleError}</p> : null}
       {props.recordingUrl ? <audio className="recording-playback" controls src={props.recordingUrl} /> : null}
       {props.state === 'captured' && props.canReplayModel ? (
-        <AudioButton label={props.modelReplayLabel} isPlaying={props.isModelPlaying} disabled={props.isModelPlaying} onPlay={props.onReplayModel} text={{ playLabel: props.modelReplayLabel, playingLabel: 'Playing…' }} />
+        <div className="recording-replay-actions">
+          {props.modelReplaySlowLabel ? (
+            <AudioButton
+              label={props.modelReplaySlowLabel}
+              isPlaying={props.isModelPlaying}
+              disabled={props.isModelPlaying}
+              onPlay={props.onReplayModelSlow}
+              text={{ playLabel: props.modelReplaySlowLabel, playingLabel: 'Playing…' }}
+            />
+          ) : null}
+          <AudioButton
+            label={props.modelReplayNormalLabel}
+            isPlaying={props.isModelPlaying}
+            disabled={props.isModelPlaying}
+            onPlay={props.onReplayModelNormal}
+            text={{ playLabel: props.modelReplayNormalLabel, playingLabel: 'Playing…' }}
+          />
+        </div>
       ) : null}
       {props.state === 'captured' && props.pendingCapture ? (
         <div className="recording-review-actions">

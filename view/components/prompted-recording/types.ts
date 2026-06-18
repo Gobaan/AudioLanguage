@@ -13,6 +13,8 @@ export type PromptedRecordingProps = {
   nextLabel?: string;
   reRecordLabel?: string;
   modelReplayLabel?: string;
+  modelReplayNormalLabel?: string;
+  modelReplaySlowLabel?: string;
   autoConfirmCapture?: boolean;
   onListenComplete?: () => void;
   onRecording?: () => void;

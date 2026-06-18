@@ -7,8 +7,18 @@ import { usePromptedRecordingController } from './usePromptedRecordingController
 export function PromptedRecording(props: PromptedRecordingProps) {
   const controller = usePromptedRecordingController(props);
   const canReplayModel = useMemo(
-    () => Boolean(props.modelReplayLabel && (props.audioUrl || props.audioText?.trim())),
-    [props.modelReplayLabel, props.audioUrl, props.audioText],
+    () =>
+      Boolean(
+        (props.modelReplayLabel || props.modelReplayNormalLabel || props.modelReplaySlowLabel) &&
+          (props.audioUrl || props.audioText?.trim()),
+      ),
+    [
+      props.modelReplayLabel,
+      props.modelReplayNormalLabel,
+      props.modelReplaySlowLabel,
+      props.audioUrl,
+      props.audioText,
+    ],
   );
 
   return (
@@ -24,13 +34,15 @@ export function PromptedRecording(props: PromptedRecordingProps) {
       modelAudioError={controller.modelPlayback.audioError}
       recordingUrl={controller.recordingUrl}
       canReplayModel={canReplayModel}
-      modelReplayLabel={props.modelReplayLabel ?? 'Listen again'}
+      modelReplayNormalLabel={props.modelReplayNormalLabel ?? props.modelReplayLabel ?? 'Listen again'}
+      modelReplaySlowLabel={props.modelReplaySlowLabel}
       isModelPlaying={controller.modelPlayback.isPlaying}
       pendingCapture={controller.pendingCapture}
       reRecordLabel={props.reRecordLabel ?? 'Re-record'}
       nextLabel={props.nextLabel ?? 'Next'}
       onStart={controller.startPromptFlow}
-      onReplayModel={() => controller.modelPlayback.playAudioOrSpeak(props.audioUrl, props.audioText)}
+      onReplayModelNormal={() => controller.replayModelAtSpeed(1)}
+      onReplayModelSlow={() => controller.replayModelAtSpeed(0.5)}
       onReRecord={controller.reRecord}
       onConfirm={controller.confirmRecording}
     />
