@@ -25,13 +25,26 @@ def existing_asset_path(project_dir: Path, path: str | None) -> str | None:
     return None
 
 
+def preferred_visual_path(project_dir: Path, path: str | None) -> str | None:
+    if not path:
+        return None
+
+    path_obj = Path(path)
+    jpeg_variant = str(path_obj.with_name(f"{path_obj.stem}-256kb.jpg")).replace("\\", "/")
+    if repo_file_for_relative_path(project_dir, jpeg_variant).exists():
+        return jpeg_variant
+    return existing_asset_path(project_dir, path)
+
+
 def final_frame_asset_path(project_dir: Path, path: str | None, line_index: int) -> str | None:
     if path and path.startswith("visuals/final/"):
-        expected_path = str(Path(path).with_name(f"frame-{line_index + 1}.png")).replace("\\", "/")
-        if repo_file_for_relative_path(project_dir, expected_path).exists():
-            return expected_path
+        expected_base = Path(path).with_name(f"frame-{line_index + 1}.png")
+        expected_path = str(expected_base).replace("\\", "/")
+        preferred_path = preferred_visual_path(project_dir, expected_path)
+        if preferred_path:
+            return preferred_path
 
-    return existing_asset_path(project_dir, path)
+    return preferred_visual_path(project_dir, path)
 
 
 def first_existing_asset_path(project_dir: Path, candidates: list[str]) -> str | None:
@@ -46,6 +59,12 @@ def asset_folder_slug(value: str) -> str:
     if len(parts) == 2 and parts[0] in {"en", "es", "fr", "ja", "ta", "yue", "zh", "ar"}:
         return parts[1]
     return value
+
+
+def visual_candidates(folder: str, frame_index: int) -> list[str]:
+    base = f"{folder}/frame-{frame_index}.png"
+    base_path = Path(base)
+    return [str(base_path.with_name(f"{base_path.stem}-256kb.jpg")).replace("\\", "/"), base]
 
 
 def resolve_line_assets(
@@ -77,16 +96,16 @@ def resolve_line_assets(
         image_path = first_existing_asset_path(
             project_dir,
             [
-                f"visuals/final/{asset_folder_slug(dialogue_id)}/frame-{frame_number}.png",
-                f"visuals/Drafts/{asset_folder_slug(dialogue_id)}/frame-{frame_number}.png",
-                f"visuals/final/{asset_folder_slug(asset_slug)}/frame-{frame_number}.png",
-                f"visuals/Drafts/{asset_folder_slug(asset_slug)}/frame-{frame_number}.png",
-                f"visuals/{asset_slug}/frame-{frame_number}.png",
-                f"visuals/final/{asset_folder_slug(dialogue_id)}/frame-{line_index}.png",
-                f"visuals/Drafts/{asset_folder_slug(dialogue_id)}/frame-{line_index}.png",
-                f"visuals/final/{asset_folder_slug(asset_slug)}/frame-{line_index}.png",
-                f"visuals/Drafts/{asset_folder_slug(asset_slug)}/frame-{line_index}.png",
-                f"visuals/{asset_slug}/frame-{line_index}.png",
+                *visual_candidates(f"visuals/final/{asset_folder_slug(dialogue_id)}", frame_number),
+                *visual_candidates(f"visuals/Drafts/{asset_folder_slug(dialogue_id)}", frame_number),
+                *visual_candidates(f"visuals/final/{asset_folder_slug(asset_slug)}", frame_number),
+                *visual_candidates(f"visuals/Drafts/{asset_folder_slug(asset_slug)}", frame_number),
+                *visual_candidates(f"visuals/{asset_slug}", frame_number),
+                *visual_candidates(f"visuals/final/{asset_folder_slug(dialogue_id)}", line_index),
+                *visual_candidates(f"visuals/Drafts/{asset_folder_slug(dialogue_id)}", line_index),
+                *visual_candidates(f"visuals/final/{asset_folder_slug(asset_slug)}", line_index),
+                *visual_candidates(f"visuals/Drafts/{asset_folder_slug(asset_slug)}", line_index),
+                *visual_candidates(f"visuals/{asset_slug}", line_index),
             ],
         )
 

@@ -100,6 +100,7 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(tab_labels[:5], [f"Scene {index}" for index in range(1, 6)])
         self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 11)})
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].startswith("/visuals/"))
+        self.assertTrue(first_lesson["frames"][0]["imageUrl"].endswith("-256kb.jpg"))
         self.assertNotIn("target_audio", step_types)
         self.assertIn("scene_setup", step_types)
         self.assertIn("backward_build", step_types)
