@@ -26,6 +26,7 @@ export function PromptedRecording(props: PromptedRecordingProps) {
       state={controller.state}
       prompt={controller.prompt}
       playbackPrompt={controller.playbackPrompt}
+      blockedReason={controller.blockedReason}
       startMode={props.startMode ?? 'auto'}
       startLabel={props.startLabel ?? 'Record'}
       recordingMs={controller.recordingMs}

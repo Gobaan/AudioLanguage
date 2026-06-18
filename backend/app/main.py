@@ -19,7 +19,10 @@ app.add_middleware(
 async def disable_browser_cache(request, call_next):
     """Avoid stale HTML/API while allowing asset caching to reduce request queueing."""
     response = await call_next(request)
-    cache_control = cache_control_for_path(request.url.path)
+    if response.status_code >= 400:
+        cache_control = "no-store, no-cache, must-revalidate, max-age=0"
+    else:
+        cache_control = cache_control_for_path(request.url.path)
     response.headers["Cache-Control"] = cache_control
     if cache_control.startswith("no-store"):
         response.headers["Pragma"] = "no-cache"

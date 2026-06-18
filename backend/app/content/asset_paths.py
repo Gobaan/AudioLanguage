@@ -43,7 +43,7 @@ def first_existing_asset_path(project_dir: Path, candidates: list[str]) -> str |
 
 def asset_folder_slug(value: str) -> str:
     parts = value.split("-", 1)
-    if len(parts) == 2 and parts[0] in {"en", "es", "fr", "ja", "ta"}:
+    if len(parts) == 2 and parts[0] in {"en", "es", "fr", "ja", "ta", "yue", "zh", "ar"}:
         return parts[1]
     return value
 

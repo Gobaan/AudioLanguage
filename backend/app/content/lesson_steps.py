@@ -330,6 +330,23 @@ def backward_build_step(
     target_audio_text: str | None,
     language: str,
 ) -> dict[str, Any]:
+    prompts = backward_build_prompts(
+        target=target,
+        target_phrase=target_phrase,
+        target_text=target_text,
+        target_transliteration=target_transliteration,
+        language=language,
+        spoken_phrase=learner_spoken_phrase(
+            learner_line=learner_line,
+            target=target,
+        ),
+    )
+    # For one-prompt backward-build phrases, reuse the exact learner model clip
+    # so the practice clip matches the core dialogue voice/prosody.
+    if len(prompts) == 1 and target_audio:
+        prompts[0]["audioUrl"] = target_audio
+        prompts[0]["audioText"] = target_audio_text or prompts[0].get("audioText", "")
+
     return step(
         "backward_build",
         "BackwardBuild",
@@ -341,17 +358,7 @@ def backward_build_step(
         props={
             "targetPhrase": target_phrase,
             "chunks": chunks_for_target(target),
-            "prompts": backward_build_prompts(
-                target=target,
-                target_phrase=target_phrase,
-                target_text=target_text,
-                target_transliteration=target_transliteration,
-                language=language,
-                spoken_phrase=learner_spoken_phrase(
-                    learner_line=learner_line,
-                    target=target,
-                ),
-            ),
+            "prompts": prompts,
         },
     )
 

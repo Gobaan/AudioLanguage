@@ -1,0 +1,212 @@
+{
+  "language": "ar",
+  "display_name": "Arabic",
+  "metadata": {
+    "description": "Arabic starter and transfer scenes.",
+    "scene_sets": [
+      "mvp",
+      "delayed"
+    ],
+    "sort_order": 3
+  },
+  "script": "Arabic",
+  "native_review_status": "needs_native_review",
+  "targets": [
+    {
+      "id": "ar-target-respond-hi",
+      "function_id": "respond_to_greeting",
+      "canonical": "مرحبًا!",
+      "transliteration": "Marhaban!",
+      "display_meaning": "Respond to hi.",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "accepted_variants": [
+        "مرحبًا",
+        "أهلًا",
+        "السلام عليكم"
+      ],
+      "valid_but_off_target": [
+        "さようなら。",
+        "病院はどこですか？"
+      ],
+      "wrong_for_context_examples": [
+        "さようなら。",
+        "病院はどこですか？"
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "greeting_response"
+        },
+        "optional": {
+          "return_greeting": true,
+          "ask_wellbeing": true
+        }
+      },
+      "notes": {
+        "register": "friendly-basic",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ar-target-my-name-is",
+      "function_id": "introduce_self",
+      "canonical": "اسمي آنا.",
+      "transliteration": "Ismi Anna.",
+      "display_meaning": "My name is Anna.",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "accepted_variants": [
+        "اسمي آنا",
+        "أنا آنا"
+      ],
+      "valid_but_off_target": [
+        "アンナ。"
+      ],
+      "wrong_for_context_examples": [
+        "こんにちは。",
+        "ありがとう。"
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "self_introduction",
+          "name": "Anna"
+        },
+        "optional": {
+          "greeting": true
+        }
+      },
+      "notes": {
+        "proper_noun": "Anna",
+        "register": "neutral",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ar-target-i-dont-understand",
+      "function_id": "say_do_not_understand",
+      "canonical": "لا أفهم.",
+      "transliteration": "La afham.",
+      "display_meaning": "I don't understand.",
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "accepted_variants": [
+        "لا أفهم",
+        "عذرًا، لا أفهم"
+      ],
+      "valid_but_off_target": [
+        "ゆっくり言ってください。"
+      ],
+      "wrong_for_context_examples": [
+        "はい。",
+        "サンドイッチを一つお願いします。"
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "repair",
+          "problem": "not_understand"
+        },
+        "optional": {
+          "apology": true,
+          "politeness": true
+        }
+      },
+      "notes": {
+        "register": "polite-neutral",
+        "native_review_required": true
+      }
+    },
+    {
+      "id": "ar-target-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "canonical": "عذرًا.",
+      "transliteration": "Udhiran.",
+      "display_meaning": "Excuse me.",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "accepted_variants": [
+        "عذرًا",
+        "لو سمحت"
+      ],
+      "valid_but_off_target": [
+        "ありがとう。"
+      ],
+      "wrong_for_context_examples": [
+        "こんにちは。",
+        "サンドイッチください。"
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "attention_request"
+        },
+        "optional": {
+          "politeness": true,
+          "apology_secondary_use": true
+        }
+      },
+      "notes": {
+        "register": "polite-basic",
+        "native_review_required": true,
+        "usage": "Primary MVP use is getting attention from someone who is busy or not looking at the learner."
+      }
+    },
+    {
+      "id": "ar-target-one-local-food-please",
+      "function_id": "order_local_food",
+      "canonical": "هذا.",
+      "transliteration": "Hatha.",
+      "display_meaning": "This one.",
+      "meaning_units": [
+        "this_one"
+      ],
+      "meaning_unit_labels": {
+        "this_one": "This one"
+      },
+      "accepted_variants": [
+        "هذا",
+        "هذا من فضلك"
+      ],
+      "valid_but_off_target": [
+        "これください。"
+      ],
+      "wrong_for_context_examples": [
+        "わかりません。",
+        "アンナです。"
+      ],
+      "semantic_slots": {
+        "required": {
+          "speech_act": "request_order",
+          "visible_item": "counter_display"
+        },
+        "optional": {
+          "politeness": true
+        }
+      },
+      "notes": {
+        "food_slot": "sandwich",
+        "register": "polite-neutral",
+        "native_review_required": true,
+        "spoken_target": "this one; sandwich is scene-visible only"
+      },
+      "backward_build_spoken_prompts": [
+        "هذا."
+      ],
+      "backward_build_units": [
+        "Hatha"
+      ],
+      "support": {
+        "meaning_unit_labels": {
+          "this_one": "This one"
+        }
+      }
+    }
+  ]
+}

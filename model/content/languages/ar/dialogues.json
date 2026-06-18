@@ -1,0 +1,721 @@
+{
+  "language": "ar",
+  "display_name": "Arabic",
+  "script": "Arabic",
+  "native_review_status": "needs_native_review",
+  "dialogues": [
+    {
+      "id": "ar-first-hi-response",
+      "asset_slug": "first-hi-response",
+      "type": "anchor",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "friend",
+          "line_type": "world_opener",
+          "text": "مرحبًا!",
+          "transliteration": "Marhaban!",
+          "meaning_units": [
+            "hello"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-respond-hi",
+          "text": "مرحبًا!",
+          "transliteration": "Marhaban!",
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "friend",
+          "line_type": "world_response",
+          "text": "سعيدٌ بلقائك.",
+          "transliteration": "Saeedun biliqaika.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-introduce-self",
+      "asset_slug": "introduce-self",
+      "type": "anchor",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "classmate",
+          "line_type": "world_opener",
+          "text": "ما اسمك؟",
+          "transliteration": "Ma ismuki?",
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-my-name-is",
+          "text": "اسمي آنا.",
+          "transliteration": "Ismi Anna.",
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ],
+          "tts_text": "اِسمي آنا."
+        },
+        {
+          "index": 2,
+          "speaker_role": "classmate",
+          "line_type": "world_response",
+          "text": "تشرفتُ بمعرفتك.",
+          "transliteration": "Tasharraftu bimarifatik.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-repair-dont-understand",
+      "asset_slug": "repair-dont-understand",
+      "type": "anchor",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "هذا هنا.",
+          "transliteration": "Hatha huna.",
+          "meaning_units": [
+            "this"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-i-dont-understand",
+          "text": "لا أفهم.",
+          "transliteration": "La afham.",
+          "meaning_units": [
+            "not",
+            "understand"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "لا بأس.",
+          "transliteration": "La bas.",
+          "meaning_units": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-excuse-me-attention",
+      "asset_slug": "excuse-me-attention",
+      "type": "anchor",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "التالي، من فضلك.",
+          "transliteration": "Altali, min fadlik.",
+          "meaning_units": [
+            "attention",
+            "not_looking"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-excuse-me-attention",
+          "text": "عذرًا.",
+          "transliteration": "Udhiran.",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "نعم، تفضل.",
+          "transliteration": "Naam, tafaddal.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-order-local-food",
+      "asset_slug": "order-local-food",
+      "type": "anchor",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "review_modes": [
+        "listen",
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "server",
+          "line_type": "world_opener",
+          "text": "ماذا تريد؟",
+          "transliteration": "Madha turid?",
+          "meaning_units": [
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-one-local-food-please",
+          "text": "هذا.",
+          "transliteration": "Hatha.",
+          "meaning_units": [
+            "this_one"
+          ],
+          "audio_text": "Hatha.",
+          "tts_text": "هذا."
+        },
+        {
+          "index": 2,
+          "speaker_role": "server",
+          "line_type": "world_response",
+          "text": "حسنًا.",
+          "transliteration": "Hasanan.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-greeting-neighbor-transfer",
+      "asset_slug": "greeting-neighbor-transfer",
+      "type": "transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "neighbor",
+          "line_type": "world_opener",
+          "text": "أهلًا!",
+          "transliteration": "Ahlan!",
+          "meaning_units": [
+            "hello"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-respond-hi",
+          "text": "مرحبًا!",
+          "transliteration": "Marhaban!",
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "neighbor",
+          "line_type": "world_response",
+          "text": "أهلًا.",
+          "transliteration": "Ahlan.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-greeting-entry-review",
+      "asset_slug": "greeting-entry-review",
+      "type": "delayed_review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "neighbor",
+          "line_type": "world_opener",
+          "text": "مرحبًا.",
+          "transliteration": "Marhaban.",
+          "meaning_units": [
+            "hello"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-respond-hi",
+          "text": "مرحبًا!",
+          "transliteration": "Marhaban!",
+          "meaning_units": [
+            "hello",
+            "response"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "neighbor",
+          "line_type": "world_response",
+          "text": "أهلًا.",
+          "transliteration": "Ahlan.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-introduce-class-transfer",
+      "asset_slug": "introduce-class-transfer",
+      "type": "transfer",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "class_partner",
+          "line_type": "world_opener",
+          "text": "اسمك لو سمحت؟",
+          "transliteration": "Ismuk law samaht?",
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-my-name-is",
+          "text": "اسمي آنا.",
+          "transliteration": "Ismi Anna.",
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ],
+          "tts_text": "اِسمي آنا."
+        },
+        {
+          "index": 2,
+          "speaker_role": "class_partner",
+          "line_type": "world_response",
+          "text": "تشرفتُ بمعرفتك.",
+          "transliteration": "Tasharraftu bimarifatik.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-introduce-community-review",
+      "asset_slug": "introduce-community-review",
+      "type": "delayed_review",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "host",
+          "line_type": "world_opener",
+          "text": "ما اسمك؟",
+          "transliteration": "Ma ismuki?",
+          "meaning_units": [
+            "your",
+            "name",
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-my-name-is",
+          "text": "اسمي آنا.",
+          "transliteration": "Ismi Anna.",
+          "meaning_units": [
+            "my",
+            "name",
+            "proper_noun"
+          ],
+          "tts_text": "اِسمي آنا."
+        },
+        {
+          "index": 2,
+          "speaker_role": "host",
+          "line_type": "world_response",
+          "text": "أهلًا بك.",
+          "transliteration": "Ahlan biki.",
+          "meaning_units": [
+            "positive_response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-repair-ticket-transfer",
+      "asset_slug": "repair-ticket-transfer",
+      "type": "transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "station_helper",
+          "line_type": "world_opener",
+          "text": "اضغط هنا.",
+          "transliteration": "Idghat huna.",
+          "meaning_units": [
+            "this",
+            "instruction"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-i-dont-understand",
+          "text": "لا أفهم.",
+          "transliteration": "La afham.",
+          "meaning_units": [
+            "not",
+            "understand"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "station_helper",
+          "line_type": "world_response",
+          "text": "لا بأس.",
+          "transliteration": "La bas.",
+          "meaning_units": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-repair-clinic-review",
+      "asset_slug": "repair-clinic-review",
+      "type": "delayed_review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "receptionist",
+          "line_type": "world_opener",
+          "text": "هذا هنا.",
+          "transliteration": "Hatha huna.",
+          "meaning_units": [
+            "this"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-i-dont-understand",
+          "text": "لا أفهم.",
+          "transliteration": "La afham.",
+          "meaning_units": [
+            "not",
+            "understand"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "receptionist",
+          "line_type": "world_response",
+          "text": "سأساعدك.",
+          "transliteration": "Sausaeduk.",
+          "meaning_units": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-excuse-me-cafe-transfer",
+      "asset_slug": "sumimasen-cafe-transfer",
+      "type": "transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "barista",
+          "line_type": "world_opener",
+          "text": "لحظة من فضلك.",
+          "transliteration": "Lahza min fadlik.",
+          "meaning_units": [
+            "wait"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-excuse-me-attention",
+          "text": "عذرًا.",
+          "transliteration": "Udhiran.",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "barista",
+          "line_type": "world_response",
+          "text": "نعم، تفضل.",
+          "transliteration": "Naam, tafaddal.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-excuse-me-station-review",
+      "asset_slug": "sumimasen-station-review",
+      "type": "delayed_review",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "staff",
+          "line_type": "world_opener",
+          "text": "التالي.",
+          "transliteration": "Altali.",
+          "meaning_units": [
+            "attention",
+            "not_looking"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-excuse-me-attention",
+          "text": "عذرًا.",
+          "transliteration": "Udhiran.",
+          "meaning_units": [
+            "attention_request",
+            "polite_softener"
+          ]
+        },
+        {
+          "index": 2,
+          "speaker_role": "staff",
+          "line_type": "world_response",
+          "text": "نعم.",
+          "transliteration": "Naam.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-order-convenience-transfer",
+      "asset_slug": "order-convenience-transfer",
+      "type": "transfer",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "cashier",
+          "line_type": "world_opener",
+          "text": "أي واحد؟",
+          "transliteration": "Ayy wahid?",
+          "meaning_units": [
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-one-local-food-please",
+          "text": "هذا.",
+          "transliteration": "Hatha.",
+          "meaning_units": [
+            "this_one"
+          ],
+          "audio_text": "Hatha.",
+          "tts_text": "هذا."
+        },
+        {
+          "index": 2,
+          "speaker_role": "cashier",
+          "line_type": "world_response",
+          "text": "حسنًا.",
+          "transliteration": "Hasanan.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ar-order-bakery-review",
+      "asset_slug": "order-bakery-review",
+      "type": "delayed_review",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "review_modes": [
+        "produce_from_visual",
+        "ai_guided_response"
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "speaker_role": "server",
+          "line_type": "world_opener",
+          "text": "ماذا تختار؟",
+          "transliteration": "Madha takhtar?",
+          "meaning_units": [
+            "question"
+          ]
+        },
+        {
+          "index": 1,
+          "speaker_role": "learner",
+          "line_type": "learner_target",
+          "target_id": "ar-target-one-local-food-please",
+          "text": "هذا.",
+          "transliteration": "Hatha.",
+          "meaning_units": [
+            "this_one"
+          ],
+          "audio_text": "Hatha.",
+          "tts_text": "هذا."
+        },
+        {
+          "index": 2,
+          "speaker_role": "server",
+          "line_type": "world_response",
+          "text": "حسنًا.",
+          "transliteration": "Hasanan.",
+          "meaning_units": [
+            "acknowledgement"
+          ]
+        }
+      ]
+    }
+  ]
+}

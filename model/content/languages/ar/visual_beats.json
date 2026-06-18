@@ -1,0 +1,1218 @@
+{
+  "language": "ar",
+  "display_name": "Arabic",
+  "script": "Arabic",
+  "native_review_status": "needs_native_review",
+  "visual_beats": [
+    {
+      "id": "ar-vb-first-hi-response-0",
+      "dialogue_id": "ar-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 0,
+      "line_text": "مرحبًا!",
+      "timing_role": "cue",
+      "meaning_units": [
+        "hello"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/first-hi-response/frame-0.png",
+        "image_prompt": "visuals/final/first-hi-response/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/first-hi-response/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "friend enters, smiles, waves, and starts the greeting"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "ar-vb-first-hi-response-1",
+      "dialogue_id": "ar-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 1,
+      "line_text": "مرحبًا!",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/first-hi-response/frame-1.png",
+        "image_prompt": "visuals/final/first-hi-response/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/first-hi-response/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello,response",
+          "visual_cue": "learner looks up, smiles, and waves back"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "ar-vb-first-hi-response-2",
+      "dialogue_id": "ar-first-hi-response",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "study-room-friend",
+      "line_index": 2,
+      "line_text": "سعيدٌ بلقائك.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/first-hi-response/frame-2.png",
+        "image_prompt": "visuals/final/first-hi-response/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/first-hi-response/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "friend smiles warmly, showing the greeting worked"
+        }
+      ],
+      "proper_noun_labels": []
+    },
+    {
+      "id": "ar-vb-introduce-self-0",
+      "dialogue_id": "ar-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 0,
+      "line_text": "ما اسمك؟",
+      "timing_role": "cue",
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-self/frame-0.png",
+        "image_prompt": "visuals/final/introduce-self/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/introduce-self/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "classmate smiles and gestures toward the learner, asking for their name"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-self-1",
+      "dialogue_id": "ar-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 1,
+      "line_text": "اسمي آنا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-self/frame-1.png",
+        "image_prompt": "visuals/final/introduce-self/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/introduce-self/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "learner touches chest and introduces themself; a small name label on notebook says Anna"
+        }
+      ],
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-self-2",
+      "dialogue_id": "ar-introduce-self",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "school-hallway-classmate",
+      "line_index": 2,
+      "line_text": "تشرفتُ بمعرفتك.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-self/frame-2.png",
+        "image_prompt": "visuals/final/introduce-self/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/introduce-self/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "classmate smiles warmly and nods in recognition"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-dont-understand-0",
+      "dialogue_id": "ar-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 0,
+      "line_text": "هذا هنا.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "this"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-dont-understand/frame-0.png",
+        "image_prompt": "visuals/final/repair-dont-understand/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/repair-dont-understand/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this",
+          "visual_cue": "staff points to a form on the counter and speaks quickly"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-dont-understand-1",
+      "dialogue_id": "ar-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 1,
+      "line_text": "لا أفهم.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-dont-understand/frame-1.png",
+        "image_prompt": "visuals/final/repair-dont-understand/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/repair-dont-understand/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "not,understand",
+          "visual_cue": "learner raises a small apologetic hand and looks confused"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-dont-understand-2",
+      "dialogue_id": "ar-repair-dont-understand",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "busy-service-counter",
+      "line_index": 2,
+      "line_text": "لا بأس.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "help"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-dont-understand/frame-2.png",
+        "image_prompt": "visuals/final/repair-dont-understand/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/repair-dont-understand/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "staff softens posture and points helpfully to the form"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-attention-0",
+      "dialogue_id": "ar-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "busy-service-counter",
+      "line_index": 0,
+      "line_text": "التالي، من فضلك.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "attention",
+        "turn_prompt"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-attention/frame-0.png",
+        "image_prompt": "visuals/final/excuse-me-attention/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/excuse-me-attention/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention,turn_prompt",
+          "visual_cue": "staff calls the next person forward while still looking down at paperwork or a counter screen; learner begins stepping up"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-attention-1",
+      "dialogue_id": "ar-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "busy-service-counter",
+      "line_index": 1,
+      "line_text": "عذرًا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-attention/frame-1.png",
+        "image_prompt": "visuals/final/excuse-me-attention/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/excuse-me-attention/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_request,polite_softener",
+          "visual_cue": "learner steps to the counter and gives a small polite bow or gentle raised-hand gesture while staff is still looking down"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-attention-2",
+      "dialogue_id": "ar-excuse-me-attention",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "busy-service-counter",
+      "line_index": 2,
+      "line_text": "نعم، تفضل.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "attention_received",
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-attention/frame-2.png",
+        "image_prompt": "visuals/final/excuse-me-attention/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/excuse-me-attention/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_received,acknowledgement",
+          "visual_cue": "staff looks up from the counter, makes eye contact, nods, and invites the learner to continue"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-order-local-food-0",
+      "dialogue_id": "ar-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 0,
+      "line_text": "ماذا تريد؟",
+      "timing_role": "cue",
+      "meaning_units": [
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-local-food/frame-0.png",
+        "image_prompt": "visuals/final/order-local-food/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/order-local-food/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "server waits at the counter with food visible nearby"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-local-food-1",
+      "dialogue_id": "ar-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 1,
+      "line_text": "هذا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "one",
+        "please"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-local-food/frame-1.png",
+        "image_prompt": "visuals/final/order-local-food/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/order-local-food/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-local-food-2",
+      "dialogue_id": "ar-order-local-food",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "local-food-counter",
+      "line_index": 2,
+      "line_text": "حسنًا.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-local-food/frame-2.png",
+        "image_prompt": "visuals/final/order-local-food/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/order-local-food/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "server nods and reaches toward the food"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-greeting-neighbor-transfer-0",
+      "dialogue_id": "ar-greeting-neighbor-transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "line_index": 0,
+      "line_text": "أهلًا!",
+      "timing_role": "cue",
+      "meaning_units": [
+        "hello"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/greeting-neighbor-transfer/frame-0.png",
+        "image_prompt": "visuals/final/greeting-neighbor-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/greeting-neighbor-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "neighbor-gate world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-greeting-neighbor-transfer-1",
+      "dialogue_id": "ar-greeting-neighbor-transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "line_index": 1,
+      "line_text": "مرحبًا!",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/greeting-neighbor-transfer/frame-1.png",
+        "image_prompt": "visuals/final/greeting-neighbor-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/greeting-neighbor-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello,response",
+          "visual_cue": "neighbor-gate learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-greeting-neighbor-transfer-2",
+      "dialogue_id": "ar-greeting-neighbor-transfer",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "neighbor-gate",
+      "line_index": 2,
+      "line_text": "أهلًا.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/greeting-neighbor-transfer/frame-2.png",
+        "image_prompt": "visuals/final/greeting-neighbor-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/greeting-neighbor-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "neighbor-gate world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-greeting-entry-review-0",
+      "dialogue_id": "ar-greeting-entry-review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 0,
+      "line_text": "مرحبًا.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "hello"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/greeting-entry-review/frame-0.png",
+        "image_prompt": "visuals/final/greeting-entry-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/greeting-entry-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello",
+          "visual_cue": "apartment-entry-neighbor world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-greeting-entry-review-1",
+      "dialogue_id": "ar-greeting-entry-review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 1,
+      "line_text": "مرحبًا!",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "hello",
+        "response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/greeting-entry-review/frame-1.png",
+        "image_prompt": "visuals/final/greeting-entry-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/greeting-entry-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "hello,response",
+          "visual_cue": "apartment-entry-neighbor learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-greeting-entry-review-2",
+      "dialogue_id": "ar-greeting-entry-review",
+      "function_id": "respond_to_greeting",
+      "target_id": "ar-target-respond-hi",
+      "scene_id": "apartment-entry-neighbor",
+      "line_index": 2,
+      "line_text": "أهلًا.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/greeting-entry-review/frame-2.png",
+        "image_prompt": "visuals/final/greeting-entry-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/greeting-entry-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "apartment-entry-neighbor world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-class-transfer-0",
+      "dialogue_id": "ar-introduce-class-transfer",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "line_index": 0,
+      "line_text": "اسمك لو سمحت؟",
+      "timing_role": "cue",
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-class-transfer/frame-0.png",
+        "image_prompt": "visuals/final/introduce-class-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/introduce-class-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "language-class-name-tags world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-class-transfer-1",
+      "dialogue_id": "ar-introduce-class-transfer",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "line_index": 1,
+      "line_text": "اسمي آنا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-class-transfer/frame-1.png",
+        "image_prompt": "visuals/final/introduce-class-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/introduce-class-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "language-class-name-tags learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-class-transfer-2",
+      "dialogue_id": "ar-introduce-class-transfer",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "language-class-name-tags",
+      "line_index": 2,
+      "line_text": "تشرفتُ بمعرفتك.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-class-transfer/frame-2.png",
+        "image_prompt": "visuals/final/introduce-class-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/introduce-class-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "language-class-name-tags world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-community-review-0",
+      "dialogue_id": "ar-introduce-community-review",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 0,
+      "line_text": "ما اسمك؟",
+      "timing_role": "cue",
+      "meaning_units": [
+        "your",
+        "name",
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-community-review/frame-0.png",
+        "image_prompt": "visuals/final/introduce-community-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/introduce-community-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "your,name,question",
+          "visual_cue": "community-table-introduction world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-community-review-1",
+      "dialogue_id": "ar-introduce-community-review",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 1,
+      "line_text": "اسمي آنا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "my",
+        "name",
+        "proper_noun"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-community-review/frame-1.png",
+        "image_prompt": "visuals/final/introduce-community-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/introduce-community-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "my,name,proper_noun",
+          "visual_cue": "community-table-introduction learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [
+        "Anna"
+      ],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-introduce-community-review-2",
+      "dialogue_id": "ar-introduce-community-review",
+      "function_id": "introduce_self",
+      "target_id": "ar-target-my-name-is",
+      "scene_id": "community-table-introduction",
+      "line_index": 2,
+      "line_text": "أهلًا بك.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "positive_response"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/introduce-community-review/frame-2.png",
+        "image_prompt": "visuals/final/introduce-community-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/introduce-community-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "positive_response",
+          "visual_cue": "community-table-introduction world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-ticket-transfer-0",
+      "dialogue_id": "ar-repair-ticket-transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "line_index": 0,
+      "line_text": "اضغط هنا.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "this",
+        "instruction"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-ticket-transfer/frame-0.png",
+        "image_prompt": "visuals/final/repair-ticket-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/repair-ticket-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this,instruction",
+          "visual_cue": "ticket-machine-help world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-ticket-transfer-1",
+      "dialogue_id": "ar-repair-ticket-transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "line_index": 1,
+      "line_text": "لا أفهم.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-ticket-transfer/frame-1.png",
+        "image_prompt": "visuals/final/repair-ticket-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/repair-ticket-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "not,understand",
+          "visual_cue": "ticket-machine-help learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-ticket-transfer-2",
+      "dialogue_id": "ar-repair-ticket-transfer",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "ticket-machine-help",
+      "line_index": 2,
+      "line_text": "لا بأس.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "help"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-ticket-transfer/frame-2.png",
+        "image_prompt": "visuals/final/repair-ticket-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/repair-ticket-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "ticket-machine-help world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-clinic-review-0",
+      "dialogue_id": "ar-repair-clinic-review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 0,
+      "line_text": "هذا هنا.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "this"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-clinic-review/frame-0.png",
+        "image_prompt": "visuals/final/repair-clinic-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/repair-clinic-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "this",
+          "visual_cue": "clinic-form-counter world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-clinic-review-1",
+      "dialogue_id": "ar-repair-clinic-review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 1,
+      "line_text": "لا أفهم.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "not",
+        "understand"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-clinic-review/frame-1.png",
+        "image_prompt": "visuals/final/repair-clinic-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/repair-clinic-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "not,understand",
+          "visual_cue": "clinic-form-counter learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-repair-clinic-review-2",
+      "dialogue_id": "ar-repair-clinic-review",
+      "function_id": "say_do_not_understand",
+      "target_id": "ar-target-i-dont-understand",
+      "scene_id": "clinic-form-counter",
+      "line_index": 2,
+      "line_text": "سأساعدك.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "help"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/repair-clinic-review/frame-2.png",
+        "image_prompt": "visuals/final/repair-clinic-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/repair-clinic-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "help",
+          "visual_cue": "clinic-form-counter world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-cafe-transfer-0",
+      "dialogue_id": "ar-excuse-me-cafe-transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 0,
+      "line_text": "لحظة من فضلك.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "wait"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-cafe-transfer/frame-0.png",
+        "image_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "wait",
+          "visual_cue": "cafe-counter-attention world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-cafe-transfer-1",
+      "dialogue_id": "ar-excuse-me-cafe-transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 1,
+      "line_text": "عذرًا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-cafe-transfer/frame-1.png",
+        "image_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_request,polite_softener",
+          "visual_cue": "cafe-counter-attention learner_target visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-cafe-transfer-2",
+      "dialogue_id": "ar-excuse-me-cafe-transfer",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "cafe-counter-attention",
+      "line_index": 2,
+      "line_text": "نعم، تفضل.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-cafe-transfer/frame-2.png",
+        "image_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/excuse-me-cafe-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "cafe-counter-attention world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-station-review-0",
+      "dialogue_id": "ar-excuse-me-station-review",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 0,
+      "line_text": "التالي.",
+      "timing_role": "cue",
+      "meaning_units": [
+        "attention",
+        "turn_prompt"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-station-review/frame-0.png",
+        "image_prompt": "visuals/final/excuse-me-station-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/excuse-me-station-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention,turn_prompt",
+          "visual_cue": "station-information-desk world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-station-review-1",
+      "dialogue_id": "ar-excuse-me-station-review",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 1,
+      "line_text": "عذرًا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "attention_request",
+        "polite_softener"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-station-review/frame-1.png",
+        "image_prompt": "visuals/final/excuse-me-station-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/excuse-me-station-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "attention_request,polite_softener",
+          "visual_cue": "station-information-desk learner_target visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-excuse-me-station-review-2",
+      "dialogue_id": "ar-excuse-me-station-review",
+      "function_id": "get_attention_politely",
+      "target_id": "ar-target-excuse-me-attention",
+      "scene_id": "station-information-desk",
+      "line_index": 2,
+      "line_text": "نعم.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/excuse-me-station-review/frame-2.png",
+        "image_prompt": "visuals/final/excuse-me-station-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/excuse-me-station-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "station-information-desk world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+    },
+    {
+      "id": "ar-vb-order-convenience-transfer-0",
+      "dialogue_id": "ar-order-convenience-transfer",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 0,
+      "line_text": "أي واحد؟",
+      "timing_role": "cue",
+      "meaning_units": [
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-convenience-transfer/frame-0.png",
+        "image_prompt": "visuals/final/order-convenience-transfer/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/order-convenience-transfer/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "convenience-store-sandwich world_opener visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-convenience-transfer-1",
+      "dialogue_id": "ar-order-convenience-transfer",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 1,
+      "line_text": "هذا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "one",
+        "please"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-convenience-transfer/frame-1.png",
+        "image_prompt": "visuals/final/order-convenience-transfer/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/order-convenience-transfer/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-convenience-transfer-2",
+      "dialogue_id": "ar-order-convenience-transfer",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "convenience-store-sandwich",
+      "line_index": 2,
+      "line_text": "حسنًا.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-convenience-transfer/frame-2.png",
+        "image_prompt": "visuals/final/order-convenience-transfer/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/order-convenience-transfer/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "convenience-store-sandwich world_response visual cue for transfer practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-bakery-review-0",
+      "dialogue_id": "ar-order-bakery-review",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 0,
+      "line_text": "ماذا تختار؟",
+      "timing_role": "cue",
+      "meaning_units": [
+        "question"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-bakery-review/frame-0.png",
+        "image_prompt": "visuals/final/order-bakery-review/prompts/frame-0.txt",
+        "video_prompt": "visuals/final/order-bakery-review/prompts/beat-0.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "question",
+          "visual_cue": "bakery-counter-sandwich world_opener visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-bakery-review-1",
+      "dialogue_id": "ar-order-bakery-review",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 1,
+      "line_text": "هذا.",
+      "timing_role": "learner_turn",
+      "meaning_units": [
+        "one",
+        "please"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-bakery-review/frame-1.png",
+        "image_prompt": "visuals/final/order-bakery-review/prompts/frame-1.txt",
+        "video_prompt": "visuals/final/order-bakery-review/prompts/beat-1.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "one,please",
+          "visual_cue": "learner points to one visible item and asks politely"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    },
+    {
+      "id": "ar-vb-order-bakery-review-2",
+      "dialogue_id": "ar-order-bakery-review",
+      "function_id": "order_local_food",
+      "target_id": "ar-target-one-local-food-please",
+      "scene_id": "bakery-counter-sandwich",
+      "line_index": 2,
+      "line_text": "حسنًا.",
+      "timing_role": "resolution",
+      "meaning_units": [
+        "acknowledgement"
+      ],
+      "asset_paths": {
+        "image": "visuals/final/order-bakery-review/frame-2.png",
+        "image_prompt": "visuals/final/order-bakery-review/prompts/frame-2.txt",
+        "video_prompt": "visuals/final/order-bakery-review/prompts/beat-2.txt"
+      },
+      "gesture_mapping": [
+        {
+          "meaning_unit": "acknowledgement",
+          "visual_cue": "bakery-counter-sandwich world_response visual cue for delayed_review practice"
+        }
+      ],
+      "proper_noun_labels": [],
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "line_meaning": "This one."
+    }
+  ]
+}

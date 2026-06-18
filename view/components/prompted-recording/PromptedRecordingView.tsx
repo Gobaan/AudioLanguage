@@ -8,6 +8,7 @@ type PromptedRecordingViewProps = {
   state: RecordingState;
   prompt: string;
   playbackPrompt: string;
+  blockedReason?: string | null;
   startMode: 'auto' | 'manual';
   startLabel: string;
   recordingMs: number;
@@ -33,7 +34,7 @@ export function PromptedRecordingView(props: PromptedRecordingViewProps) {
   const visibleError = props.audioError || props.modelAudioError;
   return (
     <section className={`prompted-recording ${props.state}`} aria-live="polite">
-      <p>{statusText(props.state, props.prompt, props.playbackPrompt)}</p>
+      <p>{statusText(props.state, props.prompt, props.playbackPrompt, props.blockedReason)}</p>
       {props.state === 'ready' && props.startMode === 'manual' ? <button type="button" className="record-button" onClick={props.onStart}>{props.startLabel}</button> : null}
       {props.state === 'recording' ? <RecordingCountdownBar durationMs={props.recordingMs} isPaused={props.isSpeechActive} /> : null}
       {visibleError ? <p className="audio-error" role="alert">{visibleError}</p> : null}

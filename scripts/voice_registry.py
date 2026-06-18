@@ -54,6 +54,15 @@ CHARACTER_VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
         "pharmacist": {"provider_voice": "zh-CN-YunyangNeural", "rate": "-3%", "pitch": "-2Hz"},
         "default": {"provider_voice": "zh-CN-YunyangNeural", "rate": "+0%", "pitch": "+0Hz"},
     },
+    "ar": {
+        "learner": {"provider_voice": "ar-SA-ZariyahNeural", "rate": "+0%", "pitch": "+0Hz"},
+        "friend": {"provider_voice": "ar-SA-HamedNeural", "rate": "+2%", "pitch": "+0Hz"},
+        "staff": {"provider_voice": "ar-SA-HamedNeural", "rate": "+0%", "pitch": "-2Hz"},
+        "local_helper": {"provider_voice": "ar-SA-HamedNeural", "rate": "-1%", "pitch": "+0Hz"},
+        "vendor": {"provider_voice": "ar-SA-ZariyahNeural", "rate": "+3%", "pitch": "+0Hz"},
+        "pharmacist": {"provider_voice": "ar-SA-HamedNeural", "rate": "-3%", "pitch": "-1Hz"},
+        "default": {"provider_voice": "ar-SA-HamedNeural", "rate": "+0%", "pitch": "+0Hz"},
+    },
 }
 
 
@@ -299,6 +308,53 @@ VOICE_PROFILES: dict[str, dict[str, dict[str, str]]] = {
         },
         "default": {
             "provider_voice": "zh-CN-YunyangNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+    },
+    "ar": {
+        "learner": {
+            "provider_voice": "ar-SA-ZariyahNeural",
+            "rate": "+0%",
+            "pitch": "+0Hz",
+        },
+        "friend": {
+            "provider_voice": "ar-SA-HamedNeural",
+            "rate": "+2%",
+            "pitch": "+0Hz",
+        },
+        "classmate": {
+            "provider_voice": "ar-SA-HamedNeural",
+            "rate": "+4%",
+            "pitch": "+1Hz",
+        },
+        "staff": {
+            "provider_voice": "ar-SA-HamedNeural",
+            "rate": "+0%",
+            "pitch": "-2Hz",
+        },
+        "local": {
+            "provider_voice": "ar-SA-HamedNeural",
+            "rate": "-1%",
+            "pitch": "+0Hz",
+        },
+        "server": {
+            "provider_voice": "ar-SA-ZariyahNeural",
+            "rate": "+3%",
+            "pitch": "+0Hz",
+        },
+        "vendor": {
+            "provider_voice": "ar-SA-ZariyahNeural",
+            "rate": "+3%",
+            "pitch": "+0Hz",
+        },
+        "pharmacist": {
+            "provider_voice": "ar-SA-HamedNeural",
+            "rate": "-3%",
+            "pitch": "-1Hz",
+        },
+        "default": {
+            "provider_voice": "ar-SA-HamedNeural",
             "rate": "+0%",
             "pitch": "+0Hz",
         },

@@ -21,7 +21,7 @@ from app.content.lesson_steps import (  # noqa: E402
 )
 from content_assets import DEFAULT_DATA_DIR, iter_dialogue_lines, list_language_dirs, path_exists, read_json  # noqa: E402
 from project_config.paths import repo_file_for_relative_path  # noqa: E402
-from voice_registry import voice_profile_for  # noqa: E402
+from voice_registry import character_voice_profile_for  # noqa: E402
 
 
 async def synthesize_mp3(
@@ -122,7 +122,7 @@ async def generate_language(
     targets_payload = read_json(data_dir / "languages" / language / "targets.json")
     dialogues_payload = read_json(data_dir / "languages" / language / "dialogues.json")
     learner_lines = learner_lines_by_target(dialogues_payload)
-    profile = voice_profile_for(language, "learner")
+    profile = character_voice_profile_for(language, "learner", "learner")
     created = 0
     skipped = 0
 

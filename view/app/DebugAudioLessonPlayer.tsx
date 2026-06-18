@@ -67,15 +67,15 @@ export function DebugAudioLessonPlayer() {
       'error',
       () => {
         audioRef.current = null;
-        setPlayState('error');
-        setErrorMessage(`Could not play ${item.label}.`);
+        setErrorMessage(`Skipped ${item.label}.`);
+        playFrom(index + 1);
       },
       { once: true },
     );
     audio.play().catch(() => {
       audioRef.current = null;
-      setPlayState('error');
-      setErrorMessage(`Could not play ${item.label}.`);
+      setErrorMessage(`Skipped ${item.label}.`);
+      playFrom(index + 1);
     });
   }
 
