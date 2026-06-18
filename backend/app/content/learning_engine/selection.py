@@ -25,13 +25,13 @@ def select_session_lessons(
             if add_candidate(selected, used_targets, candidate):
                 continue
 
-    if len(selected) < TARGET_SESSION_SIZE and repair_load_is_light(selected):
-        for candidate in new_anchor_candidates(indexed_lessons, states):
+    if len(selected) < TARGET_SESSION_SIZE:
+        for candidate in transfer_candidates(indexed_lessons, states):
             if add_candidate(selected, used_targets, candidate):
                 continue
 
-    if len(selected) < TARGET_SESSION_SIZE:
-        for candidate in transfer_candidates(indexed_lessons, states):
+    if len(selected) < TARGET_SESSION_SIZE and repair_load_is_light(selected):
+        for candidate in new_anchor_candidates(indexed_lessons, states):
             if add_candidate(selected, used_targets, candidate):
                 continue
 
