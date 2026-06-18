@@ -29,6 +29,9 @@ export function playAudioUrl(
   audio.addEventListener(
     'ended',
     () => {
+      if (audioRef.current !== audio) {
+        return;
+      }
       setIsPlaying(false);
       audioRef.current = null;
     },
@@ -38,6 +41,9 @@ export function playAudioUrl(
   audio.addEventListener(
     'error',
     () => {
+      if (audioRef.current !== audio) {
+        return;
+      }
       setIsPlaying(false);
       audioRef.current = null;
       onError?.(AUDIO_PLAYBACK_ERROR);
@@ -46,6 +52,9 @@ export function playAudioUrl(
   );
 
   audio.play().catch(() => {
+    if (audioRef.current !== audio) {
+      return;
+    }
     setIsPlaying(false);
     audioRef.current = null;
     onError?.(AUDIO_PLAYBACK_ERROR);
@@ -68,6 +77,9 @@ export function playAudioOrSpeakThen(
     const audio = getPrefetchedAudioElement(url) ?? new Audio(url);
     audioRef.current = audio;
     const complete = () => {
+      if (audioRef.current !== audio) {
+        return;
+      }
       audioRef.current = null;
       onComplete();
     };
@@ -75,12 +87,18 @@ export function playAudioOrSpeakThen(
     audio.addEventListener(
       'error',
       () => {
+        if (audioRef.current !== audio) {
+          return;
+        }
         audioRef.current = null;
         onError?.(AUDIO_PLAYBACK_ERROR);
       },
       { once: true },
     );
     audio.play().catch(() => {
+      if (audioRef.current !== audio) {
+        return;
+      }
       audioRef.current = null;
       onError?.(AUDIO_PLAYBACK_ERROR);
     });
