@@ -7,6 +7,15 @@ from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 TYPESCRIPT_PACKAGE = PROJECT_DIR / "view" / "node_modules" / "typescript"
+PROMPTED_RECORDING_DIR = PROJECT_DIR / "view" / "components" / "prompted-recording"
+
+
+def prompted_recording_source() -> str:
+    parts = []
+    for path in sorted(PROMPTED_RECORDING_DIR.rglob("*")):
+        if path.suffix in {".ts", ".tsx"}:
+            parts.append(path.read_text(encoding="utf-8"))
+    return "\n".join(parts)
 
 
 def run_frontend_script(source_paths: list[str], script: str):
@@ -115,9 +124,7 @@ def test_recording_steps_show_learner_frame_before_attempt():
 
 
 def test_recording_timer_uses_five_second_countdown_bar():
-    recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
-        encoding="utf-8"
-    )
+    recording_source = prompted_recording_source()
     preview_source = (PROJECT_DIR / "view" / "app" / "RecordingCountdownPreview.tsx").read_text(encoding="utf-8")
     countdown_source = (PROJECT_DIR / "view" / "components" / "RecordingCountdownBar.tsx").read_text(
         encoding="utf-8"
@@ -128,12 +135,12 @@ def test_recording_timer_uses_five_second_countdown_bar():
 
     assert "step.mic?.maxDurationMs" in production_source
     assert "recordingMs={recordingMs}" in production_source
-    assert "recordingMs = 5000" in recording_source
+    assert "DEFAULT_RECORDING_MS = 5000" in recording_source
     assert "RecordingCountdownBar" in recording_source
-    assert "isPaused={isSpeechActive}" in recording_source
-    assert "setSpeechActive(isSpeaking)" in recording_source
+    assert "isPaused={props.isSpeechActive}" in recording_source
+    assert "rootMeanSquare(samples)" in recording_source
     assert "SPEECH_VISUAL_HOLD_MS = 500" in recording_source
-    assert "clearSpeechVisualHoldTimer()" in recording_source
+    assert "clearHold()" in recording_source
     assert "recordingDurationMs(context.step)" in registry_source
     assert "recordingMs={recordingDurationMs(context.step)}" in registry_source
     assert "recording-countdown" in countdown_source
@@ -146,9 +153,7 @@ def test_recording_timer_uses_five_second_countdown_bar():
 
 
 def test_recording_timer_tracks_no_response_and_extends_while_speaking():
-    recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
-        encoding="utf-8"
-    )
+    recording_source = prompted_recording_source()
     validation_source = (PROJECT_DIR / "view" / "app" / "useValidationSession.ts").read_text(encoding="utf-8")
     types_source = (PROJECT_DIR / "view" / "components" / "types.ts").read_text(encoding="utf-8")
 
@@ -158,11 +163,11 @@ def test_recording_timer_tracks_no_response_and_extends_while_speaking():
     assert "recordingStoppedBy?: string" in (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(
         encoding="utf-8"
     )
-    assert "startSpeechDetection(stream, stopAfterSilenceMs)" in recording_source
+    assert "startSpeechDetector(stream" in recording_source
     assert "rootMeanSquare(samples)" in recording_source
     assert "stoppedByRef.current = 'no_speech_timeout'" in recording_source
     assert "stoppedByRef.current = 'speech_completed'" in recording_source
-    assert "hardLimitMs = recordingMs + 5000" in recording_source
+    assert "args.recordingMs + 5000" in recording_source
     assert "speechDetected: recording.speechDetected" in validation_source
     assert "timedOutWithoutSpeech: recording.timedOutWithoutSpeech" in validation_source
     assert "recordingStoppedBy: recording.stoppedBy" in validation_source
@@ -172,9 +177,7 @@ def test_lesson_audio_errors_instead_of_browser_tts_fallback():
     audio_source = (PROJECT_DIR / "view" / "app" / "audioPlayback.ts").read_text(encoding="utf-8")
     hook_source = (PROJECT_DIR / "view" / "app" / "useAudioPlayback.ts").read_text(encoding="utf-8")
     scene_source = (PROJECT_DIR / "view" / "components" / "ScenePlayback.tsx").read_text(encoding="utf-8")
-    recording_source = (PROJECT_DIR / "view" / "components" / "PromptedRecording.tsx").read_text(
-        encoding="utf-8"
-    )
+    recording_source = prompted_recording_source()
     step_audio_source = (PROJECT_DIR / "view" / "app" / "StepAudioButton.tsx").read_text(encoding="utf-8")
     styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
 
