@@ -168,6 +168,15 @@ export function ProductionPracticeStep({
     [feedbackFrames.length, onCaptureAttempt, step, usesPostAttemptFeedback],
   );
 
+  const handleContinueDuringFeedback = useCallback(() => {
+    stopPlayback();
+    if (onStepComplete) {
+      onStepComplete();
+      return;
+    }
+    setPhase('done');
+  }, [onStepComplete, stopPlayback]);
+
   const showLegacyResponsePlayback =
     phase === 'done' && !usesPostAttemptFeedback && Boolean(responseFrame?.audioUrl);
   const showLegacyResponseTextPlayback =
@@ -198,6 +207,13 @@ export function ProductionPracticeStep({
           />
         ) : null}
         {phase === 'feedback' ? <p aria-live="polite">Listen to the model dialogue.</p> : null}
+        {phase === 'feedback' ? (
+          <nav className="step-controls" aria-label="Production feedback controls">
+            <button type="button" onClick={handleContinueDuringFeedback}>
+              {nextLabel}
+            </button>
+          </nav>
+        ) : null}
         {showLegacyResponsePlayback ? <ResponsePlayback audioUrl={responseFrame?.audioUrl} /> : null}
         {showLegacyResponseTextPlayback ? <ResponsePlayback audioText={responseFrame?.audioText} /> : null}
         {phase === 'done' && showDialogueRevealAfterAttempt ? (

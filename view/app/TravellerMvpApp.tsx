@@ -5,6 +5,7 @@ import { FitToViewport } from './FitToViewport';
 import { LearnerSessionLanding } from './LearnerSessionLanding';
 import { PlanSelectionDebugPanel } from './PlanSelectionDebugPanel';
 import { TravellerLessonShell } from './TravellerLessonShell';
+import { useAssetPrefetcher } from './useAssetPrefetcher';
 import { useActiveLessonStep } from './useActiveLessonStep';
 import { useLessonLoader } from './useLessonLoader';
 import { useParticipantId } from './useParticipantId';
@@ -20,7 +21,7 @@ export function TravellerMvpApp() {
   const { language, lessonPage, sceneSet, selectLessonPage } = useTravellerRoute();
   const participantId = useParticipantId();
   const [sessionPhase, setSessionPhase] = useState<SessionPhase>('landing');
-  const [sessionRequestId, setSessionRequestId] = useState(0);
+  const [sessionRequestId, setSessionRequestId] = useState(1);
 
   const { lessonTabs, lessons, lesson, displayName, planVersion, sessionId, loadState } = useLessonLoader({
     language,
@@ -75,7 +76,7 @@ export function TravellerMvpApp() {
   useEffect(() => {
     resetScorecard();
     setSessionPhase('landing');
-    setSessionRequestId(0);
+    setSessionRequestId(1);
   }, [language, sceneSet, resetScorecard]);
 
   useEffect(() => {
@@ -98,13 +99,36 @@ export function TravellerMvpApp() {
     return lessonTabs[currentIndex + 1] ?? null;
   }, [lessonTabs, lessons, stepLesson?.id]);
 
+  const nextLesson = useMemo(() => {
+    const currentLessonId = stepLesson?.id;
+    if (!currentLessonId) {
+      return null;
+    }
+    const currentIndex = lessons.findIndex((item) => item.id === currentLessonId);
+    if (currentIndex < 0) {
+      return null;
+    }
+    return lessons[currentIndex + 1] ?? null;
+  }, [lessons, stepLesson?.id]);
+
+  useAssetPrefetcher({
+    sessionPhase,
+    firstLesson: lessons[0] ?? null,
+    currentLesson: stepLesson ?? null,
+    currentStepId: step?.id ?? null,
+    nextLesson,
+    isAudioPlaying: isPlaying,
+  });
+
   const beginSession = useCallback(() => {
     resetScorecard();
     setSessionPhase('running');
-    setSessionRequestId((value) => value + 1);
+    if (sessionPhase === 'complete') {
+      setSessionRequestId((value) => value + 1);
+    }
     selectLessonPage(START_LESSON);
     updateLessonUrl(language, START_LESSON, sceneSet, true, null);
-  }, [language, sceneSet, resetScorecard, selectLessonPage]);
+  }, [language, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
 
   const completeSession = useCallback(() => {
     setSessionPhase('complete');

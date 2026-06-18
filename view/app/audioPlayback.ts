@@ -1,3 +1,5 @@
+import { getPrefetchedAudioElement } from './useAssetPrefetcher';
+
 export const AUDIO_PLAYBACK_ERROR = 'Audio file could not be played.';
 export const AUDIO_MISSING_ERROR = 'Audio file is missing.';
 
@@ -20,7 +22,7 @@ export function playAudioUrl(
   setIsPlaying: (playing: boolean) => void,
   onError?: (message: string) => void,
 ) {
-  const audio = new Audio(url);
+  const audio = getPrefetchedAudioElement(url) ?? new Audio(url);
   audioRef.current = audio;
   setIsPlaying(true);
 
@@ -63,7 +65,7 @@ export function playAudioOrSpeakThen(
   stopSpeech(utteranceRef.current);
 
   if (url) {
-    const audio = new Audio(url);
+    const audio = getPrefetchedAudioElement(url) ?? new Audio(url);
     audioRef.current = audio;
     const complete = () => {
       audioRef.current = null;

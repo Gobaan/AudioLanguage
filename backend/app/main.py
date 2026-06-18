@@ -17,12 +17,29 @@ app.add_middleware(
 
 @app.middleware("http")
 async def disable_browser_cache(request, call_next):
-    """Keep phone testing honest while assets and scenes are changing quickly."""
+    """Avoid stale HTML/API while allowing asset caching to reduce request queueing."""
     response = await call_next(request)
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
+    cache_control = cache_control_for_path(request.url.path)
+    response.headers["Cache-Control"] = cache_control
+    if cache_control.startswith("no-store"):
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    else:
+        if "Pragma" in response.headers:
+            del response.headers["Pragma"]
+        if "Expires" in response.headers:
+            del response.headers["Expires"]
     return response
+
+
+def cache_control_for_path(path: str) -> str:
+    if path.startswith("/static/assets/"):
+        # Vite build assets are content-hashed, so immutable caching is safe.
+        return "public, max-age=31536000, immutable"
+    if path.startswith("/audio/") or path.startswith("/visuals/"):
+        # Reuse lesson media between steps while still refreshing reasonably quickly.
+        return "public, max-age=3600"
+    return "no-store, no-cache, must-revalidate, max-age=0"
 
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
