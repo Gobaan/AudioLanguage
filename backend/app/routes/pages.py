@@ -16,18 +16,9 @@ def learner_app():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
-@router.get("/debug/recording-countdown")
-def recording_countdown_preview():
-    return FileResponse(str(STATIC_DIR / "index.html"))
-
-
-@router.get("/debug/audio")
-def audio_debug_player():
-    return FileResponse(str(STATIC_DIR / "index.html"))
-
-
-@router.get("/debug/transfer-tutorial")
-def transfer_tutorial_debug():
+@router.get("/debug")
+@router.get("/debug/{debug_path:path}")
+def debug_pages(debug_path: str = ""):
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 

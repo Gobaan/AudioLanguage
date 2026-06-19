@@ -30,9 +30,9 @@ type UseAssetPrefetcherOptions = {
 };
 
 const PRIORITIES: PrefetchPriority[] = ['critical', 'soon', 'background'];
-const IMAGE_CONCURRENCY = 2;
+const IMAGE_CONCURRENCY = 4;
 const AUDIO_CONCURRENCY = 1;
-const MAX_BACKGROUND_QUEUE = 8;
+const MAX_BACKGROUND_QUEUE = 30;
 
 class AssetPrefetchQueue {
   private readonly queued = new Set<string>();
@@ -45,7 +45,7 @@ class AssetPrefetchQueue {
   private readonly imageCache = new Map<string, HTMLImageElement>();
   private activeImages = 0;
   private activeAudio = 0;
-  private backgroundPaused = false;
+  private backgroundAudioPaused = false;
 
   enqueuePlan(plan: AssetPrefetchPlan) {
     this.enqueue(plan.critical, 'critical');
@@ -79,8 +79,8 @@ class AssetPrefetchQueue {
     this.schedule();
   }
 
-  setBackgroundPaused(paused: boolean) {
-    this.backgroundPaused = paused;
+  setBackgroundAudioPaused(paused: boolean) {
+    this.backgroundAudioPaused = paused;
     if (!paused) {
       this.schedule();
     }
@@ -127,7 +127,7 @@ class AssetPrefetchQueue {
 
   private nextTask(type: AssetType): PrefetchTask | null {
     for (const priority of PRIORITIES) {
-      if (priority === 'background' && this.backgroundPaused) {
+      if (priority === 'background' && type === 'audio' && this.backgroundAudioPaused) {
         continue;
       }
       const tasks = this.queue.get(priority);
@@ -216,7 +216,7 @@ export function useAssetPrefetcher({
   const primedNextLessonIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    prefetchQueue.setBackgroundPaused(isAudioPlaying);
+    prefetchQueue.setBackgroundAudioPaused(isAudioPlaying);
   }, [isAudioPlaying]);
 
   const landingPlan = useMemo(() => {
@@ -269,6 +269,10 @@ export function getPrefetchedAudioElement(url: string): HTMLAudioElement | null 
 
 export function prefetchHasAsset(url: string): boolean {
   return prefetchQueue.has(url);
+}
+
+export function prefetchAssets(urls: string[], priority: PrefetchPriority = 'critical') {
+  prefetchQueue.enqueue(urls, priority);
 }
 
 function detectAssetType(url: string): AssetType {

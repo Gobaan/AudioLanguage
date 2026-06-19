@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchLanguages, type LanguageSummary } from '../api/languages';
 import { clearLocalValidationSessions } from '../api/validation';
 import { isLocalHost } from './urlParams';
-import { languageAudioDebugLink, languageLessonLink } from './lessonLinks';
+import { languageAudioDebugLink, languageLessonLink, languagePreloaderDebugLink } from './lessonLinks';
 import { PARTICIPANT_STORAGE_KEY } from './useParticipantId';
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -58,10 +58,12 @@ export function LanguageSelectionApp() {
             <div className="language-card-actions">
               <a href={languageLessonLink(language.id, 'mvp')}>Learn</a>
               {isLocalHost() ? <a href={languageAudioDebugLink(language.id, 'mvp')}>Audio debug</a> : null}
+              {isLocalHost() ? <a href={languagePreloaderDebugLink(language.id, 'mvp')}>Preloader debug</a> : null}
               {language.scene_sets.includes('delayed') && isLocalHost() ? (
                 <>
                   <a href={languageLessonLink(language.id, 'delayed')}>Delayed</a>
                   <a href={languageAudioDebugLink(language.id, 'delayed')}>Delayed audio</a>
+                  <a href={languagePreloaderDebugLink(language.id, 'delayed')}>Delayed preloader</a>
                 </>
               ) : null}
             </div>

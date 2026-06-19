@@ -13,3 +13,9 @@ export function languageAudioDebugLink(language: string, sceneSet: LessonSceneSe
   if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
   return `/debug/audio?${params.toString()}`;
 }
+
+export function languagePreloaderDebugLink(language: string, sceneSet: LessonSceneSet): string {
+  const params = new URLSearchParams({ language });
+  if (sceneSet !== 'mvp') params.set('scene_set', sceneSet);
+  return `/debug/preloader?${params.toString()}`;
+}

@@ -14,19 +14,22 @@ type PlanOptions = {
   nextLessonTriggerRemainingSteps?: number;
 };
 
-const DEFAULT_INITIAL_STEP_COUNT = 2;
-const DEFAULT_LOOKAHEAD_STEP_COUNT = 2;
+const DEFAULT_INITIAL_STEP_COUNT = 6;
+const DEFAULT_LOOKAHEAD_STEP_COUNT = 4;
 const DEFAULT_NEXT_LESSON_CRITICAL_STEP_COUNT = 1;
-const DEFAULT_NEXT_LESSON_TRIGGER_REMAINING_STEPS = 2;
+const DEFAULT_NEXT_LESSON_TRIGGER_REMAINING_STEPS = 4;
 
 export function planLessonStartAssets(
   lesson: Lesson,
   options: PlanOptions = {},
 ): AssetPrefetchPlan {
   const initialStepCount = Math.max(1, options.initialStepCount ?? DEFAULT_INITIAL_STEP_COUNT);
-  const critical = collectStepRangeAssets(lesson, 0, Math.min(lesson.steps.length, initialStepCount));
-  const soon = collectStepRangeAssets(lesson, initialStepCount, Math.min(lesson.steps.length, initialStepCount + 1));
-  return { critical, soon, background: [] };
+  const criticalEnd = Math.min(lesson.steps.length, initialStepCount);
+  const soonEnd = Math.min(lesson.steps.length, initialStepCount + 2);
+  const critical = collectStepRangeAssets(lesson, 0, criticalEnd);
+  const soon = collectStepRangeAssets(lesson, criticalEnd, soonEnd);
+  const background = collectStepRangeAssets(lesson, soonEnd, lesson.steps.length);
+  return { critical, soon, background };
 }
 
 export function planUpcomingStepAssets(
@@ -41,7 +44,7 @@ export function planUpcomingStepAssets(
 
   const lookaheadStepCount = Math.max(1, options.lookaheadStepCount ?? DEFAULT_LOOKAHEAD_STEP_COUNT);
   const criticalStart = currentIndex + 1;
-  const criticalEnd = Math.min(lesson.steps.length, criticalStart + 1);
+  const criticalEnd = Math.min(lesson.steps.length, criticalStart + Math.min(2, lookaheadStepCount));
   const soonEnd = Math.min(lesson.steps.length, criticalStart + lookaheadStepCount);
 
   return {
