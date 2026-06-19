@@ -396,6 +396,7 @@ def test_learner_session_landing_renders_next_session_actions():
             displayName: 'Japanese',
             lessonCount: 3,
             sessionPhase: 'landing',
+            planState: 'ready',
             participantReady: true,
             onStartSession() {},
             onContinue() {},
@@ -407,12 +408,37 @@ def test_learner_session_landing_renders_next_session_actions():
             displayName: 'Japanese',
             lessonCount: 3,
             sessionPhase: 'complete',
+            planState: 'ready',
             participantReady: true,
             onStartSession() {},
             onContinue() {},
           })
         );
-        console.log(JSON.stringify({ landing, complete }));
+        const emptyReady = renderToStaticMarkup(
+          React.createElement(LearnerSessionLanding, {
+            language: 'ja',
+            displayName: 'Japanese',
+            lessonCount: 0,
+            sessionPhase: 'landing',
+            planState: 'ready',
+            participantReady: true,
+            onStartSession() {},
+            onContinue() {},
+          })
+        );
+        const loading = renderToStaticMarkup(
+          React.createElement(LearnerSessionLanding, {
+            language: 'ja',
+            displayName: 'Japanese',
+            lessonCount: 0,
+            sessionPhase: 'landing',
+            planState: 'loading',
+            participantReady: true,
+            onStartSession() {},
+            onContinue() {},
+          })
+        );
+        console.log(JSON.stringify({ landing, complete, emptyReady, loading }));
         """,
     )
 
@@ -420,6 +446,9 @@ def test_learner_session_landing_renders_next_session_actions():
     assert "Ready for your next session?" in result["landing"]
     assert "Continue" in result["complete"]
     assert "Nice work" in result["complete"]
+    assert "Nothing due, come back tomorrow!" in result["emptyReady"]
+    assert "Preparing your next session..." in result["loading"]
+    assert "Next session" not in result["emptyReady"]
     assert "Take a break" not in result["complete"]
 
 
@@ -431,6 +460,7 @@ def test_lesson_loader_waits_for_participant_and_session_request():
     assert "sessionRequestId === 0" in loader_source
     assert "!participantId || sessionRequestId === 0" in loader_source
     assert "'idle'" in loader_source
+    assert "FALLBACK_LESSON" not in loader_source
     assert "sessionRequestId" in app_source
     assert "LearnerSessionLanding" in app_source
     assert "beginSession" in app_source
@@ -445,8 +475,12 @@ def test_session_queue_completion_shows_scorecard_with_next_lesson_action():
     assert "completeSession();" in app_source
     assert "if (appView === 'scorecard')" in app_source
     assert "onNextLesson={sessionPhase === 'complete' ? beginSession : null}" in app_source
+    assert "const canBeginSession = loadState === 'ready' && lessons.length > 0 && scorecardState !== 'loading';" in app_source
+    assert "Loading your next session..." in app_source
+    assert "planState={loadState === 'idle' ? 'loading' : loadState}" in app_source
     assert "onContinue={beginSession}" in app_source
-    assert "Next lesson" in scorecard_source
+    assert "disabled={state === 'loading'}" in scorecard_source
+    assert "Scoring..." in scorecard_source
 
 
 def test_frontend_sends_lesson_stage_to_validation():

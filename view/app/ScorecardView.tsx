@@ -31,8 +31,8 @@ export function ValidationScorecardView({
         </div>
         <nav className="scorecard-actions" aria-label="Scorecard controls">
           {onNextLesson ? (
-            <button type="button" onClick={onNextLesson}>
-              Next lesson
+            <button type="button" onClick={onNextLesson} disabled={state === 'loading'}>
+              {state === 'loading' ? 'Scoring...' : 'Next lesson'}
             </button>
           ) : null}
           <button type="button" onClick={onBack}>
@@ -44,7 +44,7 @@ export function ValidationScorecardView({
         </nav>
       </header>
 
-      {state === 'loading' ? <p className="scorecard-status">Loading scorecard.</p> : null}
+      {state === 'loading' ? <p className="scorecard-status">Scoring your recordings...</p> : null}
       {state === 'error' ? (
         <p className="scorecard-status">Scorecard is unavailable.</p>
       ) : null}

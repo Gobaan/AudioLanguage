@@ -145,6 +145,28 @@ class LearningEngineScenarioTests(unittest.TestCase):
         self.assertTrue(rows)
         self.assertTrue(all(purpose == "transfer_practice" for _, purpose, _ in rows))
 
+    def test_mvp_plan_can_be_empty_when_everything_is_recently_mastered(self):
+        with make_learning_state() as scenario:
+            for target_id, lesson_id in [
+                (HELLO_TARGET, HELLO_ANCHOR),
+                (INTRODUCE_TARGET, INTRODUCE_ANCHOR),
+                (REPAIR_TARGET, REPAIR_ANCHOR),
+                (EXCUSE_ME_TARGET, EXCUSE_ME_ANCHOR),
+                (FOOD_TARGET, FOOD_ANCHOR),
+            ]:
+                scenario.record_passed_anchor(target_id=target_id, lesson_id=lesson_id, reviewed_at="2026-06-01")
+                scenario.record_scored_attempt(
+                    target_id=target_id,
+                    lesson_id=lesson_id,
+                    passed=True,
+                    scene_set="transfer",
+                    reviewed_at="2026-06-01",
+                )
+
+            plan = scenario.build_plan_for(scene_set="mvp", planning_date="2026-06-01")
+
+        self.assertEqual(plan_rows(plan), [])
+
     def test_repair_priority_matrix_and_due_practice_before_new_content(self):
         with make_learning_state() as scenario:
             scenario.record_choice(target_id=HELLO_TARGET, lesson_id=HELLO_ANCHOR, is_correct=False)

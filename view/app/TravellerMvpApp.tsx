@@ -123,7 +123,12 @@ export function TravellerMvpApp() {
     isAudioPlaying: isPlaying,
   });
 
+  const canBeginSession = loadState === 'ready' && lessons.length > 0 && scorecardState !== 'loading';
+
   const beginSession = useCallback(() => {
+    if (!canBeginSession) {
+      return;
+    }
     resetScorecard();
     setSessionPhase('running');
     if (sessionPhase === 'complete') {
@@ -131,7 +136,7 @@ export function TravellerMvpApp() {
     }
     selectLessonPage(START_LESSON);
     updateLessonUrl(language, START_LESSON, sceneSet, true, null);
-  }, [language, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
+  }, [canBeginSession, language, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
 
   const completeSession = useCallback(() => {
     setSessionPhase('complete');
@@ -206,7 +211,9 @@ export function TravellerMvpApp() {
           displayName={displayName}
           lessonCount={lessons.length}
           sessionPhase={sessionPhase}
+          planState={loadState === 'idle' ? 'loading' : loadState}
           participantReady={participantId !== null}
+          actionsDisabled={scorecardState === 'loading'}
           onStartSession={beginSession}
           onContinue={beginSession}
         />
@@ -223,11 +230,49 @@ export function TravellerMvpApp() {
   }
 
   if (loadState === 'loading' || loadState === 'idle') {
-    return <div className="frame-placeholder" aria-label="Loading session queue" />;
+    return (
+      <FitToViewport>
+        <section className="learner-session-landing" aria-label="Loading session queue">
+          <header>
+            <span>Audio Language</span>
+            <h1>Loading your next session...</h1>
+            <p>Scoring and queue selection can take a moment.</p>
+          </header>
+        </section>
+      </FitToViewport>
+    );
   }
 
-  if (loadState === 'error' || !stepLesson || !step) {
-    return <div className="frame-placeholder" aria-label="MVP step unavailable" />;
+  if (loadState === 'error' || lessons.length === 0 || !lesson) {
+    return (
+      <FitToViewport scrollable={isLocalHost()}>
+        <LearnerSessionLanding
+          language={language}
+          displayName={displayName}
+          lessonCount={lessons.length}
+          sessionPhase="landing"
+          planState={loadState}
+          participantReady={participantId !== null}
+          actionsDisabled={scorecardState === 'loading'}
+          onStartSession={beginSession}
+          onContinue={beginSession}
+        />
+      </FitToViewport>
+    );
+  }
+
+  if (!stepLesson || !step) {
+    return (
+      <FitToViewport>
+        <section className="learner-session-landing" aria-label="MVP step unavailable">
+          <header>
+            <span>Audio Language</span>
+            <h1>Loading your next scene...</h1>
+            <p>Preparing lesson steps.</p>
+          </header>
+        </section>
+      </FitToViewport>
+    );
   }
 
   const activeTutorial = sessionPhase === 'running' ? tutorialForLesson(stepLesson) : null;

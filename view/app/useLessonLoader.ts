@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { fetchLearningPlan } from '../api/lessons';
 import type { Lesson } from '../components';
-import { FALLBACK_LESSON } from './fallbackLesson';
 import {
   activeMvpLesson,
   updateLessonUrl,
@@ -59,12 +58,12 @@ export function useLessonLoader({
       } catch {
         if (!isCurrent) return;
         setLessonTabs([]);
-        setLessons([activeMvpLesson(FALLBACK_LESSON)]);
-        setLesson(activeMvpLesson(FALLBACK_LESSON));
+        setLessons([]);
+        setLesson(null);
         setDisplayName(null);
         setPlanVersion(null);
         setSessionId(null);
-        setLoadState('ready');
+        setLoadState('error');
       }
     }
 
@@ -81,7 +80,7 @@ export function useLessonLoader({
     }
 
     const selected = selectLessonForPage(lessonPage, lessonTabs, lessons);
-    setLesson(selected.lesson ?? activeMvpLesson(FALLBACK_LESSON));
+    setLesson(selected.lesson);
 
     if (selected.shouldReplaceUrl && selected.resolvedLessonPage) {
       onLessonPageChange(selected.resolvedLessonPage);
