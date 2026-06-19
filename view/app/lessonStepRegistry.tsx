@@ -10,6 +10,7 @@ import {
 import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
 import { MeaningGuessStep } from './MeaningGuessStep';
 import { productionPracticeProps, ProductionPracticeStep } from './ProductionPracticeStep';
+import { anchorSceneTutorialForFrame } from './lessonTutorials';
 import {
   backwardBuildPrompts,
   backwardBuildTarget,
@@ -20,6 +21,7 @@ import {
   sceneSetupStopAtLineType,
 } from './lessonStepHelpers';
 import { StepAudioButton } from './StepAudioButton';
+import { dismissTutorial, isTutorialDismissed } from './transferTutorialStorage';
 
 export type LessonStepRenderContext = {
   lesson: Lesson;
@@ -98,6 +100,14 @@ const STEP_RENDERERS: StepRenderer[] = [
         frames={sceneSetupFrames(context.lesson, context.step)}
         autoplay={context.suspendSceneAutoplay ? false : context.step.audio?.autoplay}
         stopAtLineType={sceneSetupStopAtLineType(context.lesson, context.step)}
+        tutorialForFrame={(frame, index) => {
+          const tutorial = anchorSceneTutorialForFrame(context.lesson, frame, index);
+          if (!tutorial || isTutorialDismissed(tutorial.dismissId)) {
+            return null;
+          }
+          return tutorial;
+        }}
+        onDismissTutorial={dismissTutorial}
       />
     );
   },

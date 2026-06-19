@@ -2,6 +2,8 @@ const TUTORIAL_DISMISSED_KEY_PREFIX = 'audiolanguage.tutorial.dismissed';
 
 export const TRANSFER_SCENE_TUTORIAL_ID = 'transfer-scene';
 export const DELAYED_REVIEW_TUTORIAL_ID = 'delayed-review-scene';
+export const ANCHOR_WORLD_ROLE_TUTORIAL_ID = 'anchor-world-role-frame';
+export const ANCHOR_LEARNER_ROLE_TUTORIAL_ID = 'anchor-learner-role-frame';
 
 export function tutorialDismissedStorageKey(tutorialId: string): string {
   return `${TUTORIAL_DISMISSED_KEY_PREFIX}.${tutorialId}`;

@@ -247,6 +247,49 @@ def test_scene_playback_autoplay_depends_on_frame_identity_not_array_reference()
     assert "}, [autoplay, playableFrames]);" not in scene_playback_source
 
 
+def test_scene_playback_pauses_for_frame_tutorials():
+    scene_playback_source = (PROJECT_DIR / "view" / "components" / "ScenePlayback.tsx").read_text(
+        encoding="utf-8"
+    )
+
+    assert "tutorialForFrame?: (frame: SceneFrameData, index: number) => ScenePlaybackTutorial | null;" in scene_playback_source
+    assert "const [pendingTutorial, setPendingTutorial]" in scene_playback_source
+    assert "const tutorial = tutorialForFrame?.(frame, index) ?? null;" in scene_playback_source
+    assert "setPendingTutorial({ index, tutorial });" in scene_playback_source
+    assert "playFrameAudio(tutorialIndex);" in scene_playback_source
+    assert "onDismissTutorial?.(pendingTutorial.tutorial.dismissId);" in scene_playback_source
+
+
+def test_anchor_frame_role_tutorials_map_only_to_anchor_setup_frames():
+    result = run_frontend_script(
+        ["view/app/transferTutorialStorage.ts", "view/app/lessonTutorials.ts"],
+        """
+        const { anchorSceneTutorialForFrame } = requireSource('view/app/lessonTutorials.ts');
+
+        const anchorLesson = { stage: 'guided_scene_production' };
+        const transferLesson = { stage: 'same_day_transfer' };
+
+        console.log(JSON.stringify({
+          worldByIndex: anchorSceneTutorialForFrame(anchorLesson, { lineType: 'other' }, 0),
+          worldByType: anchorSceneTutorialForFrame(anchorLesson, { lineIndex: 5, lineType: 'world_opener' }, 5),
+          learnerByIndex: anchorSceneTutorialForFrame(anchorLesson, { lineType: 'other' }, 1),
+          learnerByType: anchorSceneTutorialForFrame(anchorLesson, { lineIndex: 5, lineType: 'learner_target' }, 5),
+          laterAnchor: anchorSceneTutorialForFrame(anchorLesson, { lineIndex: 2, lineType: 'world_response' }, 2),
+          transferFrame: anchorSceneTutorialForFrame(transferLesson, { lineIndex: 0, lineType: 'world_opener' }, 0),
+        }));
+        """,
+    )
+
+    assert result["worldByIndex"]["dismissId"] == "anchor-world-role-frame"
+    assert result["worldByIndex"]["title"] == "World role"
+    assert "sets the scene" in result["worldByType"]["message"]
+    assert result["learnerByIndex"]["dismissId"] == "anchor-learner-role-frame"
+    assert result["learnerByType"]["title"] == "Your role"
+    assert "Watch the mic bubble" in result["learnerByType"]["message"]
+    assert result["laterAnchor"] is None
+    assert result["transferFrame"] is None
+
+
 def test_scene_frame_renders_icon_only_speech_bubbles():
     result = run_frontend_script(
         ["view/components/SpeechIconBubble.tsx", "view/components/SceneFrame.tsx"],
