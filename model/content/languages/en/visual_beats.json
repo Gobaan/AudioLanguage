@@ -25,7 +25,18 @@
           "visual_cue": "friend enters, smiles, waves, and starts the greeting"
         }
       ],
-      "proper_noun_labels": []
+      "proper_noun_labels": [],
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-first-hi-response-1",
@@ -51,7 +62,18 @@
           "visual_cue": "learner looks up, smiles, and waves back"
         }
       ],
-      "proper_noun_labels": []
+      "proper_noun_labels": [],
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-first-hi-response-2",
@@ -76,7 +98,18 @@
           "visual_cue": "friend smiles warmly, showing the greeting worked"
         }
       ],
-      "proper_noun_labels": []
+      "proper_noun_labels": [],
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-self-0",
@@ -104,7 +137,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-self-1",
@@ -134,7 +178,18 @@
       "proper_noun_labels": [
         "Anna"
       ],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-self-2",
@@ -160,7 +215,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-dont-understand-0",
@@ -186,7 +252,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-dont-understand-1",
@@ -213,7 +290,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-dont-understand-2",
@@ -239,7 +327,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-attention-0",
@@ -266,7 +365,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-attention-1",
@@ -293,7 +403,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-attention-2",
@@ -320,7 +441,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-local-food-0",
@@ -347,7 +479,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-local-food-1",
@@ -375,7 +518,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-local-food-2",
@@ -402,7 +556,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-greeting-neighbor-transfer-0",
@@ -428,7 +593,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-greeting-neighbor-transfer-1",
@@ -455,7 +631,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-greeting-neighbor-transfer-2",
@@ -481,7 +668,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-greeting-entry-review-0",
@@ -507,7 +705,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-greeting-entry-review-1",
@@ -534,7 +743,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-greeting-entry-review-2",
@@ -560,7 +780,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-class-transfer-0",
@@ -588,7 +819,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-class-transfer-1",
@@ -618,7 +860,18 @@
       "proper_noun_labels": [
         "Anna"
       ],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-class-transfer-2",
@@ -644,7 +897,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-community-review-0",
@@ -672,7 +936,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-community-review-1",
@@ -702,7 +977,18 @@
       "proper_noun_labels": [
         "Anna"
       ],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-introduce-community-review-2",
@@ -728,7 +1014,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-ticket-transfer-0",
@@ -755,7 +1052,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-ticket-transfer-1",
@@ -782,7 +1090,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-ticket-transfer-2",
@@ -808,7 +1127,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-clinic-review-0",
@@ -834,7 +1164,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-clinic-review-1",
@@ -861,7 +1202,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-repair-clinic-review-2",
@@ -887,7 +1239,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-cafe-transfer-0",
@@ -913,7 +1276,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-cafe-transfer-1",
@@ -940,7 +1314,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-cafe-transfer-2",
@@ -966,7 +1351,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-station-review-0",
@@ -993,7 +1389,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-station-review-1",
@@ -1020,7 +1427,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-excuse-me-station-review-2",
@@ -1046,7 +1464,18 @@
         }
       ],
       "proper_noun_labels": [],
-      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency."
+      "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-convenience-transfer-0",
@@ -1073,7 +1502,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-convenience-transfer-1",
@@ -1101,7 +1541,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-convenience-transfer-2",
@@ -1128,7 +1579,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-bakery-review-0",
@@ -1155,7 +1617,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-bakery-review-1",
@@ -1183,7 +1656,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "mic",
+        "anchorX": 0.45,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "left",
+        "tipTilt": "left",
+        "rotationDegrees": -12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     },
     {
       "id": "en-vb-order-bakery-review-2",
@@ -1210,7 +1694,18 @@
       ],
       "proper_noun_labels": [],
       "notes": "Generated comic panel for Japanese MVP flow testing; needs visual QA for character consistency.",
-      "line_meaning": "This one."
+      "line_meaning": "This one.",
+      "speech_bubble": {
+        "kind": "speaker",
+        "anchorX": 0.55,
+        "anchorY": 0.206,
+        "side": "bottom",
+        "tipPosition": "right",
+        "tipTilt": "right",
+        "rotationDegrees": 12.0,
+        "source": "fallback"
+      },
+      "character_candidates": []
     }
   ],
   "generation_backlog": [

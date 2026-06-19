@@ -1,11 +1,59 @@
+import tempfile
 import unittest
+from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from test_support import app
+from app.content.lessons import speech_bubble_from_line, speech_bubble_override_for_frame
 
 
 class LessonsApiTests(unittest.TestCase):
+    def test_speech_bubble_metadata_preserves_manual_rotation(self):
+        bubble = speech_bubble_from_line(
+            {
+                "visual_beat": {
+                    "speech_bubble": {
+                        "kind": "mic",
+                        "anchorX": 0.35,
+                        "anchorY": 0.18,
+                        "side": "right",
+                        "rotationDegrees": -27,
+                    }
+                }
+            }
+        )
+
+        self.assertEqual(bubble["rotationDegrees"], -27.0)
+
+    def test_runtime_scale_only_applies_to_app_sized_editor_saves(self):
+        legacy_override = {
+            "bubbleScale": 0.47,
+            "frames": [
+                {
+                    "lessonId": "lesson-1",
+                    "frameId": "line-0",
+                    "lineIndex": 0,
+                    "kind": "speaker",
+                    "anchorX": 0.4,
+                    "anchorY": 0.2,
+                    "rotationDegrees": 12,
+                    "side": "bottom",
+                }
+            ],
+        }
+        app_sized_override = {**legacy_override, "editorFrameWidth": 896, "bubbleScale": 1.8}
+
+        legacy_bubble = speech_bubble_override_for_frame(legacy_override, lesson_id="lesson-1", frame_id="line-0")
+        app_sized_bubble = speech_bubble_override_for_frame(
+            app_sized_override,
+            lesson_id="lesson-1",
+            frame_id="line-0",
+        )
+
+        self.assertNotIn("scale", legacy_bubble)
+        self.assertEqual(app_sized_bubble["scale"], 1.8)
+
     def test_learning_engine_package_exports_build_learning_plan(self):
         from app.content.learning_engine import build_learning_plan
 
@@ -20,6 +68,8 @@ class LessonsApiTests(unittest.TestCase):
         learn_response = client.get("/learn?language=yue&lesson=hello")
         debug_response = client.get("/debug/recording-countdown")
         audio_debug_response = client.get("/debug/audio?language=ja")
+        speech_bubble_editor_response = client.get("/debug/speech-bubble-editor")
+        speech_bubble_debug_response = client.get("/debug/speech-bubbles")
         transfer_tutorial_debug_response = client.get("/debug/transfer-tutorial")
         admin_response = client.get("/gobi-admin")
         old_admin_response = client.get("/admin/validation")
@@ -33,6 +83,8 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(learn_response.status_code, 200)
         self.assertEqual(debug_response.status_code, 200)
         self.assertEqual(audio_debug_response.status_code, 200)
+        self.assertEqual(speech_bubble_editor_response.status_code, 200)
+        self.assertEqual(speech_bubble_debug_response.status_code, 200)
         self.assertEqual(transfer_tutorial_debug_response.status_code, 200)
         self.assertEqual(admin_response.status_code, 200)
         self.assertEqual(old_admin_response.status_code, 404)
@@ -103,6 +155,12 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(set(tab_labels[5:]), {f"Scene {index}" for index in range(6, 11)})
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].startswith("/visuals/"))
         self.assertTrue(first_lesson["frames"][0]["imageUrl"].endswith("-256kb.jpg"))
+        self.assertEqual(first_lesson["frames"][0]["speechBubble"]["kind"], "speaker")
+        self.assertEqual(first_lesson["frames"][1]["speechBubble"]["kind"], "mic")
+        self.assertAlmostEqual(first_lesson["frames"][0]["speechBubble"]["anchorX"], 0.44142470671288936)
+        self.assertAlmostEqual(first_lesson["frames"][0]["speechBubble"]["anchorY"], 0.1145769144706267)
+        self.assertAlmostEqual(first_lesson["frames"][0]["speechBubble"]["rotationDegrees"], 45.0)
+        self.assertAlmostEqual(first_lesson["frames"][0]["speechBubble"]["scale"], 1.72)
         self.assertNotIn("target_audio", step_types)
         self.assertIn("scene_setup", step_types)
         self.assertIn("backward_build", step_types)
@@ -114,6 +172,56 @@ class LessonsApiTests(unittest.TestCase):
         self.assertFalse(
             any(choice["label"].startswith("The learner says") for choice in meaning_step["props"]["choices"])
         )
+
+    def test_speech_bubble_override_save_endpoint_writes_json(self):
+        import app.routes.content as content_routes
+
+        client = TestClient(app)
+        payload = {
+            "language": "ja",
+            "sceneSet": "mvp",
+            "bubbleScale": 0.72,
+            "frames": [
+                {
+                    "lessonId": "ja-card-first-hi-dialogue-practice",
+                    "frameId": "line-0",
+                    "lineIndex": 0,
+                    "imageUrl": "/visuals/final/first-hi-response/frame-1-256kb.jpg",
+                    "kind": "speaker",
+                    "anchorX": 0.36,
+                    "anchorY": 0.13,
+                    "rotationDegrees": 10,
+                    "side": "bottom",
+                    "tipPosition": "right",
+                    "tipTilt": "right",
+                }
+            ],
+        }
+
+        original_data_dir = content_routes.DATA_DIR
+        with tempfile.TemporaryDirectory() as temp_dir:
+            content_routes.DATA_DIR = Path(temp_dir)
+            try:
+                response = client.post("/api/debug/speech-bubble-overrides", json=payload)
+                saved = client.get("/api/debug/speech-bubble-overrides")
+            finally:
+                content_routes.DATA_DIR = original_data_dir
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["frames"], 1)
+        self.assertEqual(saved.status_code, 200)
+        self.assertEqual(saved.json()["frames"][0]["anchorX"], 0.36)
+
+    def test_learning_engine_uses_saved_speech_bubble_overrides(self):
+        response = TestClient(app).get(
+            "/api/learning-engine/lessons?language=ja&scene_set=mvp&order_seed=speech-bubbles"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        first_frame = response.json()["lessons"][0]["frames"][0]
+        self.assertAlmostEqual(first_frame["speechBubble"]["anchorX"], 0.44142470671288936)
+        self.assertAlmostEqual(first_frame["speechBubble"]["rotationDegrees"], 45.0)
+        self.assertAlmostEqual(first_frame["speechBubble"]["scale"], 1.72)
 
     def test_lessons_endpoint_can_return_named_preview_lesson(self):
         response = TestClient(app).get("/api/languages/en/lessons?lesson=excuse-me")

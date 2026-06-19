@@ -247,6 +247,51 @@ def test_scene_playback_autoplay_depends_on_frame_identity_not_array_reference()
     assert "}, [autoplay, playableFrames]);" not in scene_playback_source
 
 
+def test_scene_frame_renders_icon_only_speech_bubbles():
+    result = run_frontend_script(
+        ["view/components/SpeechIconBubble.tsx", "view/components/SceneFrame.tsx"],
+        """
+        const React = require('react');
+        const { renderToStaticMarkup } = require('react-dom/server');
+        const { SceneFrame } = requireSource('view/components/SceneFrame.tsx');
+
+        const withMic = renderToStaticMarkup(
+          React.createElement(SceneFrame, {
+            frame: {
+              id: 'line-1',
+              imageUrl: '/visuals/test.png',
+              speechBubble: {
+                kind: 'mic',
+                anchorX: 0.35,
+                anchorY: 0.18,
+                side: 'bottom',
+                rotationDegrees: 27,
+              },
+            },
+            showCaption: false,
+          })
+        );
+        const withoutBubble = renderToStaticMarkup(
+          React.createElement(SceneFrame, {
+            frame: { id: 'line-0', imageUrl: '/visuals/test.png' },
+            showCaption: false,
+          })
+        );
+        console.log(JSON.stringify({ withMic, withoutBubble }));
+        """,
+    )
+
+    assert "speech-icon-bubble--mic" in result["withMic"]
+    assert "active-speaker-glow" not in result["withMic"]
+    assert "left:35%" in result["withMic"]
+    assert "top:18%" in result["withMic"]
+    assert "--speech-bubble-rotate:27deg" in result["withMic"]
+    assert "--speech-bubble-icon-rotate:-27deg" in result["withMic"]
+    assert "speech-icon-bubble" not in result["withoutBubble"]
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+    assert ".scene-frame-media {\n  aspect-ratio: 3 / 2;" in styles_source
+
+
 def test_admin_link_and_participant_name_stay_off_lesson_page():
     result = run_frontend_script(
         ["view/app/LessonAppLinks.tsx"],
@@ -348,6 +393,107 @@ def test_audio_debug_player_skips_choices_and_recording_uploads():
     assert "if (pathname === '/debug/audio')" in main_source
     assert "return `/debug/audio?${params.toString()}`" in link_source
     assert "return `/?${params.toString()}`" not in link_source
+
+
+def test_speech_bubble_debug_page_uses_hi_intro_scene_frame_overlay():
+    main_source = (PROJECT_DIR / "view" / "app" / "main.tsx").read_text(encoding="utf-8")
+    debug_source = (PROJECT_DIR / "view" / "app" / "DebugSpeechBubblePage.tsx").read_text(encoding="utf-8")
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+
+    assert "if (pathname === '/debug/speech-bubbles')" in main_source
+    assert "HI_INTRO_LESSON_ID = 'ja-card-first-hi-dialogue-practice'" in debug_source
+    assert "fetchLearningPlan('ja', 'mvp', 'speech-bubble-debug:ja:mvp')" in debug_source
+    assert "<SceneFrame frame={frame} isActive showCaption={false}" in debug_source
+    assert '<SpeechIconBubble kind="speaker"' in debug_source
+    assert '<SpeechIconBubble kind="mic"' in debug_source
+    assert "withDebugBubbleOverlay" in debug_source
+    assert "hiIntroDebugBubble(frame)" in debug_source
+    assert "anchorX: 0.36" in debug_source
+    assert "anchorX: 0.66" in debug_source
+    assert "speechBubble:" in debug_source
+    assert "rotationDegrees: isLearner ? -12 : 12" in debug_source
+    assert "bubbleLabel(frame)" in debug_source
+    assert ".speech-bubble-component-preview" in styles_source
+    assert ".speech-bubble-debug-grid" in styles_source
+    assert "aspect-ratio: 3 / 2" in styles_source
+    assert "height: 38px" in styles_source
+    assert "content: \"bubble\"" not in styles_source
+    assert "speech-bubble-anchor::before" not in styles_source
+
+
+def test_speech_bubble_editor_contact_sheet_drags_and_saves_overrides():
+    main_source = (PROJECT_DIR / "view" / "app" / "main.tsx").read_text(encoding="utf-8")
+    editor_source = (PROJECT_DIR / "view" / "app" / "DebugSpeechBubbleEditorPage.tsx").read_text(encoding="utf-8")
+    api_source = (PROJECT_DIR / "view" / "api" / "lessons.ts").read_text(encoding="utf-8")
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+
+    assert "if (pathname === '/debug/speech-bubble-editor')" in main_source
+    assert "fetchLearningPlan(LANGUAGE, SCENE_SET, 'speech-bubble-editor:ja:mvp')" in editor_source
+    assert "fetchLearningPlan(LANGUAGE, DELAYED_SCENE_SET, 'speech-bubble-editor:ja:delayed')" in editor_source
+    assert "setLessons([...mvpPlan.lessons, ...delayedPlan.lessons])" in editor_source
+    assert "setBubbleScale(saved.bubbleScale ?? DEFAULT_BUBBLE_SCALE)" in editor_source
+    assert "editorFrameWidth: APP_FRAME_WIDTH" in editor_source
+    assert "app-size MVP, transfer, and delayed review frames" in editor_source
+    assert "overrides[key] ?? defaultOverride(lesson, frame)" in editor_source
+    assert "lineIndex === 1 ? 'mic' : 'speaker'" in editor_source
+    assert "onPointerDown={startDrag}" in editor_source
+    assert "onPointerMove={drag}" in editor_source
+    assert "SpeechBubbleOverlay" in editor_source
+    assert 'className="scene-frame active speech-bubble-editor-scene-frame"' in editor_source
+    assert 'className="scene-frame-media"' in editor_source
+    assert "const speechBubble = { ...override, scale: bubbleScale }" in editor_source
+    assert "rotationDegrees" in editor_source
+    assert "Bubble scale" in editor_source
+    assert "saveSpeechBubbleOverrides(payload)" in editor_source
+    assert "JSON.stringify(payload, null, 2)" in editor_source
+    assert "fetch('/api/debug/speech-bubble-overrides'" in api_source
+    assert ".speech-bubble-editor-sheet" in styles_source
+    assert "grid-template-columns: 920px" in styles_source
+    assert "width: 920px" in styles_source
+    assert ".speech-bubble-editor-image" not in styles_source
+    assert "--speech-editor-bubble-scale" not in styles_source
+
+
+def test_speech_icon_bubble_renders_speaker_and_mic_variants():
+    result = run_frontend_script(
+        ["view/components/SpeechIconBubble.tsx"],
+        """
+        const React = require('react');
+        const { renderToStaticMarkup } = require('react-dom/server');
+        const { SpeechIconBubble } = requireSource('view/components/SpeechIconBubble.tsx');
+
+        console.log(JSON.stringify({
+          speaker: renderToStaticMarkup(React.createElement(SpeechIconBubble, {
+            kind: 'speaker',
+            tipPosition: 'right',
+            tipTilt: 'right',
+            rotationDegrees: 31,
+          })),
+          mic: renderToStaticMarkup(React.createElement(SpeechIconBubble, {
+            kind: 'mic',
+            tipPosition: 'left',
+            tipTilt: 'left',
+          })),
+        }));
+        """,
+    )
+
+    assert "speech-icon-bubble--speaker" in result["speaker"]
+    assert "speech-icon-bubble--tip-right" in result["speaker"]
+    assert "speech-icon-bubble--tip-tilt-right" in result["speaker"]
+    assert "--speech-bubble-rotate:31deg" in result["speaker"]
+    assert "--speech-bubble-icon-rotate:-31deg" in result["speaker"]
+    assert "World speaking" in result["speaker"]
+    assert "speech-icon-bubble--mic" in result["mic"]
+    assert "speech-icon-bubble--tip-left" in result["mic"]
+    assert "speech-icon-bubble--tip-tilt-left" in result["mic"]
+    assert "Learner speaking" in result["mic"]
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+    assert "transform: rotate(var(--speech-bubble-rotate, 0deg))" in styles_source
+    assert "scale(var(--speech-bubble-scale, 1))" in styles_source
+    assert "--speech-bubble-rotate: -12deg" in styles_source
+    assert "--speech-bubble-rotate: 12deg" in styles_source
+    assert "left: var(--speech-bubble-tip-left" not in styles_source
 
 
 def test_delayed_review_start_marker_resolves_to_first_backend_plan_tab():

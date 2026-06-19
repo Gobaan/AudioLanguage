@@ -1,17 +1,27 @@
 from __future__ import annotations
 
 import hashlib
+import json
+from pathlib import Path
 from typing import Any
+
+APP_SPEECH_BUBBLE_EDITOR_FRAME_WIDTH = 896
 
 
 def lessons_from_session(
     session: dict[str, Any],
     *,
     choice_order_seed: str | None = None,
+    speech_bubble_overrides: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Return frontend lesson records derived from hydrated practice cards."""
     return [
-        lesson_from_card(session["language"], card, choice_order_seed=choice_order_seed)
+        lesson_from_card(
+            session["language"],
+            card,
+            choice_order_seed=choice_order_seed,
+            speech_bubble_overrides=speech_bubble_overrides,
+        )
         for card in session.get("cards", [])
     ]
 
@@ -21,6 +31,7 @@ def lesson_from_card(
     card: dict[str, Any],
     *,
     choice_order_seed: str | None = None,
+    speech_bubble_overrides: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     from app.content.lesson_steps import lesson_steps
 
@@ -29,7 +40,11 @@ def lesson_from_card(
     english_target = card.get("english_target") or {}
     scene = card["scene"]
     learner_line = find_learner_line(dialogue.get("lines", []))
-    frames = frame_data(dialogue.get("lines", []))
+    frames = frame_data(
+        dialogue.get("lines", []),
+        lesson_id=str(card["id"]),
+        speech_bubble_overrides=speech_bubble_overrides,
+    )
     target_text = learner_line.get("display_text") or learner_line.get("text") or target.get("canonical", "")
     target_transliteration = learner_line.get("transliteration") or target.get("transliteration", "")
 
@@ -68,15 +83,26 @@ def target_english_meaning(target: dict[str, Any], english_target: dict[str, Any
     ).strip()
 
 
-def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def frame_data(
+    lines: list[dict[str, Any]],
+    *,
+    lesson_id: str,
+    speech_bubble_overrides: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     frames = []
     for line in lines:
         line_index = line.get("index", len(frames))
         display_text = line.get("display_text") or line.get("transliteration") or line.get("text", "")
         audio_text = line.get("audio_text") or line.get("transliteration") or line.get("text", "")
+        frame_id = f"line-{line_index}"
+        speech_bubble = speech_bubble_override_for_frame(
+            speech_bubble_overrides,
+            lesson_id=lesson_id,
+            frame_id=frame_id,
+        ) or speech_bubble_from_line(line)
         frames.append(
             {
-                "id": f"line-{line_index}",
+                "id": frame_id,
                 "lineIndex": line_index,
                 "frameNumber": int(line_index) + 1,
                 "imageUrl": line.get("visual"),
@@ -88,10 +114,80 @@ def frame_data(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "originalText": line.get("text", ""),
                 "transliteration": line.get("transliteration", ""),
                 "lineType": line.get("line_type", ""),
+                **({"speechBubble": speech_bubble} if speech_bubble else {}),
             }
         )
     return frames
 
+
+def load_speech_bubble_overrides(data_dir: Path) -> dict[str, Any] | None:
+    path = data_dir / "speech_bubble_overrides.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def speech_bubble_override_for_frame(
+    overrides: dict[str, Any] | None,
+    *,
+    lesson_id: str,
+    frame_id: str,
+) -> dict[str, Any] | None:
+    if not isinstance(overrides, dict):
+        return None
+
+    bubble_scale = (
+        overrides.get("bubbleScale")
+        if overrides.get("editorFrameWidth") == APP_SPEECH_BUBBLE_EDITOR_FRAME_WIDTH
+        else None
+    )
+    for item in overrides.get("frames", []):
+        if not isinstance(item, dict):
+            continue
+        if item.get("lessonId") != lesson_id or item.get("frameId") != frame_id:
+            continue
+        return speech_bubble_from_payload(item, bubble_scale=bubble_scale)
+    return None
+
+
+def speech_bubble_from_line(line: dict[str, Any]) -> dict[str, Any] | None:
+    visual_beat = line.get("visual_beat")
+    if not isinstance(visual_beat, dict):
+        return None
+
+    speech_bubble = visual_beat.get("speech_bubble")
+    if not isinstance(speech_bubble, dict):
+        return None
+
+    return speech_bubble_from_payload(speech_bubble)
+
+
+def speech_bubble_from_payload(payload: dict[str, Any], *, bubble_scale: Any = None) -> dict[str, Any] | None:
+    kind = payload.get("kind")
+    anchor_x = payload.get("anchorX")
+    anchor_y = payload.get("anchorY")
+    side = payload.get("side")
+    tip_position = payload.get("tipPosition")
+    tip_tilt = payload.get("tipTilt")
+    rotation_degrees = payload.get("rotationDegrees")
+    scale = payload.get("scale", bubble_scale)
+    if kind not in {"mic", "speaker"}:
+        return None
+    if not isinstance(anchor_x, (int, float)) or not isinstance(anchor_y, (int, float)):
+        return None
+    if not isinstance(side, str) or not side:
+        return None
+
+    return {
+        "kind": kind,
+        "anchorX": float(anchor_x),
+        "anchorY": float(anchor_y),
+        "side": side,
+        **({"tipPosition": tip_position} if tip_position in {"left", "center", "right"} else {}),
+        **({"tipTilt": tip_tilt} if tip_tilt in {"left", "none", "right"} else {}),
+        **({"rotationDegrees": float(rotation_degrees)} if isinstance(rotation_degrees, (int, float)) else {}),
+        **({"scale": float(scale)} if isinstance(scale, (int, float)) else {}),
+    }
 
 def find_learner_line(lines: list[dict[str, Any]]) -> dict[str, Any]:
     for line in lines:

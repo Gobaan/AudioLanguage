@@ -1,22 +1,28 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 from app.content.learning_engine.models import IndexedLesson
 from app.content.lesson_tabs import lesson_tab_key, ordered_lesson_tabs
-from app.content.lessons import lessons_from_session
+from app.content.lessons import lessons_from_session, load_speech_bubble_overrides
 
 
 def indexed_lessons(
     session: dict[str, Any],
     *,
+    data_dir: Path | None = None,
     scene_set: str,
     order_seed: str | None,
 ) -> list[IndexedLesson]:
     session_config = session["session"]
     tab_key = lesson_tab_key(scene_set)
     ordered_tabs = ordered_lesson_tabs(session_config, tab_key, scene_set, order_seed)
-    lessons = lessons_from_session(session, choice_order_seed=order_seed)
+    lessons = lessons_from_session(
+        session,
+        choice_order_seed=order_seed,
+        speech_bubble_overrides=load_speech_bubble_overrides(data_dir) if data_dir else None,
+    )
     lessons_by_id = {str(lesson.get("id")): lesson for lesson in lessons if lesson.get("id")}
     indexed = []
     for tab in ordered_tabs:

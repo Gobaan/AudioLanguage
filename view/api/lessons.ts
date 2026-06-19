@@ -1,4 +1,5 @@
 import type { LearningPlanResponse, LessonListResponse } from '../components/types';
+import type { SpeechBubbleOverridePayload } from '../app/DebugSpeechBubbleEditorPage';
 
 export async function fetchLessons(
   language: string,
@@ -51,4 +52,30 @@ export async function fetchLearningPlan(
   }
 
   return response.json() as Promise<LearningPlanResponse>;
+}
+
+export async function fetchSpeechBubbleOverrides(): Promise<SpeechBubbleOverridePayload> {
+  const response = await fetch('/api/debug/speech-bubble-overrides');
+
+  if (!response.ok) {
+    throw new Error(`Failed to load speech bubble overrides: ${response.status}`);
+  }
+
+  return response.json() as Promise<SpeechBubbleOverridePayload>;
+}
+
+export async function saveSpeechBubbleOverrides(
+  payload: SpeechBubbleOverridePayload,
+): Promise<{ saved: boolean; path: string; frames: number }> {
+  const response = await fetch('/api/debug/speech-bubble-overrides', {
+    body: JSON.stringify(payload),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to save speech bubble overrides: ${response.status}`);
+  }
+
+  return response.json() as Promise<{ saved: boolean; path: string; frames: number }>;
 }

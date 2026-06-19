@@ -20,6 +20,16 @@ export type SceneFrameData = {
   audioUrl?: string | null;
   audioText?: string;
   lineType?: string;
+  speechBubble?: {
+    kind: 'mic' | 'speaker';
+    anchorX: number;
+    anchorY: number;
+    side: string;
+    tipPosition?: 'left' | 'center' | 'right';
+    tipTilt?: 'left' | 'none' | 'right';
+    rotationDegrees?: number;
+    scale?: number;
+  };
 };
 
 export type ChoiceOption = {

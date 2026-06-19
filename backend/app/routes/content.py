@@ -1,6 +1,8 @@
-from typing import Annotated
+import json
+from typing import Annotated, Any
 
 from fastapi import APIRouter, HTTPException, Path, Query
+from pydantic import BaseModel, Field
 
 from app.content.data_graph import DataGraphError, list_languages, load_distractors, load_language_session
 from app.content.learning_engine import build_learning_plan
@@ -11,7 +13,7 @@ from app.content.lesson_tabs import (
     ordered_lesson_tabs,
     selected_lessons,
 )
-from app.content.lessons import lessons_from_session
+from app.content.lessons import lessons_from_session, load_speech_bubble_overrides
 from app.runtime import DATA_DIR, PROJECT_DIR, validation_store
 
 router = APIRouter()
@@ -20,10 +22,51 @@ LanguagePath = Annotated[str, Path(pattern=r"^[a-z]{2,3}(-[a-z]+)?$")]
 LanguageQuery = Annotated[str, Query(pattern=r"^[a-z]{2,3}(-[a-z]+)?$")]
 
 
+class SpeechBubbleOverride(BaseModel):
+    lessonId: str
+    frameId: str
+    lineIndex: int
+    imageUrl: str | None = None
+    kind: str = Field(pattern=r"^(mic|speaker)$")
+    anchorX: float = Field(ge=0, le=1)
+    anchorY: float = Field(ge=0, le=1)
+    rotationDegrees: float
+    side: str = "bottom"
+    tipPosition: str = Field(default="center", pattern=r"^(left|center|right)$")
+    tipTilt: str = Field(default="none", pattern=r"^(left|none|right)$")
+
+
+class SpeechBubbleOverridesPayload(BaseModel):
+    language: str
+    sceneSet: str
+    bubbleScale: float = Field(gt=0, le=4)
+    editorFrameWidth: int | None = None
+    frames: list[SpeechBubbleOverride]
+
+
 @router.get("/api/languages")
 def get_languages():
     """Return languages available in the structured content graph."""
     return list_languages(DATA_DIR)
+
+
+@router.get("/api/debug/speech-bubble-overrides")
+def get_speech_bubble_overrides() -> dict[str, Any]:
+    path = DATA_DIR / "speech_bubble_overrides.json"
+    if not path.exists():
+        return {"language": "ja", "sceneSet": "mvp", "bubbleScale": 0.72, "frames": []}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+@router.post("/api/debug/speech-bubble-overrides")
+def save_speech_bubble_overrides(payload: SpeechBubbleOverridesPayload):
+    path = DATA_DIR / "speech_bubble_overrides.json"
+    path.write_text(payload.model_dump_json(indent=2), encoding="utf-8")
+    try:
+        display_path = str(path.relative_to(PROJECT_DIR))
+    except ValueError:
+        display_path = str(path)
+    return {"saved": True, "path": display_path, "frames": len(payload.frames)}
 
 
 @router.get("/api/languages/{language}/session")
@@ -56,7 +99,11 @@ def get_language_lessons(
     except DataGraphError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
 
-    lessons = lessons_from_session(session, choice_order_seed=order_seed)
+    lessons = lessons_from_session(
+        session,
+        choice_order_seed=order_seed,
+        speech_bubble_overrides=load_speech_bubble_overrides(DATA_DIR),
+    )
     session_config = session["session"]
     tab_key = lesson_tab_key(scene_set)
     ordered_tabs = ordered_lesson_tabs(session_config, tab_key, scene_set, order_seed)

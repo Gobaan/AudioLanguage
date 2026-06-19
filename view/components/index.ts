@@ -6,4 +6,5 @@ export * from './PromptedRecording';
 export * from './RecordingCountdownBar';
 export * from './SceneFrame';
 export * from './ScenePlayback';
+export * from './SpeechIconBubble';
 export * from './types';
