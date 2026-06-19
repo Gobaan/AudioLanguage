@@ -18,6 +18,7 @@ type LessonStepRendererProps = {
   ) => void;
   onStepComplete?: () => void;
   nextLabel?: string;
+  suspendSceneAutoplay?: boolean;
 };
 
 export function LessonStepRenderer(props: LessonStepRendererProps) {

@@ -26,6 +26,11 @@ def audio_debug_player():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+@router.get("/debug/transfer-tutorial")
+def transfer_tutorial_debug():
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
 @router.get("/gobi-admin")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))

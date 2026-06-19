@@ -23,6 +23,10 @@ export function sceneSetupStopAtLineType(lesson: Lesson, step: LessonStep): stri
   return undefined;
 }
 
+export function isTransferLikeLesson(lesson: Lesson | null | undefined): boolean {
+  return lesson?.stage === 'same_day_transfer' || lesson?.stage === 'delayed_review';
+}
+
 export function sceneSetupFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
   const frames =
     lesson.frames.length > 0

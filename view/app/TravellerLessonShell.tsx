@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
 import { LessonAppLinks } from './LessonAppLinks';
 import { LessonStepRenderer } from './LessonStepRenderer';
+import { TransferTutorialModal } from './TransferTutorialModal';
 import { stepBlocksNextUntilChoice, stepHandlesOwnNext } from './lessonStepHelpers';
 
 type TravellerLessonShellProps = {
@@ -24,6 +25,8 @@ type TravellerLessonShellProps = {
   ) => void;
   onOpenScorecard: () => void;
   onNext: () => void;
+  showTransferTutorial?: boolean;
+  onDismissTransferTutorial?: () => void;
   debugLessonSwitcher?: ReactNode;
 };
 
@@ -42,6 +45,8 @@ export function TravellerLessonShell({
   onCaptureAttempt,
   onOpenScorecard,
   onNext,
+  showTransferTutorial = false,
+  onDismissTransferTutorial,
   debugLessonSwitcher,
 }: TravellerLessonShellProps) {
   const nextLabel = isLastStep ? (hasNextLesson ? 'Next' : 'Scorecard') : 'Next';
@@ -57,19 +62,25 @@ export function TravellerLessonShell({
           {audioError}
         </p>
       ) : null}
-      <LessonStepRenderer
-        lesson={stepLesson}
-        step={step}
-        language={language}
-        isPlaying={isPlaying}
-        selectedChoiceId={selectedChoiceByStep[step.id]}
-        onPlayAudio={onPlayAudio}
-        onLogAudioPlayed={onLogAudioPlayed}
-        onSelectChoice={onSelectChoice}
-        onCaptureAttempt={onCaptureAttempt}
-        onStepComplete={onNext}
-        nextLabel={nextLabel}
-      />
+      <div className="lesson-step-with-tutorial">
+        <LessonStepRenderer
+          lesson={stepLesson}
+          step={step}
+          language={language}
+          isPlaying={isPlaying}
+          selectedChoiceId={selectedChoiceByStep[step.id]}
+          suspendSceneAutoplay={showTransferTutorial && step.type === 'scene_setup'}
+          onPlayAudio={onPlayAudio}
+          onLogAudioPlayed={onLogAudioPlayed}
+          onSelectChoice={onSelectChoice}
+          onCaptureAttempt={onCaptureAttempt}
+          onStepComplete={onNext}
+          nextLabel={nextLabel}
+        />
+        {showTransferTutorial && onDismissTransferTutorial ? (
+          <TransferTutorialModal onDismiss={onDismissTransferTutorial} />
+        ) : null}
+      </div>
       {stepHandlesNext && !nextBlocked ? (
         <nav className="step-controls" aria-label="Lesson step controls">
           <button type="button" onClick={onNext}>

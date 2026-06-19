@@ -37,6 +37,7 @@ export type LessonStepRenderContext = {
   ) => void;
   onStepComplete?: () => void;
   nextLabel?: string;
+  suspendSceneAutoplay?: boolean;
 };
 
 type StepRenderer = (context: LessonStepRenderContext) => ReactNode;
@@ -95,7 +96,7 @@ const STEP_RENDERERS: StepRenderer[] = [
     return (
       <ScenePlayback
         frames={sceneSetupFrames(context.lesson, context.step)}
-        autoplay={context.step.audio?.autoplay}
+        autoplay={context.suspendSceneAutoplay ? false : context.step.audio?.autoplay}
         stopAtLineType={sceneSetupStopAtLineType(context.lesson, context.step)}
       />
     );

@@ -71,6 +71,7 @@ export function LanguageSelectionApp() {
       {isLocalHost() ? (
         <nav className="local-app-links" aria-label="Local app links">
           <a href="/gobi-admin">Admin</a>
+          <a href="/debug/transfer-tutorial">Transfer tutorial debug</a>
           <button type="button" className="app-link-button danger" disabled={clearState === 'clearing'} onClick={clearAllLocalFiles}>
             {clearState === 'clearing' ? 'Clearing...' : 'Clear all files'}
           </button>
