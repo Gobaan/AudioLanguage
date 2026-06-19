@@ -138,6 +138,8 @@ const STEP_RENDERERS: StepRenderer[] = [
           audioUrl={context.step.audio?.url}
           audioText={context.step.audio?.audioText}
           prompt="Now you say it."
+          modelReplayNormalLabel="🔊 Normal speed"
+          modelReplaySlowLabel="🐌 Half speed"
           recordingMs={recordingDurationMs(context.step)}
           onCaptured={(recording) => context.onCaptureAttempt?.(context.step, recording)}
         />

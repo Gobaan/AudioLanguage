@@ -204,6 +204,8 @@ export function stepRevealsDialogueAfterChoice(step: LessonStep, selectedChoice?
 type PlaybackFlowItem = {
   type?: string;
   line_type?: string;
+  frame_id?: string;
+  line_index?: number;
 };
 
 export function postAttemptFeedbackFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
@@ -216,10 +218,10 @@ export function postAttemptFeedbackFrames(lesson: Lesson, step: LessonStep): Sce
     if (recordIndex >= 0) {
       const frames: SceneFrameData[] = [];
       for (const item of playbackFlow.slice(recordIndex + 1)) {
-        if (item.type !== 'play_line' || !item.line_type) {
+        if (item.type !== 'play_line') {
           continue;
         }
-        const frame = lesson.frames.find((candidate) => candidate.lineType === item.line_type);
+        const frame = playbackFlowItemFrame(lesson.frames, item);
         if (frame) {
           frames.push(frame);
         }
@@ -244,6 +246,28 @@ export function postAttemptFeedbackFrames(lesson: Lesson, step: LessonStep): Sce
     }
   }
   return frames;
+}
+
+function playbackFlowItemFrame(frames: SceneFrameData[], item: PlaybackFlowItem): SceneFrameData | undefined {
+  if (typeof item.frame_id === 'string' && item.frame_id) {
+    const byId = frames.find((frame) => frame.id === item.frame_id);
+    if (byId) {
+      return byId;
+    }
+  }
+
+  if (typeof item.line_index === 'number' && Number.isFinite(item.line_index)) {
+    const byLineIndex = frames.find((frame) => frame.lineIndex === item.line_index);
+    if (byLineIndex) {
+      return byLineIndex;
+    }
+  }
+
+  if (typeof item.line_type === 'string' && item.line_type) {
+    return frames.find((frame) => frame.lineType === item.line_type);
+  }
+
+  return undefined;
 }
 
 export function stepPlaysModelLineAfterAttempt(step: LessonStep): boolean {

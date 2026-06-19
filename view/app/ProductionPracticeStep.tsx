@@ -105,12 +105,46 @@ export function ProductionPracticeStep({
     [language],
   );
 
+  const waitForFrameReady = useCallback(async (targetFrame: SceneFrameData | undefined) => {
+    const imageUrl = targetFrame?.imageUrl;
+    if (!imageUrl) {
+      return;
+    }
+
+    await new Promise<void>((resolve) => {
+      const image = new Image();
+      let settled = false;
+      const finish = () => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        resolve();
+      };
+
+      image.onload = finish;
+      image.onerror = finish;
+      image.src = imageUrl;
+
+      if (image.complete) {
+        finish();
+        return;
+      }
+
+      // Never block audio forever on a bad/slow image request.
+      window.setTimeout(finish, 2000);
+    });
+
+    // Give React a paint tick so the new frame is visible before audio starts.
+    await new Promise<void>((resolve) => window.setTimeout(resolve, 80));
+  }, []);
+
   useEffect(() => {
     setPhase('record');
     setFeedbackIndex(0);
     setAudioError(null);
     stopPlayback();
-  }, [step.id, stopPlayback]);
+  }, [lesson.id, step.id, stopPlayback]);
 
   useEffect(() => stopPlayback, [stopPlayback]);
 
@@ -129,6 +163,10 @@ export function ProductionPracticeStep({
 
     async function runFeedbackSequence() {
       try {
+        await waitForFrameReady(targetFrame);
+        if (cancelled) {
+          return;
+        }
         await playFrameAudio(targetFrame);
       } catch {
         return;
@@ -151,7 +189,7 @@ export function ProductionPracticeStep({
       cancelled = true;
       stopPlayback();
     };
-  }, [feedbackFrames, feedbackIndex, phase, playFrameAudio, stopPlayback]);
+  }, [feedbackFrames, feedbackIndex, phase, playFrameAudio, stopPlayback, waitForFrameReady]);
 
   const handleCaptured = useCallback(
     (recording: CapturedRecording) => {
@@ -200,6 +238,8 @@ export function ProductionPracticeStep({
             audioUrl={recordingAudioUrl ?? step.audio?.url}
             audioText={step.audio?.audioText}
             prompt={recordingPromptText(step)}
+            modelReplayNormalLabel="🔊 Normal speed"
+            modelReplaySlowLabel="🐌 Half speed"
             recordingMs={recordingMs}
             startMode={startsRecordingAutomatically ? 'auto' : 'manual'}
             startLabel="Record"

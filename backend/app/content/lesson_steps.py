@@ -133,6 +133,7 @@ def transfer_review_steps(
     playback_flow = card.get("playback_flow")
     if not isinstance(playback_flow, list) or not playback_flow:
         raise ValueError(f"Practice card '{card.get('id')}' is missing playback_flow for transfer/review.")
+    playback_flow_with_frames = _attach_frame_refs_to_playback_flow(playback_flow, frames)
 
     record_before_model = _record_before_model_line(playback_flow)
     include_world_response = _includes_world_response_feedback(playback_flow)
@@ -154,7 +155,7 @@ def transfer_review_steps(
                 "initialFrameId": opener_frame.get("id") if opener_frame else None,
                 "frames": frames,
                 "stopAtLineType": "world_opener",
-                "playbackFlow": playback_flow,
+                "playbackFlow": playback_flow_with_frames,
             },
         ),
         step(
@@ -182,7 +183,7 @@ def transfer_review_steps(
             audio=audio_behavior(None, autoplay=False, replayable=False, play_before_mic=False),
             mic=recording_mic(target_text, target_transliteration, starts_after_audio=False),
             props={
-                "playbackFlow": playback_flow,
+                "playbackFlow": playback_flow_with_frames,
                 "recordBeforeModelLine": record_before_model,
                 "playModelLineAfterAttempt": True,
                 "playWorldResponseAfterAttempt": include_world_response,
@@ -218,6 +219,35 @@ def _includes_world_response_feedback(playback_flow: list[dict[str, Any]]) -> bo
         if item.get("type") == "play_line" and item.get("line_type") == "world_response":
             return True
     return False
+
+
+def _attach_frame_refs_to_playback_flow(
+    playback_flow: list[dict[str, Any]],
+    frames: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    enriched: list[dict[str, Any]] = []
+    for item in playback_flow:
+        if not isinstance(item, dict):
+            continue
+
+        line_type = item.get("line_type")
+        if not isinstance(line_type, str) or not line_type:
+            enriched.append(dict(item))
+            continue
+
+        frame = frame_for_line_type(frames, line_type)
+        if not frame:
+            enriched.append(dict(item))
+            continue
+
+        enriched_item = dict(item)
+        if frame.get("id") is not None:
+            enriched_item["frame_id"] = frame.get("id")
+        if frame.get("lineIndex") is not None:
+            enriched_item["line_index"] = frame.get("lineIndex")
+        enriched.append(enriched_item)
+
+    return enriched
 
 
 def step(

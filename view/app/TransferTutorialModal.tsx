@@ -1,8 +1,16 @@
-type TransferTutorialModalProps = {
+import type { LessonTutorial } from './lessonTutorials';
+
+type TutorialBubbleModalProps = LessonTutorial & {
   onDismiss: () => void;
 };
 
-export function TransferTutorialModal({ onDismiss }: TransferTutorialModalProps) {
+export function TutorialBubbleModal({
+  onDismiss,
+  badgeLabel,
+  title,
+  message,
+  dismissLabel,
+}: TutorialBubbleModalProps) {
   return (
     <section className="transfer-tutorial-overlay" role="presentation" aria-hidden="true">
       <div
@@ -11,15 +19,12 @@ export function TransferTutorialModal({ onDismiss }: TransferTutorialModalProps)
         aria-modal="true"
         aria-labelledby="transfer-tutorial-title"
       >
-        <p className="transfer-tutorial-badge">Tutorial</p>
-        <h2 id="transfer-tutorial-title">Transfer scene</h2>
-        <p>
-          This is a transfer scene. It tests your ability to recall what you know and use it in a separate context.
-          Be prepared to respond.
-        </p>
+        <p className="transfer-tutorial-badge">{badgeLabel}</p>
+        <h2 id="transfer-tutorial-title">{title}</h2>
+        <p>{message}</p>
         <nav className="transfer-tutorial-actions" aria-label="Transfer tutorial actions">
           <button type="button" onClick={onDismiss}>
-            Got it
+            {dismissLabel}
           </button>
         </nav>
       </div>

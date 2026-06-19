@@ -1,30 +1,34 @@
 import { useState } from 'react';
 
-import { TransferTutorialModal } from './TransferTutorialModal';
+import { tutorialForStage } from './lessonTutorials';
+import { TutorialBubbleModal } from './TransferTutorialModal';
 import {
-  dismissTransferTutorial,
-  isTransferTutorialDismissed,
-  resetTransferTutorialDismissed,
+  TRANSFER_SCENE_TUTORIAL_ID,
+  dismissTutorial,
+  isTutorialDismissed,
+  resetTutorialDismissed,
+  tutorialDismissedStorageKey,
 } from './transferTutorialStorage';
 
 export function DebugTransferTutorialPage() {
-  const [dismissed, setDismissed] = useState<boolean>(() => isTransferTutorialDismissed());
-  const [isOpen, setIsOpen] = useState<boolean>(() => !isTransferTutorialDismissed());
+  const transferTutorial = tutorialForStage('same_day_transfer');
+  const [dismissed, setDismissed] = useState<boolean>(() => isTutorialDismissed(TRANSFER_SCENE_TUTORIAL_ID));
+  const [isOpen, setIsOpen] = useState<boolean>(() => !isTutorialDismissed(TRANSFER_SCENE_TUTORIAL_ID));
 
   function refreshFromStorage() {
-    const nextDismissed = isTransferTutorialDismissed();
+    const nextDismissed = isTutorialDismissed(TRANSFER_SCENE_TUTORIAL_ID);
     setDismissed(nextDismissed);
     setIsOpen(!nextDismissed);
   }
 
   function handleDismiss() {
-    dismissTransferTutorial();
+    dismissTutorial(TRANSFER_SCENE_TUTORIAL_ID);
     setDismissed(true);
     setIsOpen(false);
   }
 
   function handleReset() {
-    resetTransferTutorialDismissed();
+    resetTutorialDismissed(TRANSFER_SCENE_TUTORIAL_ID);
     setDismissed(false);
     setIsOpen(true);
   }
@@ -39,7 +43,7 @@ export function DebugTransferTutorialPage() {
       <dl className="transfer-debug-state">
         <div>
           <dt>Storage key</dt>
-          <dd>`audiolanguage.transferTutorial.dismissed`</dd>
+          <dd>{tutorialDismissedStorageKey(TRANSFER_SCENE_TUTORIAL_ID)}</dd>
         </div>
         <div>
           <dt>Dismissed</dt>
@@ -65,7 +69,15 @@ export function DebugTransferTutorialPage() {
         </button>
       </div>
       <div className="transfer-tutorial-preview-host" aria-label="Transfer tutorial preview over scene frame">
-        {isOpen ? <TransferTutorialModal onDismiss={handleDismiss} /> : null}
+        {isOpen && transferTutorial ? (
+          <TutorialBubbleModal
+            badgeLabel={transferTutorial.badgeLabel}
+            title={transferTutorial.title}
+            message={transferTutorial.message}
+            dismissLabel={transferTutorial.dismissLabel}
+            onDismiss={handleDismiss}
+          />
+        ) : null}
       </div>
       {!isOpen ? <p className="audio-debug-status">Dialog closed.</p> : null}
     </section>

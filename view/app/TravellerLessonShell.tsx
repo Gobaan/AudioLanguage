@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 
 import type { CapturedRecording, ChoiceOption, Lesson, LessonStep } from '../components';
+import type { LessonTutorial } from './lessonTutorials';
 import { LessonAppLinks } from './LessonAppLinks';
 import { LessonStepRenderer } from './LessonStepRenderer';
-import { TransferTutorialModal } from './TransferTutorialModal';
+import { TutorialBubbleModal } from './TransferTutorialModal';
 import { stepBlocksNextUntilChoice, stepHandlesOwnNext } from './lessonStepHelpers';
 
 type TravellerLessonShellProps = {
@@ -25,8 +26,8 @@ type TravellerLessonShellProps = {
   ) => void;
   onOpenScorecard: () => void;
   onNext: () => void;
-  showTransferTutorial?: boolean;
-  onDismissTransferTutorial?: () => void;
+  tutorial?: LessonTutorial | null;
+  onDismissTutorial?: () => void;
   debugLessonSwitcher?: ReactNode;
 };
 
@@ -45,8 +46,8 @@ export function TravellerLessonShell({
   onCaptureAttempt,
   onOpenScorecard,
   onNext,
-  showTransferTutorial = false,
-  onDismissTransferTutorial,
+  tutorial = null,
+  onDismissTutorial,
   debugLessonSwitcher,
 }: TravellerLessonShellProps) {
   const nextLabel = isLastStep ? (hasNextLesson ? 'Next' : 'Scorecard') : 'Next';
@@ -64,12 +65,13 @@ export function TravellerLessonShell({
       ) : null}
       <div className="lesson-step-with-tutorial">
         <LessonStepRenderer
+          key={`${stepLesson.id}:${step.id}`}
           lesson={stepLesson}
           step={step}
           language={language}
           isPlaying={isPlaying}
           selectedChoiceId={selectedChoiceByStep[step.id]}
-          suspendSceneAutoplay={showTransferTutorial && step.type === 'scene_setup'}
+          suspendSceneAutoplay={Boolean(tutorial) && step.type === 'scene_setup'}
           onPlayAudio={onPlayAudio}
           onLogAudioPlayed={onLogAudioPlayed}
           onSelectChoice={onSelectChoice}
@@ -77,8 +79,14 @@ export function TravellerLessonShell({
           onStepComplete={onNext}
           nextLabel={nextLabel}
         />
-        {showTransferTutorial && onDismissTransferTutorial ? (
-          <TransferTutorialModal onDismiss={onDismissTransferTutorial} />
+        {tutorial && onDismissTutorial ? (
+          <TutorialBubbleModal
+            badgeLabel={tutorial.badgeLabel}
+            title={tutorial.title}
+            message={tutorial.message}
+            dismissLabel={tutorial.dismissLabel}
+            onDismiss={onDismissTutorial}
+          />
         ) : null}
       </div>
       {stepHandlesNext && !nextBlocked ? (

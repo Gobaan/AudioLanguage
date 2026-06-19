@@ -1,25 +1,45 @@
-const TRANSFER_TUTORIAL_DISMISSED_KEY = 'audiolanguage.transferTutorial.dismissed';
+const TUTORIAL_DISMISSED_KEY_PREFIX = 'audiolanguage.tutorial.dismissed';
 
-export function isTransferTutorialDismissed(): boolean {
+export const TRANSFER_SCENE_TUTORIAL_ID = 'transfer-scene';
+export const DELAYED_REVIEW_TUTORIAL_ID = 'delayed-review-scene';
+
+export function tutorialDismissedStorageKey(tutorialId: string): string {
+  return `${TUTORIAL_DISMISSED_KEY_PREFIX}.${tutorialId}`;
+}
+
+export function isTutorialDismissed(tutorialId: string): boolean {
   try {
-    return localStorage.getItem(TRANSFER_TUTORIAL_DISMISSED_KEY) === 'true';
+    return localStorage.getItem(tutorialDismissedStorageKey(tutorialId)) === 'true';
   } catch {
     return false;
   }
 }
 
-export function dismissTransferTutorial(): void {
+export function dismissTutorial(tutorialId: string): void {
   try {
-    localStorage.setItem(TRANSFER_TUTORIAL_DISMISSED_KEY, 'true');
+    localStorage.setItem(tutorialDismissedStorageKey(tutorialId), 'true');
   } catch {
     // Ignore localStorage write failures and allow session-only dismissal.
   }
 }
 
-export function resetTransferTutorialDismissed(): void {
+export function resetTutorialDismissed(tutorialId: string): void {
   try {
-    localStorage.removeItem(TRANSFER_TUTORIAL_DISMISSED_KEY);
+    localStorage.removeItem(tutorialDismissedStorageKey(tutorialId));
   } catch {
     // Ignore localStorage failures.
   }
+}
+
+// Backward-compatible helpers for the original transfer tutorial.
+export function isTransferTutorialDismissed(): boolean {
+  return isTutorialDismissed(TRANSFER_SCENE_TUTORIAL_ID);
+}
+
+export function dismissTransferTutorial(): void {
+  dismissTutorial(TRANSFER_SCENE_TUTORIAL_ID);
+}
+
+export function resetTransferTutorialDismissed(): void {
+  resetTutorialDismissed(TRANSFER_SCENE_TUTORIAL_ID);
 }

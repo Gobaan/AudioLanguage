@@ -6,16 +6,17 @@ import { usePromptedRecordingController } from './usePromptedRecordingController
 
 export function PromptedRecording(props: PromptedRecordingProps) {
   const controller = usePromptedRecordingController(props);
+  const modelReplayNormalLabel = props.modelReplayNormalLabel ?? props.modelReplayLabel ?? '🔊 Normal speed';
+  const modelReplaySlowLabel = props.modelReplaySlowLabel ?? '🐌 Half speed';
   const canReplayModel = useMemo(
     () =>
       Boolean(
-        (props.modelReplayLabel || props.modelReplayNormalLabel || props.modelReplaySlowLabel) &&
+        (modelReplayNormalLabel.trim() || modelReplaySlowLabel.trim()) &&
           (props.audioUrl || props.audioText?.trim()),
       ),
     [
-      props.modelReplayLabel,
-      props.modelReplayNormalLabel,
-      props.modelReplaySlowLabel,
+      modelReplayNormalLabel,
+      modelReplaySlowLabel,
       props.audioUrl,
       props.audioText,
     ],
@@ -35,8 +36,8 @@ export function PromptedRecording(props: PromptedRecordingProps) {
       modelAudioError={controller.modelPlayback.audioError}
       recordingUrl={controller.recordingUrl}
       canReplayModel={canReplayModel}
-      modelReplayNormalLabel={props.modelReplayNormalLabel ?? props.modelReplayLabel ?? 'Listen again'}
-      modelReplaySlowLabel={props.modelReplaySlowLabel}
+      modelReplayNormalLabel={modelReplayNormalLabel}
+      modelReplaySlowLabel={modelReplaySlowLabel}
       isModelPlaying={controller.modelPlayback.isPlaying}
       pendingCapture={controller.pendingCapture}
       reRecordLabel={props.reRecordLabel ?? 'Re-record'}

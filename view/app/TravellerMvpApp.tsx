@@ -5,13 +5,13 @@ import { FitToViewport } from './FitToViewport';
 import { LearnerSessionLanding } from './LearnerSessionLanding';
 import { PlanSelectionDebugPanel } from './PlanSelectionDebugPanel';
 import { TravellerLessonShell } from './TravellerLessonShell';
-import { isTransferLikeLesson } from './lessonStepHelpers';
+import { tutorialForLesson } from './lessonTutorials';
 import { useAssetPrefetcher } from './useAssetPrefetcher';
 import { useActiveLessonStep } from './useActiveLessonStep';
 import { useLessonLoader } from './useLessonLoader';
 import { useParticipantId } from './useParticipantId';
 import { useScorecard } from './useScorecard';
-import { dismissTransferTutorial, isTransferTutorialDismissed } from './transferTutorialStorage';
+import { dismissTutorial, isTutorialDismissed } from './transferTutorialStorage';
 import { useTravellerRoute } from './useTravellerRoute';
 import { START_LESSON, updateLessonUrl, viewFromUrl } from './lessonUrls';
 import { useValidationSession } from './useValidationSession';
@@ -24,9 +24,7 @@ export function TravellerMvpApp() {
   const participantId = useParticipantId();
   const [sessionPhase, setSessionPhase] = useState<SessionPhase>('landing');
   const [sessionRequestId, setSessionRequestId] = useState(1);
-  const [transferTutorialDismissed, setTransferTutorialDismissed] = useState<boolean>(() =>
-    isTransferTutorialDismissed(),
-  );
+  const [dismissedTutorials, setDismissedTutorials] = useState<Record<string, true>>({});
 
   const { lessonTabs, lessons, lesson, displayName, planVersion, sessionId, loadState } = useLessonLoader({
     language,
@@ -140,9 +138,9 @@ export function TravellerMvpApp() {
     showScorecard();
   }, [showScorecard]);
 
-  const handleDismissTransferTutorial = useCallback(() => {
-    dismissTransferTutorial();
-    setTransferTutorialDismissed(true);
+  const handleDismissTutorial = useCallback((tutorialId: string) => {
+    dismissTutorial(tutorialId);
+    setDismissedTutorials((current) => ({ ...current, [tutorialId]: true }));
   }, []);
 
   const debugLessonSwitcher = isLocalHost() ? (
@@ -232,7 +230,11 @@ export function TravellerMvpApp() {
     return <div className="frame-placeholder" aria-label="MVP step unavailable" />;
   }
 
-  const showTransferTutorial = sessionPhase === 'running' && isTransferLikeLesson(stepLesson) && !transferTutorialDismissed;
+  const activeTutorial = sessionPhase === 'running' ? tutorialForLesson(stepLesson) : null;
+  const tutorialDismissed = activeTutorial
+    ? dismissedTutorials[activeTutorial.dismissId] === true || isTutorialDismissed(activeTutorial.dismissId)
+    : true;
+  const tutorial = activeTutorial && !tutorialDismissed ? activeTutorial : null;
 
   return (
     <FitToViewport scrollable={isLocalHost()}>
@@ -246,8 +248,8 @@ export function TravellerMvpApp() {
         selectedChoiceByStep={selectedChoiceByStep}
         isLastStep={isLastStep}
         hasNextLesson={nextLessonTab !== null}
-        showTransferTutorial={showTransferTutorial}
-        onDismissTransferTutorial={handleDismissTransferTutorial}
+        tutorial={tutorial}
+        onDismissTutorial={tutorial ? () => handleDismissTutorial(tutorial.dismissId) : undefined}
         onPlayAudio={playStepAudio}
         onLogAudioPlayed={logStepAudioPlayed}
         onSelectChoice={selectChoice}
