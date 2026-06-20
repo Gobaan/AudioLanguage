@@ -5,6 +5,13 @@ from typing import Any
 
 from fastapi import Request
 
+COUNTRY_CODE_HEADERS = (
+    "cf-ipcountry",
+    "x-vercel-ip-country",
+    "x-country-code",
+    "cloudfront-viewer-country",
+)
+
 
 def client_ip_from_request(request: Request) -> str:
     """Resolve the best-effort client IP from common proxy headers."""
@@ -59,11 +66,31 @@ def location_flag_from_ip(raw_ip: str) -> str:
 
 def enrich_session_metadata_with_location(metadata: dict[str, Any], request: Request) -> dict[str, Any]:
     client_ip = client_ip_from_request(request)
+    location_flag = location_flag_from_country_code(request) or location_flag_from_ip(client_ip)
     return {
         **metadata,
         "clientIp": client_ip or None,
-        "locationFlag": location_flag_from_ip(client_ip),
+        "locationFlag": location_flag,
     }
+
+
+def location_flag_from_country_code(request: Request) -> str | None:
+    for header in COUNTRY_CODE_HEADERS:
+        country_code = normalize_country_code(request.headers.get(header, ""))
+        if country_code:
+            return f"{country_flag(country_code)} {country_code}"
+    return None
+
+
+def normalize_country_code(value: str) -> str:
+    code = str(value or "").strip().upper()
+    if len(code) != 2 or not code.isalpha() or code == "XX":
+        return ""
+    return code
+
+
+def country_flag(country_code: str) -> str:
+    return "".join(chr(0x1F1E6 + ord(char) - ord("A")) for char in country_code)
 
 
 def normalize_ip(value: str) -> str:

@@ -182,7 +182,31 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(delete_response.json()["status"], "deleted")
         self.assertEqual(deleted_summary_response.json()["sessionCount"], 0)
 
-    def test_validation_admin_summary_includes_ip_location_flag(self):
+    def test_validation_admin_summary_prefers_country_location_flag(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.routes.validation.validation_store", store):
+                client = TestClient(app)
+                client.post(
+                    "/api/validation/sessions",
+                    json={
+                        "sessionId": "ip-location",
+                        "participantId": "friend-a",
+                        "language": "ja",
+                        "sceneSet": "mvp",
+                    },
+                    headers={"x-forwarded-for": "73.44.12.199", "cf-ipcountry": "US"},
+                )
+
+                response = client.get("/api/validation/admin/summary")
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["sessionCount"], 1)
+        self.assertEqual(payload["sessions"][0]["clientIp"], "73.44.12.199")
+        self.assertEqual(payload["sessions"][0]["locationFlag"], "🇺🇸 US")
+
+    def test_validation_admin_summary_uses_public_ip_location_fallback(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
             with patch("app.routes.validation.validation_store", store):
@@ -205,6 +229,63 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(payload["sessionCount"], 1)
         self.assertEqual(payload["sessions"][0]["clientIp"], "73.44.12.199")
         self.assertEqual(payload["sessions"][0]["locationFlag"], "🌍 Public 73.44.*.*")
+
+    def test_validation_score_override_marks_learner_correction(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.routes.validation.validation_store", store):
+                client = TestClient(app)
+                client.post(
+                    "/api/validation/sessions",
+                    json={
+                        "sessionId": "override-score",
+                        "participantId": "friend-a",
+                        "language": "ja",
+                        "sceneSet": "mvp",
+                    },
+                )
+                client.post(
+                    "/api/validation/sessions/override-score/attempts",
+                    data={
+                        "metadata": (
+                            '{"attemptId":"attempt-1","language":"ja","sceneSet":"mvp",'
+                            '"lessonId":"lesson","stepId":"repeat_with_mic","targetId":"target",'
+                            '"expectedText":"hi","expectedTransliteration":"hi"}'
+                        )
+                    },
+                    files={"file": ("attempt.webm", b"audio-bytes", "audio/webm")},
+                )
+                store.save_score(
+                    "override-score",
+                    "attempt-1",
+                    {
+                        "status": "scored",
+                        "result": {
+                            "communication": {
+                                "status": "miss",
+                                "close_enough": False,
+                                "confidence": 0.1,
+                            }
+                        },
+                    },
+                )
+
+                override_response = client.post(
+                    "/api/validation/sessions/override-score/attempts/attempt-1/score-override",
+                    json={"isCorrect": True},
+                )
+                scorecard_response = client.get("/api/validation/sessions/override-score/scorecard")
+                admin_response = client.get("/api/validation/admin/summary")
+
+        self.assertEqual(override_response.status_code, 200)
+        override_payload = override_response.json()
+        self.assertEqual(override_payload["source"], "learner_override")
+        self.assertEqual(override_payload["learnerOverride"], {"isCorrect": True})
+        score = scorecard_response.json()["targets"][0]["attempts"][0]["aiScore"]
+        self.assertEqual(score["source"], "learner_override")
+        self.assertTrue(score["overridesAttemptScore"])
+        self.assertEqual(score["result"]["communication"]["status"], "learner_correct")
+        self.assertEqual(admin_response.json()["rememberedAttemptCount"], 1)
 
     def test_validation_admin_can_delete_selected_session_data(self):
         with tempfile.TemporaryDirectory() as temp_dir:
