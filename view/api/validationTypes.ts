@@ -27,6 +27,11 @@ export type ScorecardAttempt = {
   receivedAt?: string;
   aiScore?: {
     status?: string;
+    source?: string;
+    overridesAttemptScore?: boolean;
+    learnerOverride?: {
+      isCorrect?: boolean;
+    };
     result?: {
       transcript_romanized?: string;
       communication?: {

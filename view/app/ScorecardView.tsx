@@ -1,4 +1,10 @@
-import { validationAttemptAudioUrl, type ScorecardAttempt, type ValidationScorecard } from '../api/validation';
+import { useState } from 'react';
+import {
+  overrideValidationAttemptScore,
+  validationAttemptAudioUrl,
+  type ScorecardAttempt,
+  type ValidationScorecard,
+} from '../api/validation';
 import { assetUrl } from './lessonUrls';
 
 export type ScorecardState = 'idle' | 'loading' | 'ready' | 'error';
@@ -48,12 +54,21 @@ export function ValidationScorecardView({
       {state === 'error' ? (
         <p className="scorecard-status">Scorecard is unavailable.</p>
       ) : null}
-      {state === 'ready' && scorecard ? <ScorecardDetails scorecard={scorecard} /> : null}
+      {state === 'ready' && scorecard ? <ScorecardDetails scorecard={scorecard} onRefresh={onRefresh} /> : null}
     </section>
   );
 }
 
-function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
+function ScorecardDetails({
+  scorecard,
+  onRefresh,
+}: {
+  scorecard: ValidationScorecard;
+  onRefresh: () => void;
+}) {
+  const [overrideAttemptKey, setOverrideAttemptKey] = useState<string | null>(null);
+  const [overrideError, setOverrideError] = useState<string | null>(null);
+
   return (
     <>
       <section className="scorecard-targets" aria-label="Scorecard targets">
@@ -81,25 +96,47 @@ function ScorecardDetails({ scorecard }: { scorecard: ValidationScorecard }) {
                     key={attempt.attemptId}
                     attempt={attempt}
                     sessionId={scorecard.session.sessionId}
+                    isOverriding={overrideAttemptKey === attempt.attemptId}
+                    onOverride={overrideAttempt}
                   />
                 ))}
               </ul>
+              {overrideError ? <p className="scorecard-status">{overrideError}</p> : null}
             </article>
           ))
         )}
       </section>
     </>
   );
+
+  async function overrideAttempt(attemptId: string, isCorrect: boolean) {
+    setOverrideAttemptKey(attemptId);
+    setOverrideError(null);
+    try {
+      await overrideValidationAttemptScore(scorecard.session.sessionId, attemptId, isCorrect);
+      onRefresh();
+    } catch (error) {
+      setOverrideError(scoreOverrideErrorMessage(error));
+    } finally {
+      setOverrideAttemptKey(null);
+    }
+  }
 }
 
 function ScorecardAttemptRow({
   attempt,
   sessionId,
+  isOverriding,
+  onOverride,
 }: {
   attempt: ScorecardAttempt;
   sessionId: string;
+  isOverriding: boolean;
+  onOverride: (attemptId: string, isCorrect: boolean) => void;
 }) {
   const saidLine = attemptSaidLine(attempt);
+  const isCorrect = attemptIsRemembered(attempt);
+  const nextIsCorrect = !isCorrect;
 
   return (
     <li className={attemptAccuracyClass(attempt)}>
@@ -107,6 +144,7 @@ function ScorecardAttemptRow({
         <div className="scorecard-attempt-heading">
           <strong>{attemptStepLabel(attempt)}</strong>
           <span>{scoreLabel(attempt)}</span>
+          {attempt.aiScore?.overridesAttemptScore ? <span>Corrected by learner</span> : null}
         </div>
         <dl className="scorecard-attempt-phrases">
           <div>
@@ -118,6 +156,11 @@ function ScorecardAttemptRow({
       <div className="scorecard-attempt-audio">
         <span className="scorecard-audio-label">Your recording</span>
         <audio controls src={validationAttemptAudioUrl(sessionId, attempt.attemptId)} />
+        <div className="scorecard-override-actions" aria-label="Correct this score">
+          <button type="button" disabled={isOverriding} onClick={() => onOverride(attempt.attemptId, nextIsCorrect)}>
+            {isOverriding ? 'Saving...' : nextIsCorrect ? 'Mark correct' : 'Mark incorrect'}
+          </button>
+        </div>
       </div>
     </li>
   );
@@ -170,12 +213,7 @@ function scoreLabel(attempt: ScorecardAttempt): string {
 }
 
 function attemptAccuracyClass(attempt: ScorecardAttempt): 'passed' | 'failed' {
-  const confidence = attemptAccuracy(attempt);
-  if (confidence === null) {
-    return 'failed';
-  }
-
-  return confidence > ACCURACY_PASS_THRESHOLD ? 'passed' : 'failed';
+  return attemptIsRemembered(attempt) ? 'passed' : 'failed';
 }
 
 function attemptAccuracy(attempt: ScorecardAttempt): number | null {
@@ -186,4 +224,28 @@ function attemptAccuracy(attempt: ScorecardAttempt): number | null {
 
   const confidence = score.result?.communication?.confidence;
   return typeof confidence === 'number' ? confidence : null;
+}
+
+function attemptIsRemembered(attempt: ScorecardAttempt): boolean {
+  const score = attempt.aiScore;
+  if (!score || score.status !== 'scored') {
+    return false;
+  }
+  const communication = score.result?.communication;
+  if (communication?.close_enough === true) {
+    return true;
+  }
+  const status = communication?.status || '';
+  if (status === 'exact' || status === 'close' || status === 'understood' || status === 'learner_correct') {
+    return true;
+  }
+  const confidence = attemptAccuracy(attempt);
+  return confidence !== null && confidence > ACCURACY_PASS_THRESHOLD;
+}
+
+function scoreOverrideErrorMessage(error: unknown): string {
+  if (!(error instanceof Error)) {
+    return 'Could not save that correction.';
+  }
+  return `Could not save that correction: ${error.message}`;
 }

@@ -47,6 +47,10 @@ class ValidationEventRequest(BaseModel):
     metadata: dict | None = None
 
 
+class ScoreOverrideRequest(BaseModel):
+    isCorrect: bool
+
+
 @router.post("/api/validation/sessions")
 def start_validation_session(request: ValidationSessionRequest, http_request: Request):
     """Create a local validation session for workflow events and recordings."""
@@ -154,6 +158,24 @@ def score_validation_attempt_endpoint(
     try:
         attempt = validation_store.attempt_metadata(session_id, attempt_id)
         return score_validation_attempt(session_id, attempt, conversation_coach)
+    except FileNotFoundError as error:
+        raise HTTPException(status_code=404, detail=f"Attempt '{attempt_id}' not found") from error
+
+
+@router.post("/api/validation/sessions/{session_id}/attempts/{attempt_id}/score-override")
+def override_validation_attempt_score(
+    session_id: str,
+    attempt_id: str,
+    request: ScoreOverrideRequest,
+):
+    """Record a learner correction for an automatic score without deleting the original score."""
+    try:
+        validation_store.attempt_metadata(session_id, attempt_id)
+        return validation_store.save_score(
+            session_id,
+            attempt_id,
+            learner_override_score(request.isCorrect),
+        )
     except FileNotFoundError as error:
         raise HTTPException(status_code=404, detail=f"Attempt '{attempt_id}' not found") from error
 
@@ -273,3 +295,22 @@ def score_validation_attempt(session_id: str, attempt: dict, conversation_coach:
                 "error": str(error),
             },
         )
+
+
+def learner_override_score(is_correct: bool) -> dict:
+    status = "learner_correct" if is_correct else "learner_incorrect"
+    return {
+        "status": "scored",
+        "source": "learner_override",
+        "overridesAttemptScore": True,
+        "learnerOverride": {
+            "isCorrect": is_correct,
+        },
+        "result": {
+            "communication": {
+                "status": status,
+                "close_enough": is_correct,
+                "confidence": 1.0 if is_correct else 0.0,
+            },
+        },
+    }

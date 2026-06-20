@@ -154,6 +154,36 @@ export async function scoreValidationAttempt(sessionId: string, attemptId: strin
   }
 }
 
+export async function overrideValidationAttemptScore(
+  sessionId: string,
+  attemptId: string,
+  isCorrect: boolean,
+): Promise<void> {
+  const response = await fetch(
+    `/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts/${encodeURIComponent(attemptId)}/score-override`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ isCorrect }),
+    },
+  );
+  if (!response.ok) {
+    throw new Error(await validationApiErrorMessage(response, 'Failed to override validation score'));
+  }
+}
+
 export function validationAttemptAudioUrl(sessionId: string, attemptId: string): string {
   return `/api/validation/sessions/${encodeURIComponent(sessionId)}/attempts/${encodeURIComponent(attemptId)}/audio`;
+}
+
+async function validationApiErrorMessage(response: Response, fallback: string): Promise<string> {
+  try {
+    const body = await response.json();
+    if (typeof body.detail === 'string' && body.detail.length > 0) {
+      return `${fallback}: ${body.detail}`;
+    }
+  } catch {
+    // Non-JSON responses still report the status code below.
+  }
+  return `${fallback}: ${response.status}`;
 }

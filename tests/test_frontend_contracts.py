@@ -734,6 +734,8 @@ def test_lesson_loader_waits_for_participant_and_session_request():
 def test_session_queue_completion_shows_scorecard_with_next_lesson_action():
     app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
     scorecard_source = (PROJECT_DIR / "view" / "app" / "ScorecardView.tsx").read_text(encoding="utf-8")
+    validation_api_source = (PROJECT_DIR / "view" / "api" / "validation.ts").read_text(encoding="utf-8")
+    validation_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
 
     assert "completeSession();" in app_source
     assert "if (appView === 'scorecard')" in app_source
@@ -744,6 +746,17 @@ def test_session_queue_completion_shows_scorecard_with_next_lesson_action():
     assert "onContinue={beginSession}" in app_source
     assert "disabled={state === 'loading'}" in scorecard_source
     assert "Scoring..." in scorecard_source
+    assert "Mark correct" in scorecard_source
+    assert "Mark incorrect" in scorecard_source
+    assert "const nextIsCorrect = !isCorrect" in scorecard_source
+    assert "onOverride(attempt.attemptId, nextIsCorrect)" in scorecard_source
+    assert "Corrected by learner" in scorecard_source
+    assert "scoreOverrideErrorMessage" in scorecard_source
+    assert "overrideValidationAttemptScore" in scorecard_source
+    assert "score-override" in validation_api_source
+    assert "validationApiErrorMessage" in validation_api_source
+    assert "learnerOverride" in validation_types_source
+    assert "overridesAttemptScore" in validation_types_source
 
 
 def test_frontend_sends_lesson_stage_to_validation():
