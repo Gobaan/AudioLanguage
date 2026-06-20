@@ -79,10 +79,10 @@ export function LearnerSessionLanding({
       : planState === 'error'
         ? 'Session queue unavailable'
         : hasNothingDue
-          ? "You're caught up for today."
+          ? 'Nothing due, come back tomorrow!'
           : isComplete
             ? 'Nice work. Your travel queue is complete.'
-            : "Get travel-ready by practicing the moments you'll actually face.";
+            : 'Ready for your next session?';
   const description =
     planState === 'loading'
       ? `Checking what is due for ${languageLabel}.`
@@ -93,7 +93,7 @@ export function LearnerSessionLanding({
           : isComplete
             ? `You finished your ${languageLabel} queue. Keep going when you want more practice.`
             : 'Skip textbook coverage. Learn the high-value phrases travelers need, then practice responding quickly inside realistic visual scenes.';
-  const actionLabel = actionsDisabled ? 'Scoring...' : isComplete ? 'Continue practicing' : 'Start next session';
+  const actionLabel = actionsDisabled ? 'Scoring...' : isComplete ? 'Continue practicing' : 'Next session';
   const actionHandler = isComplete ? onContinue : onStartSession;
 
   return (
