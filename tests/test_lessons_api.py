@@ -54,6 +54,34 @@ class LessonsApiTests(unittest.TestCase):
         self.assertNotIn("scale", legacy_bubble)
         self.assertEqual(app_sized_bubble["scale"], 1.8)
 
+    def test_speech_bubble_overrides_apply_to_localized_card_ids(self):
+        overrides = {
+            "editorFrameWidth": 896,
+            "bubbleScale": 1.8,
+            "frames": [
+                {
+                    "lessonId": "ja-card-first-hi-dialogue-practice",
+                    "frameId": "line-0",
+                    "lineIndex": 0,
+                    "kind": "speaker",
+                    "anchorX": 0.44,
+                    "anchorY": 0.12,
+                    "rotationDegrees": 45,
+                    "side": "bottom",
+                }
+            ],
+        }
+
+        bubble = speech_bubble_override_for_frame(
+            overrides,
+            lesson_id="ar-card-first-hi-dialogue-practice",
+            frame_id="line-0",
+        )
+
+        self.assertAlmostEqual(bubble["anchorX"], 0.44)
+        self.assertAlmostEqual(bubble["anchorY"], 0.12)
+        self.assertAlmostEqual(bubble["scale"], 1.8)
+
     def test_learning_engine_package_exports_build_learning_plan(self):
         from app.content.learning_engine import build_learning_plan
 
@@ -215,6 +243,17 @@ class LessonsApiTests(unittest.TestCase):
     def test_learning_engine_uses_saved_speech_bubble_overrides(self):
         response = TestClient(app).get(
             "/api/learning-engine/lessons?language=ja&scene_set=mvp&order_seed=speech-bubbles"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        first_frame = response.json()["lessons"][0]["frames"][0]
+        self.assertAlmostEqual(first_frame["speechBubble"]["anchorX"], 0.44142470671288936)
+        self.assertAlmostEqual(first_frame["speechBubble"]["rotationDegrees"], 45.0)
+        self.assertAlmostEqual(first_frame["speechBubble"]["scale"], 1.72)
+
+    def test_learning_engine_reuses_saved_bubble_overrides_for_localized_lessons(self):
+        response = TestClient(app).get(
+            "/api/learning-engine/lessons?language=ar&scene_set=mvp&order_seed=speech-bubbles"
         )
 
         self.assertEqual(response.status_code, 200)

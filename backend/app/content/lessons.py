@@ -141,13 +141,30 @@ def speech_bubble_override_for_frame(
         if overrides.get("editorFrameWidth") == APP_SPEECH_BUBBLE_EDITOR_FRAME_WIDTH
         else None
     )
-    for item in overrides.get("frames", []):
-        if not isinstance(item, dict):
-            continue
+    frames = [item for item in overrides.get("frames", []) if isinstance(item, dict)]
+    for item in frames:
         if item.get("lessonId") != lesson_id or item.get("frameId") != frame_id:
             continue
         return speech_bubble_from_payload(item, bubble_scale=bubble_scale)
+
+    shared_lesson_key = localized_card_key(lesson_id)
+    if shared_lesson_key is None:
+        return None
+
+    for item in frames:
+        if item.get("frameId") != frame_id:
+            continue
+        if localized_card_key(str(item.get("lessonId", ""))) != shared_lesson_key:
+            continue
+        return speech_bubble_from_payload(item, bubble_scale=bubble_scale)
     return None
+
+
+def localized_card_key(lesson_id: str) -> str | None:
+    marker = "-card-"
+    if marker not in lesson_id:
+        return None
+    return f"card-{lesson_id.split(marker, 1)[1]}"
 
 
 def speech_bubble_from_line(line: dict[str, Any]) -> dict[str, Any] | None:
@@ -188,6 +205,7 @@ def speech_bubble_from_payload(payload: dict[str, Any], *, bubble_scale: Any = N
         **({"rotationDegrees": float(rotation_degrees)} if isinstance(rotation_degrees, (int, float)) else {}),
         **({"scale": float(scale)} if isinstance(scale, (int, float)) else {}),
     }
+
 
 def find_learner_line(lines: list[dict[str, Any]]) -> dict[str, Any]:
     for line in lines:
