@@ -1,11 +1,13 @@
 import tempfile
 import unittest
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from test_support import app
 from app.content.lessons import speech_bubble_from_line, speech_bubble_override_for_frame
+from app.reminders import ReminderSubscription, is_due, is_valid_timezone, local_date_for
 
 
 class LessonsApiTests(unittest.TestCase):
@@ -87,6 +89,71 @@ class LessonsApiTests(unittest.TestCase):
 
         self.assertTrue(callable(build_learning_plan))
 
+    def test_daily_reminder_due_uses_subscription_local_timezone_once_per_day(self):
+        subscription = ReminderSubscription(
+            participant_id="Friend",
+            endpoint="https://push.example.test/1",
+            subscription={"endpoint": "https://push.example.test/1"},
+            time="22:00",
+            timezone="America/New_York",
+            last_sent_date=None,
+        )
+
+        before_local_time = datetime(2026, 6, 20, 1, 59, tzinfo=UTC)
+        at_local_time = datetime(2026, 6, 20, 2, 0, tzinfo=UTC)
+        already_sent = ReminderSubscription(
+            participant_id="Friend",
+            endpoint="https://push.example.test/1",
+            subscription={"endpoint": "https://push.example.test/1"},
+            time="22:00",
+            timezone="America/New_York",
+            last_sent_date="2026-06-19",
+        )
+
+        self.assertFalse(is_due(subscription, before_local_time))
+        self.assertTrue(is_due(subscription, at_local_time))
+        self.assertFalse(is_due(already_sent, at_local_time))
+
+    def test_daily_reminder_accepts_utc_without_zoneinfo_database(self):
+        subscription = ReminderSubscription(
+            participant_id="Friend",
+            endpoint="https://push.example.test/utc",
+            subscription={"endpoint": "https://push.example.test/utc"},
+            time="22:00",
+            timezone="UTC",
+            last_sent_date=None,
+        )
+
+        self.assertTrue(is_valid_timezone("UTC"))
+        self.assertFalse(is_due(subscription, datetime(2026, 6, 20, 21, 59, tzinfo=UTC)))
+        self.assertTrue(is_due(subscription, datetime(2026, 6, 20, 22, 0, tzinfo=UTC)))
+        self.assertEqual(local_date_for(subscription, datetime(2026, 6, 20, 22, 0, tzinfo=UTC)), "2026-06-20")
+
+    def test_daily_reminder_subscription_endpoint_accepts_local_timezone(self):
+        client = TestClient(app)
+        subscription = {
+            "endpoint": "https://push.example.test/daily-reminder-test",
+            "keys": {"p256dh": "public", "auth": "auth"},
+        }
+
+        response = client.post(
+            "/api/reminders/subscriptions",
+            json={
+                "participantId": "Friend",
+                "time": "22:00",
+                "timezone": "America/New_York",
+                "subscription": subscription,
+            },
+        )
+        unsubscribe_response = client.post(
+            "/api/reminders/unsubscribe",
+            json={"endpoint": subscription["endpoint"]},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["ok"], True)
+        self.assertEqual(unsubscribe_response.status_code, 200)
+
     def test_language_selection_routes_and_new_languages_load(self):
         client = TestClient(app)
 
@@ -96,6 +163,7 @@ class LessonsApiTests(unittest.TestCase):
         learn_response = client.get("/learn?language=yue&lesson=hello")
         debug_response = client.get("/debug/recording-countdown")
         audio_debug_response = client.get("/debug/audio?language=ja")
+        reminder_key_response = client.get("/api/reminders/public-key")
         speech_bubble_editor_response = client.get("/debug/speech-bubble-editor")
         speech_bubble_debug_response = client.get("/debug/speech-bubbles")
         transfer_tutorial_debug_response = client.get("/debug/transfer-tutorial")
@@ -111,6 +179,8 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(learn_response.status_code, 200)
         self.assertEqual(debug_response.status_code, 200)
         self.assertEqual(audio_debug_response.status_code, 200)
+        self.assertEqual(reminder_key_response.status_code, 200)
+        self.assertTrue(reminder_key_response.json()["publicKey"])
         self.assertEqual(speech_bubble_editor_response.status_code, 200)
         self.assertEqual(speech_bubble_debug_response.status_code, 200)
         self.assertEqual(transfer_tutorial_debug_response.status_code, 200)

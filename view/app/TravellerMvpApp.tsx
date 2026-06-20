@@ -213,6 +213,7 @@ export function TravellerMvpApp() {
           sessionPhase={sessionPhase}
           planState={loadState === 'idle' ? 'loading' : loadState}
           participantReady={participantId !== null}
+          participantId={participantId}
           actionsDisabled={scorecardState === 'loading'}
           onStartSession={beginSession}
           onContinue={beginSession}
@@ -253,6 +254,7 @@ export function TravellerMvpApp() {
           sessionPhase="landing"
           planState={loadState}
           participantReady={participantId !== null}
+          participantId={participantId}
           actionsDisabled={scorecardState === 'loading'}
           onStartSession={beginSession}
           onContinue={beginSession}

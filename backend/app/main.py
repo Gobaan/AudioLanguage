@@ -1,11 +1,23 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.routes import content, conversation, pages, validation
-from app.runtime import AUDIO_DIR, STATIC_DIR, VISUALS_DIR
+from app.routes import content, conversation, pages, reminders, validation
+from app.runtime import AUDIO_DIR, STATIC_DIR, VISUALS_DIR, reminder_scheduler
 
-app = FastAPI(title="Audio Language")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    reminder_scheduler.start()
+    try:
+        yield
+    finally:
+        reminder_scheduler.stop()
+
+
+app = FastAPI(title="Audio Language", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -53,3 +65,4 @@ app.include_router(pages.router)
 app.include_router(content.router)
 app.include_router(validation.router)
 app.include_router(conversation.router)
+app.include_router(reminders.router)

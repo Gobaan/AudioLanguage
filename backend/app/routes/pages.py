@@ -11,6 +11,11 @@ def index():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+@router.get("/service-worker.js")
+def service_worker():
+    return FileResponse(str(STATIC_DIR / "service-worker.js"), media_type="text/javascript")
+
+
 @router.get("/learn")
 def learner_app():
     return FileResponse(str(STATIC_DIR / "index.html"))

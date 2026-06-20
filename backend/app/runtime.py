@@ -1,4 +1,5 @@
 from app.validation import ValidationStore
+from app.reminders import ReminderScheduler, ReminderSender, ReminderStore
 from project_config.paths import repo_paths
 
 PATHS = repo_paths()
@@ -10,3 +11,6 @@ DATA_DIR = PATHS.content_dir
 VALIDATION_DIR = PATHS.model_dir / "validation"
 
 validation_store = ValidationStore(VALIDATION_DIR)
+reminder_store = ReminderStore(VALIDATION_DIR)
+reminder_sender = ReminderSender(reminder_store)
+reminder_scheduler = ReminderScheduler(reminder_sender)

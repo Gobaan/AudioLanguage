@@ -1,3 +1,5 @@
+import { DailyReminderPrompt } from './DailyReminderPrompt';
+
 type LearnerSessionLandingProps = {
   language: string;
   displayName?: string | null;
@@ -5,6 +7,7 @@ type LearnerSessionLandingProps = {
   sessionPhase: 'landing' | 'complete';
   planState: 'loading' | 'ready' | 'error';
   participantReady: boolean;
+  participantId: string | null;
   onStartSession: () => void;
   onContinue: () => void;
   actionsDisabled?: boolean;
@@ -58,6 +61,7 @@ export function LearnerSessionLanding({
   sessionPhase,
   planState,
   participantReady,
+  participantId,
   onStartSession,
   onContinue,
   actionsDisabled = false,
@@ -114,6 +118,8 @@ export function LearnerSessionLanding({
           </div>
         ) : null}
       </div>
+
+      <DailyReminderPrompt participantId={participantId} />
 
       <section className="learning-value-grid" aria-label="Why this works">
         {VALUE_PANELS.map((panel) => (

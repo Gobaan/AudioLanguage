@@ -394,6 +394,75 @@ def test_homepage_uses_private_route():
     assert 'aria-label="Page unavailable"' in main_source
 
 
+def test_lesson_landing_offers_optional_daily_notification_reminder():
+    result = run_frontend_script(
+        ["view/app/dailyReminderNotifications.ts"],
+        """
+        const {
+          DEFAULT_DAILY_REMINDER_TIME,
+          DAILY_REMINDER_STORAGE_KEY,
+          canUsePushReminders,
+          loadDailyReminderSettings,
+          reminderPermission,
+          pushReminderUnavailableMessage,
+        } = requireSource('view/app/dailyReminderNotifications.ts');
+
+        global.localStorage = {
+          value: null,
+          getItem(key) {
+            return key === DAILY_REMINDER_STORAGE_KEY ? this.value : null;
+          },
+          setItem(key, value) {
+            if (key === DAILY_REMINDER_STORAGE_KEY) this.value = value;
+          },
+        };
+
+        console.log(JSON.stringify({
+          defaultTime: DEFAULT_DAILY_REMINDER_TIME,
+          defaultSettings: loadDailyReminderSettings(),
+          unsupportedPermission: reminderPermission(),
+          canUsePush: canUsePushReminders(),
+          unavailableMessage: pushReminderUnavailableMessage(),
+        }));
+        """,
+    )
+    selection_source = (PROJECT_DIR / "view" / "app" / "LanguageSelectionApp.tsx").read_text(encoding="utf-8")
+    landing_source = (PROJECT_DIR / "view" / "app" / "LearnerSessionLanding.tsx").read_text(encoding="utf-8")
+    app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
+    prompt_source = (PROJECT_DIR / "view" / "app" / "DailyReminderPrompt.tsx").read_text(encoding="utf-8")
+    api_source = (PROJECT_DIR / "view" / "api" / "reminders.ts").read_text(encoding="utf-8")
+    service_worker_source = (PROJECT_DIR / "view" / "app" / "public" / "service-worker.js").read_text(encoding="utf-8")
+    reminder_source = (PROJECT_DIR / "view" / "app" / "dailyReminderNotifications.ts").read_text(encoding="utf-8")
+    pages_source = (PROJECT_DIR / "backend" / "app" / "routes" / "pages.py").read_text(encoding="utf-8")
+
+    assert result["defaultTime"] == "22:00"
+    assert result["defaultSettings"] == {"enabled": False, "time": "22:00"}
+    assert result["unsupportedPermission"] == "unsupported"
+    assert result["canUsePush"] is False
+    assert result["unavailableMessage"] == "Push notifications are unavailable in this browser."
+    assert "DailyReminderPrompt" not in selection_source
+    assert "DailyReminderPrompt" in landing_source
+    assert "participantId={participantId}" in app_source
+    assert "requestReminderPermission" in prompt_source
+    assert "Reminder server is missing Web Push dependencies" in prompt_source
+    assert "Reminder worker is unavailable" in prompt_source
+    assert "Browser push registration failed" in prompt_source
+    assert "Turn it off here anytime." in prompt_source
+    assert "registerReminderServiceWorker" in prompt_source
+    assert "saveReminderSubscription" in prompt_source
+    assert "reminderTimezone()" in prompt_source
+    assert "window.isSecureContext === true" in reminder_source
+    assert "navigator.serviceWorker.register('/service-worker.js')" in reminder_source
+    assert "navigator.serviceWorker.ready" in reminder_source
+    assert '"/service-worker.js"' in pages_source
+    assert "body.detail" in api_source
+    assert "/api/reminders/subscriptions" in api_source
+    assert "skipWaiting" in service_worker_source
+    assert "clients.claim" in service_worker_source
+    assert "showNotification" in service_worker_source
+    assert "audio-language-daily-reminder" in service_worker_source
+
+
 def test_language_links_do_not_expose_participant_and_delayed_uses_start_marker():
     result = run_frontend_script(
         ["view/app/lessonUrls.ts", "view/app/lessonLinks.ts"],
@@ -573,7 +642,12 @@ def test_delayed_review_start_marker_resolves_to_first_backend_plan_tab():
 
 def test_learner_session_landing_renders_next_session_actions():
     result = run_frontend_script(
-        ["view/app/LearnerSessionLanding.tsx"],
+        [
+            "view/api/reminders.ts",
+            "view/app/dailyReminderNotifications.ts",
+            "view/app/DailyReminderPrompt.tsx",
+            "view/app/LearnerSessionLanding.tsx",
+        ],
         """
         const React = require('react');
         const { renderToStaticMarkup } = require('react-dom/server');
