@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.routes import content, conversation, pages, reminders, validation
+from app.routes import content, conversation, pages, recommendations, reminders, validation
 from app.runtime import AUDIO_DIR, STATIC_DIR, VISUALS_DIR, reminder_scheduler
 
 
@@ -66,3 +66,4 @@ app.include_router(content.router)
 app.include_router(validation.router)
 app.include_router(conversation.router)
 app.include_router(reminders.router)
+app.include_router(recommendations.router)

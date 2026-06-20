@@ -76,6 +76,114 @@ body {
   margin: 0;
 }
 
+.recommend-phrase-dialog,
+.recommended-phrases-dialog {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 22px 55px rgba(28, 35, 32, 0.24);
+  color: var(--ink);
+  max-width: min(92vw, 520px);
+  padding: 16px;
+  width: 100%;
+}
+
+.recommend-phrase-dialog::backdrop,
+.recommended-phrases-dialog::backdrop {
+  background: rgba(22, 28, 25, 0.42);
+}
+
+.recommend-phrase-close-form {
+  display: flex;
+  justify-content: end;
+}
+
+.recommend-phrase-close-form button {
+  min-height: 32px;
+}
+
+.recommend-phrase-form,
+.recommended-phrases-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.recommend-phrase-form h2,
+.recommended-phrases-panel h2 {
+  color: var(--ink);
+  font: 900 1.2rem/1.15 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.recommend-phrase-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.recommend-phrase-form label span,
+.recommended-phrases-panel header span,
+.recommended-phrases-panel dt {
+  color: #5f665f;
+  font: 800 0.72rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform: uppercase;
+}
+
+.recommend-phrase-form textarea {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  font: 700 1rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 10px;
+  resize: vertical;
+}
+
+.recommend-phrase-form p,
+.recommend-phrase-form > span,
+.recommended-phrases-panel p,
+.recommended-phrases-panel dd,
+.recommended-phrases-panel nav span {
+  color: #5f665f;
+  font: 700 0.92rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.recommend-phrase-form button,
+.recommended-phrases-panel button {
+  min-height: 36px;
+}
+
+.recommended-phrases-panel article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.recommended-phrases-panel article p {
+  color: var(--ink);
+  font: 800 1rem/1.35 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.recommended-phrases-panel dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.recommended-phrases-panel nav {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.learn-page-bottom-actions {
+  display: flex;
+  justify-content: center;
+  width: min(100%, 920px);
+}
+
 .learner-session-actions {
   align-items: center;
   display: flex;

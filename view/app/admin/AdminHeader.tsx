@@ -1,3 +1,5 @@
+import { RecommendedPhrasesDialog } from './RecommendedPhrasesDialog';
+
 export function AdminHeader({ onRefresh }: { onRefresh: () => void }) {
   return (
     <header className="admin-header">
@@ -7,6 +9,7 @@ export function AdminHeader({ onRefresh }: { onRefresh: () => void }) {
       </div>
       <nav className="admin-actions" aria-label="Admin controls">
         <a href="/">Lesson app</a>
+        <RecommendedPhrasesDialog />
         <button type="button" onClick={onRefresh}>
           Refresh
         </button>

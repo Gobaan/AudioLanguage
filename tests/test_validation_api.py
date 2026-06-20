@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 
 from app.conversation.models import CoachResponse, CommunicationJudgement, ConversationContext
 from app.deps import get_conversation_coach
+from app.recommendations import RecommendedPhraseStore
 from app.validation import ValidationStore
 from app.validation.scoring import attempt_expected_phrase
 from test_support import app
@@ -286,6 +287,40 @@ class ValidationApiTests(unittest.TestCase):
         self.assertTrue(score["overridesAttemptScore"])
         self.assertEqual(score["result"]["communication"]["status"], "learner_correct")
         self.assertEqual(admin_response.json()["rememberedAttemptCount"], 1)
+
+    def test_recommended_phrases_capture_ip_and_admin_navigation(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = RecommendedPhraseStore(Path(temp_dir))
+            with patch("app.routes.recommendations.recommended_phrase_store", store):
+                client = TestClient(app)
+                first_response = client.post(
+                    "/api/recommended-phrases",
+                    json={"phrase": "  teach me how to order coffee  "},
+                    headers={"x-forwarded-for": "73.44.12.199", "cf-ipcountry": "US"},
+                )
+                second_response = client.post(
+                    "/api/recommended-phrases",
+                    json={"phrase": "ask where the bathroom is"},
+                    headers={"x-forwarded-for": "203.0.113.7"},
+                )
+                too_long_response = client.post(
+                    "/api/recommended-phrases",
+                    json={"phrase": "x" * 251},
+                )
+                first_admin_response = client.get("/api/admin/recommended-phrases")
+                second_admin_response = client.get("/api/admin/recommended-phrases?index=1")
+
+        self.assertEqual(first_response.status_code, 200)
+        self.assertEqual(first_response.json()["phrase"], "teach me how to order coffee")
+        self.assertEqual(first_response.json()["clientIp"], "73.44.12.199")
+        self.assertEqual(first_response.json()["locationFlag"], "🇺🇸 US")
+        self.assertEqual(second_response.status_code, 200)
+        self.assertEqual(too_long_response.status_code, 422)
+        self.assertEqual(first_admin_response.json()["count"], 2)
+        self.assertEqual(first_admin_response.json()["index"], 0)
+        self.assertEqual(first_admin_response.json()["phrase"]["phrase"], "teach me how to order coffee")
+        self.assertEqual(second_admin_response.json()["index"], 1)
+        self.assertEqual(second_admin_response.json()["phrase"]["phrase"], "ask where the bathroom is")
 
     def test_validation_admin_can_delete_selected_session_data(self):
         with tempfile.TemporaryDirectory() as temp_dir:
