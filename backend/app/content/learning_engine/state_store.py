@@ -386,7 +386,7 @@ def int_to_bool(value: int | None) -> bool | None:
 
 def stage_from_attempt(attempt: dict[str, Any]) -> str:
     lesson_stage = str(attempt.get("lessonStage") or "").strip()
-    if lesson_stage in {"guided_scene_production", "anchor"}:
+    if lesson_stage in {"guided_scene_production", "same_day_anchor_recall", "anchor"}:
         return "anchor"
     if lesson_stage in {"same_day_transfer", "transfer"}:
         return "transfer"

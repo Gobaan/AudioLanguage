@@ -111,16 +111,19 @@ def test_recording_steps_show_learner_frame_before_attempt():
           props: { recordBeforeModelLine: true },
           mic: { enabled: true, record: true },
         };
+        const anchorRecallLesson = { ...lesson, stage: 'same_day_anchor_recall' };
 
         console.log(JSON.stringify({
           recallFrameId: recordingFrameForProduction(lesson, recallStep).id,
           anchorFrameId: recordingFrameForProduction(lesson, anchorStep).id,
+          anchorRecallFrameId: recordingFrameForProduction(anchorRecallLesson, recallStep).id,
         }));
         """,
     )
 
     assert result["recallFrameId"] == "line-1"
     assert result["anchorFrameId"] == "line-1"
+    assert result["anchorRecallFrameId"] == "line-0"
 
 
 def test_recording_timer_uses_five_second_countdown_bar():

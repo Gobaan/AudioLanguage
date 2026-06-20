@@ -24,7 +24,11 @@ export function sceneSetupStopAtLineType(lesson: Lesson, step: LessonStep): stri
 }
 
 export function isTransferLikeLesson(lesson: Lesson | null | undefined): boolean {
-  return lesson?.stage === 'same_day_transfer' || lesson?.stage === 'delayed_review';
+  return (
+    lesson?.stage === 'same_day_transfer' ||
+    lesson?.stage === 'delayed_review' ||
+    lesson?.stage === 'same_day_anchor_recall'
+  );
 }
 
 export function sceneSetupFrames(lesson: Lesson, step: LessonStep): SceneFrameData[] {
@@ -105,6 +109,10 @@ export function recordingFrameForProduction(
 ): SceneFrameData | undefined {
   const learnerFrame = learnerFrameForLesson(lesson);
 
+  if (lesson.stage === 'same_day_anchor_recall' && step.type === 'scene_recall') {
+    return openerFrameForLesson(lesson) ?? frameForStep(lesson, step);
+  }
+
   if (step.mic?.enabled === true && step.mic?.record === true) {
     return learnerFrame ?? frameForStep(lesson, step);
   }
@@ -141,7 +149,7 @@ export function stepHidesLearnerScriptBeforeAttempt(lesson: Lesson, step: Lesson
     return true;
   }
 
-  return lesson.stage === 'same_day_transfer' || lesson.stage === 'delayed_review';
+  return isTransferLikeLesson(lesson);
 }
 
 export function backwardBuildTarget(step: LessonStep): string | undefined {

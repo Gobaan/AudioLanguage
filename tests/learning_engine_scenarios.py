@@ -214,6 +214,10 @@ def plan_rows(plan: dict) -> list[tuple[str, str | None, str | None]]:
     ]
 
 
+def plan_stages(plan: dict) -> list[str | None]:
+    return [lesson.get("stage") for lesson in plan.get("lessons", [])]
+
+
 def score_payload(
     passed: bool,
     *,

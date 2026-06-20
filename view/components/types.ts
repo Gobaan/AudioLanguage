@@ -129,6 +129,7 @@ export type Lesson = {
   targetId?: string;
   planPurpose?: string;
   repairCategory?: string;
+  lessonUnitId?: string;
   sceneSet?: string;
   target: {
     id: string;

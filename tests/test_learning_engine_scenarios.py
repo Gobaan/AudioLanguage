@@ -1,6 +1,6 @@
 import unittest
 
-from learning_engine_scenarios import make_learning_state, plan_rows
+from learning_engine_scenarios import make_learning_state, plan_rows, plan_stages
 
 HELLO_TARGET = "ja-target-respond-hi"
 INTRODUCE_TARGET = "ja-target-my-name-is"
@@ -18,7 +18,7 @@ FOOD_ANCHOR = "ja-card-order-food-dialogue-practice"
 
 
 class LearningEngineScenarioTests(unittest.TestCase):
-    def test_fresh_learner_gets_three_new_anchor_lessons(self):
+    def test_fresh_learner_gets_three_new_anchor_lessons_with_same_day_recall_beats(self):
         with make_learning_state() as scenario:
             plan = scenario.build_plan_for()
 
@@ -28,7 +28,25 @@ class LearningEngineScenarioTests(unittest.TestCase):
                 (HELLO_TARGET, "new", "new"),
                 (INTRODUCE_TARGET, "new", "new"),
                 (REPAIR_TARGET, "new", "new"),
+                (HELLO_TARGET, "same_day_anchor_recall", None),
+                (INTRODUCE_TARGET, "same_day_anchor_recall", None),
+                (REPAIR_TARGET, "same_day_anchor_recall", None),
             ],
+        )
+        self.assertEqual(
+            plan_stages(plan),
+            [
+                "guided_scene_production",
+                "guided_scene_production",
+                "guided_scene_production",
+                "same_day_anchor_recall",
+                "same_day_anchor_recall",
+                "same_day_anchor_recall",
+            ],
+        )
+        self.assertEqual(
+            [lesson["lessonUnitId"] for lesson in plan["lessons"][:3]],
+            [lesson["lessonUnitId"] for lesson in plan["lessons"][3:]],
         )
 
     def test_wrong_meaning_choice_produces_meaning_repair(self):
@@ -37,7 +55,6 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
             plan = scenario.build_plan_for()
 
-        self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertEqual(plan_rows(plan)[0], (HELLO_TARGET, "meaning_repair", "meaning_repair"))
 
     def test_later_spoken_success_clears_meaning_repair(self):
@@ -48,7 +65,6 @@ class LearningEngineScenarioTests(unittest.TestCase):
             plan = scenario.build_plan_for(planning_date="2026-06-02")
 
         rows = plan_rows(plan)
-        self.assertLessEqual(len(rows), 3)
         self.assertNotIn("meaning_repair", [purpose for _, purpose, _ in rows])
         self.assertEqual(rows[0], (HELLO_TARGET, "transfer_practice", None))
 
@@ -58,7 +74,6 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
             plan = scenario.build_plan_for()
 
-        self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertEqual(plan_rows(plan)[0], (INTRODUCE_TARGET, "recall_repair", "recall_repair"))
 
     def test_passed_anchor_plus_failed_transfer_produces_transfer_repair(self):
@@ -68,7 +83,6 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
             plan = scenario.build_plan_for()
 
-        self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertEqual(plan_rows(plan)[0], (REPAIR_TARGET, "transfer_repair", "transfer_repair"))
 
     def test_passed_anchor_transfer_followup_is_transfer_practice_not_repair(self):
@@ -96,7 +110,6 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
             plan = scenario.build_plan_for()
 
-        self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertEqual(plan_rows(plan)[0], (EXCUSE_ME_TARGET, "memory_repair", "memory_repair"))
 
     def test_pending_unscored_attempt_is_neutral(self):
@@ -105,7 +118,6 @@ class LearningEngineScenarioTests(unittest.TestCase):
 
             plan = scenario.build_plan_for()
 
-        self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertNotIn("recall_repair", [purpose for _, purpose, _ in plan_rows(plan)])
         self.assertEqual(
             plan_rows(plan),
@@ -113,6 +125,9 @@ class LearningEngineScenarioTests(unittest.TestCase):
                 (HELLO_TARGET, "new", "new"),
                 (INTRODUCE_TARGET, "new", "new"),
                 (REPAIR_TARGET, "new", "new"),
+                (HELLO_TARGET, "same_day_anchor_recall", None),
+                (INTRODUCE_TARGET, "same_day_anchor_recall", None),
+                (REPAIR_TARGET, "same_day_anchor_recall", None),
             ],
         )
 
@@ -123,9 +138,12 @@ class LearningEngineScenarioTests(unittest.TestCase):
             plan = scenario.build_plan_for()
 
         rows = plan_rows(plan)
-        self.assertLessEqual(len(rows), 3)
         self.assertEqual(rows[0], (INTRODUCE_TARGET, "recall_repair", "recall_repair"))
-        self.assertEqual(rows[1:], [(HELLO_TARGET, "new", "new"), (REPAIR_TARGET, "new", "new")])
+        self.assertEqual(rows[1:3], [(HELLO_TARGET, "new", "new"), (REPAIR_TARGET, "new", "new")])
+        self.assertEqual(
+            rows[3:],
+            [(HELLO_TARGET, "same_day_anchor_recall", None), (REPAIR_TARGET, "same_day_anchor_recall", None)],
+        )
 
     def test_planner_returns_fewer_than_three_when_nothing_useful_exists(self):
         with make_learning_state() as scenario:
@@ -191,8 +209,12 @@ class LearningEngineScenarioTests(unittest.TestCase):
         transfer_practice_rows = plan_rows(transfer_practice_plan)
         self.assertEqual(transfer_practice_rows[0], (HELLO_TARGET, "transfer_practice", None))
         self.assertEqual(
-            transfer_practice_rows[1:],
+            transfer_practice_rows[1:3],
             [(INTRODUCE_TARGET, "new", "new"), (REPAIR_TARGET, "new", "new")],
+        )
+        self.assertEqual(
+            transfer_practice_rows[3:],
+            [(INTRODUCE_TARGET, "same_day_anchor_recall", None), (REPAIR_TARGET, "same_day_anchor_recall", None)],
         )
 
     def test_first_spoken_pass_schedules_review_for_tomorrow(self):

@@ -30,7 +30,7 @@ class LearningEngineTests(unittest.TestCase):
         self.assertEqual(len(payload["lessons"]), 10)
         self.assertNotIn("participant_id", payload)
 
-    def test_endpoint_with_participant_returns_personalized_three_scene_plan(self):
+    def test_endpoint_with_participant_returns_three_anchor_units_with_recall_beats(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))
             with patch("app.routes.content.validation_store", store):
@@ -43,10 +43,28 @@ class LearningEngineTests(unittest.TestCase):
         payload = response.json()
         self.assertEqual(payload["plan_version"], 2)
         self.assertEqual(payload["participant_id"], "Bob")
-        self.assertEqual(len(payload["lessons"]), 3)
-        self.assertTrue(all(lesson["planPurpose"] == "new" for lesson in payload["lessons"]))
-        self.assertTrue(all(lesson["repairCategory"] == "new" for lesson in payload["lessons"]))
+        self.assertEqual(len(payload["lessons"]), 6)
+        self.assertTrue(all(lesson["planPurpose"] == "new" for lesson in payload["lessons"][:3]))
+        self.assertTrue(all(lesson["repairCategory"] == "new" for lesson in payload["lessons"][:3]))
+        self.assertTrue(
+            all(lesson["planPurpose"] == "same_day_anchor_recall" for lesson in payload["lessons"][3:])
+        )
+        self.assertTrue(all(lesson["stage"] == "same_day_anchor_recall" for lesson in payload["lessons"][3:]))
+        self.assertEqual(
+            [lesson["lessonUnitId"] for lesson in payload["lessons"][:3]],
+            [lesson["lessonUnitId"] for lesson in payload["lessons"][3:]],
+        )
         self.assertTrue(all(lesson["targetId"] == lesson["target"]["id"] for lesson in payload["lessons"]))
+        recall = payload["lessons"][3]
+        self.assertEqual([step["type"] for step in recall["steps"]], ["scene_setup", "scene_recall"])
+        self.assertEqual(recall["steps"][0]["props"]["stopAtLineType"], "world_opener")
+        self.assertEqual(recall["steps"][1]["frameId"], "line-0")
+        self.assertEqual(recall["steps"][1]["mic"]["expectedText"], "こんにちは！")
+        self.assertEqual(recall["steps"][1]["mic"]["expectedTransliteration"], "Konnichiwa!")
+        self.assertTrue(recall["steps"][1]["props"]["recordBeforeModelLine"])
+        self.assertTrue(recall["steps"][1]["props"]["playModelLineAfterAttempt"])
+        self.assertTrue(recall["steps"][1]["props"]["playWorldResponseAfterAttempt"])
+        self.assertNotIn("repairCategory", recall)
 
     def test_validation_state_updates_drive_repair_categories(self):
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -171,7 +189,6 @@ class LearningEngineTests(unittest.TestCase):
                 planning_date="2026-06-02",
             )
 
-        self.assertLessEqual(len(plan["lessons"]), 3)
         self.assertIn("transfer_practice", [lesson["planPurpose"] for lesson in plan["lessons"]])
         self.assertNotIn("recall_repair", [lesson["planPurpose"] for lesson in plan["lessons"]])
 

@@ -18,6 +18,7 @@ PlanPurpose = Literal[
     "transfer_repair",
     "memory_repair",
     "transfer_practice",
+    "same_day_anchor_recall",
     "new",
 ]
 
@@ -64,3 +65,4 @@ class PlannedLesson:
     lesson: dict
     purpose: PlanPurpose
     repair_category: RepairCategory | None = None
+    lesson_unit_id: str = ""

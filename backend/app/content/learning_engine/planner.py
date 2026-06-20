@@ -132,6 +132,7 @@ def lesson_from_plan(item: PlannedLesson) -> dict[str, Any]:
         item.lesson,
         plan_purpose=item.purpose,
         repair_category=item.repair_category,
+        lesson_unit_id=item.lesson_unit_id,
     )
 
 

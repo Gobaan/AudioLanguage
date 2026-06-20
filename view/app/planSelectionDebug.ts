@@ -6,11 +6,13 @@ const PURPOSE_LABELS: Record<string, string> = {
   transfer_repair: 'Repair after failed transfer',
   memory_repair: 'Repair after failed delayed review',
   transfer_practice: 'Due spaced transfer/review practice',
+  same_day_anchor_recall: 'Same-day anchor recall',
   new: 'New i+1 anchor',
 };
 
 const STAGE_LABELS: Record<string, string> = {
   guided_scene_production: 'anchor',
+  same_day_anchor_recall: 'anchor recall',
   same_day_transfer: 'transfer',
   delayed_review: 'delayed review',
 };
@@ -21,6 +23,7 @@ export type PlanLessonMetadata = {
   planPurpose?: string;
   repairCategory?: string;
   stage?: string;
+  lessonUnitId?: string;
 };
 
 export function planSelectionSummary(lesson: PlanLessonMetadata): string {
@@ -37,6 +40,7 @@ export type PlanQueueItem = {
   planPurpose: string;
   repairCategory: string;
   stage: string;
+  lessonUnitId: string;
   summary: string;
 };
 
@@ -50,6 +54,7 @@ export function planQueueItems(lessonTabs: LessonTab[], lessons: PlanLessonMetad
       planPurpose: lesson.planPurpose ?? '—',
       repairCategory: lesson.repairCategory ?? '—',
       stage: lesson.stage ?? '—',
+      lessonUnitId: lesson.lessonUnitId ?? '—',
       summary: planSelectionSummary(lesson),
     };
   });

@@ -35,7 +35,7 @@ def select_session_lessons(
             if add_candidate(selected, used_targets, candidate):
                 continue
 
-    return selected[:TARGET_SESSION_SIZE]
+    return selected_with_same_day_anchor_recalls(selected)
 
 
 def repair_candidates(
@@ -80,7 +80,13 @@ def new_anchor_candidates(
     states: dict[str, TargetState],
 ) -> list[PlannedLesson]:
     return [
-        PlannedLesson(indexed.tab, indexed.lesson, "new", "new")
+        PlannedLesson(
+            indexed.tab,
+            indexed.lesson,
+            "new",
+            "new",
+            lesson_unit_id=lesson_unit_id(indexed.lesson),
+        )
         for indexed in indexed_lessons
         if is_anchor_stage(indexed.stage) and repair_category_for_state(states.get(indexed.target_id)) == "new"
     ]
@@ -116,3 +122,32 @@ def add_candidate(
 
 def repair_load_is_light(selected: list[PlannedLesson]) -> bool:
     return sum(1 for item in selected if item.repair_category in REPAIR_PRIORITY) < 2
+
+
+def selected_with_same_day_anchor_recalls(selected: list[PlannedLesson]) -> list[PlannedLesson]:
+    anchor_recalls = [
+        same_day_anchor_recall_for(item)
+        for item in selected
+        if item.purpose == "new" and is_anchor_stage(str(item.lesson.get("stage", "")))
+    ]
+    return selected + anchor_recalls
+
+
+def same_day_anchor_recall_for(anchor: PlannedLesson) -> PlannedLesson:
+    unit_id = anchor.lesson_unit_id or lesson_unit_id(anchor.lesson)
+    tab = dict(anchor.tab)
+    tab_id = str(tab.get("id") or unit_id)
+    tab["id"] = f"{tab_id}-anchor-recall"
+    tab["label"] = str(tab.get("label") or tab_id)
+    return PlannedLesson(
+        tab,
+        anchor.lesson,
+        "same_day_anchor_recall",
+        None,
+        lesson_unit_id=unit_id,
+    )
+
+
+def lesson_unit_id(lesson: dict) -> str:
+    target_id = str(lesson.get("target", {}).get("id", ""))
+    return target_id or str(lesson.get("id", ""))
