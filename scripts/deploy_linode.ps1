@@ -20,6 +20,7 @@ Push-Location $ProjectDir
 try {
     tar `
         --exclude=".git" `
+        --exclude=".pytest_cache" `
         --exclude=".venv" `
         --exclude="venv" `
         --exclude="env" `
@@ -28,6 +29,7 @@ try {
         --exclude="*.pyc" `
         --exclude="server.log" `
         --exclude="server.err.log" `
+        --exclude="model/validation" `
         --exclude="project_config/config/secrets.local.json" `
         -czf $ArchivePath .
 }

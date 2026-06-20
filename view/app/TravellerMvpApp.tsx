@@ -200,9 +200,6 @@ export function TravellerMvpApp() {
           onRefresh={showScorecard}
           onNextLesson={sessionPhase === 'complete' ? beginSession : null}
         />
-        <div className="learn-page-bottom-actions">
-          <RecommendPhraseButton />
-        </div>
       </FitToViewport>
     );
   }
@@ -247,9 +244,6 @@ export function TravellerMvpApp() {
             <p>Scoring and queue selection can take a moment.</p>
           </header>
         </section>
-        <div className="learn-page-bottom-actions">
-          <RecommendPhraseButton />
-        </div>
       </FitToViewport>
     );
   }
@@ -269,9 +263,6 @@ export function TravellerMvpApp() {
           onStartSession={beginSession}
           onContinue={beginSession}
         />
-        <div className="learn-page-bottom-actions">
-          <RecommendPhraseButton />
-        </div>
       </FitToViewport>
     );
   }
@@ -286,9 +277,6 @@ export function TravellerMvpApp() {
             <p>Preparing lesson steps.</p>
           </header>
         </section>
-        <div className="learn-page-bottom-actions">
-          <RecommendPhraseButton />
-        </div>
       </FitToViewport>
     );
   }
@@ -321,9 +309,6 @@ export function TravellerMvpApp() {
         onNext={handleNext}
         debugLessonSwitcher={debugLessonSwitcher}
       />
-      <div className="learn-page-bottom-actions">
-        <RecommendPhraseButton />
-      </div>
     </FitToViewport>
   );
 }

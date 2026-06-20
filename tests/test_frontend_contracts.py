@@ -770,6 +770,7 @@ def test_learn_and_admin_pages_support_phrase_recommendations():
     styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
 
     assert "RecommendPhraseButton" in app_source
+    assert app_source.count("<RecommendPhraseButton />") == 1
     assert "learn-page-bottom-actions" in app_source
     assert "Recommend phrases" in button_source
     assert "className=\"session-primary-action\"" in button_source
