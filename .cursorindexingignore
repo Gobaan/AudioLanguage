@@ -1,0 +1,3 @@
+# Keep out of semantic search but allow explicit reads when truly needed
+view/static/assets/**
+model/assets/**

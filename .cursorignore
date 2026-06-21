@@ -1,0 +1,14 @@
+﻿# Built frontend bundles — verify builds via view/static/index.html only
+view/static/assets/**
+
+# Large media and local learner data
+model/assets/**
+model/validation/**
+
+# Local secrets and scratch
+config/client_secret_*.json
+project_config/config/secrets.local.json
+analysis.txt
+
+# Caches
+.pytest_cache/**

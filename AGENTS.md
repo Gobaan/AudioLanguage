@@ -18,14 +18,29 @@ Validation data and recordings are local by default. Do not send learner audio o
 
 This repository has large generated content and media manifests. Preserve token budget by finding the narrow file set before reading content.
 
+### Blocked paths (never read, grep, diff, or secret-scan)
+
+- `view/static/assets/**` — minified bundles; verify builds via `view/static/index.html` only
+- `model/assets/**`, `model/validation/**`
+- `config/client_secret_*.json`, `analysis.txt`
+
+Exception: user explicitly asks about deploy bundles, hash mismatches, or asset deployment.
+
+### Search and verification
+
 - Use `python scripts/summarize_content_json.py` before opening broad `model/content/**/*.json` files.
 - Use `python scripts/summarize_content_json.py --language ja` when a task is scoped to one language.
 - Use `python scripts/summarize_content_json.py --largest 8` when looking for the noisiest files.
-- Prefer targeted `rg` searches by target id, dialogue id, language, or route name.
+- Prefer targeted `rg` on source dirs (`backend/`, `view/app/`, `tests/`) by target id, dialogue id, language, or route name.
 - Do not dump generated manifests, media directories, validation recordings, build assets, or broad `rg "frame|audio|line"` output into chat unless the task specifically requires it.
 - Read `AGENTS.md` files near the subsystem first, then inspect only the 1-3 files needed for the change.
 - For content edits, inspect the specific language file and target/dialogue/card ids involved rather than every language.
-- Treat `model/assets/**`, `model/validation/**`, `view/static/assets/**`, and temporary scratch folders as high-noise unless the task is directly about assets, validation data, or deployment bundles.
 - Prefer short verification commands that assert behavior over broad full-suite runs unless the touched area requires the full suite.
+
+### Cursor / Codex / Claude
+
+- Cursor: `.cursorignore` and `.cursor/rules/agent-token-hygiene.mdc` enforce the blocked paths above.
+- Claude Code: see `CLAUDE.md` (does not read `.cursorignore`).
+- Global Codex skills must exclude blocked paths in secret scans and diffs.
 
 Local `AGENTS.md` files override global skills for this repository. If a global skill conflicts with these instructions, follow the local project instructions.
