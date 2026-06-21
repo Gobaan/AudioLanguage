@@ -43,6 +43,9 @@ class ValidationEventRequest(BaseModel):
     isCorrect: bool | None = None
     direction: str | None = None
     targetId: str | None = None
+    planPurpose: str | None = None
+    repairCategory: str | None = None
+    lessonStage: str | None = None
     timestamp: str | None = None
     metadata: dict | None = None
 
@@ -184,6 +187,12 @@ def override_validation_attempt_score(
 def get_validation_admin_summary():
     """Return a local validation rollup across participants, languages, and review days."""
     return validation_store.admin_summary()
+
+
+@router.get("/api/validation/history/summary")
+def get_validation_history_summary(participantId: str = Query(min_length=1)):
+    """Return validation history for one participant."""
+    return validation_store.admin_summary(participant_id=participantId)
 
 
 @router.get("/api/validation/participant-name")

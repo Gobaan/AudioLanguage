@@ -31,6 +31,8 @@ export function ValidationScorecardView({
   onNextLesson,
   onViewAnchor,
 }: ValidationScorecardViewProps) {
+  const historyUrl = scorecard?.session.participantId ? historyHref(scorecard.session.participantId) : null;
+
   return (
     <section className="validation-scorecard" aria-label="Validation scorecard">
       <header className="scorecard-header">
@@ -38,6 +40,7 @@ export function ValidationScorecardView({
           <h1>Scorecard</h1>
         </div>
         <nav className="scorecard-actions" aria-label="Scorecard controls">
+          {historyUrl ? <a href={historyUrl}>History</a> : null}
           {onNextLesson ? (
             <button type="button" onClick={onNextLesson} disabled={state === 'loading'}>
               {state === 'loading' ? 'Scoring...' : 'Next lesson'}
@@ -65,6 +68,10 @@ export function ValidationScorecardView({
       ) : null}
     </section>
   );
+}
+
+function historyHref(participantId: string): string {
+  return `/history?participant=${encodeURIComponent(participantId)}`;
 }
 
 function ScorecardDetails({

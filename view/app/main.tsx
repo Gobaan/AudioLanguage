@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { AdminScenePage } from './admin/AdminScenePage';
 import { AdminValidationApp } from './admin/AdminValidationApp';
+import { UserHistoryApp } from './admin/UserHistoryApp';
 import { DebugAudioLessonPlayer } from './DebugAudioLessonPlayer';
 import { DebugPreloaderPage } from './DebugPreloaderPage';
 import { DebugSpeechBubbleEditorPage } from './DebugSpeechBubbleEditorPage';
@@ -25,6 +27,8 @@ createRoot(root).render(
 
 function appForPath(pathname: string) {
   if (pathname === '/gobi-admin') return <AdminValidationApp />;
+  if (pathname === '/history') return <UserHistoryApp />;
+  if (pathname === '/scene') return <AdminScenePage />;
   if (pathname === '/gobi-home') return <LanguageSelectionApp />;
   if (pathname === '/debug/audio') return <DebugAudioLessonPlayer />;
   if (pathname === '/debug/preloader') return <DebugPreloaderPage />;

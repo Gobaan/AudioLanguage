@@ -10,6 +10,18 @@ from app.content.learner_audio import learner_dialogue_audio_url
 from app.validation.jsonl_io import read_jsonl
 from app.validation.scoring import is_remembered_score, participant_id_from, score_status
 
+SCENE_KIND_LABELS = {
+    "anchor": "Anchor",
+    "transfer": "Transfer",
+    "delayed": "Delayed",
+}
+
+TRY_KIND_LABELS = {
+    "anchor": "Anchor",
+    "anchor_transfer": "Anchor transfer",
+    "transfer": "Transfer",
+}
+
 
 def filter_scorecard_attempts(attempts: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Keep only the final backward-build recording per lesson; drop practice chunks."""
@@ -176,9 +188,11 @@ def anchor_metadata_by_target(
 def build_admin_summary(
     root: Path,
     scores_by_attempt: Callable[[Path], dict[str, dict[str, Any]]],
+    *,
+    participant_id: str | None = None,
 ) -> dict[str, Any]:
     sessions = []
-    targets: dict[tuple[str, str, str], dict[str, Any]] = {}
+    targets: dict[tuple[str, str, str, str], dict[str, Any]] = {}
 
     for session_dir in sorted((root / "sessions").glob("*")):
         metadata_path = session_dir / "metadata.json"
@@ -189,13 +203,16 @@ def build_admin_summary(
         attempts = read_jsonl(session_dir / "attempts.jsonl")
         events = read_jsonl(session_dir / "events.jsonl")
         scores = scores_by_attempt(session_dir)
-        participant_id = participant_id_from(metadata, attempts, events)
+        session_participant_id = participant_id_from(metadata, attempts, events)
+        if participant_id and session_participant_id != participant_id:
+            continue
+
         language = str(metadata.get("language") or "unknown")
         scene_set = str(metadata.get("sceneSet") or "unknown")
 
         session_summary = {
             "sessionId": metadata.get("sessionId"),
-            "participantId": participant_id,
+            "participantId": session_participant_id,
             "clientIp": metadata.get("clientIp"),
             "locationFlag": metadata.get("locationFlag"),
             "language": language,
@@ -211,12 +228,16 @@ def build_admin_summary(
 
         for attempt in attempts:
             target_id = str(attempt.get("targetId") or "unknown")
-            key = (language, scene_set, target_id)
+            scene_kind = scene_kind_for_record(attempt, metadata)
+            try_kind = try_kind_for_record(attempt, metadata)
+            key = (language, scene_set, scene_kind, target_id)
             target = targets.setdefault(
                 key,
                 {
                     "language": language,
                     "sceneSet": scene_set,
+                    "sceneKind": scene_kind,
+                    "sceneKindLabel": SCENE_KIND_LABELS[scene_kind],
                     "targetId": target_id,
                     "expectedText": attempt.get("expectedText"),
                     "expectedTransliteration": attempt.get("expectedTransliteration"),
@@ -235,8 +256,17 @@ def build_admin_summary(
                 {
                     "type": "recording",
                     "sessionId": metadata.get("sessionId"),
-                    "participantId": participant_id,
+                    "participantId": session_participant_id,
+                    "language": language,
+                    "sceneSet": scene_set,
+                    "sceneKind": scene_kind,
+                    "sceneKindLabel": SCENE_KIND_LABELS[scene_kind],
+                    "tryKind": try_kind,
+                    "tryKindLabel": TRY_KIND_LABELS[try_kind],
+                    "lessonId": attempt.get("lessonId"),
                     "lessonPage": attempt.get("lessonPage") or metadata.get("lessonPage"),
+                    "lessonStage": attempt.get("lessonStage"),
+                    "planPurpose": attempt.get("planPurpose"),
                     "stepId": attempt.get("stepId"),
                     "attemptId": attempt.get("attemptId"),
                     "receivedAt": attempt.get("receivedAt"),
@@ -251,12 +281,16 @@ def build_admin_summary(
                 continue
 
             target_id = str(event.get("targetId"))
-            key = (language, scene_set, target_id)
+            scene_kind = scene_kind_for_record(event, metadata)
+            try_kind = try_kind_for_record(event, metadata)
+            key = (language, scene_set, scene_kind, target_id)
             target = targets.setdefault(
                 key,
                 {
                     "language": language,
                     "sceneSet": scene_set,
+                    "sceneKind": scene_kind,
+                    "sceneKindLabel": SCENE_KIND_LABELS[scene_kind],
                     "targetId": target_id,
                     "expectedText": None,
                     "expectedTransliteration": None,
@@ -271,8 +305,17 @@ def build_admin_summary(
                 {
                     "type": "choice",
                     "sessionId": metadata.get("sessionId"),
-                    "participantId": participant_id,
+                    "participantId": session_participant_id,
+                    "language": language,
+                    "sceneSet": scene_set,
+                    "sceneKind": scene_kind,
+                    "sceneKindLabel": SCENE_KIND_LABELS[scene_kind],
+                    "tryKind": try_kind,
+                    "tryKindLabel": TRY_KIND_LABELS[try_kind],
+                    "lessonId": event.get("lessonId"),
                     "lessonPage": event.get("lessonPage") or metadata.get("lessonPage"),
+                    "lessonStage": event.get("lessonStage"),
+                    "planPurpose": event.get("planPurpose"),
                     "stepId": event.get("stepId"),
                     "eventId": event.get("eventId"),
                     "choiceId": event.get("choiceId"),
@@ -290,3 +333,33 @@ def build_admin_summary(
         "sessions": sessions,
         "targets": list(targets.values()),
     }
+
+
+def scene_kind_for_record(record: dict[str, Any], metadata: dict[str, Any]) -> str:
+    lesson_stage = str(record.get("lessonStage") or "").strip().lower()
+    plan_purpose = str(record.get("planPurpose") or "").strip().lower()
+    scene_set = str(record.get("sceneSet") or metadata.get("sceneSet") or "").strip().lower()
+    lesson_page = str(record.get("lessonPage") or metadata.get("lessonPage") or "").strip().lower()
+
+    if "transfer" in lesson_stage or "transfer" in plan_purpose or "transfer" in lesson_page:
+        return "transfer"
+    if (
+        "delayed" in lesson_stage
+        or "delayed" in plan_purpose
+        or "delayed" in scene_set
+        or "delayed" in lesson_page
+        or "memory_repair" in plan_purpose
+    ):
+        return "delayed"
+    return "anchor"
+
+
+def try_kind_for_record(record: dict[str, Any], metadata: dict[str, Any]) -> str:
+    lesson_stage = str(record.get("lessonStage") or "").strip().lower()
+    plan_purpose = str(record.get("planPurpose") or "").strip().lower()
+
+    if lesson_stage in {"same_day_anchor_recall", "anchor_transfer"} or plan_purpose == "same_day_anchor_recall":
+        return "anchor_transfer"
+    if scene_kind_for_record(record, metadata) in {"transfer", "delayed"}:
+        return "transfer"
+    return "anchor"

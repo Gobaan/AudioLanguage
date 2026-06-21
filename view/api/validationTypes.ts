@@ -91,7 +91,16 @@ export type ValidationAdminTargetSession = {
   type?: 'recording' | 'choice';
   sessionId: string;
   participantId?: string;
+  language?: string;
+  sceneSet?: string;
+  sceneKind?: ValidationSceneKind;
+  sceneKindLabel?: string;
+  tryKind?: ValidationTryKind;
+  tryKindLabel?: string;
+  lessonId?: string;
   lessonPage?: string;
+  lessonStage?: string;
+  planPurpose?: string;
   stepId?: string;
   eventId?: string;
   choiceId?: string;
@@ -106,6 +115,8 @@ export type ValidationAdminTargetSession = {
 export type ValidationAdminTarget = {
   language: string;
   sceneSet: string;
+  sceneKind: ValidationSceneKind;
+  sceneKindLabel: string;
   targetId: string;
   expectedText?: string;
   expectedTransliteration?: string;
@@ -115,6 +126,9 @@ export type ValidationAdminTarget = {
   rememberedAttemptCount: number;
   sessions: ValidationAdminTargetSession[];
 };
+
+export type ValidationSceneKind = 'anchor' | 'transfer' | 'delayed';
+export type ValidationTryKind = 'anchor' | 'anchor_transfer' | 'transfer';
 
 export type ValidationAdminSummary = {
   sessionCount: number;

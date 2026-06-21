@@ -1821,18 +1821,31 @@ body:has(.prompted-recording.recording)::before {
   gap: 8px;
 }
 
+.scorecard-actions a,
 .scorecard-actions button {
-  background: var(--accent);
-  border: 1px solid var(--accent);
+  align-items: center;
   border-radius: 8px;
-  color: var(--accent-ink);
   cursor: pointer;
+  display: inline-flex;
   font: 800 0.95rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 40px;
   padding: 0 14px;
+  text-decoration: none;
 }
 
-.scorecard-actions button:first-child {
+.scorecard-actions a {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.scorecard-actions button {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--accent-ink);
+}
+
+.scorecard-actions button:first-of-type {
   background: var(--surface);
   color: var(--ink);
 }
@@ -2213,20 +2226,24 @@ body:has(.prompted-recording.recording)::before {
 }
 
 .admin-delete-user,
-.attempt-actions button {
+.attempt-actions button,
+.attempt-actions a {
   background: #b94332;
   border: 1px solid #b94332;
   border-radius: 8px;
   color: #ffffff;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font: 800 0.78rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 30px;
   padding: 0 10px;
+  text-decoration: none;
 }
 
 .admin-delete-user:disabled,
-.attempt-actions button:disabled,
-.retry-toggle:disabled {
+.attempt-actions button:disabled {
   cursor: not-allowed;
   opacity: 0.58;
 }
@@ -2237,6 +2254,9 @@ body:has(.prompted-recording.recording)::before {
 
 .admin-progress-grid {
   border-collapse: collapse;
+}
+
+.admin-progress-grid {
   min-width: 720px;
   width: 100%;
 }
@@ -2287,16 +2307,53 @@ body:has(.prompted-recording.recording)::before {
 
 .admin-attempt-cells {
   display: grid;
+  gap: 7px;
+}
+
+.try-pills {
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
+}
+
+.try-pill {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  font: 900 0.72rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 26px;
+  min-width: 68px;
+  padding: 0 12px;
+  text-transform: uppercase;
+}
+
+.try-pill.passed {
+  background: #267247;
+  color: #ffffff;
+}
+
+.try-pill.failed {
+  background: #b94332;
+  color: #ffffff;
+}
+
+.try-pill.active {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px #ffffff inset;
+}
+
+.try-pill:focus-visible {
+  outline: 3px solid #2a6f9b;
+  outline-offset: 2px;
 }
 
 .attempt-cell {
   border: 1px solid;
   border-radius: 8px;
   display: grid;
-  gap: 5px;
-  min-width: 170px;
-  padding: 6px;
+  gap: 7px;
+  min-width: 210px;
+  padding: 8px;
 }
 
 .attempt-cell header {
@@ -2332,7 +2389,7 @@ body:has(.prompted-recording.recording)::before {
   border-color: #b94332;
 }
 
-.attempt-cell span,
+.attempt-cell > header span,
 .choice-cell span,
 .attempt-empty {
   color: var(--ink);
@@ -2340,12 +2397,38 @@ body:has(.prompted-recording.recording)::before {
   text-transform: uppercase;
 }
 
+.attempt-fields {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.attempt-fields div {
+  display: grid;
+  gap: 2px;
+}
+
+.attempt-fields dt {
+  color: #5f665f;
+  font: 900 0.68rem/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform: uppercase;
+}
+
+.attempt-fields dd {
+  color: var(--ink);
+  display: grid;
+  gap: 5px;
+  font: 800 0.82rem/1.25 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+}
+
 .attempt-cell audio {
-  width: 170px;
+  width: 190px;
 }
 
 .attempt-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
@@ -2355,15 +2438,41 @@ body:has(.prompted-recording.recording)::before {
   color: var(--accent);
 }
 
-.retry-toggle {
+.attempt-actions .scene-button {
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink);
-  cursor: pointer;
-  font: 900 0.72rem/1 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  min-height: 24px;
-  padding: 0 8px;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.admin-scene-page {
+  gap: 16px;
+  height: calc(100vh - 28px);
+  overflow: hidden;
+}
+
+.admin-scene-page .scene-playback {
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+}
+
+.admin-scene-page .scene-frame {
+  justify-self: center;
+  max-height: 100%;
+  min-height: 0;
+  padding: 8px;
+  width: min(100%, calc((100vh - 110px) * 1.5));
+}
+
+.admin-scene-page .scene-frame-media {
+  max-height: calc(100vh - 110px);
+}
+
+.admin-scene-page .audio-button {
+  justify-self: center;
+}
+
+.admin-scene-actions {
+  justify-content: end;
 }
 
 .admin-table-wrap {

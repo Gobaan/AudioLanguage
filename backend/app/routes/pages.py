@@ -30,3 +30,8 @@ def debug_pages(debug_path: str = ""):
 @router.get("/gobi-admin")
 def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))
+
+
+@router.get("/scene")
+def scene_page():
+    return FileResponse(str(STATIC_DIR / "index.html"))

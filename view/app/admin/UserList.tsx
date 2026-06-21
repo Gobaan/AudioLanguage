@@ -7,19 +7,19 @@ export function UserList({
 }: {
   users: UserSummary[];
   selectedUser: string | null;
-  onSelectUser: (participantId: string) => void;
+  onSelectUser: (userKey: string) => void;
 }) {
   return (
     <aside className="admin-user-list" aria-label="Users">
       <h2>Users</h2>
       {users.map((user) => (
         <button
-          key={user.participantId}
+          key={user.userKey}
           type="button"
-          className={selectedUser === user.participantId ? 'active' : ''}
-          onClick={() => onSelectUser(user.participantId)}
+          className={selectedUser === user.userKey ? 'active' : ''}
+          onClick={() => onSelectUser(user.userKey)}
         >
-          <strong>{user.participantId}</strong>
+          <strong>{user.displayName}</strong>
           <span>{user.locationFlag || '❓ Unknown'}</span>
           <span>
             {user.rememberedAttemptCount} / {user.attemptCount}

@@ -143,8 +143,8 @@ class ValidationStore:
             project_dir=project_dir,
         )
 
-    def admin_summary(self) -> dict[str, Any]:
-        return build_admin_summary(self.root, self.scores_by_attempt)
+    def admin_summary(self, *, participant_id: str | None = None) -> dict[str, Any]:
+        return build_admin_summary(self.root, self.scores_by_attempt, participant_id=participant_id)
 
     def delete_session(self, session_id: str) -> dict[str, str]:
         session_dir = self.require_session(session_id)

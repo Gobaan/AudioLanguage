@@ -185,6 +185,79 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(delete_response.json()["status"], "deleted")
         self.assertEqual(deleted_summary_response.json()["sessionCount"], 0)
 
+    def test_validation_admin_summary_separates_scene_kinds_and_filters_history(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            with patch("app.routes.validation.validation_store", store):
+                client = TestClient(app)
+                for session_id, participant_id, lesson_stage in (
+                    ("anchor-day", "friend-a", "guided_scene_production"),
+                    ("anchor-transfer-day", "friend-a", "same_day_anchor_recall"),
+                    ("transfer-day", "friend-a", "same_day_transfer"),
+                    ("delayed-day", "friend-b", "delayed_review"),
+                ):
+                    client.post(
+                        "/api/validation/sessions",
+                        json={
+                            "sessionId": session_id,
+                            "participantId": participant_id,
+                            "language": "ja",
+                            "sceneSet": "mvp",
+                            "lessonPage": session_id,
+                        },
+                    )
+                    client.post(
+                        f"/api/validation/sessions/{session_id}/attempts",
+                        data={
+                            "metadata": (
+                                f'{{"attemptId":"{session_id}-attempt","language":"ja","sceneSet":"mvp",'
+                                f'"lessonPage":"{session_id}","lessonId":"lesson",'
+                                f'"lessonStage":"{lesson_stage}","stepId":"repeat_with_mic",'
+                                '"targetId":"shared-target","expectedText":"hi",'
+                                '"expectedTransliteration":"hi"}'
+                            )
+                        },
+                        files={"file": ("attempt.webm", b"audio-bytes", "audio/webm")},
+                    )
+
+                admin_response = client.get("/api/validation/admin/summary")
+                history_response = client.get("/api/validation/history/summary?participantId=friend-a")
+
+        self.assertEqual(admin_response.status_code, 200)
+        admin_payload = admin_response.json()
+        self.assertEqual(admin_payload["sessionCount"], 4)
+        self.assertEqual(
+            sorted((target["targetId"], target["sceneKind"]) for target in admin_payload["targets"]),
+            [
+                ("shared-target", "anchor"),
+                ("shared-target", "delayed"),
+                ("shared-target", "transfer"),
+            ],
+        )
+        self.assertEqual(
+            sorted(
+                session["tryKindLabel"]
+                for target in admin_payload["targets"]
+                for session in target["sessions"]
+            ),
+            ["Anchor", "Anchor transfer", "Transfer", "Transfer"],
+        )
+        self.assertTrue(
+            all(
+                session["lessonId"] == "lesson"
+                for target in admin_payload["targets"]
+                for session in target["sessions"]
+            )
+        )
+
+        self.assertEqual(history_response.status_code, 200)
+        history_payload = history_response.json()
+        self.assertEqual(history_payload["sessionCount"], 3)
+        self.assertEqual(
+            sorted(target["sceneKind"] for target in history_payload["targets"]),
+            ["anchor", "transfer"],
+        )
+
     def test_validation_admin_summary_prefers_country_location_flag(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))

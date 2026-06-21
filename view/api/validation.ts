@@ -19,7 +19,9 @@ export type {
   ValidationEvent,
   ValidationParticipant,
   ValidationScorecard,
+  ValidationSceneKind,
   ValidationSession,
+  ValidationTryKind,
 } from './validationTypes';
 
 export async function startValidationSession(input: {
@@ -108,6 +110,14 @@ export async function fetchValidationAdminSummary(): Promise<ValidationAdminSumm
   const response = await fetch('/api/validation/admin/summary');
   if (!response.ok) {
     throw new Error(`Failed to load validation admin summary: ${response.status}`);
+  }
+  return response.json() as Promise<ValidationAdminSummary>;
+}
+
+export async function fetchValidationHistorySummary(participantId: string): Promise<ValidationAdminSummary> {
+  const response = await fetch(`/api/validation/history/summary?participantId=${encodeURIComponent(participantId)}`);
+  if (!response.ok) {
+    throw new Error(`Failed to load validation history: ${response.status}`);
   }
   return response.json() as Promise<ValidationAdminSummary>;
 }

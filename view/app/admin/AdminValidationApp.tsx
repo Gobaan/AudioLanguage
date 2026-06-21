@@ -8,16 +8,17 @@ import {
   type ValidationAdminSummary,
 } from '../../api/validation';
 import { AdminHeader } from './AdminHeader';
-import { usersFromSummary } from './summary';
+import { adminUserKey, usersFromSummary } from './summary';
 import { UserList } from './UserList';
 import { UserProgress } from './UserProgress';
+import type { UserSummary } from './types';
 
 type LoadState = 'loading' | 'ready' | 'error';
 
 export function AdminValidationApp() {
   const [summary, setSummary] = useState<ValidationAdminSummary | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('loading');
-  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUserKey, setSelectedUserKey] = useState<string | null>(null);
   const [deletingAttemptKey, setDeletingAttemptKey] = useState<string | null>(null);
   const [scoringAttemptKey, setScoringAttemptKey] = useState<string | null>(null);
   const [deletingUser, setDeletingUser] = useState<string | null>(null);
@@ -30,9 +31,16 @@ export function AdminValidationApp() {
     setLoadState('loading');
     fetchValidationAdminSummary()
       .then((nextSummary) => {
+        const nextUsers = usersFromSummary(nextSummary);
+        const currentUserKey = selectedUserKey && nextUsers.some((user) => user.userKey === selectedUserKey) ? selectedUserKey : null;
+        const nextUserKey = currentUserKey ?? selectedUserKeyFromUrl(nextSummary) ?? nextUsers[0]?.userKey ?? null;
         setSummary(nextSummary);
         setLoadState('ready');
-        setSelectedUser((currentUser) => currentUser ?? usersFromSummary(nextSummary)[0]?.participantId ?? null);
+        setSelectedUserKey(nextUserKey);
+        const nextUser = nextUsers.find((user) => user.userKey === nextUserKey);
+        if (nextUser) {
+          window.history.replaceState({}, '', adminUserPath(nextUser));
+        }
       })
       .catch(() => {
         setSummary(null);
@@ -54,17 +62,20 @@ export function AdminValidationApp() {
   }
 
   const users = usersFromSummary(summary);
-  const activeUser = selectedUser ?? users[0]?.participantId ?? null;
+  const activeUserKey = selectedUserKey ?? users[0]?.userKey ?? null;
+  const activeUser = users.find((user) => user.userKey === activeUserKey) ?? users[0] ?? null;
 
   return (
     <section className="validation-admin simple" aria-label="Validation admin dashboard">
       <AdminHeader onRefresh={loadSummary} />
       <div className="admin-user-progress-shell">
-        <UserList users={users} selectedUser={activeUser} onSelectUser={setSelectedUser} />
+        <UserList users={users} selectedUser={activeUser?.userKey ?? null} onSelectUser={selectUser} />
         {activeUser ? (
           <UserProgress
             summary={summary}
-            participantId={activeUser}
+            participantId={activeUser.participantId}
+            language={activeUser.language}
+            displayName={activeUser.displayName}
             deletingAttemptKey={deletingAttemptKey}
             scoringAttemptKey={scoringAttemptKey}
             deletingUser={deletingUser}
@@ -95,10 +106,19 @@ export function AdminValidationApp() {
     setDeletingUser(participantId);
     deleteValidationUser(participantId)
       .then(() => {
-        setSelectedUser(null);
+        setSelectedUserKey(null);
+        window.history.replaceState({}, '', '/gobi-admin');
         loadSummary();
       })
       .finally(() => setDeletingUser(null));
+  }
+
+  function selectUser(userKey: string) {
+    setSelectedUserKey(userKey);
+    const user = users.find((item) => item.userKey === userKey);
+    if (user) {
+      window.history.replaceState({}, '', adminUserPath(user));
+    }
   }
 
   function scoreAttempt(sessionId: string, attemptId: string) {
@@ -108,4 +128,21 @@ export function AdminValidationApp() {
       .then(loadSummary)
       .finally(() => setScoringAttemptKey(null));
   }
+}
+
+function selectedUserKeyFromUrl(summary: ValidationAdminSummary): string | null {
+  const params = new URLSearchParams(window.location.search);
+  const participantId = params.get('participant');
+  const language = params.get('language');
+  if (!participantId || !language) return null;
+
+  const userKey = adminUserKey(participantId, language);
+  return usersFromSummary(summary).some((user) => user.userKey === userKey) ? userKey : null;
+}
+
+function adminUserPath(user: UserSummary): string {
+  const params = new URLSearchParams();
+  params.set('participant', user.participantId);
+  params.set('language', user.language);
+  return `/gobi-admin?${params.toString()}`;
 }

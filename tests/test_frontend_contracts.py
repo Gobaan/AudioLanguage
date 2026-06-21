@@ -833,6 +833,178 @@ def test_learn_and_admin_pages_support_phrase_recommendations():
     assert ".recommended-phrases-dialog" in styles_source
 
 
+def test_scorecard_links_to_read_only_user_history():
+    main_source = (PROJECT_DIR / "view" / "app" / "main.tsx").read_text(encoding="utf-8")
+    scorecard_source = (PROJECT_DIR / "view" / "app" / "ScorecardView.tsx").read_text(encoding="utf-8")
+    history_source = (PROJECT_DIR / "view" / "app" / "admin" / "UserHistoryApp.tsx").read_text(encoding="utf-8")
+    progress_source = (PROJECT_DIR / "view" / "app" / "admin" / "UserProgress.tsx").read_text(encoding="utf-8")
+    summary_source = (PROJECT_DIR / "view" / "app" / "admin" / "summary.ts").read_text(encoding="utf-8")
+    validation_api_source = (PROJECT_DIR / "view" / "api" / "validation.ts").read_text(encoding="utf-8")
+    validation_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
+
+    assert "History" in scorecard_source
+    assert "/history?participant=" in scorecard_source
+    assert "pathname === '/history'" in main_source
+    assert "fetchValidationHistorySummary(participantId)" in history_source
+    assert "isReadOnly" in progress_source
+    assert "phrasesForUser" in summary_source
+    assert "scenePhraseGroupsForUser" not in summary_source
+    assert "sceneKind: ValidationSceneKind" in validation_types_source
+    assert "/api/validation/history/summary" in validation_api_source
+
+
+def test_admin_user_summary_splits_one_participant_by_language():
+    result = run_frontend_script(
+        ["view/app/admin/summary.ts"],
+        """
+        const {
+          usersFromSummary,
+          daysForUser,
+          phrasesForUser,
+        } = requireSource('view/app/admin/summary.ts');
+        const summary = {
+          sessions: [
+            {
+              sessionId: 'ja-day',
+              participantId: 'Friend',
+              language: 'ja',
+              sceneSet: 'mvp',
+              createdAt: '2026-01-01T00:00:00Z',
+              eventCount: 0,
+              attemptCount: 1,
+              scoredAttemptCount: 1,
+              rememberedAttemptCount: 1,
+            },
+            {
+              sessionId: 'es-day',
+              participantId: 'Friend',
+              language: 'es',
+              sceneSet: 'mvp',
+              createdAt: '2026-01-02T00:00:00Z',
+              eventCount: 0,
+              attemptCount: 1,
+              scoredAttemptCount: 0,
+              rememberedAttemptCount: 0,
+            },
+          ],
+          targets: [
+            {
+              language: 'ja',
+              sceneSet: 'mvp',
+              sceneKind: 'anchor',
+              sceneKindLabel: 'Anchor',
+              targetId: 'shared',
+              expectedTransliteration: 'ja phrase',
+              attemptCount: 1,
+              scoredAttemptCount: 1,
+              rememberedAttemptCount: 1,
+              sessions: [{ type: 'recording', sessionId: 'ja-day', participantId: 'Friend', scoreStatus: 'exact' }],
+            },
+            {
+              language: 'ja',
+              sceneSet: 'mvp',
+              sceneKind: 'transfer',
+              sceneKindLabel: 'Transfer',
+              targetId: 'shared',
+              expectedTransliteration: 'ja phrase',
+              attemptCount: 1,
+              scoredAttemptCount: 0,
+              rememberedAttemptCount: 0,
+              sessions: [{ type: 'recording', sessionId: 'ja-day', participantId: 'Friend', scoreStatus: 'missed' }],
+            },
+            {
+              language: 'es',
+              sceneSet: 'mvp',
+              sceneKind: 'anchor',
+              sceneKindLabel: 'Anchor',
+              targetId: 'shared',
+              expectedTransliteration: 'es phrase',
+              attemptCount: 1,
+              scoredAttemptCount: 0,
+              rememberedAttemptCount: 0,
+              sessions: [{ type: 'recording', sessionId: 'es-day', participantId: 'Friend', scoreStatus: 'unscored' }],
+            },
+          ],
+        };
+        const users = usersFromSummary(summary);
+        console.log(JSON.stringify({
+          users,
+          jaDays: daysForUser(summary.sessions, 'Friend', 'ja').map((day) => day.sessionId),
+          esDays: daysForUser(summary.sessions, 'Friend', 'es').map((day) => day.sessionId),
+          jaPhrases: phrasesForUser(summary.targets, 'Friend', 'ja').map((phrase) => phrase.phrase),
+          jaAttemptCount: phrasesForUser(summary.targets, 'Friend', 'ja')[0].attemptsBySession['ja-day'].length,
+          allPhrases: phrasesForUser(summary.targets, 'Friend').map((phrase) => phrase.phrase).sort(),
+        }));
+        """,
+    )
+
+    assert [user["displayName"] for user in result["users"]] == ["Friend-es", "Friend-ja"]
+    assert [user["userKey"] for user in result["users"]] == ["Friend::es", "Friend::ja"]
+    assert result["jaDays"] == ["ja-day"]
+    assert result["esDays"] == ["es-day"]
+    assert result["jaPhrases"] == ["ja phrase"]
+    assert result["jaAttemptCount"] == 2
+    assert result["allPhrases"] == ["es phrase", "ja phrase"]
+
+
+def test_admin_attempt_cells_select_tries_with_status_pills_and_open_scene_page():
+    main_source = (PROJECT_DIR / "view" / "app" / "main.tsx").read_text(encoding="utf-8")
+    attempt_cells_source = (PROJECT_DIR / "view" / "app" / "admin" / "AttemptCells.tsx").read_text(encoding="utf-8")
+    try_cell_source = (PROJECT_DIR / "view" / "app" / "admin" / "RecordingCell.tsx").read_text(encoding="utf-8")
+    progress_source = (PROJECT_DIR / "view" / "app" / "admin" / "UserProgress.tsx").read_text(encoding="utf-8")
+    scene_page_source = (PROJECT_DIR / "view" / "app" / "admin" / "AdminScenePage.tsx").read_text(encoding="utf-8")
+    admin_source = (PROJECT_DIR / "view" / "app" / "admin" / "AdminValidationApp.tsx").read_text(encoding="utf-8")
+    api_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
+    styles_source = (PROJECT_DIR / "view" / "app" / "styles.css").read_text(encoding="utf-8")
+
+    assert "sortedAttempts" in attempt_cells_source
+    assert "TryCell" in attempt_cells_source
+    assert "try-pills" in attempt_cells_source
+    assert "try-pill" in attempt_cells_source
+    assert "tryPassed(item)" in attempt_cells_source
+    assert "tryTypeAbbreviation(item)" in attempt_cells_source
+    assert "if (typeName === 'Anchor transfer') return 'AT';" in attempt_cells_source
+    assert "tryKind === 'anchor_transfer'" in attempt_cells_source
+    assert 'aria-label={`${tryTypeName(item)} try`}' in attempt_cells_source
+    assert "Try {index + 1}" not in attempt_cells_source
+    assert "aria-pressed={index === activeTryIndex}" in attempt_cells_source
+    assert "onClick={() => setTryIndex(index)}" in attempt_cells_source
+    assert "onNextTry" not in attempt_cells_source
+    assert "recording?.scorePassed === true" in try_cell_source
+    assert "choice ? choice.choiceCorrect" not in try_cell_source
+    assert "View scene" in try_cell_source
+    assert "href={sceneUrl}" in try_cell_source
+    assert "if (lessonPage) params.set('lessonPage', lessonPage)" in try_cell_source
+    assert "returnTo" in try_cell_source
+    assert "<dt>Type</dt>" in try_cell_source
+    assert "<dt>Choice</dt>" in try_cell_source
+    assert "<dt>Recording</dt>" in try_cell_source
+    assert "<dt>Actions</dt>" in try_cell_source
+    assert "choiceId" in try_cell_source
+    assert "Delete record" in try_cell_source
+    assert "handleTryClick" not in try_cell_source
+    assert "Next" not in try_cell_source
+    assert "attempt.tryKindLabel" in try_cell_source
+    assert "phrasesForUser(summary.targets, participantId, language)" in progress_source
+    assert "sceneGroups.map" not in progress_source
+    assert "ScenePreviewDialog" not in progress_source
+    assert "pathname === '/scene'" in main_source
+    assert "loadScene(language, lessonPage, lessonId, sceneSet)" in scene_page_source
+    assert "fetchLessons(language, lessonPage, sceneSet)" in scene_page_source
+    assert "fetchLessons(language, null, sceneSet)" in scene_page_source
+    assert "ScenePlayback frames={withAssetUrls(lesson)?.frames ?? []} autoplay" in scene_page_source
+    assert "<h1>Scene</h1>" not in scene_page_source
+    assert "<span>Scene</span>" not in scene_page_source
+    assert "admin-scene-actions" in scene_page_source
+    assert "lesson?.title" not in scene_page_source
+    assert "href={returnTo}" in scene_page_source
+    assert ".admin-scene-page .scene-playback" in styles_source
+    assert "width: min(100%, calc((100vh - 110px) * 1.5));" in styles_source
+    assert "adminUserPath(user)" in admin_source
+    assert "tryKind?: ValidationTryKind" in api_types_source
+    assert "lessonStage?: string" in api_types_source
+
+
 def test_frontend_sends_lesson_stage_to_validation():
     active_step_source = (PROJECT_DIR / "view" / "app" / "useActiveLessonStep.ts").read_text(encoding="utf-8")
     validation_source = (PROJECT_DIR / "view" / "app" / "useValidationSession.ts").read_text(encoding="utf-8")
