@@ -734,9 +734,11 @@ def test_lesson_loader_waits_for_participant_and_session_request():
     assert "sessionRequestId" in app_source
     assert "LearnerSessionLanding" in app_source
     assert "beginSession" in app_source
-    assert "lessonPage === START_LESSON || sessionPhase !== 'landing' || loadState !== 'ready' || !lesson" in app_source
+    assert "initialLessonPageFromUrl" in app_source
+    assert "initialLessonPageFromUrl.current === START_LESSON" in app_source
     assert "setSessionPhase('running');" in app_source
-    assert "const startingLessonPage = lessonPage === START_LESSON ? START_LESSON : lessonPage;" in app_source
+    assert "selectLessonPage(START_LESSON);" in app_source
+    assert "sessionPhase === 'running'" in loader_source
     assert "completeSession()" in app_source
     assert "PlanSelectionDebugPanel" in app_source
 

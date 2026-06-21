@@ -11,10 +11,13 @@ import { isLocalHost } from './urlParams';
 
 export type LoadState = 'idle' | 'loading' | 'ready' | 'error';
 
+type SessionPhase = 'landing' | 'running' | 'complete';
+
 type UseLessonLoaderOptions = {
   language: string;
   lessonPage: string;
   sceneSet: string;
+  sessionPhase: SessionPhase;
   participantId: string | null;
   sessionRequestId: number;
   onLessonPageChange: (lessonPage: string) => void;
@@ -24,6 +27,7 @@ export function useLessonLoader({
   language,
   lessonPage,
   sceneSet,
+  sessionPhase,
   participantId,
   sessionRequestId,
   onLessonPageChange,
@@ -82,11 +86,11 @@ export function useLessonLoader({
     const selected = selectLessonForPage(lessonPage, lessonTabs, lessons);
     setLesson(selected.lesson);
 
-    if (selected.shouldReplaceUrl && selected.resolvedLessonPage) {
+    if (selected.shouldReplaceUrl && selected.resolvedLessonPage && sessionPhase === 'running') {
       onLessonPageChange(selected.resolvedLessonPage);
       updateLessonUrl(language, selected.resolvedLessonPage, sceneSet, true);
     }
-  }, [language, lessonPage, lessonTabs, lessons, loadState, sceneSet, onLessonPageChange]);
+  }, [language, lessonPage, lessonTabs, lessons, loadState, sceneSet, sessionPhase, onLessonPageChange]);
 
   const insertLessonBundleAfter = useCallback(
     (currentLessonPage: string, bundleTabs: LessonTab[], bundleLessons: Lesson[]): string | null => {

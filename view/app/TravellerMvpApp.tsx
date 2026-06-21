@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { fetchLessons, relearnTarget } from '../api/lessons';
 import type { ScorecardTarget } from '../api/validation';
@@ -18,7 +18,14 @@ import { useParticipantId } from './useParticipantId';
 import { useScorecard } from './useScorecard';
 import { dismissTutorial, isTutorialDismissed } from './transferTutorialStorage';
 import { useTravellerRoute } from './useTravellerRoute';
-import { activeMvpLesson, START_LESSON, updateLessonUrl, viewFromUrl, withAssetUrls } from './lessonUrls';
+import {
+  activeMvpLesson,
+  lessonPageFromUrl,
+  START_LESSON,
+  updateLessonUrl,
+  viewFromUrl,
+  withAssetUrls,
+} from './lessonUrls';
 import { useValidationSession } from './useValidationSession';
 import { isLocalHost } from './urlParams';
 
@@ -40,6 +47,7 @@ export function TravellerMvpApp() {
   const [anchorReviewState, setAnchorReviewState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [isRelearning, setIsRelearning] = useState(false);
   const [relearnError, setRelearnError] = useState<string | null>(null);
+  const initialLessonPageFromUrl = useRef(lessonPageFromUrl());
 
   const {
     lessonTabs,
@@ -54,6 +62,7 @@ export function TravellerMvpApp() {
     language,
     lessonPage,
     sceneSet,
+    sessionPhase,
     participantId,
     sessionRequestId,
     onLessonPageChange: selectLessonPage,
@@ -122,12 +131,17 @@ export function TravellerMvpApp() {
   }, [language, sceneSet, validationSessionId, sessionPhase, showScorecard]);
 
   useEffect(() => {
-    if (lessonPage === START_LESSON || sessionPhase !== 'landing' || loadState !== 'ready' || !lesson) {
+    if (
+      initialLessonPageFromUrl.current === START_LESSON ||
+      sessionPhase !== 'landing' ||
+      loadState !== 'ready' ||
+      !lesson
+    ) {
       return;
     }
 
     setSessionPhase('running');
-  }, [lesson, lessonPage, loadState, sessionPhase]);
+  }, [lesson, loadState, sessionPhase]);
 
   const nextLessonTab = useMemo(() => {
     const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
@@ -165,10 +179,9 @@ export function TravellerMvpApp() {
     if (sessionPhase === 'complete') {
       setSessionRequestId((value) => value + 1);
     }
-    const startingLessonPage = lessonPage === START_LESSON ? START_LESSON : lessonPage;
-    selectLessonPage(startingLessonPage);
-    updateLessonUrl(language, startingLessonPage, sceneSet, true, null);
-  }, [canBeginSession, language, lessonPage, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
+    selectLessonPage(START_LESSON);
+    updateLessonUrl(language, START_LESSON, sceneSet, true, null);
+  }, [canBeginSession, language, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
 
   const completeSession = useCallback(() => {
     setSessionPhase('complete');
