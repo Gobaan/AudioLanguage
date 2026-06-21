@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.routes import content, conversation, pages, recommendations, reminders, validation
+from app.routes import auth, content, conversation, pages, recommendations, reminders, validation
 from app.runtime import AUDIO_DIR, STATIC_DIR, VISUALS_DIR, reminder_scheduler
 
 
@@ -62,6 +62,7 @@ app.mount("/audio", StaticFiles(directory=str(AUDIO_DIR)), name="audio")
 app.mount("/visuals", StaticFiles(directory=str(VISUALS_DIR)), name="visuals")
 
 app.include_router(pages.router)
+app.include_router(auth.router)
 app.include_router(content.router)
 app.include_router(validation.router)
 app.include_router(conversation.router)

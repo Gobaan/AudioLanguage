@@ -1,4 +1,6 @@
 import { DailyReminderPrompt } from './DailyReminderPrompt';
+import { GoogleAccountLink } from './GoogleAccountLink';
+import type { ParticipantAuthStatus } from './useParticipantId';
 
 type LearnerSessionLandingProps = {
   language: string;
@@ -8,8 +10,12 @@ type LearnerSessionLandingProps = {
   planState: 'loading' | 'ready' | 'error';
   participantReady: boolean;
   participantId: string | null;
+  authStatus: ParticipantAuthStatus;
+  authError: string | null;
+  authEmail?: string | null;
   onStartSession: () => void;
   onContinue: () => void;
+  onGoogleCredential: (credential: string) => void;
   actionsDisabled?: boolean;
 };
 
@@ -62,8 +68,12 @@ export function LearnerSessionLanding({
   planState,
   participantReady,
   participantId,
+  authStatus,
+  authError,
+  authEmail,
   onStartSession,
   onContinue,
+  onGoogleCredential,
   actionsDisabled = false,
 }: LearnerSessionLandingProps) {
   if (!participantReady) {
@@ -120,6 +130,13 @@ export function LearnerSessionLanding({
       </div>
 
       <DailyReminderPrompt participantId={participantId} />
+      <GoogleAccountLink
+        participantId={participantId}
+        authStatus={authStatus}
+        authError={authError}
+        authEmail={authEmail}
+        onCredential={onGoogleCredential}
+      />
 
       <section className="learning-value-grid" aria-label="Why this works">
         {VALUE_PANELS.map((panel) => (

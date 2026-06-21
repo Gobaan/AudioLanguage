@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -298,6 +299,222 @@ class LearningEngineTests(unittest.TestCase):
         self.assertEqual(state.last_confidence_band, "high")
         self.assertAlmostEqual(state.last_duration_ratio or 0.0, 0.34, places=2)
 
+    def test_learning_state_merges_local_participant_into_oauth_participant(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            create_session(store, "local-device", "Local-1234", "ja")
+            create_session(store, "oauth-device", "Google-linked", "ja")
+            save_and_score(
+                store,
+                "local-device",
+                "attempt-local-anchor",
+                "ja-card-first-hi-dialogue-practice",
+                "ja-target-respond-hi",
+                passed=True,
+                participant_id="Local-1234",
+                reviewed_at="2026-06-01T10:00:00",
+            )
+            save_and_score(
+                store,
+                "oauth-device",
+                "attempt-oauth-transfer",
+                "ja-card-first-hi-ticket-transfer-same_day_transfer",
+                "ja-target-respond-hi",
+                passed=True,
+                participant_id="Google-linked",
+                reviewed_at="2026-06-02T10:00:00",
+                attempt_overrides={
+                    "lessonStage": "same_day_transfer",
+                    "planPurpose": "transfer_practice",
+                },
+            )
+
+            merged_count = store.learning_state.merge_participant("Local-1234", "Google-linked")
+            states = store.learning_state.target_states("Google-linked", "ja")
+
+        self.assertEqual(merged_count, 1)
+        self.assertEqual(store.learning_state.target_states("Local-1234", "ja"), {})
+        self.assertTrue(states["ja-target-respond-hi"].anchor_passed)
+        self.assertTrue(states["ja-target-respond-hi"].transfer_passed)
+        self.assertEqual(states["ja-target-respond-hi"].last_lesson_id, "ja-card-first-hi-ticket-transfer-same_day_transfer")
+
+    def test_learning_state_merge_keeps_ahead_phone_progress_over_newer_lagging_phone(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            create_session(store, "ahead-phone", "Google-linked", "ja")
+            create_session(store, "lagging-phone", "Local-lagging", "ja")
+            save_and_score(
+                store,
+                "ahead-phone",
+                "attempt-transfer",
+                "ja-card-first-hi-ticket-transfer-same_day_transfer",
+                "ja-target-respond-hi",
+                passed=True,
+                participant_id="Google-linked",
+                reviewed_at="2026-06-01T10:00:00",
+                attempt_overrides={
+                    "lessonStage": "same_day_transfer",
+                    "planPurpose": "transfer_practice",
+                },
+            )
+            save_and_score(
+                store,
+                "lagging-phone",
+                "attempt-anchor-later",
+                "ja-card-first-hi-dialogue-practice",
+                "ja-target-respond-hi",
+                passed=True,
+                participant_id="Local-lagging",
+                reviewed_at="2026-06-03T10:00:00",
+            )
+
+            store.learning_state.merge_participant("Local-lagging", "Google-linked")
+            state = store.learning_state.target_states("Google-linked", "ja")["ja-target-respond-hi"]
+
+        self.assertTrue(state.anchor_passed)
+        self.assertTrue(state.transfer_passed)
+        self.assertEqual(state.last_lesson_id, "ja-card-first-hi-ticket-transfer-same_day_transfer")
+        self.assertEqual(state.last_reviewed_at, "2026-06-01T10:00:00")
+        self.assertEqual(state.next_review_at, "2026-06-02")
+
+    def test_google_link_endpoint_returns_canonical_participant_and_merges_state(self):
+        import app.routes.auth as auth_routes
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            create_session(store, "local-device", "Local-1234", "ja")
+            save_and_score(
+                store,
+                "local-device",
+                "attempt-local-anchor",
+                "ja-card-first-hi-dialogue-practice",
+                "ja-target-respond-hi",
+                passed=True,
+                participant_id="Local-1234",
+            )
+            expected_participant = auth_routes.google_participant_id("google-subject-1")
+
+            with (
+                patch.dict("os.environ", {"AUDIO_LANGUAGE_GOOGLE_CLIENT_ID": "client-1"}),
+                patch("app.routes.auth.validation_store", store),
+                patch(
+                    "app.routes.auth.verify_google_id_token",
+                    return_value={
+                        "aud": "client-1",
+                        "sub": "google-subject-1",
+                        "email": "friend@example.test",
+                        "email_verified": True,
+                    },
+                ),
+            ):
+                response = TestClient(app).post(
+                    "/api/auth/google/link",
+                    json={
+                        "credential": "credential",
+                        "localParticipantId": "Local-1234",
+                    },
+                )
+                states = store.learning_state.target_states(expected_participant, "ja")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["participantId"], expected_participant)
+        self.assertEqual(response.json()["mergedTargetCount"], 1)
+        self.assertTrue(states["ja-target-respond-hi"].anchor_passed)
+
+    def test_google_config_can_read_client_id_from_client_secret_file_without_secret(self):
+        import app.routes.auth as auth_routes
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config_dir = Path(temp_dir) / "config"
+            config_dir.mkdir()
+            (config_dir / "client_secret_test.apps.googleusercontent.com.json").write_text(
+                json.dumps(
+                    {
+                        "web": {
+                            "client_id": "test-client.apps.googleusercontent.com",
+                            "client_secret": "do-not-return-this",
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with patch.dict("os.environ", {}, clear=True), patch("app.routes.auth.PROJECT_DIR", Path(temp_dir)):
+                config = auth_routes.google_auth_config()
+
+        self.assertEqual(config["enabled"], True)
+        self.assertEqual(config["clientId"], "test-client.apps.googleusercontent.com")
+        self.assertNotIn("clientSecret", config)
+
+    def test_google_link_endpoint_merges_multiple_local_devices_into_same_google_participant(self):
+        import app.routes.auth as auth_routes
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            expected_participant = auth_routes.google_participant_id("shared-google-subject")
+            for session_id, participant_id, target_id, lesson_id in [
+                (
+                    "phone-one",
+                    "Local-phone-1",
+                    "ja-target-respond-hi",
+                    "ja-card-first-hi-dialogue-practice",
+                ),
+                (
+                    "phone-two",
+                    "Local-phone-2",
+                    "ja-target-my-name-is",
+                    "ja-card-introduce-self-dialogue-practice",
+                ),
+            ]:
+                create_session(store, session_id, participant_id, "ja")
+                save_and_score(
+                    store,
+                    session_id,
+                    f"{session_id}-attempt",
+                    lesson_id,
+                    target_id,
+                    passed=True,
+                    participant_id=participant_id,
+                )
+
+            with (
+                patch.dict("os.environ", {"AUDIO_LANGUAGE_GOOGLE_CLIENT_ID": "client-1"}),
+                patch("app.routes.auth.validation_store", store),
+                patch(
+                    "app.routes.auth.verify_google_id_token",
+                    return_value={
+                        "aud": "client-1",
+                        "sub": "shared-google-subject",
+                        "email": "friend@example.test",
+                        "email_verified": True,
+                    },
+                ),
+            ):
+                client = TestClient(app)
+                first_response = client.post(
+                    "/api/auth/google/link",
+                    json={
+                        "credential": "credential-one",
+                        "localParticipantId": "Local-phone-1",
+                    },
+                )
+                second_response = client.post(
+                    "/api/auth/google/link",
+                    json={
+                        "credential": "credential-two",
+                        "localParticipantId": "Local-phone-2",
+                    },
+                )
+                states = store.learning_state.target_states(expected_participant, "ja")
+
+        self.assertEqual(first_response.status_code, 200)
+        self.assertEqual(second_response.status_code, 200)
+        self.assertEqual(first_response.json()["participantId"], expected_participant)
+        self.assertEqual(second_response.json()["participantId"], expected_participant)
+        self.assertTrue(states["ja-target-respond-hi"].anchor_passed)
+        self.assertTrue(states["ja-target-my-name-is"].anchor_passed)
+        self.assertEqual(store.learning_state.target_states("Local-phone-1", "ja"), {})
+        self.assertEqual(store.learning_state.target_states("Local-phone-2", "ja"), {})
+
 
 def create_session(store: ValidationStore, session_id: str, participant_id: str, language: str) -> None:
     store.create_session(
@@ -321,11 +538,12 @@ def save_and_score(
     passed: bool,
     scene_set: str = "mvp",
     reviewed_at: str = "2026-06-01",
+    participant_id: str = "Bob",
     attempt_overrides: dict[str, Any] | None = None,
     score_overrides: dict[str, Any] | None = None,
 ) -> None:
     attempt_metadata: dict[str, Any] = {
-        "participantId": "Bob",
+        "participantId": participant_id,
         "language": "ja",
         "sceneSet": scene_set,
         "lessonId": lesson_id,

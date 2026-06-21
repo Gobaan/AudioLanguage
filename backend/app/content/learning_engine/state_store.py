@@ -227,6 +227,46 @@ class LearningStateStore:
             )
             return int(cursor.rowcount or 0)
 
+    def merge_participant(self, source_participant_id: str, target_participant_id: str) -> int:
+        source_id = str(source_participant_id or "").strip()
+        target_id = str(target_participant_id or "").strip()
+        if not source_id or not target_id or source_id == target_id:
+            return 0
+
+        with self.connect() as connection:
+            self.ensure_schema(connection)
+            source_rows = connection.execute(
+                """
+                SELECT * FROM learner_target_state
+                WHERE participant_id = ?
+                """,
+                (source_id,),
+            ).fetchall()
+            merged_count = 0
+            for source_row in source_rows:
+                existing_target_row = self.get_state(
+                    connection,
+                    target_id,
+                    str(source_row["language"]),
+                    str(source_row["target_id"]),
+                )
+                source_state = dict(source_row)
+                source_state["participant_id"] = target_id
+                if existing_target_row is None:
+                    self.upsert_state(connection, source_state)
+                else:
+                    self.upsert_state(connection, merged_state(dict(existing_target_row), source_state))
+                merged_count += 1
+
+            connection.execute(
+                """
+                DELETE FROM learner_target_state
+                WHERE participant_id = ?
+                """,
+                (source_id,),
+            )
+            return merged_count
+
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
@@ -500,6 +540,89 @@ def ensure_columns(connection: sqlite3.Connection, table_name: str, columns: dic
     for column_name, definition in columns.items():
         if column_name not in existing_columns:
             connection.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {definition}")
+
+
+def merged_state(target_state: dict[str, Any], source_state: dict[str, Any]) -> dict[str, Any]:
+    progress_state = more_advanced_state(target_state, source_state)
+    newest_state = newest_updated_state(target_state, source_state)
+    merged = dict(newest_state)
+    merged["participant_id"] = str(target_state["participant_id"])
+    merged["language"] = str(target_state["language"])
+    merged["target_id"] = str(target_state["target_id"])
+
+    for column in [
+        "has_wrong_choice",
+        "anchor_passed",
+        "transfer_passed",
+        "delayed_passed",
+        "failed_transfer",
+        "failed_delayed",
+    ]:
+        merged[column] = 1 if bool(target_state.get(column)) or bool(source_state.get(column)) else 0
+    if merged["transfer_passed"]:
+        merged["failed_transfer"] = 0
+    if merged["delayed_passed"]:
+        merged["failed_delayed"] = 0
+
+    for column in [
+        "last_attempt_id",
+        "last_attempt_status",
+        "last_score_status",
+        "last_scene_set",
+        "last_lesson_id",
+        "last_lesson_page",
+        "last_step_id",
+        "review_count",
+        "ease_factor",
+        "interval_days",
+        "last_reviewed_at",
+        "next_review_at",
+        "last_quality",
+        "last_duration_ratio",
+        "last_confidence_band",
+        "last_quality_reason",
+    ]:
+        merged[column] = progress_state[column]
+    merged["review_count"] = max(int(target_state.get("review_count") or 0), int(source_state.get("review_count") or 0))
+    merged["lapse_count"] = max(int(target_state.get("lapse_count") or 0), int(source_state.get("lapse_count") or 0))
+    if bool(target_state.get("last_choice_correct")) or bool(source_state.get("last_choice_correct")):
+        merged["last_choice_correct"] = 1
+
+    return merged
+
+
+def more_advanced_state(first_state: dict[str, Any], second_state: dict[str, Any]) -> dict[str, Any]:
+    first_rank = progress_rank(first_state)
+    second_rank = progress_rank(second_state)
+    if second_rank > first_rank:
+        return second_state
+    return first_state
+
+
+def newest_updated_state(first_state: dict[str, Any], second_state: dict[str, Any]) -> dict[str, Any]:
+    if str(second_state.get("updated_at") or "") >= str(first_state.get("updated_at") or ""):
+        return second_state
+    return first_state
+
+
+def progress_rank(state: dict[str, Any]) -> tuple[int, int, int, str, str]:
+    return (
+        stage_rank(state),
+        int(state.get("review_count") or 0),
+        int(state.get("interval_days") or 0),
+        str(state.get("next_review_at") or ""),
+        str(state.get("updated_at") or ""),
+    )
+
+
+def stage_rank(state: dict[str, Any]) -> int:
+    if bool(state.get("delayed_passed")):
+        return 3
+    if bool(state.get("transfer_passed")):
+        return 2
+    if bool(state.get("anchor_passed")):
+        return 1
+    return 0
 
 
 def schedule_state_values(state: dict[str, Any], *, quality: int, reviewed_at: str) -> dict[str, Any]:

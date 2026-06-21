@@ -26,7 +26,13 @@ type SessionPhase = 'landing' | 'running' | 'complete';
 
 export function TravellerMvpApp() {
   const { language, lessonPage, sceneSet, selectLessonPage } = useTravellerRoute();
-  const participantId = useParticipantId();
+  const {
+    participantId,
+    authStatus,
+    authError,
+    googleAccount,
+    linkGoogleCredential,
+  } = useParticipantId();
   const [sessionPhase, setSessionPhase] = useState<SessionPhase>('landing');
   const [sessionRequestId, setSessionRequestId] = useState(1);
   const [dismissedTutorials, setDismissedTutorials] = useState<Record<string, true>>({});
@@ -100,7 +106,7 @@ export function TravellerMvpApp() {
     setSessionRequestId(1);
     setRelearnError(null);
     setIsRelearning(false);
-  }, [language, sceneSet, resetScorecard]);
+  }, [language, sceneSet, participantId, resetScorecard]);
 
   useEffect(() => {
     setRelearnError(null);
@@ -327,9 +333,13 @@ export function TravellerMvpApp() {
           planState={loadState === 'idle' ? 'loading' : loadState}
           participantReady={participantId !== null}
           participantId={participantId}
+          authStatus={authStatus}
+          authError={authError}
+          authEmail={googleAccount?.email ?? null}
           actionsDisabled={scorecardState === 'loading'}
           onStartSession={beginSession}
           onContinue={beginSession}
+          onGoogleCredential={linkGoogleCredential}
         />
         {isLocalHost() && sessionPhase === 'complete' && lessons.length > 0 ? (
           <PlanSelectionDebugPanel
@@ -371,9 +381,13 @@ export function TravellerMvpApp() {
           planState={loadState}
           participantReady={participantId !== null}
           participantId={participantId}
+          authStatus={authStatus}
+          authError={authError}
+          authEmail={googleAccount?.email ?? null}
           actionsDisabled={scorecardState === 'loading'}
           onStartSession={beginSession}
           onContinue={beginSession}
+          onGoogleCredential={linkGoogleCredential}
         />
       </FitToViewport>
     );
