@@ -121,6 +121,14 @@ export function TravellerMvpApp() {
     showScorecard();
   }, [language, sceneSet, validationSessionId, sessionPhase, showScorecard]);
 
+  useEffect(() => {
+    if (lessonPage === START_LESSON || sessionPhase !== 'landing' || loadState !== 'ready' || !lesson) {
+      return;
+    }
+
+    setSessionPhase('running');
+  }, [lesson, lessonPage, loadState, sessionPhase]);
+
   const nextLessonTab = useMemo(() => {
     const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
     if (currentIndex < 0) {
@@ -157,9 +165,10 @@ export function TravellerMvpApp() {
     if (sessionPhase === 'complete') {
       setSessionRequestId((value) => value + 1);
     }
-    selectLessonPage(START_LESSON);
-    updateLessonUrl(language, START_LESSON, sceneSet, true, null);
-  }, [canBeginSession, language, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
+    const startingLessonPage = lessonPage === START_LESSON ? START_LESSON : lessonPage;
+    selectLessonPage(startingLessonPage);
+    updateLessonUrl(language, startingLessonPage, sceneSet, true, null);
+  }, [canBeginSession, language, lessonPage, sceneSet, resetScorecard, selectLessonPage, sessionPhase]);
 
   const completeSession = useCallback(() => {
     setSessionPhase('complete');

@@ -16,6 +16,8 @@ export type ScenePlaybackTutorial = {
 type ScenePlaybackProps = {
   frames?: SceneFrameData[];
   autoplay?: boolean;
+  initialFrameId?: string | null;
+  onActiveFrameChange?: (frame: SceneFrameData) => void;
   stopAtLineType?: string;
   tutorialForFrame?: (frame: SceneFrameData, index: number) => ScenePlaybackTutorial | null;
   onDismissTutorial?: (tutorialId: string) => void;
@@ -29,6 +31,8 @@ type PendingTutorial = {
 export function ScenePlayback({
   frames = [],
   autoplay = false,
+  initialFrameId,
+  onActiveFrameChange,
   stopAtLineType,
   tutorialForFrame,
   onDismissTutorial,
@@ -60,10 +64,15 @@ export function ScenePlayback({
   const dismissedTutorialsRef = useRef<Set<string>>(new Set());
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const initialFrameIndex = useMemo(() => {
+    if (!initialFrameId) return 0;
+    const index = playableFrames.findIndex((frame) => frame.id === initialFrameId);
+    return index >= 0 ? index : 0;
+  }, [initialFrameId, playableFrames]);
   const activeFrame = playableFrames[activeIndex] ?? playableFrames[0];
 
   useEffect(() => {
-    setActiveIndex(0);
+    setActiveIndex(initialFrameIndex);
     stopAudio(audioRef.current);
     stopSpeech(utteranceRef.current);
     audioRef.current = null;
@@ -71,17 +80,23 @@ export function ScenePlayback({
     setIsPlaying(false);
     setAudioError(null);
     setPendingTutorial(null);
-  }, [playbackKey]);
+  }, [initialFrameIndex, playbackKey]);
+
+  useEffect(() => {
+    if (activeFrame) {
+      onActiveFrameChange?.(activeFrame);
+    }
+  }, [activeFrame, onActiveFrameChange]);
 
   useEffect(() => {
     if (!autoplay || playableFrames.length === 0) return;
-    playScene();
+    playFrameAt(initialFrameIndex);
 
     return () => {
       stopAudio(audioRef.current);
       stopSpeech(utteranceRef.current);
     };
-  }, [autoplay, playbackKey]);
+  }, [autoplay, initialFrameIndex, playbackKey]);
 
   function playScene() {
     stopAudio(audioRef.current);
@@ -89,7 +104,7 @@ export function ScenePlayback({
     setIsPlaying(true);
     setAudioError(null);
     setPendingTutorial(null);
-    playFrameAt(0);
+    playFrameAt(activeIndex);
   }
 
   function playFrameAt(index: number) {

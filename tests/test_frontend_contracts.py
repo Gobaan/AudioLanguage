@@ -246,7 +246,7 @@ def test_scene_playback_autoplay_depends_on_frame_identity_not_array_reference()
     assert "frame.id" in scene_playback_source
     assert "frame.audioUrl" in scene_playback_source
     assert "frame.audioText" in scene_playback_source
-    assert "}, [autoplay, playbackKey]);" in scene_playback_source
+    assert "}, [autoplay, initialFrameIndex, playbackKey]);" in scene_playback_source
     assert "}, [autoplay, playableFrames]);" not in scene_playback_source
 
 
@@ -255,6 +255,10 @@ def test_scene_playback_pauses_for_frame_tutorials():
         encoding="utf-8"
     )
 
+    assert "initialFrameId?: string | null;" in scene_playback_source
+    assert "onActiveFrameChange?: (frame: SceneFrameData) => void;" in scene_playback_source
+    assert "playableFrames.findIndex((frame) => frame.id === initialFrameId)" in scene_playback_source
+    assert "onActiveFrameChange?.(activeFrame)" in scene_playback_source
     assert "tutorialForFrame?: (frame: SceneFrameData, index: number) => ScenePlaybackTutorial | null;" in scene_playback_source
     assert "const [pendingTutorial, setPendingTutorial]" in scene_playback_source
     assert "const tutorial = tutorialForFrame?.(frame, index) ?? null;" in scene_playback_source
@@ -730,6 +734,9 @@ def test_lesson_loader_waits_for_participant_and_session_request():
     assert "sessionRequestId" in app_source
     assert "LearnerSessionLanding" in app_source
     assert "beginSession" in app_source
+    assert "lessonPage === START_LESSON || sessionPhase !== 'landing' || loadState !== 'ready' || !lesson" in app_source
+    assert "setSessionPhase('running');" in app_source
+    assert "const startingLessonPage = lessonPage === START_LESSON ? START_LESSON : lessonPage;" in app_source
     assert "completeSession()" in app_source
     assert "PlanSelectionDebugPanel" in app_source
 
@@ -995,7 +1002,11 @@ def test_admin_attempt_cells_select_tries_with_status_pills_and_open_scene_page(
     assert "loadScene(language, lessonPage, lessonId, sceneSet)" in scene_page_source
     assert "fetchLessons(language, lessonPage, sceneSet)" in scene_page_source
     assert "fetchLessons(language, null, sceneSet)" in scene_page_source
-    assert "ScenePlayback frames={withAssetUrls(lesson)?.frames ?? []} autoplay" in scene_page_source
+    assert "initialFrameId={frameId}" in scene_page_source
+    assert "autoplay={!frameId}" in scene_page_source
+    assert "onActiveFrameChange={updateFrameInUrl}" in scene_page_source
+    assert "url.searchParams.set('frame', frame.id)" in scene_page_source
+    assert "window.history.replaceState({}, '', url)" in scene_page_source
     assert "<h1>Scene</h1>" not in scene_page_source
     assert "<span>Scene</span>" not in scene_page_source
     assert "admin-scene-actions" in scene_page_source

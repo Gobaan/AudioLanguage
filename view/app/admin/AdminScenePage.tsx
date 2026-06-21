@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { fetchLessons } from '../../api/lessons';
 import { ScenePlayback, type Lesson } from '../../components';
+import type { SceneFrameData } from '../../components/types';
 import { withAssetUrls } from '../lessonUrls';
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -11,10 +12,16 @@ export function AdminScenePage() {
   const language = params.get('language') || '';
   const lessonPage = params.get('lessonPage') || '';
   const lessonId = params.get('lessonId') || '';
+  const frameId = params.get('frame') || '';
   const sceneSet = params.get('sceneSet');
   const returnTo = safeReturnPath(params.get('returnTo'));
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const updateFrameInUrl = useCallback((frame: SceneFrameData) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('frame', frame.id);
+    window.history.replaceState({}, '', url);
+  }, []);
 
   useEffect(() => {
     if (!language || (!lessonPage && !lessonId)) {
@@ -41,7 +48,14 @@ export function AdminScenePage() {
       </nav>
       {loadState === 'loading' ? <p className="admin-status">Loading scene.</p> : null}
       {loadState === 'error' ? <p className="admin-status">Scene is unavailable.</p> : null}
-      {loadState === 'ready' && lesson ? <ScenePlayback frames={withAssetUrls(lesson)?.frames ?? []} autoplay /> : null}
+      {loadState === 'ready' && lesson ? (
+        <ScenePlayback
+          frames={withAssetUrls(lesson)?.frames ?? []}
+          autoplay={!frameId}
+          initialFrameId={frameId}
+          onActiveFrameChange={updateFrameInUrl}
+        />
+      ) : null}
     </section>
   );
 }
