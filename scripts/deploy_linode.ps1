@@ -29,6 +29,7 @@ try {
         --exclude="*.pyc" `
         --exclude="server.log" `
         --exclude="server.err.log" `
+        --exclude="config/client_secret_*.json" `
         --exclude="model/validation" `
         --exclude="project_config/config/secrets.local.json" `
         -czf $ArchivePath .

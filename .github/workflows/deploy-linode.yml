@@ -66,6 +66,7 @@ jobs:
             --exclude="*.pyc" \
             --exclude="server.log" \
             --exclude="server.err.log" \
+            --exclude="config/client_secret_*.json" \
             --exclude="project_config/config/secrets.local.json" \
             --exclude="model/validation" \
             -czf "$RUNNER_TEMP/audio-language-deploy.tar.gz" .
