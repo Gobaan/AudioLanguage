@@ -5,7 +5,6 @@ import {
   type ValidationAdminSummary,
 } from '../../api/validation';
 import { PARTICIPANT_STORAGE_KEY } from '../useParticipantId';
-import { participantFromUrl } from '../urlParams';
 import { UserProgress } from './UserProgress';
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -76,7 +75,5 @@ function HistoryHeader() {
 }
 
 function historyParticipantId(): string | null {
-  const urlParticipant = participantFromUrl();
-  if (urlParticipant) return urlParticipant;
   return localStorage.getItem(PARTICIPANT_STORAGE_KEY);
 }

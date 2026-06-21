@@ -32,6 +32,11 @@ def validation_admin():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+@router.get("/history")
+def user_history():
+    return FileResponse(str(STATIC_DIR / "index.html"))
+
+
 @router.get("/scene")
 def scene_page():
     return FileResponse(str(STATIC_DIR / "index.html"))

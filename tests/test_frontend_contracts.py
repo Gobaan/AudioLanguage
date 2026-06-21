@@ -843,9 +843,12 @@ def test_scorecard_links_to_read_only_user_history():
     validation_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
 
     assert "History" in scorecard_source
-    assert "/history?participant=" in scorecard_source
+    assert 'href="/history"' in scorecard_source
+    assert "/history?participant=" not in scorecard_source
     assert "pathname === '/history'" in main_source
     assert "fetchValidationHistorySummary(participantId)" in history_source
+    assert "participantFromUrl" not in history_source
+    assert "localStorage.getItem(PARTICIPANT_STORAGE_KEY)" in history_source
     assert "isReadOnly" in progress_source
     assert "phrasesForUser" in summary_source
     assert "scenePhraseGroupsForUser" not in summary_source

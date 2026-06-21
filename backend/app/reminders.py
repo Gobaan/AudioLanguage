@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import time
 import threading
 from dataclasses import dataclass
 from datetime import UTC, datetime, tzinfo
@@ -124,7 +125,14 @@ class ReminderStore:
             self.storage_dir.mkdir(parents=True, exist_ok=True)
             vapid = Vapid01()
             if self.key_path.exists():
-                return Vapid01.from_pem(self.key_path.read_bytes())
+                try:
+                    return Vapid01.from_pem(self.key_path.read_bytes())
+                except ValueError as error:
+                    logger.warning("Stored VAPID private key is invalid; generating a fresh reminder key.")
+                    backup_path = self.key_path.with_name(
+                        f"{self.key_path.name}.invalid-{int(time.time())}"
+                    )
+                    self.key_path.replace(backup_path)
             vapid.generate_keys()
             self.key_path.write_bytes(vapid.private_pem())
             return vapid

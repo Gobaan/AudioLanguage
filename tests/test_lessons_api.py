@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 
 from test_support import app
 from app.content.lessons import speech_bubble_from_line, speech_bubble_override_for_frame
-from app.reminders import ReminderSubscription, is_due, is_valid_timezone, local_date_for
+from app.reminders import ReminderStore, ReminderSubscription, is_due, is_valid_timezone, local_date_for
 
 
 class LessonsApiTests(unittest.TestCase):
@@ -129,6 +129,18 @@ class LessonsApiTests(unittest.TestCase):
         self.assertTrue(is_due(subscription, datetime(2026, 6, 20, 22, 0, tzinfo=UTC)))
         self.assertEqual(local_date_for(subscription, datetime(2026, 6, 20, 22, 0, tzinfo=UTC)), "2026-06-20")
 
+    def test_daily_reminder_store_rotates_invalid_vapid_key(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ReminderStore(Path(temp_dir))
+            store.key_path.write_text("not a pem key", encoding="utf-8")
+
+            public_key = store.public_key()
+
+            self.assertTrue(public_key)
+            self.assertTrue(store.key_path.exists())
+            self.assertNotEqual(store.key_path.read_text(encoding="utf-8"), "not a pem key")
+            self.assertTrue(list(Path(temp_dir).glob("daily_reminder_vapid_private.pem.invalid-*")))
+
     def test_daily_reminder_subscription_endpoint_accepts_local_timezone(self):
         client = TestClient(app)
         subscription = {
@@ -168,6 +180,7 @@ class LessonsApiTests(unittest.TestCase):
         speech_bubble_debug_response = client.get("/debug/speech-bubbles")
         transfer_tutorial_debug_response = client.get("/debug/transfer-tutorial")
         admin_response = client.get("/gobi-admin")
+        history_response = client.get("/history?participant=Alice")
         scene_response = client.get("/scene?language=ja&lessonPage=first-hi")
         old_admin_response = client.get("/admin/validation")
         api_languages_response = client.get("/api/languages")
@@ -186,6 +199,7 @@ class LessonsApiTests(unittest.TestCase):
         self.assertEqual(speech_bubble_debug_response.status_code, 200)
         self.assertEqual(transfer_tutorial_debug_response.status_code, 200)
         self.assertEqual(admin_response.status_code, 200)
+        self.assertEqual(history_response.status_code, 200)
         self.assertEqual(scene_response.status_code, 200)
         self.assertEqual(old_admin_response.status_code, 404)
         self.assertEqual(api_languages_response.status_code, 200)
