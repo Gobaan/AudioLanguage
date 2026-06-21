@@ -26,12 +26,15 @@ type ProductionPracticeStepProps = {
   prompt: string;
   recordingAudioUrl?: string | null;
   nextLabel?: string;
+  isRelearning?: boolean;
+  relearnError?: string | null;
   onCaptureAttempt?: (
     step: LessonStep,
     recording: CapturedRecording,
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;
+  onRelearn?: () => void;
 };
 
 type PracticePhase = 'record' | 'feedback' | 'done';
@@ -44,8 +47,11 @@ export function ProductionPracticeStep({
   prompt,
   recordingAudioUrl,
   nextLabel = 'Next',
+  isRelearning = false,
+  relearnError = null,
   onCaptureAttempt,
   onStepComplete,
+  onRelearn,
 }: ProductionPracticeStepProps) {
   const [phase, setPhase] = useState<PracticePhase>('record');
   const [feedbackIndex, setFeedbackIndex] = useState(0);
@@ -264,7 +270,17 @@ export function ProductionPracticeStep({
             <button type="button" onClick={onStepComplete}>
               {nextLabel}
             </button>
+            {onRelearn ? (
+              <button type="button" disabled={isRelearning} onClick={onRelearn}>
+                {isRelearning ? 'Adding...' : 'Relearn'}
+              </button>
+            ) : null}
           </nav>
+        ) : null}
+        {phase === 'done' && relearnError ? (
+          <p className="audio-error" role="alert">
+            {relearnError}
+          </p>
         ) : null}
       </section>
     </section>
@@ -276,7 +292,7 @@ export function productionPracticeProps(
   step: LessonStep,
   language: string,
   prompt = productionPromptText(step),
-): Omit<ProductionPracticeStepProps, 'onCaptureAttempt' | 'onStepComplete'> {
+): Omit<ProductionPracticeStepProps, 'onCaptureAttempt' | 'onStepComplete' | 'onRelearn'> {
   return {
     lesson,
     step,

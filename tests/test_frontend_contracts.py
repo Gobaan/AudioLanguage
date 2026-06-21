@@ -762,6 +762,46 @@ def test_session_queue_completion_shows_scorecard_with_next_lesson_action():
     assert "overridesAttemptScore" in validation_types_source
 
 
+def test_scorecard_anchor_review_and_relearn_contracts():
+    app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
+    loader_source = (PROJECT_DIR / "view" / "app" / "useLessonLoader.ts").read_text(encoding="utf-8")
+    production_source = (PROJECT_DIR / "view" / "app" / "ProductionPracticeStep.tsx").read_text(encoding="utf-8")
+    scorecard_source = (PROJECT_DIR / "view" / "app" / "ScorecardView.tsx").read_text(encoding="utf-8")
+    helper_source = (PROJECT_DIR / "view" / "app" / "lessonStepHelpers.ts").read_text(encoding="utf-8")
+    shell_source = (PROJECT_DIR / "view" / "app" / "TravellerLessonShell.tsx").read_text(encoding="utf-8")
+    lessons_api_source = (PROJECT_DIR / "view" / "api" / "lessons.ts").read_text(encoding="utf-8")
+    validation_types_source = (PROJECT_DIR / "view" / "api" / "validationTypes.ts").read_text(encoding="utf-8")
+
+    assert "anchorLessonPage?: string" in validation_types_source
+    assert "anchorLessonId?: string" in validation_types_source
+    assert "View anchor" in scorecard_source
+    assert "Relearn" not in scorecard_source
+    assert "scorecard-learner-audio" not in scorecard_source
+    assert "target.targetAudioUrl" not in scorecard_source
+    assert "validationAttemptAudioUrl(sessionId, attempt.attemptId)" in scorecard_source
+    assert "lessonSupportsRelearn" in helper_source
+    assert "guided_scene_production" in helper_source
+    assert "same_day_anchor_recall" in helper_source
+    assert "onRelearn={relearnAction}" in app_source
+    assert "lessonSupportsRelearn(stepLesson) ? handleRelearn : undefined" in app_source
+    assert "onRelearn={onRelearn}" in shell_source
+    assert "phase === 'done' && onStepComplete" in production_source
+    assert "isRelearning ? 'Adding...' : 'Relearn'" in production_source
+    assert "POST" in lessons_api_source
+    assert "/api/learning-engine/relearn-target" in lessons_api_source
+    assert "insertLessonBundleAfter" in loader_source
+    assert "insertBundleWithRecallGap" in loader_source
+    assert "interveningItem" in loader_source
+    assert "const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage)" in app_source
+    assert "ScorecardAnchorReview" in app_source
+    assert "<h1>Anchor scene</h1>" in app_source
+    assert "<h1>{lesson?.title ?? 'Anchor scene'}</h1>" not in app_source
+    assert "<ScenePlayback frames={withAssetUrls(lesson)?.frames ?? []} autoplay />" in app_source
+    assert "fetchLessons(language, target.anchorLessonPage, sceneSet)" in app_source
+    assert "relearnTarget({" in app_source
+    assert "selectLessonPage(firstInsertedPage)" in app_source
+
+
 def test_learn_and_admin_pages_support_phrase_recommendations():
     app_source = (PROJECT_DIR / "view" / "app" / "TravellerMvpApp.tsx").read_text(encoding="utf-8")
     button_source = (PROJECT_DIR / "view" / "app" / "RecommendPhraseButton.tsx").read_text(encoding="utf-8")

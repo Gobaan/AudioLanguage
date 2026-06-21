@@ -211,6 +211,55 @@ class LearningEngineTests(unittest.TestCase):
 
         self.assertTrue(states["ja-target-respond-hi"].anchor_passed)
 
+    def test_relearn_endpoint_resets_target_state_and_keeps_scorecard_history(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ValidationStore(Path(temp_dir))
+            create_session(store, "relearn", "Bob", "ja")
+            save_and_score(
+                store,
+                "relearn",
+                "attempt-hello-transfer",
+                "ja-card-first-hi-ticket-transfer-same_day_transfer",
+                "ja-target-respond-hi",
+                passed=True,
+                attempt_overrides={
+                    "lessonStage": "same_day_transfer",
+                    "planPurpose": "transfer_practice",
+                },
+            )
+            self.assertIn("ja-target-respond-hi", store.learning_state.target_states("Bob", "ja"))
+
+            with patch("app.routes.content.validation_store", store):
+                response = TestClient(app).post(
+                    "/api/learning-engine/relearn-target",
+                    json={
+                        "language": "ja",
+                        "participantId": "Bob",
+                        "targetId": "ja-target-respond-hi",
+                    },
+                )
+
+            scorecard = store.scorecard(
+                "relearn",
+                data_dir=Path("model/content"),
+                project_dir=Path("."),
+            )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["targetId"], "ja-target-respond-hi")
+        self.assertEqual([lesson["stage"] for lesson in payload["lessons"]], [
+            "guided_scene_production",
+            "same_day_anchor_recall",
+        ])
+        self.assertEqual(payload["lessons"][0]["targetId"], "ja-target-respond-hi")
+        self.assertEqual(payload["lessons"][1]["planPurpose"], "same_day_anchor_recall")
+        self.assertEqual(payload["lessons"][0]["lessonUnitId"], payload["lessons"][1]["lessonUnitId"])
+        self.assertNotIn("ja-target-respond-hi", store.learning_state.target_states("Bob", "ja"))
+        self.assertEqual(scorecard["attemptCount"], 1)
+        self.assertEqual(scorecard["targets"][0]["targetId"], "ja-target-respond-hi")
+        self.assertEqual(scorecard["targets"][0]["attempts"][0]["attemptId"], "attempt-hello-transfer")
+
     def test_implicit_quality_signals_flow_into_learning_state(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = ValidationStore(Path(temp_dir))

@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { fetchLessons, relearnTarget } from '../api/lessons';
+import type { ScorecardTarget } from '../api/validation';
+import { ScenePlayback, type Lesson } from '../components';
 import { ValidationScorecardView } from './ScorecardView';
 import { FitToViewport } from './FitToViewport';
 import { LearnerSessionLanding } from './LearnerSessionLanding';
@@ -7,6 +10,7 @@ import { PlanSelectionDebugPanel } from './PlanSelectionDebugPanel';
 import { RecommendPhraseButton } from './RecommendPhraseButton';
 import { TravellerLessonShell } from './TravellerLessonShell';
 import { tutorialForLesson } from './lessonTutorials';
+import { lessonSupportsRelearn } from './lessonStepHelpers';
 import { useAssetPrefetcher } from './useAssetPrefetcher';
 import { useActiveLessonStep } from './useActiveLessonStep';
 import { useLessonLoader } from './useLessonLoader';
@@ -14,7 +18,7 @@ import { useParticipantId } from './useParticipantId';
 import { useScorecard } from './useScorecard';
 import { dismissTutorial, isTutorialDismissed } from './transferTutorialStorage';
 import { useTravellerRoute } from './useTravellerRoute';
-import { START_LESSON, updateLessonUrl, viewFromUrl } from './lessonUrls';
+import { activeMvpLesson, START_LESSON, updateLessonUrl, viewFromUrl, withAssetUrls } from './lessonUrls';
 import { useValidationSession } from './useValidationSession';
 import { isLocalHost } from './urlParams';
 
@@ -26,8 +30,21 @@ export function TravellerMvpApp() {
   const [sessionPhase, setSessionPhase] = useState<SessionPhase>('landing');
   const [sessionRequestId, setSessionRequestId] = useState(1);
   const [dismissedTutorials, setDismissedTutorials] = useState<Record<string, true>>({});
+  const [anchorReviewLesson, setAnchorReviewLesson] = useState<Lesson | null>(null);
+  const [anchorReviewState, setAnchorReviewState] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [isRelearning, setIsRelearning] = useState(false);
+  const [relearnError, setRelearnError] = useState<string | null>(null);
 
-  const { lessonTabs, lessons, lesson, displayName, planVersion, sessionId, loadState } = useLessonLoader({
+  const {
+    lessonTabs,
+    lessons,
+    lesson,
+    displayName,
+    planVersion,
+    sessionId,
+    loadState,
+    insertLessonBundleAfter,
+  } = useLessonLoader({
     language,
     lessonPage,
     sceneSet,
@@ -81,7 +98,14 @@ export function TravellerMvpApp() {
     resetScorecard();
     setSessionPhase('landing');
     setSessionRequestId(1);
+    setRelearnError(null);
+    setIsRelearning(false);
   }, [language, sceneSet, resetScorecard]);
+
+  useEffect(() => {
+    setRelearnError(null);
+    setIsRelearning(false);
+  }, [lessonPage]);
 
   useEffect(() => {
     if (viewFromUrl() !== 'scorecard' || !validationSessionId || sessionPhase !== 'running') {
@@ -92,28 +116,20 @@ export function TravellerMvpApp() {
   }, [language, sceneSet, validationSessionId, sessionPhase, showScorecard]);
 
   const nextLessonTab = useMemo(() => {
-    const currentLessonId = stepLesson?.id;
-    if (!currentLessonId) {
-      return null;
-    }
-    const currentIndex = lessons.findIndex((item) => item.id === currentLessonId);
+    const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
     if (currentIndex < 0) {
       return null;
     }
     return lessonTabs[currentIndex + 1] ?? null;
-  }, [lessonTabs, lessons, stepLesson?.id]);
+  }, [lessonPage, lessonTabs]);
 
   const nextLesson = useMemo(() => {
-    const currentLessonId = stepLesson?.id;
-    if (!currentLessonId) {
-      return null;
-    }
-    const currentIndex = lessons.findIndex((item) => item.id === currentLessonId);
+    const currentIndex = lessonTabs.findIndex((tab) => tab.id === lessonPage);
     if (currentIndex < 0) {
       return null;
     }
     return lessons[currentIndex + 1] ?? null;
-  }, [lessons, stepLesson?.id]);
+  }, [lessonPage, lessonTabs, lessons]);
 
   useAssetPrefetcher({
     sessionPhase,
@@ -189,17 +205,113 @@ export function TravellerMvpApp() {
     completeSession();
   }, [isLastStep, goToStep, nextLessonTab, selectLessonPage, completeSession, resetScorecard]);
 
+  const handleViewAnchor = useCallback(
+    async (target: ScorecardTarget) => {
+      if (!target.anchorLessonPage) {
+        return;
+      }
+
+      setAnchorReviewLesson(null);
+      setAnchorReviewState('loading');
+      try {
+        const payload = await fetchLessons(language, target.anchorLessonPage, sceneSet);
+        const anchorLesson = payload.lessons.find((item) => item.id === target.anchorLessonId) ?? payload.lessons[0];
+        if (!anchorLesson) {
+          throw new Error('Anchor lesson was not returned.');
+        }
+        setAnchorReviewLesson(activeMvpLesson(anchorLesson));
+        setAnchorReviewState('idle');
+      } catch {
+        setAnchorReviewState('error');
+      }
+    },
+    [language, sceneSet],
+  );
+
+  const handleBackFromAnchorReview = useCallback(() => {
+    setAnchorReviewLesson(null);
+    setAnchorReviewState('idle');
+  }, []);
+
+  const handleRelearn = useCallback(
+    async () => {
+      if (!participantId || !stepLesson || !lessonSupportsRelearn(stepLesson)) {
+        setRelearnError('Relearn is unavailable until a participant is ready.');
+        return;
+      }
+
+      setRelearnError(null);
+      setIsRelearning(true);
+      try {
+        const bundle = await relearnTarget({
+          language,
+          participantId,
+          targetId: stepLesson.target.id,
+        });
+        const firstInsertedPage = insertLessonBundleAfter(
+          lessonPage,
+          bundle.lesson_tabs ?? [],
+          bundle.lessons ?? [],
+        );
+        logEvent({
+          type: 'relearn_requested',
+          lessonId: stepLesson.id,
+          lessonPage,
+          stepId: step?.id,
+          stepIndex,
+          targetId: stepLesson.target.id,
+          planPurpose: stepLesson.planPurpose,
+          repairCategory: stepLesson.repairCategory,
+          lessonStage: stepLesson.stage,
+        });
+
+        if (firstInsertedPage) {
+          resetScorecard();
+          setSessionPhase('running');
+          selectLessonPage(firstInsertedPage);
+          updateLessonUrl(language, firstInsertedPage, sceneSet, true, null);
+        }
+      } catch (error) {
+        setRelearnError(relearnErrorMessage(error));
+      } finally {
+        setIsRelearning(false);
+      }
+    },
+    [
+      insertLessonBundleAfter,
+      language,
+      lessonPage,
+      logEvent,
+      participantId,
+      resetScorecard,
+      sceneSet,
+      selectLessonPage,
+      step?.id,
+      stepIndex,
+      stepLesson,
+    ],
+  );
+
   if (appView === 'scorecard') {
     return (
       <FitToViewport scrollable>
-        <ValidationScorecardView
-          sessionId={validationSessionId}
-          state={scorecardState}
-          scorecard={scorecard}
-          onBack={backToLesson}
-          onRefresh={showScorecard}
-          onNextLesson={sessionPhase === 'complete' ? beginSession : null}
-        />
+        {anchorReviewLesson || anchorReviewState !== 'idle' ? (
+          <ScorecardAnchorReview
+            lesson={anchorReviewLesson}
+            state={anchorReviewState}
+            onBack={handleBackFromAnchorReview}
+          />
+        ) : (
+          <ValidationScorecardView
+            sessionId={validationSessionId}
+            state={scorecardState}
+            scorecard={scorecard}
+            onBack={backToLesson}
+            onRefresh={showScorecard}
+            onNextLesson={sessionPhase === 'complete' ? beginSession : null}
+            onViewAnchor={handleViewAnchor}
+          />
+        )}
       </FitToViewport>
     );
   }
@@ -286,6 +398,7 @@ export function TravellerMvpApp() {
     ? dismissedTutorials[activeTutorial.dismissId] === true || isTutorialDismissed(activeTutorial.dismissId)
     : true;
   const tutorial = activeTutorial && !tutorialDismissed ? activeTutorial : null;
+  const relearnAction = lessonSupportsRelearn(stepLesson) ? handleRelearn : undefined;
 
   return (
     <FitToViewport scrollable={isLocalHost()}>
@@ -307,8 +420,47 @@ export function TravellerMvpApp() {
         onCaptureAttempt={handleCaptureAttempt}
         onOpenScorecard={showScorecard}
         onNext={handleNext}
+        onRelearn={relearnAction}
+        isRelearning={isRelearning}
+        relearnError={relearnError}
         debugLessonSwitcher={debugLessonSwitcher}
       />
     </FitToViewport>
   );
+}
+
+function ScorecardAnchorReview({
+  lesson,
+  state,
+  onBack,
+}: {
+  lesson: Lesson | null;
+  state: 'idle' | 'loading' | 'error';
+  onBack: () => void;
+}) {
+  return (
+    <section className="scorecard-anchor-review" aria-label="Anchor review">
+      <header className="scorecard-header">
+        <div>
+          <span>Anchor</span>
+          <h1>Anchor scene</h1>
+        </div>
+        <nav className="scorecard-actions" aria-label="Anchor review controls">
+          <button type="button" onClick={onBack}>
+            Back
+          </button>
+        </nav>
+      </header>
+      {state === 'loading' ? <p className="scorecard-status">Loading anchor...</p> : null}
+      {state === 'error' ? <p className="scorecard-status">Anchor is unavailable.</p> : null}
+      {lesson ? <ScenePlayback frames={withAssetUrls(lesson)?.frames ?? []} autoplay /> : null}
+    </section>
+  );
+}
+
+function relearnErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return `Could not add relearn scenes: ${error.message}`;
+  }
+  return 'Could not add relearn scenes.';
 }

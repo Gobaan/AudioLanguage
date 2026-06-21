@@ -1,5 +1,16 @@
-import type { LearningPlanResponse, LessonListResponse } from '../components/types';
+import type { LearningPlanResponse, Lesson, LessonListResponse } from '../components/types';
 import type { SpeechBubbleOverridePayload } from '../app/DebugSpeechBubbleEditorPage';
+
+export type RelearnTargetResponse = {
+  targetId: string;
+  language: string;
+  display_name?: string;
+  lesson_tabs?: Array<{
+    id: string;
+    label: string;
+  }>;
+  lessons: Lesson[];
+};
 
 export async function fetchLessons(
   language: string,
@@ -52,6 +63,24 @@ export async function fetchLearningPlan(
   }
 
   return response.json() as Promise<LearningPlanResponse>;
+}
+
+export async function relearnTarget(input: {
+  language: string;
+  participantId: string;
+  targetId: string;
+}): Promise<RelearnTargetResponse> {
+  const response = await fetch('/api/learning-engine/relearn-target', {
+    body: JSON.stringify(input),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to relearn target ${input.targetId}: ${response.status}`);
+  }
+
+  return response.json() as Promise<RelearnTargetResponse>;
 }
 
 export async function fetchSpeechBubbleOverrides(): Promise<SpeechBubbleOverridePayload> {

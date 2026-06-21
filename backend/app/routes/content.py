@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Path, Query
 from pydantic import BaseModel, Field
 
 from app.content.data_graph import DataGraphError, list_languages, load_distractors, load_language_session
-from app.content.learning_engine import build_learning_plan
+from app.content.learning_engine import build_learning_plan, build_relearn_target_plan
 from app.content.lesson_tabs import (
     lesson_tab_key,
     lesson_tabs_from_ordered_tabs,
@@ -42,6 +42,12 @@ class SpeechBubbleOverridesPayload(BaseModel):
     bubbleScale: float = Field(gt=0, le=4)
     editorFrameWidth: int | None = None
     frames: list[SpeechBubbleOverride]
+
+
+class RelearnTargetRequest(BaseModel):
+    language: str = Field(pattern=r"^[a-z]{2,3}(-[a-z]+)?$")
+    participantId: str = Field(min_length=1)
+    targetId: str = Field(min_length=1)
 
 
 @router.get("/api/languages")
@@ -142,6 +148,24 @@ def get_learning_engine_lessons(
             state_store=validation_store.learning_state,
         )
     except DataGraphError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+
+
+@router.post("/api/learning-engine/relearn-target")
+def relearn_target(request: RelearnTargetRequest):
+    """Reset one target's scheduler state and return an anchor relearn bundle."""
+    try:
+        return build_relearn_target_plan(
+            data_dir=DATA_DIR,
+            project_dir=PROJECT_DIR,
+            language=request.language,
+            participant_id=request.participantId,
+            target_id=request.targetId,
+            state_store=validation_store.learning_state,
+        )
+    except DataGraphError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+    except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
 
 

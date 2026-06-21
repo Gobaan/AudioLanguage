@@ -113,6 +113,8 @@ class ValidationApiTests(unittest.TestCase):
         self.assertEqual(scorecard["attemptCount"], 1)
         self.assertEqual(scorecard["targets"][0]["targetId"], "ja-target-respond-hi")
         self.assertEqual(scorecard["targets"][0]["targetAudioUrl"], "/audio/generated/ja/first-hi-response/line-1.mp3")
+        self.assertEqual(scorecard["targets"][0]["anchorLessonPage"], "hello")
+        self.assertEqual(scorecard["targets"][0]["anchorLessonId"], "ja-card-first-hi-dialogue-practice")
         self.assertEqual(scorecard["targets"][0]["attempts"][0]["aiScore"]["status"], "scored")
         self.assertEqual(scorecard["targets"][0]["attempts"][0]["aiScore"]["result"]["communication"]["status"], "exact")
         admin_target_sessions = admin_response.json()["targets"][0]["sessions"]

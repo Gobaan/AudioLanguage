@@ -24,6 +24,9 @@ export type ScorecardAttempt = {
   buildPromptText?: string;
   buildPromptId?: string;
   targetAudioUrl?: string;
+  planPurpose?: string;
+  repairCategory?: string;
+  lessonStage?: string;
   receivedAt?: string;
   aiScore?: {
     status?: string;
@@ -50,6 +53,8 @@ export type ScorecardTarget = {
   expectedTransliteration?: string;
   learnerLine?: string;
   targetAudioUrl?: string;
+  anchorLessonPage?: string;
+  anchorLessonId?: string;
   reviewStatus: string;
   attempts: ScorecardAttempt[];
 };

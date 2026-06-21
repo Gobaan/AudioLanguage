@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { fetchLearningPlan } from '../api/lessons';
 import type { Lesson } from '../components';
@@ -88,6 +88,35 @@ export function useLessonLoader({
     }
   }, [language, lessonPage, lessonTabs, lessons, loadState, sceneSet, onLessonPageChange]);
 
+  const insertLessonBundleAfter = useCallback(
+    (currentLessonPage: string, bundleTabs: LessonTab[], bundleLessons: Lesson[]): string | null => {
+      if (bundleTabs.length === 0 || bundleLessons.length === 0) {
+        return null;
+      }
+
+      const uniqueSuffix = relearnQueueSuffix();
+      const insertedTabs = bundleTabs.map((tab) => ({
+        ...tab,
+        id: `${tab.id}-relearn-${uniqueSuffix}`,
+      }));
+      const insertedLessons = bundleLessons.map(activeMvpLesson);
+      const firstInsertedPage = insertedTabs[0]?.id ?? null;
+
+      setLessonTabs((currentTabs) => {
+        const insertionIndex = lessonInsertionIndex(currentTabs, currentLessonPage);
+        return insertBundleWithRecallGap(currentTabs, insertedTabs, insertionIndex);
+      });
+      setLessons((currentLessons) => {
+        const insertionIndex = lessonInsertionIndex(lessonTabs, currentLessonPage);
+        return insertBundleWithRecallGap(currentLessons, insertedLessons, insertionIndex);
+      });
+      setLoadState('ready');
+
+      return firstInsertedPage;
+    },
+    [lessonTabs],
+  );
+
   return {
     lessonTabs,
     lessons,
@@ -96,7 +125,45 @@ export function useLessonLoader({
     planVersion,
     sessionId,
     loadState,
+    insertLessonBundleAfter,
   };
+}
+
+function lessonInsertionIndex(lessonTabs: LessonTab[], currentLessonPage: string): number {
+  const currentIndex = lessonTabs.findIndex((tab) => tab.id === currentLessonPage);
+  return currentIndex < 0 ? lessonTabs.length : currentIndex + 1;
+}
+
+function insertBundleWithRecallGap<TItem>(currentItems: TItem[], bundleItems: TItem[], insertionIndex: number): TItem[] {
+  const [anchorItem, recallItem, ...remainingItems] = bundleItems;
+  if (!anchorItem || !recallItem) {
+    return [
+      ...currentItems.slice(0, insertionIndex),
+      ...bundleItems,
+      ...currentItems.slice(insertionIndex),
+    ];
+  }
+
+  const beforeInsertion = currentItems.slice(0, insertionIndex);
+  const afterInsertion = currentItems.slice(insertionIndex);
+  const interveningItem = afterInsertion[0];
+
+  if (interveningItem) {
+    return [
+      ...beforeInsertion,
+      anchorItem,
+      interveningItem,
+      recallItem,
+      ...remainingItems,
+      ...afterInsertion.slice(1),
+    ];
+  }
+
+  return [...beforeInsertion, anchorItem, recallItem, ...remainingItems];
+}
+
+function relearnQueueSuffix(): string {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
 function stableOrderSeed(language: string, sceneSet: string): string | null {

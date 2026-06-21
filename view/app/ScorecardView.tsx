@@ -3,9 +3,9 @@ import {
   overrideValidationAttemptScore,
   validationAttemptAudioUrl,
   type ScorecardAttempt,
+  type ScorecardTarget,
   type ValidationScorecard,
 } from '../api/validation';
-import { assetUrl } from './lessonUrls';
 
 export type ScorecardState = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -19,6 +19,7 @@ type ValidationScorecardViewProps = {
   onBack: () => void;
   onRefresh: () => void;
   onNextLesson?: (() => void) | null;
+  onViewAnchor?: (target: ScorecardTarget) => void;
 };
 
 export function ValidationScorecardView({
@@ -28,6 +29,7 @@ export function ValidationScorecardView({
   onBack,
   onRefresh,
   onNextLesson,
+  onViewAnchor,
 }: ValidationScorecardViewProps) {
   return (
     <section className="validation-scorecard" aria-label="Validation scorecard">
@@ -54,7 +56,13 @@ export function ValidationScorecardView({
       {state === 'error' ? (
         <p className="scorecard-status">Scorecard is unavailable.</p>
       ) : null}
-      {state === 'ready' && scorecard ? <ScorecardDetails scorecard={scorecard} onRefresh={onRefresh} /> : null}
+      {state === 'ready' && scorecard ? (
+        <ScorecardDetails
+          scorecard={scorecard}
+          onRefresh={onRefresh}
+          onViewAnchor={onViewAnchor}
+        />
+      ) : null}
     </section>
   );
 }
@@ -62,9 +70,11 @@ export function ValidationScorecardView({
 function ScorecardDetails({
   scorecard,
   onRefresh,
+  onViewAnchor,
 }: {
   scorecard: ValidationScorecard;
   onRefresh: () => void;
+  onViewAnchor?: (target: ScorecardTarget) => void;
 }) {
   const [overrideAttemptKey, setOverrideAttemptKey] = useState<string | null>(null);
   const [overrideError, setOverrideError] = useState<string | null>(null);
@@ -77,18 +87,18 @@ function ScorecardDetails({
         ) : (
           scorecard.targets.map((target) => (
             <article className="scorecard-target" key={target.targetId}>
-              <header className="scorecard-target-intro">
-                <span>Learner line</span>
-                {target.targetAudioUrl ? (
-                  <audio
-                    className="scorecard-learner-audio"
-                    controls
-                    src={assetUrl(target.targetAudioUrl)}
-                    aria-label="Learner line"
-                  />
-                ) : (
-                  <p className="scorecard-status">Learner line audio unavailable.</p>
-                )}
+              <header>
+                <div className="scorecard-target-intro">
+                  <span>Learner line</span>
+                  <h2>{targetLineLabel(target)}</h2>
+                </div>
+                <div className="scorecard-target-actions">
+                  {target.anchorLessonPage && onViewAnchor ? (
+                    <button type="button" onClick={() => onViewAnchor(target)}>
+                      View anchor
+                    </button>
+                  ) : null}
+                </div>
               </header>
               <ul>
                 {target.attempts.map((attempt) => (
@@ -164,6 +174,10 @@ function ScorecardAttemptRow({
       </div>
     </li>
   );
+}
+
+function targetLineLabel(target: ScorecardTarget): string {
+  return target.learnerLine || target.expectedTransliteration || target.expectedText || target.targetId;
 }
 
 function attemptStepLabel(attempt: ScorecardAttempt): string {

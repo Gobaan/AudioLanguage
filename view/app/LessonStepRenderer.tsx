@@ -17,6 +17,9 @@ type LessonStepRendererProps = {
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;
+  onRelearn?: () => void;
+  isRelearning?: boolean;
+  relearnError?: string | null;
   nextLabel?: string;
   suspendSceneAutoplay?: boolean;
 };

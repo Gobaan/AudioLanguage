@@ -331,3 +331,7 @@ export function stepHandlesOwnAutoplay(step: LessonStep): boolean {
   if (step.type === 'scene_recall' && step.mic?.enabled) return true;
   return false;
 }
+
+export function lessonSupportsRelearn(lesson: Lesson): boolean {
+  return Boolean(lesson.target?.id) && !['guided_scene_production', 'same_day_anchor_recall'].includes(lesson.stage ?? '');
+}

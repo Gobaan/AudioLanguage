@@ -38,6 +38,9 @@ export type LessonStepRenderContext = {
     extra?: Record<string, unknown>,
   ) => void;
   onStepComplete?: () => void;
+  onRelearn?: () => void;
+  isRelearning?: boolean;
+  relearnError?: string | null;
   nextLabel?: string;
   suspendSceneAutoplay?: boolean;
 };
@@ -78,6 +81,9 @@ const STEP_RENDERERS: StepRenderer[] = [
         {...productionPracticeProps(context.lesson, context.step, context.language)}
         onCaptureAttempt={context.onCaptureAttempt}
         onStepComplete={context.onStepComplete}
+        onRelearn={context.onRelearn}
+        isRelearning={context.isRelearning}
+        relearnError={context.relearnError}
         nextLabel={context.nextLabel}
       />
     );
@@ -89,6 +95,9 @@ const STEP_RENDERERS: StepRenderer[] = [
         {...productionPracticeProps(context.lesson, context.step, context.language)}
         onCaptureAttempt={context.onCaptureAttempt}
         onStepComplete={context.onStepComplete}
+        onRelearn={context.onRelearn}
+        isRelearning={context.isRelearning}
+        relearnError={context.relearnError}
         nextLabel={context.nextLabel}
       />
     );

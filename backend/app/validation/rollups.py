@@ -5,6 +5,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from app.content.data_graph import DataGraphError, load_language_session
 from app.content.learner_audio import learner_dialogue_audio_url
 from app.validation.jsonl_io import read_jsonl
 from app.validation.scoring import is_remembered_score, participant_id_from, score_status
@@ -73,6 +74,12 @@ def build_scorecard(
     attempts = read_jsonl(session_dir / "attempts.jsonl")
     events = read_jsonl(session_dir / "events.jsonl")
     scores = scores_by_attempt(session_dir)
+    language = str(metadata.get("language") or "")
+    anchor_metadata = anchor_metadata_by_target(
+        data_dir=data_dir,
+        project_dir=project_dir,
+        language=language,
+    )
     targets: dict[str, dict[str, Any]] = {}
 
     for attempt in attempts:
@@ -85,6 +92,7 @@ def build_scorecard(
             target_id,
             {
                 "targetId": target_id,
+                **anchor_metadata.get(target_id, {}),
                 "expectedText": attempt.get("expectedText"),
                 "expectedTransliteration": attempt.get("expectedTransliteration"),
                 "targetAudioUrl": attempt.get("targetAudioUrl"),
@@ -128,6 +136,41 @@ def build_scorecard(
         "attemptCount": sum(len(target["attempts"]) for target in targets.values()),
         "targets": list(targets.values()),
     }
+
+
+def anchor_metadata_by_target(
+    *,
+    data_dir: Path | None,
+    project_dir: Path | None,
+    language: str,
+) -> dict[str, dict[str, str]]:
+    if not data_dir or not project_dir or not language:
+        return {}
+
+    try:
+        session = load_language_session(data_dir=data_dir, project_dir=project_dir, language=language)
+    except DataGraphError:
+        return {}
+
+    tabs_by_card_id = {
+        str(tab.get("card_id")): str(tab.get("id"))
+        for tab in session.get("session", {}).get("lesson_tabs", [])
+        if isinstance(tab, dict) and tab.get("card_id") and tab.get("id")
+    }
+    metadata: dict[str, dict[str, str]] = {}
+    for card in session.get("cards", []):
+        if not isinstance(card, dict) or card.get("stage") != "guided_scene_production":
+            continue
+        target = card.get("target") if isinstance(card.get("target"), dict) else {}
+        target_id = str(card.get("target_id") or target.get("id") or "")
+        card_id = str(card.get("id") or "")
+        lesson_page = tabs_by_card_id.get(card_id)
+        if target_id and card_id and lesson_page:
+            metadata[target_id] = {
+                "anchorLessonId": card_id,
+                "anchorLessonPage": lesson_page,
+            }
+    return metadata
 
 
 def build_admin_summary(

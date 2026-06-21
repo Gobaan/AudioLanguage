@@ -26,6 +26,9 @@ type TravellerLessonShellProps = {
   ) => void;
   onOpenScorecard: () => void;
   onNext: () => void;
+  onRelearn?: () => void;
+  isRelearning?: boolean;
+  relearnError?: string | null;
   tutorial?: LessonTutorial | null;
   onDismissTutorial?: () => void;
   debugLessonSwitcher?: ReactNode;
@@ -46,6 +49,9 @@ export function TravellerLessonShell({
   onCaptureAttempt,
   onOpenScorecard,
   onNext,
+  onRelearn,
+  isRelearning = false,
+  relearnError = null,
   tutorial = null,
   onDismissTutorial,
   debugLessonSwitcher,
@@ -77,6 +83,9 @@ export function TravellerLessonShell({
           onSelectChoice={onSelectChoice}
           onCaptureAttempt={onCaptureAttempt}
           onStepComplete={onNext}
+          onRelearn={onRelearn}
+          isRelearning={isRelearning}
+          relearnError={relearnError}
           nextLabel={nextLabel}
         />
         {tutorial && onDismissTutorial ? (

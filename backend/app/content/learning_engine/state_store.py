@@ -209,6 +209,24 @@ class LearningStateStore:
             )
             return int(cursor.rowcount or 0)
 
+    def delete_target(self, participant_id: str, language: str, target_id: str) -> int:
+        normalized_participant = str(participant_id or "").strip()
+        normalized_language = str(language or "").strip()
+        normalized_target = str(target_id or "").strip()
+        if not normalized_participant or not normalized_language or not normalized_target:
+            return 0
+
+        with self.connect() as connection:
+            self.ensure_schema(connection)
+            cursor = connection.execute(
+                """
+                DELETE FROM learner_target_state
+                WHERE participant_id = ? AND language = ? AND target_id = ?
+                """,
+                (normalized_participant, normalized_language, normalized_target),
+            )
+            return int(cursor.rowcount or 0)
+
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
