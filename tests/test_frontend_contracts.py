@@ -650,9 +650,11 @@ def test_delayed_review_start_marker_resolves_to_first_backend_plan_tab():
 def test_learner_session_landing_renders_next_session_actions():
     result = run_frontend_script(
         [
+            "view/api/auth.ts",
             "view/api/reminders.ts",
             "view/app/dailyReminderNotifications.ts",
             "view/app/DailyReminderPrompt.tsx",
+            "view/app/GoogleAccountLink.tsx",
             "view/app/LearnerSessionLanding.tsx",
         ],
         """
@@ -660,50 +662,52 @@ def test_learner_session_landing_renders_next_session_actions():
         const { renderToStaticMarkup } = require('react-dom/server');
         const { LearnerSessionLanding } = requireSource('view/app/LearnerSessionLanding.tsx');
 
+        const commonProps = {
+          language: 'ja',
+          displayName: 'Japanese',
+          participantReady: true,
+          participantId: 'test-participant',
+          authStatus: 'idle',
+          authError: null,
+          onGoogleCredential() {},
+        };
+
         const landing = renderToStaticMarkup(
           React.createElement(LearnerSessionLanding, {
-            language: 'ja',
-            displayName: 'Japanese',
+            ...commonProps,
             lessonCount: 3,
             sessionPhase: 'landing',
             planState: 'ready',
-            participantReady: true,
             onStartSession() {},
             onContinue() {},
           })
         );
         const complete = renderToStaticMarkup(
           React.createElement(LearnerSessionLanding, {
-            language: 'ja',
-            displayName: 'Japanese',
+            ...commonProps,
             lessonCount: 3,
             sessionPhase: 'complete',
             planState: 'ready',
-            participantReady: true,
             onStartSession() {},
             onContinue() {},
           })
         );
         const emptyReady = renderToStaticMarkup(
           React.createElement(LearnerSessionLanding, {
-            language: 'ja',
-            displayName: 'Japanese',
+            ...commonProps,
             lessonCount: 0,
             sessionPhase: 'landing',
             planState: 'ready',
-            participantReady: true,
             onStartSession() {},
             onContinue() {},
           })
         );
         const loading = renderToStaticMarkup(
           React.createElement(LearnerSessionLanding, {
-            language: 'ja',
-            displayName: 'Japanese',
+            ...commonProps,
             lessonCount: 0,
             sessionPhase: 'landing',
             planState: 'loading',
-            participantReady: true,
             onStartSession() {},
             onContinue() {},
           })
